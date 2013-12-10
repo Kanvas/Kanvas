@@ -14,12 +14,14 @@ package
 	
 	import model.CoreFacade;
 	
+	import view.pagePanel.PagePanel;
 	import view.shapePanel.ShapePanel;
 	import view.themePanel.ThemePanel;
 	import view.toolBar.ToolBar;
 	import view.toolBar.ZoomToolBar;
 	
 	/**
+	 * 
 	 */	
 	public class Kanvas extends App
 	{
@@ -40,6 +42,8 @@ package
 			
 			initPanels();
 			preLayout();
+			
+			uiContainer.addChild(pagePanel);
 			uiContainer.addChild(themePanel);
 			uiContainer.addChild(shapePanel);
 			uiContainer.addChild(toolBar);
@@ -115,6 +119,11 @@ package
 			themePanel.isOpen = false;
 			themePanel.bgStyleXML = panelBGStyleXML;
 			themePanel.exitBtnStyleXML = exitBtnStyle;
+			
+			//多页面列表
+			pagePanel = new PagePanel(this);
+			pagePanel.bgStyleXML = panelBGStyleXML;
+			
 		}
 		
 		/**
@@ -125,9 +134,11 @@ package
 			if (stage.stageWidth && stage.stageHeight)
 			{
 				preLayout();
+				
 				toolBar.updateLayout();
 				shapePanel.updateLayout();
 				themePanel.updateLayout();
+				pagePanel.updateLayout();
 				
 				kvsCore.resize();
 			}
@@ -141,8 +152,8 @@ package
 			toolBar.w = stage.stageWidth;
 			toolBar.h = 50;
 			
-			shapePanel.h = themePanel.h = stage.stageHeight - toolBar.h;
-			shapePanel.y = themePanel.y = toolBar.h;
+			pagePanel.h = shapePanel.h = themePanel.h = stage.stageHeight - toolBar.h;
+			pagePanel.y = shapePanel.y = themePanel.y = toolBar.h;
 			
 			zoomToolBar.y = (stage.stageHeight - zoomToolBar.height) * .5;
 			
@@ -168,7 +179,7 @@ package
 				zoomToolBar.x = stage.stageWidth - zoomToolBar.width - 5;
 			}
 			
-			
+			//画布尺寸变化时调用此方法
 			updateKvsContenBound();
 		}
 		
@@ -185,11 +196,11 @@ package
 			{
 				// 给画布流内容留一定的边距
 				var gutter:uint = 30;
-				var w:Number =  stage.stageWidth - gutter * 2;
+				var w:Number =  stage.stageWidth - gutter * 2 - pagePanel.w;
 				if (shapePanel.isOpen || themePanel.isOpen)
 					w -= shapePanel.w;
 				
-				kvsCore.bound = new Rectangle(gutter, toolBar.h + gutter, w, 
+				kvsCore.bound = new Rectangle(pagePanel.w + gutter, toolBar.h + gutter, w, 
 					stage.stageHeight - toolBar.h - gutter * 2);
 			}
 		}
@@ -208,6 +219,10 @@ package
 		 * 全局样式控制面板 
 		 */		
 		public var themePanel:Panel;
+		
+		/**
+		 */		
+		public var pagePanel:PagePanel;
 		
 		/**
 		 * 工具条

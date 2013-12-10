@@ -69,7 +69,7 @@ package control
 					_openShapePanel();
 				}
 				
-				this.app.updateKvsContenBound();
+				TweenLite.to(app.pagePanel, 0.5, {x: 0});
 			}
 		}
 		
@@ -112,8 +112,7 @@ package control
 			}
 			
 			TweenLite.to(app.toolBar, 0.5, {y: - app.toolBar.h});
-			
-			this.app.updateKvsContenBound();
+			TweenLite.to(app.pagePanel, 0.5, {x: - app.pagePanel.w});
 		}
 		
 		/**
