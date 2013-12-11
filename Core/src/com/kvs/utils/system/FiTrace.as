@@ -12,7 +12,7 @@ package com.kvs.utils.system
 		
 		/**
 		 */		
-		public static var isOpen:Boolean = false;
+		public static var isOpen:Boolean = true;
 		
 		/**
 		 */		
