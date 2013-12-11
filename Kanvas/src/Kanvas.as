@@ -2,6 +2,7 @@ package
 {
 	import com.kvs.ui.Panel;
 	import com.kvs.ui.toolTips.ToolTipsManager;
+	import com.kvs.utils.PerformaceTest;
 	import com.kvs.utils.StageUtil;
 	import com.kvs.utils.XMLConfigKit.App;
 	
