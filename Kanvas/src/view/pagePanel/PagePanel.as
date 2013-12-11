@@ -2,16 +2,12 @@ package view.pagePanel
 {
 	import com.kvs.ui.FiUI;
 	import com.kvs.ui.button.LabelBtn;
-	import com.kvs.utils.Map;
-	import com.kvs.utils.PerformaceTest;
 	import com.kvs.utils.XMLConfigKit.StyleManager;
 	import com.kvs.utils.XMLConfigKit.XMLVOMapper;
 	import com.kvs.utils.XMLConfigKit.style.Style;
 	
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	
-	import flashx.textLayout.elements.BreakElement;
 	
 	/**
 	 * 负责页面创建命令发出，页面列表显示，页面顺序调换命令发出
@@ -46,6 +42,8 @@ package view.pagePanel
 		 */		
 		private function addPage(evt:MouseEvent):void
 		{
+			//通知核心Core新建一个页面
+			
 			//模拟代码
 			var page:Object = new Object;
 			pageAdded(page);
@@ -61,11 +59,18 @@ package view.pagePanel
 		{
 			var pageUI:PageUI = new PageUI(pageVO);
 			
-			pageUI.w = scrollProxy.viewWidth - gutter * 2;
-			pageUI.h = 100;
+			pageUI.w = scrollProxy.viewWidth;
+			pageUI.h = 90;
+			
+			pageUI.iconW = 90;
+			pageUI.iconH = 70;
+			
+			pageUI.styleXML = pageStyleXML;
 			
 			pagesCtn.addChild(pageUI);
 			pages.push(pageUI);
+			
+			setCurrentPage(pageUI);
 		}
 		
 		/**
@@ -81,6 +86,12 @@ package view.pagePanel
 			
 			pages.splice(pages.indexOf(pageUI), 1);
 			pagesCtn.removeChild(pageUI);
+			
+			if (pageUI == currentPage)
+			{
+				currentPage.selected = false;
+				currentPage = null;
+			}
 		}
 		
 		/**
@@ -88,7 +99,7 @@ package view.pagePanel
 		 */		
 		public function pageSelected(pageVO:Object):void
 		{
-			
+			//通知核心core切换至当前page
 		}
 		
 		/**
@@ -119,8 +130,7 @@ package view.pagePanel
 			var pageUI:PageUI;
 			for each (pageUI in pages)
 			{
-				pageUI.x = gutter;
-				pageUI.y = gutter + pageUI.pageVO.index * (pageUI.h + gutter);
+				pageUI.y = pageUI.pageVO.index * pageUI.h;
 				
 				pageUI.updataLabel();
 			}
@@ -142,9 +152,38 @@ package view.pagePanel
 			return pageUI;
 		}
 		
+		/**
+		 * 按下页面，切换至当前页
+		 */		
+		private function pageClicked(evt:MouseEvent):void
+		{
+			if (evt.target is PageUI)
+			{
+				setCurrentPage(evt.target as PageUI);
+				pageSelected(evt.target as PageUI);
+			}
+		}
 		
+		/**
+		 * 将当前page切换到指定页
+		 */		
+		private function setCurrentPage(pageUI:PageUI):void
+		{
+			if (currentPage)
+			{
+				currentPage.selected = false;
+			}
+			
+			if (pageUI)
+			{
+				currentPage = pageUI;
+				currentPage.selected = true;
+			}
+		}
 		
-		
+		/**
+		 */		
+		private var currentPage:PageUI;
 		
 		
 		
@@ -169,12 +208,15 @@ package view.pagePanel
 			
 			addBtn.w = w - gutter;
 			addBtn.h = 100;
+			
 			addBtn.text = "添加页面";
 			this.addChild(addBtn);
 			addBtn.addEventListener(MouseEvent.CLICK, addPage);
 			
 			scrollProxy = new PagesScrollProxy(this);
 			addChild(pagesCtn);
+			pagesCtn.addEventListener(MouseEvent.CLICK, pageClicked);
+			
 			updateLayout();
 		}
 		
@@ -191,11 +233,10 @@ package view.pagePanel
 			this.graphics.drawRect(0, 0, scrollProxy.viewWidth, scrollProxy.viewHeight);
 			this.graphics.endFill();
 			
-			this.graphics.moveTo(scrollProxy.viewWidth, scrollProxy.viewHeight);
-			this.graphics.lineTo(w, scrollProxy.viewHeight);
-			
 			scrollProxy.updateMask();
 			scrollProxy.update();
+			
+			
 		}
 		
 		/**
@@ -205,10 +246,7 @@ package view.pagePanel
 		{
 			bgStyle.width = w;
 			bgStyle.height = h;
-			
-			PerformaceTest.start();
 			StyleManager.drawRect(this, bgStyle);
-			PerformaceTest.end();
 		}
 		
 		/**
@@ -239,5 +277,22 @@ package view.pagePanel
 		/**
 		 */		
 		public var bgStyleXML:XML;
+		
+		/**
+		 */		
+		private var pageStyleXML:XML = <states>
+											<normal>
+												<fill color='#FFFFFF' alpha='1'/>
+												<img/>
+											</normal>
+											<hover>
+												<fill color='#DDDDDD' alpha='1'/>
+												<img/>
+											</hover>
+											<down>
+												<fill color='#666666'/>
+												<img/>
+											</down>
+										</states>
 	}
 }

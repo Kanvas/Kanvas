@@ -300,7 +300,7 @@ package
 		 */		
 		private var panelBGStyleXML:XML = <style>
 											<border color='#eeeeee' alpha='1'/>
-											<fill color='#fafafa, #fafafa' alpha='0.8, 0.8' type='radial'/>
+											<fill color='#fafafa, #fafafa' alpha='1, 1' type='radial'/>
 										 </style>
 	}
 }
