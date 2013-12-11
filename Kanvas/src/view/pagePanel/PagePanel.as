@@ -187,6 +187,13 @@ package view.pagePanel
 			addBtn.x = (w - addBtn.w) / 2;
 			addBtn.y = h - addBtn.h - gutter;
 			
+			this.graphics.beginFill(0xffffff);
+			this.graphics.drawRect(0, 0, scrollProxy.viewWidth, scrollProxy.viewHeight);
+			this.graphics.endFill();
+			
+			this.graphics.moveTo(scrollProxy.viewWidth, scrollProxy.viewHeight);
+			this.graphics.lineTo(w, scrollProxy.viewHeight);
+			
 			scrollProxy.updateMask();
 			scrollProxy.update();
 		}

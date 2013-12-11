@@ -16,7 +16,7 @@ package view.pagePanel
 		{
 			this.pagesPanel = panel;
 			vScrollControl = new VScrollControl(this);
-			vScrollControl.barWidth = 8;
+			vScrollControl.barWidth = 6;
 		}
 		
 		/**
