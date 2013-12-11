@@ -308,7 +308,7 @@ package view.themePanel
 			bgColorIcon.x = bgImgInertor.x + 10;
 			bgColorIcon.y = bgImgInertor.y + 10;
 			
-			bgConfigArea.x = 0;
+			bgConfigArea.x = 3;
 			bgConfigArea.y = h - bgConfigPanelHeight;
 			
 			colorPanel.x = (w- colorPanel.width) / 2 - 4;
@@ -387,14 +387,10 @@ package view.themePanel
 		{
 			super.renderBG();
 			
-			bgShape.graphics.lineStyle(1, 0xDDDDDD);
-			bgShape.graphics.beginFill(0xEEEEEE, 0);
+			bgShape.graphics.lineStyle(1, 0xEEEEEE);
+			bgShape.graphics.beginFill(0xffffff);
 			bgShape.graphics.drawRect(0, barHeight, w - 20, scrollProxy.viewHeight);
 			bgShape.graphics.endFill();
-			
-			bgShape.graphics.lineStyle(1, 0xDDDDDD);
-			bgShape.graphics.beginFill(0, 0);
-			bgShape.graphics.drawRect(w - 20, barHeight, 20, scrollProxy.viewHeight);
 		}
 		
 		/**
@@ -408,6 +404,7 @@ package view.themePanel
 			scrollProxy = new ThemesScrollProxy(this);
 			addChild(themesContainer);
 			
+			layouter.gap = 0;
 			layouter.locX = 0;
 			layouter.locY = barHeight;
 			layouter.ready();
@@ -419,8 +416,12 @@ package view.themePanel
 				XMLVOMapper.fuck(themeXML, theme);
 				theme.styleXML = themeIconStyle;
 				theme.setIcons(theme.icon, theme.icon, theme.icon);
-				theme.w = theme.iconW = themePanelWidth - layouter.gap * 2;
-				theme.h = theme.iconH = 98;
+				
+				theme.w = themePanelWidth;
+				theme.h = 90
+					
+				theme.iconW = 110;
+				theme.iconH = 80;
 				
 				layouter.layout(theme);
 				themesContainer.addChild(theme);
@@ -489,18 +490,15 @@ package view.themePanel
 		 */			
 		private var themeIconStyle:XML = <states>
 											<normal>
-												<fill color='#FFFFFF' alpha='1'/>
-												<border color='#555555' thickness='1' alpha='1'/>
+												<fill color='#FFFFFF' alpha='0'/>
 												<img/>
 											</normal>
 											<hover>
-												<fill color='#dddddd' alpha='0.3'/>
-												<border color='#555555' alpha='1' thickness='2'/>
+												<fill color='#DDDDDD' alpha='1'/>
 												<img/>
 											</hover>
 											<down>
-												<fill color='#555555' alpha='0.3'/>
-												<border color='#000000' alpha='0.8' thickness='3'/>
+												<fill color='#666666'/>
 												<img/>
 											</down>
 										</states>
