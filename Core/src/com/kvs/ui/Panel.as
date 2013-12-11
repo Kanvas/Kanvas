@@ -256,7 +256,7 @@ package com.kvs.ui
 		 */		
 		public var bgStyleXML:XML = <style>
 										<border color='#CCCCCC' alpha='0'/>
-										<fill color='#EFEFEF' alpha='0.9'/>
+										<fill color='#EFEFEF' alpha='1'/>
 									 </style>
 		/**
 		 * 头部背景样式
