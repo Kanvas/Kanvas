@@ -32,10 +32,14 @@ package landray.kp.maps.mindMap.view
 				showBtn();
 			}
 			
-			if (vo.docCount != "0" && vo.docCount != "")
-				addChild(hotSopt = new RichText(vo.hotSopt));
-			
 			mouseEnabled = richText.mouseEnabled = richText.mouseChildren = richText.buttonMode = (vo.url != "");
+			
+			if (vo.docCount != "0" && vo.docCount != "")
+			{
+				addChild(hotSopt = new RichText(vo.hotSopt));
+				hotSopt.mouseEnabled = hotSopt.mouseChildren = mouseEnabled;
+			}
+			
 			if (mouseEnabled)
 				richText.addEventListener(MouseEvent.CLICK, richChilckHandler, false, 0, true);
 			else

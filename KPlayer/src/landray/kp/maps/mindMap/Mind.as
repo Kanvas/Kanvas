@@ -28,9 +28,7 @@ package landray.kp.maps.mindMap
 		{
 			scale = $scale;
 			for each (var element:TreeElement in allChild)
-			{
 				element.render(scale);
-			}
 		}
 		
 		private var scale:Number = 1;
@@ -47,11 +45,10 @@ package landray.kp.maps.mindMap
 		
 		private function creatMind(arr:Vector.<TreeElementVO>, elementFather:TreeElement):void
 		{
-			
 			for (var i:int = 0; i < arr.length; i++) 
 			{	
 				var vo:TreeElementVO = arr[i];
-				if(vo.level < 3)
+				if (vo.level < 3)
 				{
 					MindMapUtil.updateTreeElementVODirection(vo);
 				}
@@ -67,7 +64,7 @@ package landray.kp.maps.mindMap
 				treeElement.visible = false;
 				itemLayer.addChild(treeElement);
 				
-				if(vo.father == null)
+				if (vo.father == null)
 				{
 					MindData.NodeTreeElement = treeElement;
 				}
@@ -112,7 +109,7 @@ package landray.kp.maps.mindMap
 			itemLayer.addChild(MindData.NodeTreeElement);
 			allChild.push(MindData.NodeTreeElement);
 			
-			if(MindData.NodeTreeElement.vo.isExpand)
+			if (MindData.NodeTreeElement.vo.isExpand)
 				layoutChild(MindData.NodeTreeElement.childs);
 			lineLayer.graphics.clear();
 			layoutLines(MindData.NodeTreeElement.childs);
@@ -157,9 +154,6 @@ package landray.kp.maps.mindMap
 				item.x = item.father.x + ((MindMapUtil.getElementWidth(item.father) + MindMapUtil.getElementWidth(item)) * .5) * h;
 				var father:Boolean = (last == null);
 				last = (father) ? item.father : last;
-				var itemHeight:Number = MindMapUtil.getElementHeight(item);
-				var lastHeight:Number = MindMapUtil.getElementHeight(last);
-				
 				item.y = last.y + (MindMapUtil.getElementHeight(item) + MindMapUtil.getElementHeight(last) * ((father) ? -1 : 1)) * .5;
 				last = item;
 				
@@ -170,7 +164,7 @@ package landray.kp.maps.mindMap
 		
 		private function layoutLines(childs:Vector.<TreeElement>):void
 		{
-			if(childs && childs.length > 0 && childs[0].father.vo.isExpand)
+			if (childs && childs.length > 0 && childs[0].father.vo.isExpand)
 			{
 				for each (var item:TreeElement in childs) 
 				{

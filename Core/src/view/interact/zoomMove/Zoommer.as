@@ -74,7 +74,6 @@ package view.interact.zoomMove
 			
 			var newScale:Number = flasher.canvasTargetScale * zoomScale;
 			
-			trace(newScale);
 			if (newScale > maxScale)
 			{
 				newScale = maxScale;
