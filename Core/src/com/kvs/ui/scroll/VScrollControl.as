@@ -104,7 +104,7 @@ package com.kvs.ui.scroll
 				off = 0;
 			}
 			
-			TweenMax.to(sourceView, 0.2, {off: off});
+			TweenMax.to(sourceView, 0.3, {off: off});
 		}
 		
 		/**

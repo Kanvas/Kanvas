@@ -178,7 +178,7 @@ package com.kvs.ui.label
 		 */		
 		public function set styleXML(value:XML):void
 		{
-			_styleXML = XMLVOMapper.extendFrom(_styleXML, value);
+			_styleXML = XMLVOMapper.extendFrom(_styleXML, value.copy());
 			XMLVOMapper.fuck(_styleXML, this.labelStyle);
 			
 			ifStyleAppled = true;
