@@ -95,7 +95,15 @@ package view.themePanel
 			
 			if (hasImage)
 			{
-				BitmapUtil.drawBitmapDataToShape(evt.bgIMG, imgCanvas, w - 8, h - 8, 4, 4);
+				var cw:Number = w - 8;
+				var ch:Number = h - 8;
+				var bw:Number = evt.bgIMG.width;
+				var bh:Number = evt.bgIMG.height;
+				var scale:Number = ((cw / ch) > (bw / bh)) ? ch / bh : cw / bw;
+				var nw:Number = bw * scale;
+				var nh:Number = bh * scale;
+				
+				BitmapUtil.drawBitmapDataToShape(evt.bgIMG, imgCanvas, nw, nh, 4 + (cw - nw) * .5, 4 + (ch - nh) * .5);
 			}
 			
 			updateState();
