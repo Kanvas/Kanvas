@@ -27,7 +27,7 @@ package view.editor.text
 			scale_up;
 			scale_over;
 			scale_down;
-			scalePoint.iconW = scalePoint.iconH = ConfigInitor.ICON_SIZE_FOR_SCALE_AND_ROLL;
+			scalePoint.iconW = scalePoint.iconH = 15;
 			scalePoint.setIcons("scale_up", "scale_over", "scale_down");
 			addChild(scalePoint);
 			scaleControl = new ScalPointControl(this);
@@ -36,7 +36,7 @@ package view.editor.text
 			width_up;
 			width_over;
 			width_down;
-			sizePoint.iconW = sizePoint.iconH = ConfigInitor.ICON_SIZE_FOR_SCALE_AND_ROLL;
+			sizePoint.iconW = sizePoint.iconH = 15;
 			sizePoint.setIcons("width_up", "width_over", "width_down");
 			addChild(sizePoint);
 			sizeControl = new SizeControl(this);
