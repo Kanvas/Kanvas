@@ -115,6 +115,8 @@ package
 			
 			// 样式面板初始化
 			themePanel = new ThemePanel(this);
+			themePanel.w = 160;
+			themePanel.barHeight = 40;
 			themePanel.title = '风格样式';
 			themePanel.ifShowExitBtn = true;
 			themePanel.isOpen = false;
