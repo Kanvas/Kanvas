@@ -51,6 +51,39 @@ package com.kvs.ui.scroll
 		}
 		
 		/**
+		 * 将内容的指定位置移至可视范围内
+		 */		
+		public function scrollTo(start:Number, end:Number):void
+		{
+			var off:Number;
+			
+			if (sourceView.off + start < 0)//目标在可视区域上方
+			{
+				off = - start;
+				TweenLite.to(sourceView, 0.5, {off: off});
+				offToScrollBarY(off);
+			}
+			else if (sourceView.off + end > sourceView.viewHeight)//目标在可视区域下方
+			{
+				off = sourceView.viewHeight - end;
+				TweenLite.to(sourceView, 0.5, {off: off});
+				
+				offToScrollBarY(off);
+			}
+			else
+			{
+				
+			}
+		}
+		
+		/**
+		 */		
+		private function offToScrollBarY(off:Number):void
+		{
+			scrollBar.y = barPos = minScrollBarY - off / (this.sourceView.fullSize - this.sourceView.viewHeight) * barScrollDis
+		}
+		
+		/**
 		 */		
 		private function rollOverHandler(evt:MouseEvent):void
 		{
@@ -117,18 +150,21 @@ package com.kvs.ui.scroll
 		 * 
 		 * 触发；
 		 */		
-		public function update():void
+		public function update(ifUpdataView:Boolean = true):void
 		{
 			if (this.sourceView.viewHeight >= this.sourceView.fullSize)
 			{
-				this.sourceView.off = 0;
+				if (ifUpdataView)
+					this.sourceView.off = 0;
 				
 				scrollBar.y = minScrollBarY
 				TweenLite.to(scrollBar, 0.5, {alpha: 0});
 			}
 			else
 			{
-				this.sourceView.off = 0;
+				if (ifUpdataView)
+					this.sourceView.off = 0;
+				
 				barHeight = this.sourceView.viewHeight / this.sourceView.fullSize * this.sourceView.viewHeight;
 				barPos = minScrollBarY - this.sourceView.off / (this.sourceView.fullSize - this.sourceView.viewHeight) * barScrollDis
 				

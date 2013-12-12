@@ -7,7 +7,11 @@ package view.pagePanel
 	import com.kvs.utils.XMLConfigKit.style.Style;
 	
 	import flash.display.Sprite;
+	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	import flash.ui.Keyboard;
+	
+	import flashx.textLayout.elements.BreakElement;
 	
 	/**
 	 * 负责页面创建命令发出，页面列表显示，页面顺序调换命令发出
@@ -135,21 +139,20 @@ package view.pagePanel
 				pageUI.updataLabel();
 			}
 			
-			scrollProxy.update();
+			scrollProxy.updateScrollBar();
+			
+			udpateScrollForCurrPage();
 		}
 		
 		/**
+		 * 保证当前页可见
 		 */		
-		private function findPageUIByVO(pageVO:Object):PageUI
+		private function udpateScrollForCurrPage():void
 		{
-			var pageUI:PageUI;
-			for each(pageUI in pages)
+			if (currentPage)
 			{
-				if (pageUI.pageVO == pageVO)
-					break;
+				scrollProxy.scrollTo(currentPage.y, currentPage.y + currentPage.height);
 			}
-			
-			return pageUI;
 		}
 		
 		/**
@@ -161,6 +164,7 @@ package view.pagePanel
 			{
 				setCurrentPage(evt.target as PageUI);
 				pageSelected(evt.target as PageUI);
+				udpateScrollForCurrPage();
 			}
 		}
 		
@@ -179,6 +183,40 @@ package view.pagePanel
 				currentPage = pageUI;
 				currentPage.selected = true;
 			}
+		}
+		
+		/**
+		 */		
+		private function findPageUIByVO(pageVO:Object):PageUI
+		{
+			var pageUI:PageUI;
+			for each(pageUI in pages)
+			{
+				if (pageUI.pageVO == pageVO)
+					break;
+			}
+			
+			return pageUI;
+		}
+		
+		/**
+		 */		
+		private function findPageByIndex(index:int):PageUI
+		{
+			if (index < 0)
+				index = 0;
+			else if (index >= pages.length)
+				index = pages.length - 1;
+				
+			var page:PageUI;
+			
+			for each (page in pages)
+			{
+				if (page.pageVO.index == index)
+					break;
+			}
+			
+			return page;
 		}
 		
 		/**
@@ -217,7 +255,88 @@ package view.pagePanel
 			addChild(pagesCtn);
 			pagesCtn.addEventListener(MouseEvent.CLICK, pageClicked);
 			
+			this.addEventListener(MouseEvent.ROLL_OVER, startKeyBordListen);
+			
 			updateLayout();
+		}
+		
+		/**
+		 */		
+		private function startKeyBordListen(evt:MouseEvent):void
+		{
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, keyHandler);
+			stage.addEventListener(MouseEvent.CLICK, stageClick);
+			
+			ifKeyBord = true;
+		}
+		
+		/**
+		 */		
+		private var ifKeyBord:Boolean = false;
+		
+		/**
+		 */		
+		private function stageClick(evt:MouseEvent):void
+		{
+			if (ifKeyBord && !this.hitTestPoint(evt.stageX, evt.stageY))
+			{
+				stage.removeEventListener(KeyboardEvent.KEY_DOWN, keyHandler);
+				ifKeyBord = false;
+			}
+		}
+		
+		/**
+		 */		
+		private function keyHandler(evt:KeyboardEvent):void
+		{
+			switch(evt.keyCode)
+			{
+				case Keyboard.DOWN:
+				{
+					nextPage();
+					break;
+				}
+				case Keyboard.RIGHT:
+				{
+					nextPage();
+					break;
+				}
+				case Keyboard.UP:
+				{
+					prevPage();
+					break;
+				}
+				case Keyboard.LEFT:
+				{
+					prevPage();
+					break;
+				}
+					
+				default:
+				{
+					break;
+				}
+			}
+		}
+		
+		private function nextPage():void
+		{
+			if (currentPage)
+				setCurrentPage(findPageByIndex(currentPage.pageVO.index + 1));
+			else
+				setCurrentPage(findPageByIndex(0));
+			
+			udpateScrollForCurrPage();
+		}
+		
+		private function prevPage():void
+		{
+			if (currentPage)
+				setCurrentPage(findPageByIndex(currentPage.pageVO.index - 1));
+			else
+				setCurrentPage(findPageByIndex(0));
+			
+			udpateScrollForCurrPage();
 		}
 		
 		/**
@@ -235,8 +354,6 @@ package view.pagePanel
 			
 			scrollProxy.updateMask();
 			scrollProxy.update();
-			
-			
 		}
 		
 		/**

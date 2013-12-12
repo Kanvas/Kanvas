@@ -21,9 +21,24 @@ package view.pagePanel
 		
 		/**
 		 */		
+		public function scrollTo(start:Number, end:Number):void
+		{
+			vScrollControl.scrollTo(start, end);
+		}
+		
+		/**
+		 */		
 		public function update():void
 		{
 			vScrollControl.update();
+		}
+		
+		/**
+		 * 页面添加内容后，仅仅刷新滚动条
+		 */		
+		public function updateScrollBar():void
+		{
+			vScrollControl.update(false);
 		}
 		
 		/**
@@ -106,7 +121,7 @@ package view.pagePanel
 		
 		public function get fullSize():Number
 		{
-			return pagesPanel.pagesCtn.height + pagesPanel.gutter * 2;
+			return pagesPanel.pagesCtn.height //+ pagesPanel.gutter * 2;
 		}
 		
 		public function get off():Number
