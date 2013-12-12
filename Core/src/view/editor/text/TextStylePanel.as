@@ -38,9 +38,9 @@ package view.editor.text
 			fontStyleBtnsC.addEventListener(MouseEvent.CLICK, styleSelectedHandler, false, 0, true);
 			this.addChild(fontStyleBtnsC);
 			
-			colorSelectBtn.w = colorSelectBtn.h = 24;
-			colorSelectBtn.iconWidth = 20;
-			colorSelectBtn.iconHeight = 20;
+			colorSelectBtn.w = colorSelectBtn.h = 22;
+			colorSelectBtn.iconWidth = 18;
+			colorSelectBtn.iconHeight = 18;
 			colorSelectBtn.bgStatesXML = <states>
 											<normal radius='24'>
 												<border thickness='1' color='CCCCCC'/>
@@ -190,6 +190,9 @@ package view.editor.text
 				if (textStyleBtn.id == 'SubTitle')
 					setStyle(textStyleBtn.textVO);
 			}
+			
+			//保证当前所选样式按钮位于最顶层
+			fontStyleBtnsC.addChild(curStyleBtn)
 			
 			fontStyleBtnsC.x = 0 ;
 			fontStyleBtnsC.y = - editor.offSet - panelUnitHeight + (panelUnitHeight - fontStyleBtnsC.height) / 2;
@@ -348,9 +351,17 @@ package view.editor.text
 			StyleManager.drawRect(bgShape, bgStyle);
 			
 			//绘制头部灰色条
-			bgShape.graphics.lineStyle(1, 0x666666, 1);
-			bgShape.graphics.beginFill(0x666666);
-			bgShape.graphics.drawRect(bgStyle.tx, bgStyle.ty - 10, bgStyle.width, 10);
+			var topH:uint = 10;
+			bgShape.graphics.lineStyle(1, 0xDDDDDD, 0);
+			bgShape.graphics.beginFill(0xEEEEEE);
+			bgShape.graphics.drawRect(bgStyle.tx, bgStyle.ty - topH, bgStyle.width, topH);
+			bgShape.graphics.endFill();
+			
+			bgShape.graphics.lineStyle(1, 0xDDDDDD);
+			bgShape.graphics.moveTo(bgStyle.tx, bgStyle.ty);
+			bgShape.graphics.lineTo(bgStyle.tx, bgStyle.ty - topH);
+			bgShape.graphics.lineTo(bgStyle.width - editor.offSet, bgStyle.ty - topH);
+			bgShape.graphics.lineTo(bgStyle.width- editor.offSet, bgStyle.ty);
 			
 			fontColors.x = colorSelectBtn.x + colorSelectBtn.width / 2;
 			fontColors.y = bgStyle.ty - editor.offSet - 10;
@@ -375,7 +386,7 @@ package view.editor.text
 		
 		/**
 		 */		
-		private var panelUnitHeight:uint = 50;
+		private var panelUnitHeight:uint = 36;
 		
 		/**
 		 */		
@@ -389,7 +400,7 @@ package view.editor.text
 		 */		
 		private var bgStyleXML:XML = <style>
 											<border color="#e0e0e0" thikness='1'/>
-											<fill color='#fafafa,#F6F6F6' alpha='0.9,0.9' angle='90'/>
+											<fill color='#fafafa,#F6F6F6' alpha='1,1' angle='90'/>
 									  </style>
 		/**
 		 */		
