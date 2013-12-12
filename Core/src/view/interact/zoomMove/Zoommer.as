@@ -104,7 +104,7 @@ package view.interact.zoomMove
 			flasher.flash(0.5);
 		}
 		
-		public function zoomTo(newScale:Number, center:Point, timer:Number = 1, ease:Object = null):void
+		public function zoomTo(newScale:Number, center:Point = null, time:Number = 1, ease:Object = null):void
 		{
 			flasher.close(false);
 			flasher.ready();
@@ -128,7 +128,12 @@ package view.interact.zoomMove
 					+ canvas.stage.height / 2 + (canvas.y - canvas.stage.height / 2) / curScale * newScale;
 			}
 			
-			flasher.flash(timer, ease);
+			flasher.flash(time, ease);
+		}
+		
+		public function zoomRotateMoveTo(scale:Number, rotation:Number, center:Point = null, time:Number = 1, ease:Object = null):void
+		{
+			
 		}
 		
 		/**
