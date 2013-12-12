@@ -104,11 +104,8 @@ package view.interact.zoomMove
 			flasher.flash(0.5);
 		}
 		
-<<<<<<< HEAD
+
 		public function zoomTo(newScale:Number, center:Point = null, time:Number = 1, ease:Object = null):void
-=======
-		public function zoomTo(newScale:Number, center:Point, time:Number = 1, ease:Object = null):void
->>>>>>> fix
 		{
 			flasher.close(false);
 			flasher.ready();
@@ -133,14 +130,12 @@ package view.interact.zoomMove
 			}
 			
 			flasher.flash(time, ease);
-<<<<<<< HEAD
 		}
 		
 		public function zoomRotateMoveTo(scale:Number, rotation:Number, center:Point = null, time:Number = 1, ease:Object = null):void
 		{
 			
-=======
->>>>>>> fix
+
 		}
 		
 		/**

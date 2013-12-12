@@ -1,6 +1,9 @@
 package modules.pages
 {
 	import model.vo.ElementVO;
+	import modules.pages.pg_internal;
+	
+	[Event(name="updateThumb", type="modules.pages.PageEvent")]
 	
 	public final class PageVO extends ElementVO
 	{
@@ -9,14 +12,26 @@ package modules.pages
 			super();
 		}
 		
+		
+		
+		public function get parent():PageManager
+		{
+			return pg_internal::parent;
+		}
+		pg_internal var parent:PageManager
+		
+		
+		
 		public function get index():int
 		{
-			return __index;
+			return pg_internal::index;
 		}
 		public function set index(value:int):void
 		{
-			__index = value;
+			pg_internal::index = value;
 		}
-		private var __index:int;
+		pg_internal var index:int = -1;
+		
+		
 	}
 }
