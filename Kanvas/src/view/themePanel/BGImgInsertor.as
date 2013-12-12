@@ -166,8 +166,8 @@ package view.themePanel
 		private var deleteBtn  :IconBtn;
 		
 		private var hasImage:Boolean;
-		private var w:Number = 148;
-		private var h:Number = 108;
+		private var w:Number = 130;
+		private var h:Number = 90;
 		
 		/**
 		 */		
@@ -198,11 +198,11 @@ package view.themePanel
 											</states>
 			
 		private const noImgLabelStyle:XML = <label vAlign="center">
-								                <format color='555555' font='雅痞' size='13' letterSpacing="3"/>
+								                <format color='555555' font='雅痞' size='12' letterSpacing="3"/>
 								            </label>
 			
 		private const hasImgLabelStyle:XML = <label vAlign="center">
-								                <format color='ffffff' font='雅痞' size='13' letterSpacing="3"/>
+								                <format color='ffffff' font='雅痞' size='12' letterSpacing="3"/>
 								            </label>
 			
 		

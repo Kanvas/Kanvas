@@ -88,6 +88,7 @@ package view.themePanel
 		{
 			colorPanel.dataXML = evt.colorList;
 			drawColorPanelBG();
+			layoutColorPanel();
 		}
 		
 		/**
@@ -145,9 +146,9 @@ package view.themePanel
 			bgConfigArea.addChild(bgImgInertor);
 			
 			colorPanel = new ColorPanel(this);
-			colorPanel.panelWidth = 150;
-			colorPanel.iconWidth = 30;
-			colorPanel.iconHeight = 30;
+			colorPanel.panelWidth = 130;
+			colorPanel.iconWidth = 26;
+			colorPanel.iconHeight = 26;
 			colorPanel.x = colorPanel.y = 8;
 			
 			colorPanel.iconStatesXML = <states>
@@ -206,8 +207,8 @@ package view.themePanel
 											</down>
 										</states>
 			
-			bgColorIcon.w = bgColorIcon.h = 28;
-			bgColorIcon.iconWidth = bgColorIcon.iconHeight = 24;
+			bgColorIcon.w = bgColorIcon.h = 26;
+			bgColorIcon.iconWidth = bgColorIcon.iconHeight = 22;
 			
 			bgColorIcon.addEventListener(MouseEvent.CLICK, colorBtnClickHandler);
 			bgConfigArea.addChild(bgColorIcon);
@@ -226,7 +227,7 @@ package view.themePanel
 									</style>
 			XMLVOMapper.fuck(panelBGStyleXML, panelBGStyle);
 			
-			var startX:uint = 25;
+			var startX:uint = 20;
 			var size:uint = 8;
 			
 			panelBGStyle.width = colorPanel.width - 1;
@@ -305,14 +306,21 @@ package view.themePanel
 			bgImgInertor.y = 20;
 			bgImgInertor.x = (w - bgImgInertor.width) / 2;
 			
-			bgColorIcon.x = bgImgInertor.x + 10;
-			bgColorIcon.y = bgImgInertor.y + 10;
+			bgColorIcon.x = bgImgInertor.x + 8;
+			bgColorIcon.y = bgImgInertor.y + 8;
 			
 			bgConfigArea.x = 3;
 			bgConfigArea.y = h - bgConfigPanelHeight;
 			
-			colorPanel.x = (w- colorPanel.width) / 2 - 4;
-			colorPanel.y = bgConfigArea.y + bgColorIcon.y - colorPanel.height - 6;
+			layoutColorPanel();
+		}
+		
+		/**
+		 */		
+		private function layoutColorPanel():void
+		{
+			colorPanel.x = (w - colorPanel.width) / 2 - 1;
+			colorPanel.y = scrollProxy.viewHeight - colorPanel.height + barHeight + 23;
 		}
 		
 		/**
@@ -389,7 +397,7 @@ package view.themePanel
 			
 			bgShape.graphics.lineStyle(1, 0xEEEEEE);
 			bgShape.graphics.beginFill(0xffffff);
-			bgShape.graphics.drawRect(0, barHeight, w - 20, scrollProxy.viewHeight);
+			bgShape.graphics.drawRect(0, barHeight, this.themePanelWidth, scrollProxy.viewHeight);
 			bgShape.graphics.endFill();
 		}
 		
@@ -449,7 +457,7 @@ package view.themePanel
 		 */		
 		internal function get themePanelWidth():Number
 		{
-			return this.w - 20;
+			return this.w - 15;
 		}
 		
 		/**
