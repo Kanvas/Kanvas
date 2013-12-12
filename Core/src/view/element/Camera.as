@@ -61,7 +61,6 @@ package view.element
 		 */
 		override public function render():void
 		{
-			trace("render")
 			super.render();
 			
 			graphics.clear();
