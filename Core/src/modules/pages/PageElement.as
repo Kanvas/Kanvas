@@ -18,6 +18,7 @@ package modules.pages
 		{
 			super(vo);
 			
+			vo.addEventListener(PageEvent.DELETE_PAGE_FROM_UI, deletePageHandler);
 		}
 		
 		override protected function preRender():void
@@ -117,7 +118,15 @@ package modules.pages
 		private function drawInteract(x:Number, y:Number, w:Number, h:Number):void
 		{
 			graphics.beginFill(0, 0);
-			graphics.drawRect(x, y, w, h);
+			//left
+			graphics.drawRect(x, y, 30, 10);
+			graphics.drawRect(x, y + h - 10, 30, 10);
+			graphics.drawRect(x, y, 10, h);
+			
+			//right
+			graphics.drawRect(x + w - 30, y, 30, 10);
+			graphics.drawRect(x + w - 30, y + h - 10, 30, 10);
+			graphics.drawRect(x + w - 10, y, 10, h);
 			graphics.endFill();
 		}
 		
@@ -170,6 +179,11 @@ package modules.pages
 			selector.frame.alpha = 1;
 			ViewUtil.show(selector.sizeControl);
 			ViewUtil.show(selector.scaleRollControl);
+		}
+		
+		private function deletePageHandler(e:PageEvent):void
+		{
+			del();
 		}
 		
 		private function get pageVO():PageVO
