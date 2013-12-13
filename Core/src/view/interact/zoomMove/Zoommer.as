@@ -72,7 +72,7 @@ package view.interact.zoomMove
 		{
 			this.flasher.ready();
 			
-			var newScale:Number = flasher.canvasTargetScale * zoomScale;
+			var newScale:Number = flasher.canvasTargetScale * control.zoomScale;
 			
 			if (newScale > maxScale)
 			{
@@ -92,7 +92,7 @@ package view.interact.zoomMove
 		{
 			this.flasher.ready();
 			
-			var newScale:Number = flasher.canvasTargetScale / zoomScale;
+			var newScale:Number = flasher.canvasTargetScale / control.zoomScale;
 			if (newScale < minScale)
 			{
 				newScale = minScale;

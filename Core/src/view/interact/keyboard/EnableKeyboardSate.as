@@ -85,6 +85,7 @@ package view.interact.keyboard
 				mainUIMediator.autofitController.enabled = false;
 				mainUIMediator.autoLayerController.enabled = false;
 				mainUIMediator.autoGroupController.enabled = false;
+				mainUIMediator.zoomMoveControl.zoomScale = 1.05;
 			}
 			
 			if (evt.altKey)
@@ -119,6 +120,7 @@ package view.interact.keyboard
 				mainUIMediator.autofitController.enabled = true;
 				mainUIMediator.autoLayerController.enabled = true;
 				mainUIMediator.autoGroupController.enabled = true;
+				mainUIMediator.zoomMoveControl.zoomScale = 1.2;
 			}
 			
 			if (altKey && ! evt.altKey)

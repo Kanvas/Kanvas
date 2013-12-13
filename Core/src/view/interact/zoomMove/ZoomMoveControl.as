@@ -107,6 +107,8 @@ package view.interact.zoomMove
 			return mainUI.bgImgCanvas;
 		}
 		
+		public var zoomScale:Number = 1.2;
+		
 		/**
 		 * 默认不管画布中的元素有多大都自动对焦， 关闭后则
 		 * 
