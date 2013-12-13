@@ -68,7 +68,7 @@ package view.editor.text
 			super.init();
 			
 			this.colorPanel = new ColorPanel(this);
-			colorPanel.panelWidth = 240;
+			colorPanel.panelWidth = 208;
 			colorPanel.iconWidth = iconSize;
 			colorPanel.iconHeight = iconSize;
 			
@@ -83,7 +83,7 @@ package view.editor.text
 		
 		/**
 		 */		
-		private var iconSize:uint = 30;
+		private var iconSize:uint = 26;
 		
 		/**
 		 * 根据配置文件，构建颜色内容
@@ -148,20 +148,21 @@ package view.editor.text
 		 */		
 		private var colorBgStatesXML:XML = <states>
 											<normal>
-												<fill color='#000000' alpha='1'/>
+												<fill color='#555555' alpha='1'/>
 											</normal>
 											<hover>
-												<fill color='#000000' alpha='1'/>
+												<fill color='#DDDDDD' alpha='1'/>
 											</hover>
 											<down>
-												<fill color='#000000' alpha='1'/>
+												<fill color='#DDDDDD' alpha='1'/>
 											</down>
 										</states>
 			
 		/**
 		 */		
 		private var colorIconStatesXML:XML = <states>
-												<normal>
+												<normal radius='0'>
+													<border color='ffffff' thickness='1' alpha='1'/>
 													<fill color='${iconColor}'/>
 												</normal>
 												<hover radius='30'>
@@ -183,8 +184,8 @@ package view.editor.text
 		/**
 		 */		
 		private var bgStyleXML:XML = <style>
-										<fill color='555555'/>
-										<border color='333333'/>
+										<fill color='DDDDDD'/>
+										<border color='DDDDDD'/>
 									</style>
 	}
 }

@@ -83,7 +83,7 @@ package view.editor.text
 		
 		/**
 		 */		
-		private var labelHeight:uint = 16;
+		private var labelHeight:uint = 12;
 		
 		/**
 		 */		
@@ -249,15 +249,15 @@ package view.editor.text
 		private var bgStyleXML:XML = <states>
 										<normal radius='0'>
 											<border color='#dddddd'/>
-											<fill color='#FFFFFF' alpha='0'/>
+											<fill color='#fdfdfd, #efefef' alpha='1, 1' angle='90'/>
 										</normal>
 										<hover>
-											<border color='#BBBBBB'/>
-											<fill color='#FFFFFF' alpha='1'/>
+											<border color='#aaaaaa'/>
+											<fill color='#f5f5f5, #e8e8e8' alpha='1, 1' angle='90'/>
 										</hover>
 										<down>
-											<border color='#BBBBBB'/>
-											<fill color='#cccccc' alpha='1'/>
+											<border color='#aaaaaa'/>
+											<fill color='#ebebeb, #dedede' alpha='1, 1' angle='90'/>
 										</down>
 									</states>
 		
