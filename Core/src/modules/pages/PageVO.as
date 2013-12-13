@@ -5,6 +5,8 @@ package modules.pages
 	
 	[Event(name="updateThumb", type="modules.pages.PageEvent")]
 	
+	[Event(name="deletePageFromUI", type="modules.pages.PageEvent")]
+	
 	public final class PageVO extends ElementVO
 	{
 		public function PageVO()

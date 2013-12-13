@@ -72,6 +72,10 @@ package modules.pages
 				{
 					registPageVO(pageVO, index);
 					pages.splice(index, 0, pageVO);
+					var l:int = numPage;
+					for (var i:int = index; i < l; i++)
+						pages[i].index = i;
+					
 					dispatchEvent(new PageEvent(PageEvent.PAGE_ADDED, pageVO));
 				}
 				else
@@ -140,6 +144,10 @@ package modules.pages
 				removePageVO(pageVO);
 				pages.splice(index, 1);
 				
+				var l:int = numPage;
+				for (var i:int = index; i < l; i++)
+					pages[i].index = i;
+				
 				dispatchEvent(new PageEvent(PageEvent.PAGE_DELETED, pageVO));
 				dispatchEvent(new PageEvent(PageEvent.UPDATE_PAGES_LAYOUT));
 			}
@@ -161,6 +169,9 @@ package modules.pages
 				var pageVO:PageVO = pages[index];
 				removePageVO(pageVO);
 				pages.splice(index, 1);
+				var l:int = numPage;
+				for (var i:int = index; i < l; i++)
+					pages[i].index = i;
 				
 				dispatchEvent(new PageEvent(PageEvent.PAGE_DELETED, pageVO));
 			}
