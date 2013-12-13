@@ -285,12 +285,12 @@ package view.pagePanel
 		
 		/**
 		 */		
-		private function showCameraShot():void
+		public function showCameraShot():void
 		{
 			core.cameraShotShape.visible = true;
 		}
 		
-		private function hideCanmeraShot():void
+		public function hideCanmeraShot():void
 		{
 			core.cameraShotShape.visible = false;
 		}

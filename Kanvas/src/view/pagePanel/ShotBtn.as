@@ -42,6 +42,29 @@ package view.pagePanel
 			
 			shotSprite.addEventListener(MouseEvent.CLICK, pagePanel.addPage);
 			addChild(shotSprite);
+			
+			this.addEventListener(MouseEvent.ROLL_OVER, showFrame);
+			this.addEventListener(MouseEvent.ROLL_OUT, hideFrame);
+		}
+		
+		/**
+		 */		
+		private function showFrame(evt:MouseEvent):void
+		{
+			if (frameBtn.selected == false)
+			{
+				pagePanel.showCameraShot();
+			}
+		}
+		
+		/**
+		 */		
+		private function hideFrame(evt:MouseEvent):void
+		{
+			if (frameBtn.selected == false)
+			{
+				pagePanel.hideCanmeraShot();
+			}
 		}
 		
 		/**
