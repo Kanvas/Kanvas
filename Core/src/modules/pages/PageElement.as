@@ -8,6 +8,7 @@ package modules.pages
 	import model.vo.ElementVO;
 	
 	import view.element.ElementBase;
+	import view.element.ElementEvent;
 	import view.elementSelector.ElementSelector;
 	import view.elementSelector.toolBar.ToolBarController;
 	
@@ -108,6 +109,10 @@ package modules.pages
 			}
 		}
 		
+		override public function del():void
+		{
+			dispatchEvent(new ElementEvent(ElementEvent.DEL_PAGE, this));
+		}
 		
 		private function drawInteract(x:Number, y:Number, w:Number, h:Number):void
 		{
@@ -167,6 +172,10 @@ package modules.pages
 			ViewUtil.show(selector.scaleRollControl);
 		}
 		
+		private function get pageVO():PageVO
+		{
+			return vo as PageVO;
+		}
 		
 		private var maskShape:Shape;
 	}

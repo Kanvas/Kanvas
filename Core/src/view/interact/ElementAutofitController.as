@@ -49,7 +49,7 @@ package view.interact
 				
 				//元素坐标的范围判断
 				var centerPaddingLeft:Number = canvasBound.left + toolBarWidth * .5;
-				var centerPaddingRight:Number = canvasBound.right - toolBarWidth * .5 - 36;
+				var centerPaddingRight:Number = canvasBound.right - toolBarWidth * .5;
 				
 				var point:Point = getToolBarPoint(element);
 				
@@ -66,9 +66,9 @@ package view.interact
 				
 				//元素矩形的范围
 				var rectPaddingLeft:Number = canvasBound.left;
-				var rectPaddingRight:Number = canvasBound.right - 36;
-				var rectPaddingTop:Number = canvasBound.top + toolBarHeight + 20;
-				var rectPaddingBottom:Number = canvasBound.bottom - 20;
+				var rectPaddingRight:Number = canvasBound.right;
+				var rectPaddingTop:Number = canvasBound.top + toolBarHeight;
+				var rectPaddingBottom:Number = canvasBound.bottom;
 				
 				//element矩形范围判断
 				var rect:Rectangle = CoreUtil.getRectForStage(element);
@@ -120,7 +120,7 @@ package view.interact
 				var editorBound:Rectangle = coreMdt.mainUI.textEditor.editorBound;
 				
 				if (xDir == 0 || xDir == 1)
-					x = autofitRight(editorBound.right, canvasBound.right - 36);
+					x = autofitRight(editorBound.right, canvasBound.right);
 				if (xDir == 0 || xDir == -1)
 					x = (x == 0) ? autofitLeft(editorBound.left, canvasBound.left) : x;
 				
@@ -188,7 +188,7 @@ package view.interact
 				
 				//最后需要移动的相对位置
 				if (xDir == 0 || xDir == 1)
-					x = autofitRight(editorBound.right, canvasBound.right - 36);
+					x = autofitRight(editorBound.right, canvasBound.right);
 				if (xDir == 0 || xDir == -1)
 					x = (x == 0) ? autofitLeft(editorBound.left, canvasBound.left) : x;
 				

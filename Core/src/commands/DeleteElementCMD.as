@@ -28,10 +28,9 @@ package commands
 			elementIndex = CoreFacade.getElementIndex(shape);
 			CoreFacade.removeElement(shape);
 			
+			
 			elementIndexArray = [];
-			
 			groupElements = CoreFacade.coreMediator.autoGroupController.elements;
-			
 			autoGroupEnabled = CoreFacade.coreMediator.autoGroupController.enabled;
 			
 			if (autoGroupEnabled)
@@ -48,9 +47,7 @@ package commands
 			UndoRedoMannager.register(this);
 		}
 		
-		/**
-		 */		
-		private var groupElements:Vector.<ElementBase>;
+		
 		
 		/**
 		 */		
@@ -61,23 +58,21 @@ package commands
 			{
 				var l:int = groupElements.length;
 				for (var i:int = l - 1; i >= 0; i --)
-				{
-					var item:ElementBase = groupElements[i];
-					CoreFacade.addElementAt(item, elementIndexArray[i]);
-				}
+					CoreFacade.addElementAt(groupElements[i], elementIndexArray[i]);
 			}
+			
 			CoreFacade.addElementAt(shape, elementIndex);
 		}
 		
 		override public function redoHandler():void
 		{
 			CoreFacade.removeElement(shape);
+			
 			if (autoGroupEnabled)
 			{
 				for each (var item:ElementBase in groupElements)
-					CoreFacade.removeElement(item);
+				CoreFacade.removeElement(item);
 			}
-			
 		}
 		
 		/**
@@ -87,6 +82,8 @@ package commands
 		private var elementIndex:int;
 		
 		private var elementIndexArray:Array;
+		
+		private var groupElements:Vector.<ElementBase>;
 		
 		private var autoGroupEnabled:Boolean;
 	}

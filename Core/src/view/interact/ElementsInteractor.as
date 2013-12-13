@@ -43,6 +43,7 @@ package view.interact
 			mainUI.addEventListener(ElementEvent.DEL_SHAPE, delShapeHandler, false, 0, true);
 			mainUI.addEventListener(ElementEvent.DEL_IMG, delIMGHandler, false, 0, true);
 			mainUI.addEventListener(ElementEvent.DEL_TEXT, delTextHandler, false, 0, true);
+			mainUI.addEventListener(ElementEvent.DEL_PAGE, delPageHandler, false, 0, true);
 			
 			//复制粘贴
 			mainUI.addEventListener(ElementEvent.COPY_ELEMENT, copyElement);
@@ -133,6 +134,13 @@ package view.interact
 		 	evt.stopPropagation();	
 			
 			mainMediator.sendNotification(Command.DELETE_TEXT, evt.element);
+		}
+		
+		private function delPageHandler(evt:ElementEvent):void
+		{
+			evt.stopPropagation();	
+			
+			mainMediator.sendNotification(Command.DELETE_PAGE, evt.element);
 		}
 		
 		/**

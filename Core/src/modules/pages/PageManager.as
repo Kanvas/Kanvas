@@ -41,7 +41,9 @@ package modules.pages
 			proxy.y = (bound.top + bound.bottom) * .5;
 			proxy.width = bound.width ;
 			proxy.height = bound.height;
-			coreMdt.sendNotification(Command.CREATE_SHAPE, proxy);
+			
+			coreMdt.createNewShapeMouseUped = true;
+			coreMdt.sendNotification(Command.CREATE_PAGE, proxy);
 			
 		}
 		
@@ -146,11 +148,12 @@ package modules.pages
 		 */
 		public function removePageAt(index:int):PageVO
 		{
-			if (index >=0 && index < pages.length)
+			if (index >= 0 && index < pages.length)
 			{
-				removePageVO(pages[index]);
+				var pageVO:PageVO = pages[index];
+				removePageVO(pageVO);
 				pages.splice(index, 1);
-				dispatchEvent(new PageEvent(PageEvent.DELETE_PAGE, pages[index]));
+				dispatchEvent(new PageEvent(PageEvent.DELETE_PAGE, pageVO));
 			}
 			else
 			{
@@ -164,7 +167,30 @@ package modules.pages
 		 */
 		public function setPageIndex(pageVO:PageVO, index:int):void
 		{
-			
+			if (index >= 0 && index < pages.length)
+			{
+				var cur:int = pages.indexOf(pageVO);
+				if (cur != -1)
+				{
+					var aim:int = (index > cur) ? index - 1 : index;
+					pages.splice(cur, 1);
+					pages.splice(aim, 0, pageVO);
+					var min:int = Math.min(cur, aim);
+					var max:int = Math.max(cur, aim);
+					for (var i:int = min; i < max; i++)
+						pages[i].index = i;
+					
+					dispatchEvent(new PageEvent(PageEvent.UPDATE_LAYOUT));
+				}
+				else
+				{
+					throw new ArgumentError("提供的 PageVO 必须是调用者的子级。", 2025);
+				}
+			}
+			else
+			{
+				throw new RangeError("提供的索引超出范围。", 2006);
+			}
 		}
 		
 		
