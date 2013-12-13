@@ -30,16 +30,18 @@ package
 	import util.undoRedo.UndoRedoEvent;
 	import util.undoRedo.UndoRedoMannager;
 	
-	import view.ui.Bubble;
 	import view.editor.text.TextEditor;
 	import view.element.ElementBase;
 	import view.element.imgElement.ImgElement;
 	import view.elementSelector.ElementHover;
 	import view.interact.zoomMove.ZoomMoveControl;
 	import view.ui.BgColorFlasher;
+	import view.ui.Bubble;
 	import view.ui.MainUIBase;
 	import view.ui.ThumbManager;
 
+	
+	[Event(name="ready", type="KVSEvent")]
 	
 	/**
 	 * 核心主程序, 负责核心core初始化；

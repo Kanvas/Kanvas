@@ -116,6 +116,12 @@
 				</style>
 			</border>
 			
+			<border styleID='Page'>
+				<style>
+					<border color='#666666' alpha='0.9' thickness='10' caps='square' pixelHinting='false' scaleMode='none'/>
+				</style>
+			</border>
+			
 			<line styleID='Border'>
 				<style border='Simple'/>
 			</line>
@@ -233,6 +239,12 @@
 				</style>
 			</border>
 			
+			<border styleID='Page'>
+				<style>
+					<border color='#666666' alpha='0.9' thickness='10' caps='square' pixelHinting='false' scaleMode='none'/>
+				</style>
+			</border>
+			
 			<line styleID='Border'>
 				<style border='Simple'/>
 			</line>
@@ -347,6 +359,12 @@
 			<border styleID='Canvas'>
 				<style>
 					<border color='#66FFFF' alpha='0.9' thickness='10' caps='square' pixelHinting='false' scaleMode='none'/>
+				</style>
+			</border>
+			
+			<border styleID='Page'>
+				<style>
+					<border color='#666666' alpha='0.9' thickness='10' caps='square' pixelHinting='false' scaleMode='none'/>
 				</style>
 			</border>
 			
@@ -468,6 +486,12 @@
 				</style>
 			</border>
 			
+			<border styleID='Page'>
+				<style>
+					<border color='#666666' alpha='0.9' thickness='10' caps='square' pixelHinting='false' scaleMode='none'/>
+				</style>
+			</border>
+			
 			<line styleID='Border'>
 				<style border='Simple'/>
 			</line>
@@ -581,6 +605,12 @@
 			</shape>
 			
 			<border styleID='Canvas'>
+				<style>
+					<border color='#666666' alpha='0.9' thickness='10' caps='square' pixelHinting='false' scaleMode='none'/>
+				</style>
+			</border>
+			
+			<border styleID='Page'>
 				<style>
 					<border color='#666666' alpha='0.9' thickness='10' caps='square' pixelHinting='false' scaleMode='none'/>
 				</style>
@@ -702,6 +732,12 @@
 			<border styleID='Canvas'>
 				<style>
 					<border color='#66FFFF' alpha='0.9' thickness='10' caps='square' pixelHinting='false' scaleMode='none'/>
+				</style>
+			</border>
+			
+			<border styleID='Page'>
+				<style>
+					<border color='#666666' alpha='0.9' thickness='10' caps='square' pixelHinting='false' scaleMode='none'/>
 				</style>
 			</border>
 			

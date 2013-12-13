@@ -10,6 +10,8 @@ package view.interact
 	
 	import model.CoreFacade;
 	
+	import modules.pages.PageManager;
+	
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
 	import util.layout.LayoutTransformer;
@@ -476,6 +478,8 @@ package view.interact
 		
 		public var autoLayerController:ElementAutoLayerController;
 		
+		public var pageManager:PageManager;
+		
 		/**
 		 * 属性控制器 , 快捷属性编辑, 工具条，型变控制都由其负责
 		 */		
@@ -548,6 +552,8 @@ package view.interact
 			
 			//层级自动控制
 			autoLayerController = new ElementAutoLayerController(this);
+			
+			pageManager = new PageManager(this);
 		}
 		
 		/**

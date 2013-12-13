@@ -13,6 +13,12 @@ package view.pagePanel
 	
 	import flashx.textLayout.elements.BreakElement;
 	
+	import model.CoreFacade;
+	
+	import modules.pages.PageEvent;
+	import modules.pages.PageManager;
+	import modules.pages.PageVO;
+	
 	/**
 	 * 负责页面创建命令发出，页面列表显示，页面顺序调换命令发出
 	 */	
@@ -25,6 +31,24 @@ package view.pagePanel
 			this.core = kvs;
 			this.w = 150;
 		}
+		
+		/**
+		 * 核心Core初始化完毕后才可以调用此方法
+		 */		
+		public function initPageManager():void
+		{
+			this.pageManager = CoreFacade.coreMediator.pageManager;
+			
+			pageManager.addEventListener(PageEvent.PAGE_ADDED, pageAdded);
+			pageManager.addEventListener(PageEvent.UPDATE_PAGES_LAYOUT, layoutPages);
+			pageManager.addEventListener(PageEvent.PAGE_DELETED, pagedDeleted);
+			
+			this.addEventListener(PageEvent.DELETE_PAGE_FROM_UI, deletePage);
+		}
+		
+		/**
+		 */		
+		private var pageManager:PageManager;
 		
 		
 		
@@ -44,22 +68,22 @@ package view.pagePanel
 		/**
 		 * 告知core去创建一个页面
 		 */		
-		private function addPage(evt:MouseEvent):void
+		private function addPage():void
 		{
-			//通知核心Core新建一个页面
-			
-			//模拟代码
-			var page:Object = new Object;
-			pageAdded(page);
-			
-			page.index = pagesCtn.numChildren - 1;
-			layoutPages();
+			pageManager.addPageFromCanvas();
 		}
 		
 		/**
 		 * core页面创建成功反馈
 		 */		
-		public function pageAdded(pageVO:Object):void
+		public function pageAdded(evt:PageEvent):void
+		{
+			_pageAdded(evt.pageVO);
+		}
+		
+		/**
+		 */		
+		private function _pageAdded(pageVO:PageVO):void
 		{
 			var pageUI:PageUI = new PageUI(pageVO);
 			
@@ -82,11 +106,18 @@ package view.pagePanel
 		private var pages:Vector.<Object> = new Vector.<Object>;
 		
 		/**
+		 */		
+		private function deletePage(evt:PageEvent):void
+		{
+			pageManager.removePage(evt.pageVO);
+		}
+		
+		/**
 		 * 从core中删除了某个页面后
 		 */		
-		public function pagedDeleted(pageVO:Object):void
+		public function pagedDeleted(evt:PageEvent):void
 		{
-			var pageUI:PageUI = findPageUIByVO(pageVO);
+			var pageUI:PageUI = findPageUIByVO(evt.pageVO);
 			
 			pages.splice(pages.indexOf(pageUI), 1);
 			pagesCtn.removeChild(pageUI);
@@ -117,19 +148,19 @@ package view.pagePanel
 		/**
 		 * 页面初始化，数据导入时用到
 		 */		
-		public function initPages(pages:Vector.<Object>):void
+		public function initPages(pages:Vector.<PageVO>):void
 		{
-			var pageVO:Object;
+			var pageVO:PageVO;
 			for each (pageVO in pages)
 			{
-				pageAdded(pageVO);
+				_pageAdded(pageVO);
 			}
 		}
 		
 		/**
 		 * 根据页面的序号重新排列所有页面，并更新序号显示
 		 */		
-		private function layoutPages():void
+		private function layoutPages(evt:PageEvent):void
 		{
 			var pageUI:PageUI;
 			for each (pageUI in pages)
@@ -245,13 +276,13 @@ package view.pagePanel
 			scrollProxy = new PagesScrollProxy(this);
 			XMLVOMapper.fuck(bgStyleXML, bgStyle);
 			
+			addPageBtn = new ShotBtn(this);
 			addPageBtn.w = w - gutter * 2 - 4;
 			addPageBtn.h = 100;
-			
+			addPageBtn.iconW = 60;
+			addPageBtn.iconH = 60;
+		    addPageBtn.setIcons('del_up', 'del_over', 'del_down');
 			this.addChild(addPageBtn);
-			addPageBtn.addEventListener(MouseEvent.ROLL_OVER, showCameraShot);
-			addPageBtn.addEventListener(MouseEvent.ROLL_OUT, hideCanmeraShot);
-			addPageBtn.addEventListener(MouseEvent.CLICK, addPage);
 			
 			addChild(pagesCtn);
 			pagesCtn.addEventListener(MouseEvent.CLICK, pageClicked);
@@ -263,12 +294,12 @@ package view.pagePanel
 		
 		/**
 		 */		
-		private function showCameraShot(evt:MouseEvent):void
+		private function showCameraShot():void
 		{
 			core.cameraShotShape.visible = true;
 		}
 		
-		private function hideCanmeraShot(evt:MouseEvent):void
+		private function hideCanmeraShot():void
 		{
 			core.cameraShotShape.visible = false;
 		}
@@ -394,7 +425,7 @@ package view.pagePanel
 		
 		/**
 		 */		
-	    internal var addPageBtn:ShotBtn = new ShotBtn;
+	    internal var addPageBtn:ShotBtn;
 		
 		/**
 		 */		

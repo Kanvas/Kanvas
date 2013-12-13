@@ -12,11 +12,14 @@ package view.pagePanel
 	
 	import model.vo.TextVO;
 	
+	import modules.pages.PageEvent;
+	import modules.pages.PageVO;
+	
 	/**
 	 */	
 	public class PageUI extends IconBtn
 	{
-		public function PageUI(vo:Object)
+		public function PageUI(vo:PageVO)
 		{
 			super();
 			
@@ -40,7 +43,7 @@ package view.pagePanel
 		 */		
 		private function delHander(evt:MouseEvent):void
 		{
-			this.dispatchEvent(new Event('delPageToCore', true));
+			this.dispatchEvent(new PageEvent(PageEvent.DELETE_PAGE_FROM_UI, this.pageVO, true));
 		}
 		
 		/**
@@ -93,7 +96,7 @@ package view.pagePanel
 		 */		
 		public function updataLabel():void
 		{
-			label.text = pageVO.index + 1;
+			label.text = (pageVO.index + 1).toString();
 			
 			updateLabelWidthStyle();
 			
@@ -125,6 +128,16 @@ package view.pagePanel
 		
 		/**
 		 */		
+		override protected function init():void
+		{
+			super.init();
+			
+			this.mouseChildren = true;
+			this.buttonMode = false;
+		}
+		
+		/**
+		 */		
 		private var normalTextStyle:XML = <label radius='0' vPadding='0' hPadding='0'>
 											<format color='#555555' font='雅痞' size='12'/>
 										  </label>
@@ -137,7 +150,7 @@ package view.pagePanel
 		
 		/**
 		 */		
-		public var pageVO:Object;
+		public var pageVO:PageVO;
 		
 		/**
 		 */		

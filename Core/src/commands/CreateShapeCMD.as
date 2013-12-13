@@ -9,6 +9,9 @@ package commands
 	import model.vo.ElementVO;
 	import model.vo.ShapeVO;
 	
+	import modules.pages.PageElement;
+	import modules.pages.PageVO;
+	
 	import org.puremvc.as3.interfaces.INotification;
 	
 	import util.ElementCreator;
@@ -74,6 +77,10 @@ package commands
 			// 图形创建时 添加动画效果
 			TweenLite.from(shapeElement, elementProxy.flashTime, {alpha: 0, scaleX : 0, scaleY : 0, ease: Back.easeOut, onComplete: shapeCreated});
 			
+			if (shapeElement is PageElement)
+			{
+				CoreFacade.coreMediator.pageManager.addPage(shapeElement.vo as PageVO);
+			}
 		}
 		
 		/**
@@ -97,11 +104,21 @@ package commands
 		override public function undoHandler():void
 		{
 			CoreFacade.removeElement(shapeElement);
+			
+			if (shapeElement is PageElement)
+			{
+				pageIndex = (shapeElement.vo as PageVO).index;
+				CoreFacade.coreMediator.pageManager.removePage(shapeElement.vo as PageVO);
+			}
 		}
 		
 		override public function redoHandler():void
 		{
 			CoreFacade.addElementAt(shapeElement, elementIndex);
+			if (shapeElement is PageElement)
+			{
+				CoreFacade.coreMediator.pageManager.addPageAt(shapeElement.vo as PageVO, pageIndex);
+			}
 		}
 		
 		/**
@@ -109,5 +126,7 @@ package commands
 		private var shapeElement:ElementBase;
 		
 		private var elementIndex:int;
+		
+		private var pageIndex:int;
 	}
 }

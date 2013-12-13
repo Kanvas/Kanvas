@@ -12,6 +12,9 @@ package model
 	import model.vo.StarVO;
 	import model.vo.TextVO;
 	
+	import modules.pages.PageElement;
+	import modules.pages.PageVO;
+	
 	import org.puremvc.as3.patterns.facade.Facade;
 	
 	import util.ElementCreator;
@@ -137,6 +140,7 @@ package model
 			ElementCreator.registerElement('img', ImgElement, ImgVO);
 			ElementCreator.registerElement('hotspot', HotspotElement, ElementVO);
 			ElementCreator.registerElement('camera', Camera, ElementVO);
+			ElementCreator.registerElement("page", PageElement, PageVO);
 			ElementCreator.registerElement('group', GroupElement, GroupVO);
 			ElementCreator.registerElement('dashRect', DashRect, ShapeVO);
 			ElementCreator.registerElement('dialog', DialogUI, DialogVO);

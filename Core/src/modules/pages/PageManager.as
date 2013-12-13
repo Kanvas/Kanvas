@@ -1,25 +1,49 @@
 package modules.pages
 {
-	import flash.events.EventDispatcher;
-
-	[Event(name="updateLayout", type="modules.pages.PageEvent")]
+	import commands.Command;
 	
+	import flash.events.EventDispatcher;
+	import flash.geom.Rectangle;
+	
+	import model.ElementProxy;
+	
+	import view.interact.CoreMediator;
+
+	[Event(name="pageAdded", type="modules.pages.PageEvent")]
+	
+	[Event(name="pageDeleted", type="modules.pages.PageEvent")]
+	
+	[Event(name="updatePagesLayout", type="modules.pages.PageEvent")]
+	
+	/**
+	 * 负责页面的创建，编辑，删除等
+	 */	
 	public final class PageManager extends EventDispatcher
 	{
 		
-		public function PageManager()
+		public function PageManager($coreMdt:CoreMediator)
 		{
+			coreMdt = $coreMdt;
 			pg_internal::pages = new Vector.<PageVO>;
 		}
 		
 		/**
 		 * 根据画布当前布局获取pageVO
 		 */
-		public function addPageFromCanvas():PageVO
+		public function addPageFromCanvas():void
 		{
-			var pageVO:PageVO = new PageVO;
+			var bound:Rectangle = coreMdt.mainUI.bound;
+			var proxy:ElementProxy = new ElementProxy;
 			
-			return addPage(pageVO);
+			proxy.type = "page";
+			proxy.styleType = "border";
+			proxy.styleID = "Page";
+			proxy.x = (bound.left + bound.right) * .5;
+			proxy.y = (bound.top + bound.bottom) * .5;
+			proxy.width = bound.width ;
+			proxy.height = bound.height;
+			
+			coreMdt.sendNotification(Command.CREATE_SHAPE, proxy);
 		}
 		
 		/**
@@ -29,7 +53,10 @@ package modules.pages
 		{
 			registPageVO(pageVO, pages.length);
 			pages.push(pageVO);
-			dispatchEvent(new PageEvent(PageEvent.UPDATE_LAYOUT));
+			
+			dispatchEvent(new PageEvent(PageEvent.PAGE_ADDED, pageVO));
+			dispatchEvent(new PageEvent(PageEvent.UPDATE_PAGES_LAYOUT));
+			
 			return pageVO;
 		}
 		
@@ -44,20 +71,26 @@ package modules.pages
 				{
 					registPageVO(pageVO, index);
 					pages.splice(index, 0, pageVO);
-					dispatchEvent(new PageEvent(PageEvent.UPDATE_LAYOUT));
+					dispatchEvent(new PageEvent(PageEvent.PAGE_ADDED, pageVO));
 				}
 				else
 				{
 					if (index < pages.length)
+					{
 						setPageIndex(pageVO, index);
+						dispatchEvent(new PageEvent(PageEvent.PAGE_ADDED, pageVO));
+					}
 					else
+					{
 						throw new RangeError("提供的索引超出范围。", 2006);
+					}
 				}
 			}
 			else
 			{
 				throw new RangeError("提供的索引超出范围。", 2006);
 			}
+			
 			return pageVO;
 		}
 		
@@ -91,6 +124,7 @@ package modules.pages
 				var index:int = pages.indexOf(pageVO);
 			else
 				throw new ArgumentError("提供的 PageVO 必须是调用者的子级。", 2025);
+			
 			return index;
 		}
 		
@@ -105,13 +139,14 @@ package modules.pages
 				removePageVO(pageVO);
 				pages.splice(index, 1);
 				
-				
-				dispatchEvent(new PageEvent(PageEvent.UPDATE_LAYOUT));
+				dispatchEvent(new PageEvent(PageEvent.PAGE_DELETED, pageVO));
+				dispatchEvent(new PageEvent(PageEvent.UPDATE_PAGES_LAYOUT));
 			}
 			else
 			{
 				throw new ArgumentError("提供的 PageVO 必须是调用者的子级。", 2025);
 			}
+			
 			return pageVO;
 		}
 		
@@ -124,12 +159,13 @@ package modules.pages
 			{
 				removePageVO(pages[index]);
 				pages.splice(index, 1);
-				dispatchEvent(new PageEvent(PageEvent.UPDATE_LAYOUT));
+				dispatchEvent(new PageEvent(PageEvent.PAGE_DELETED, pages[index]));
 			}
 			else
 			{
 				throw new RangeError("提供的索引超出范围。", 2006);
 			}
+			
 			return null;
 		}
 		
@@ -156,7 +192,7 @@ package modules.pages
 		 */
 		private function removePageVO(pageVO:PageVO):void
 		{
-			pageVO.pg_internal::index = -1;
+			pageVO.pg_internal::index = - 1;
 			pageVO.pg_internal::parent = null;
 		}
 		
@@ -185,12 +221,16 @@ package modules.pages
 		{
 			return __index;
 		}
+		
 		public function set index(value:int):void
 		{
 			__index = value;
 		}
+		
 		private var __index:int;
 		
 		pg_internal var pages:Vector.<PageVO>;
+		
+		private var coreMdt:CoreMediator;
 	}
 }

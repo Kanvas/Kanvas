@@ -39,6 +39,7 @@ package
 			this.resetLib();
 			
 			kvsCore.externalUI = uiContainer;
+			kvsCore.addEventListener(KVSEvent.READY, kvsReadyHandler);
 			addChild(kvsCore);
 			addChild(uiContainer);
 			
@@ -80,8 +81,6 @@ package
 			
 			// 数据测试用
 			dataTest = new DataTest(this.toolBar, shapePanel, kvsCore);
-			
-			//addChild(debugger);
 		}
 		
 		
@@ -216,6 +215,14 @@ package
 			cameraShotShape.graphics.lineStyle(2, 0);
 			cameraShotShape.graphics.drawRect(kvsCore.bound.left, kvsCore.bound.top, kvsCore.bound.width, kvsCore.bound.height);
 			
+		}
+		
+		/**
+		 * 核心core初始化完毕
+		 */		
+		private function kvsReadyHandler(evt:KVSEvent):void
+		{
+			pagePanel.initPageManager();
 		}
 		
 		/**
