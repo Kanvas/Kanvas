@@ -7,6 +7,8 @@ package view.pagePanel
 	
 	import flash.display.Shape;
 	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
 	
 	import model.vo.TextVO;
 	
@@ -20,6 +22,39 @@ package view.pagePanel
 			
 			this.pageVO = vo;
 			addChild(label);
+			
+			deleteBtn = new IconBtn;
+			deleteBtn.tips = '删除页面';
+			deleteBtn.iconW = deleteBtn.iconH = 16;
+			deleteBtn.setIcons('del_up', 'del_over', 'del_down');
+			deleteBtn.visible = false;
+			addChild(deleteBtn);
+			
+			deleteBtn.addEventListener(MouseEvent.CLICK, delHander);
+			
+			this.addEventListener(MouseEvent.ROLL_OVER, rollOver);
+			this.addEventListener(MouseEvent.ROLL_OUT, rollOut);
+		}
+		
+		/**
+		 */		
+		private function delHander(evt:MouseEvent):void
+		{
+			this.dispatchEvent(new Event('delPageToCore', true));
+		}
+		
+		/**
+		 */		
+		private function rollOver(et:MouseEvent):void
+		{
+			deleteBtn.visible = true;
+		}
+		
+		/**
+		 */		
+		private function rollOut(evt:MouseEvent):void
+		{
+			deleteBtn.visible = false;
 		}
 		
 		/**
@@ -34,6 +69,9 @@ package view.pagePanel
 			this.graphics.beginFill(0xFFFFFF);
 			this.graphics.drawRect(leftGutter, ty, iconW, iconH);
 			this.graphics.endFill();
+			
+			deleteBtn.x = leftGutter + iconW;
+			deleteBtn.y = ty;
 		}
 		
 		/**
@@ -59,10 +97,8 @@ package view.pagePanel
 			
 			updateLabelWidthStyle();
 			
-			//label.scaleX = label.scaleY = leftGutter / label.width;
-			
 			label.x = (leftGutter - label.width) / 2;
-             label.y = (h - label.height) / 2;
+            label.y = (h - label.height) / 2;
 		}
 		
 		/**
@@ -71,6 +107,7 @@ package view.pagePanel
 		{
 			super.selected = value;
 			
+			this.mouseEnabled = true;
 			updateLabelWidthStyle();
 		}
 		
@@ -101,5 +138,9 @@ package view.pagePanel
 		/**
 		 */		
 		public var pageVO:Object;
+		
+		/**
+		 */		
+		private var deleteBtn:IconBtn
 	}
 }

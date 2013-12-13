@@ -109,7 +109,7 @@ package view.pagePanel
 		 */		
 		public function get viewHeight():Number
 		{
-			return pagesPanel.h - pagesPanel.addBtn.h - pagesPanel.gutter * 2;
+			return pagesPanel.h - pagesPanel.addPageBtn.h - pagesPanel.gutter * 2;
 		}
 		
 		/**

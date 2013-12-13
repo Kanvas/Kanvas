@@ -9,6 +9,7 @@ package
 	import control.InteractEvent;
 	import control.NavControl;
 	
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
@@ -49,6 +50,9 @@ package
 			uiContainer.addChild(shapePanel);
 			uiContainer.addChild(toolBar);
 			uiContainer.addChild(zoomToolBar);
+			
+			cameraShotShape.visible = false;
+			uiContainer.addChild(cameraShotShape);
 			
 			stage.addEventListener(Event.RESIZE, stageResizeHandler, false, 0, true);
 			
@@ -206,7 +210,18 @@ package
 				kvsCore.bound = new Rectangle(pagePanel.w + gutter, toolBar.h + gutter, w, 
 					stage.stageHeight - toolBar.h - gutter * 2);
 			}
+			
+			
+			cameraShotShape.graphics.clear();
+			cameraShotShape.graphics.lineStyle(2, 0);
+			cameraShotShape.graphics.drawRect(kvsCore.bound.left, kvsCore.bound.top, kvsCore.bound.width, kvsCore.bound.height);
+			
 		}
+		
+		/**
+		 * 用来绘制镜头 
+		 */		
+		public var cameraShotShape:Shape = new Shape;
 		
 		/**
 		 * 装载工具条，面板的容器

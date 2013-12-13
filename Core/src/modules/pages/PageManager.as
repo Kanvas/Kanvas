@@ -104,6 +104,8 @@ package modules.pages
 				var index:int = pages.indexOf(pageVO);
 				removePageVO(pageVO);
 				pages.splice(index, 1);
+				
+				
 				dispatchEvent(new PageEvent(PageEvent.UPDATE_LAYOUT));
 			}
 			else

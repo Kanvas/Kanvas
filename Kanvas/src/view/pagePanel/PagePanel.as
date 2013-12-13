@@ -242,22 +242,35 @@ package view.pagePanel
 		{
 			super.init();
 			
+			scrollProxy = new PagesScrollProxy(this);
 			XMLVOMapper.fuck(bgStyleXML, bgStyle);
 			
-			addBtn.w = w - gutter;
-			addBtn.h = 100;
+			addPageBtn.w = w - gutter * 2 - 4;
+			addPageBtn.h = 100;
 			
-			addBtn.text = "添加页面";
-			this.addChild(addBtn);
-			addBtn.addEventListener(MouseEvent.CLICK, addPage);
+			this.addChild(addPageBtn);
+			addPageBtn.addEventListener(MouseEvent.ROLL_OVER, showCameraShot);
+			addPageBtn.addEventListener(MouseEvent.ROLL_OUT, hideCanmeraShot);
+			addPageBtn.addEventListener(MouseEvent.CLICK, addPage);
 			
-			scrollProxy = new PagesScrollProxy(this);
 			addChild(pagesCtn);
 			pagesCtn.addEventListener(MouseEvent.CLICK, pageClicked);
 			
 			this.addEventListener(MouseEvent.ROLL_OVER, startKeyBordListen);
 			
 			updateLayout();
+		}
+		
+		/**
+		 */		
+		private function showCameraShot(evt:MouseEvent):void
+		{
+			core.cameraShotShape.visible = true;
+		}
+		
+		private function hideCanmeraShot(evt:MouseEvent):void
+		{
+			core.cameraShotShape.visible = false;
 		}
 		
 		/**
@@ -345,8 +358,8 @@ package view.pagePanel
 		{
 			render();
 			
-			addBtn.x = (w - addBtn.w) / 2;
-			addBtn.y = h - addBtn.h - gutter;
+			addPageBtn.x = (w - addPageBtn.w) / 2;
+			addPageBtn.y = h - addPageBtn.h - gutter;
 			
 			this.graphics.beginFill(0xffffff);
 			this.graphics.drawRect(0, 0, scrollProxy.viewWidth, scrollProxy.viewHeight);
@@ -381,7 +394,7 @@ package view.pagePanel
 		
 		/**
 		 */		
-	    internal var addBtn:LabelBtn = new LabelBtn;
+	    internal var addPageBtn:ShotBtn = new ShotBtn;
 		
 		/**
 		 */		
