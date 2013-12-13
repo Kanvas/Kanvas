@@ -13,9 +13,10 @@ package modules.pages
 	
 	public final class PageElement extends ElementBase
 	{
-		public function PageElement(vo:ElementVO)
+		public function PageElement(vo:PageVO)
 		{
 			super(vo);
+			
 		}
 		
 		override protected function preRender():void
@@ -121,7 +122,7 @@ package modules.pages
 		{
 			var pageVO:PageVO = new PageVO;
 			
-			return new PageElement(cloneVO(pageVO));
+			return new PageElement(cloneVO(pageVO) as PageVO);
 		}
 		
 		override public function showToolBar(toolbar:ToolBarController):void

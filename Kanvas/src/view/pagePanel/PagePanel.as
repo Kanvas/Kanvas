@@ -13,6 +13,10 @@ package view.pagePanel
 	
 	import flashx.textLayout.elements.BreakElement;
 	
+	import model.CoreFacade;
+	
+	import modules.pages.PageVO;
+	
 	/**
 	 * 负责页面创建命令发出，页面列表显示，页面顺序调换命令发出
 	 */	
@@ -49,10 +53,9 @@ package view.pagePanel
 			//通知核心Core新建一个页面
 			
 			//模拟代码
-			var page:Object = new Object;
-			pageAdded(page);
+			CoreFacade.coreMediator.pageManager.addPageFromCanvas();
+			//pageAdded(page);
 			
-			page.index = pagesCtn.numChildren - 1;
 			layoutPages();
 		}
 		

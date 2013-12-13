@@ -1,25 +1,48 @@
 package modules.pages
 {
+	import commands.Command;
+	
 	import flash.events.EventDispatcher;
+	import flash.geom.Rectangle;
+	
+	import model.CoreFacade;
+	import model.ElementProxy;
+	
+	import util.StyleUtil;
+	
+	import view.interact.CoreMediator;
 
+	[Event(name="addPage", type="modules.pages.PageEvent")]
+	
+	[Event(name="deletePage", type="modules.pages.PageEvent")]
+	
 	[Event(name="updateLayout", type="modules.pages.PageEvent")]
 	
 	public final class PageManager extends EventDispatcher
 	{
 		
-		public function PageManager()
+		public function PageManager($coreMdt:CoreMediator)
 		{
+			coreMdt = $coreMdt;
 			pg_internal::pages = new Vector.<PageVO>;
 		}
 		
 		/**
 		 * 根据画布当前布局获取pageVO
 		 */
-		public function addPageFromCanvas():PageVO
+		public function addPageFromCanvas():void
 		{
-			var pageVO:PageVO = new PageVO;
+			var bound:Rectangle = coreMdt.mainUI.bound;
+			var proxy:ElementProxy = new ElementProxy;
+			proxy.type = "page";
+			proxy.styleType = "border";
+			proxy.styleID = "Page";
+			proxy.x = (bound.left + bound.right) * .5;
+			proxy.y = (bound.top + bound.bottom) * .5;
+			proxy.width = bound.width ;
+			proxy.height = bound.height;
+			coreMdt.sendNotification(Command.CREATE_SHAPE, proxy);
 			
-			return addPage(pageVO);
 		}
 		
 		/**
@@ -29,7 +52,7 @@ package modules.pages
 		{
 			registPageVO(pageVO, pages.length);
 			pages.push(pageVO);
-			dispatchEvent(new PageEvent(PageEvent.UPDATE_LAYOUT));
+			dispatchEvent(new PageEvent(PageEvent.ADD_PAGE, pageVO));
 			return pageVO;
 		}
 		
@@ -44,14 +67,19 @@ package modules.pages
 				{
 					registPageVO(pageVO, index);
 					pages.splice(index, 0, pageVO);
-					dispatchEvent(new PageEvent(PageEvent.UPDATE_LAYOUT));
+					dispatchEvent(new PageEvent(PageEvent.ADD_PAGE, pageVO));
 				}
 				else
 				{
 					if (index < pages.length)
+					{
 						setPageIndex(pageVO, index);
+						dispatchEvent(new PageEvent(PageEvent.ADD_PAGE, pageVO));
+					}
 					else
+					{
 						throw new RangeError("提供的索引超出范围。", 2006);
+					}
 				}
 			}
 			else
@@ -104,7 +132,7 @@ package modules.pages
 				var index:int = pages.indexOf(pageVO);
 				removePageVO(pageVO);
 				pages.splice(index, 1);
-				dispatchEvent(new PageEvent(PageEvent.UPDATE_LAYOUT));
+				dispatchEvent(new PageEvent(PageEvent.DELETE_PAGE, pageVO));
 			}
 			else
 			{
@@ -122,7 +150,7 @@ package modules.pages
 			{
 				removePageVO(pages[index]);
 				pages.splice(index, 1);
-				dispatchEvent(new PageEvent(PageEvent.UPDATE_LAYOUT));
+				dispatchEvent(new PageEvent(PageEvent.DELETE_PAGE, pages[index]));
 			}
 			else
 			{
@@ -190,5 +218,7 @@ package modules.pages
 		private var __index:int;
 		
 		pg_internal var pages:Vector.<PageVO>;
+		
+		private var coreMdt:CoreMediator;
 	}
 }
