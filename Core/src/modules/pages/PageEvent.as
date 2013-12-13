@@ -19,6 +19,9 @@ package modules.pages
 		 */		
 		public static const DELETE_PAGE_FROM_UI:String = "deletePageFromUI";
 		
+		
+		public static const PAGE_SELECTED:String = "pageSelected";
+		
 		/**
 		 * 通知主UI刷新页面布局 
 		 */		

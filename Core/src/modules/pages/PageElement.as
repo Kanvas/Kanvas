@@ -54,6 +54,12 @@ package modules.pages
 			this.render();
 		}
 		
+		override public function toSelectedState():void
+		{
+			super.toSelectedState();
+			pageVO.dispatchEvent(new PageEvent(PageEvent.PAGE_SELECTED));
+		}
+		
 		/**
 		 * 渲染
 		 */

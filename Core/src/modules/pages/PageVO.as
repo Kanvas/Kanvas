@@ -7,6 +7,8 @@ package modules.pages
 	
 	[Event(name="deletePageFromUI", type="modules.pages.PageEvent")]
 	
+	[Event(name="pageSelected", type="modules.pages.PageEvent")]
+	
 	public final class PageVO extends ElementVO
 	{
 		public function PageVO()

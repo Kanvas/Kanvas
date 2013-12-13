@@ -72,11 +72,10 @@ package modules.pages
 				{
 					registPageVO(pageVO, index);
 					pages.splice(index, 0, pageVO);
-					var l:int = numPage;
-					for (var i:int = index; i < l; i++)
-						pages[i].index = i;
+					udpatePageIndex(index, numPage);
 					
 					dispatchEvent(new PageEvent(PageEvent.PAGE_ADDED, pageVO));
+					dispatchEvent(new PageEvent(PageEvent.UPDATE_PAGES_LAYOUT));
 				}
 				else
 				{
@@ -126,7 +125,7 @@ package modules.pages
 		public function getPageIndex(pageVO:PageVO):int
 		{
 			if (contains(pageVO))
-				var index:int = pages.indexOf(pageVO);
+				var index:int = pageVO.index;
 			else
 				throw new ArgumentError("提供的 PageVO 必须是调用者的子级。", 2025);
 			
@@ -140,13 +139,10 @@ package modules.pages
 		{
 			if (contains(pageVO))
 			{
-				var index:int = pages.indexOf(pageVO);
+				var index:int = pageVO.index;
 				removePageVO(pageVO);
 				pages.splice(index, 1);
-				
-				var l:int = numPage;
-				for (var i:int = index; i < l; i++)
-					pages[i].index = i;
+				udpatePageIndex(index, numPage);
 				
 				dispatchEvent(new PageEvent(PageEvent.PAGE_DELETED, pageVO));
 				dispatchEvent(new PageEvent(PageEvent.UPDATE_PAGES_LAYOUT));
@@ -169,11 +165,10 @@ package modules.pages
 				var pageVO:PageVO = pages[index];
 				removePageVO(pageVO);
 				pages.splice(index, 1);
-				var l:int = numPage;
-				for (var i:int = index; i < l; i++)
-					pages[i].index = i;
+				udpatePageIndex(index, numPage);
 				
 				dispatchEvent(new PageEvent(PageEvent.PAGE_DELETED, pageVO));
+				dispatchEvent(new PageEvent(PageEvent.UPDATE_PAGES_LAYOUT));
 			}
 			else
 			{
@@ -198,8 +193,7 @@ package modules.pages
 					pages.splice(aim, 0, pageVO);
 					var min:int = Math.min(cur, aim);
 					var max:int = Math.max(cur, aim);
-					for (var i:int = min; i < max; i++)
-						pages[i].index = i;
+					udpatePageIndex(Math.min(cur, aim), Math.max(cur, aim));
 					
 					dispatchEvent(new PageEvent(PageEvent.UPDATE_PAGES_LAYOUT));
 				}
@@ -233,6 +227,14 @@ package modules.pages
 			pageVO.pg_internal::parent = null;
 		}
 		
+		/**
+		 * 更新VO的顺序
+		 */
+		private function udpatePageIndex(start:int, end:int):void
+		{
+			for (var i:int = start; i < end; i++)
+				pages[i].pg_internal::index = i;
+		}
 		
 		/**
 		 * 获取总页数
