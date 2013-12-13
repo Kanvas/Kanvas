@@ -57,7 +57,7 @@ package modules.pages
 		override public function toSelectedState():void
 		{
 			super.toSelectedState();
-			pageVO.dispatchEvent(new PageEvent(PageEvent.PAGE_SELECTED));
+			pageVO.dispatchEvent(new PageEvent(PageEvent.PAGE_SELECTED, pageVO, false));
 		}
 		
 		/**

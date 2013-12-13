@@ -42,6 +42,16 @@ package view.pagePanel
 			pageManager.addEventListener(PageEvent.PAGE_ADDED, pageAdded);
 			pageManager.addEventListener(PageEvent.UPDATE_PAGES_LAYOUT, layoutPages);
 			pageManager.addEventListener(PageEvent.PAGE_DELETED, pagedDeleted);
+			
+			this.addEventListener(PageEvent.PAGE_SELECTED, pageSelectedFromCore);
+		}
+		
+		/**
+		 */		
+		private function pageSelectedFromCore(evt:PageEvent):void
+		{
+			setCurrentPage(findPageUIByVO(evt.pageVO));
+			udpateScrollForCurrPage();
 		}
 		
 		/**

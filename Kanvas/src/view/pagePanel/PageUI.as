@@ -24,6 +24,8 @@ package view.pagePanel
 			super();
 			
 			this.pageVO = vo;
+			pageVO.addEventListener(PageEvent.PAGE_SELECTED, pageSelected);
+			
 			addChild(label);
 			
 			deleteBtn = new IconBtn;
@@ -37,6 +39,13 @@ package view.pagePanel
 			
 			this.addEventListener(MouseEvent.ROLL_OVER, rollOver);
 			this.addEventListener(MouseEvent.ROLL_OUT, rollOut);
+		}
+		
+		/**
+		 */		
+		private function pageSelected(evt:PageEvent):void
+		{
+			this.dispatchEvent(evt);
 		}
 		
 		/**

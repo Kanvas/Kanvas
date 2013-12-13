@@ -45,6 +45,11 @@ package modules.pages
 			return __pageVO;
 		}
 		
+		override public function clone():Event
+		{
+			return new PageEvent(type, __pageVO, true);
+		}
+		
 		private var __pageVO:PageVO;
 	}
 }
