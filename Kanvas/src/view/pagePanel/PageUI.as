@@ -43,7 +43,7 @@ package view.pagePanel
 		 */		
 		private function delHander(evt:MouseEvent):void
 		{
-			this.dispatchEvent(new PageEvent(PageEvent.DELETE_PAGE_FROM_UI, this.pageVO, true));
+			pageVO.dispatchEvent(new PageEvent(PageEvent.DELETE_PAGE_FROM_UI, this.pageVO));
 		}
 		
 		/**

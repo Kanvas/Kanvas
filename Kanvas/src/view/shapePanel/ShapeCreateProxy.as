@@ -9,6 +9,7 @@ package view.shapePanel
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	
+	import model.CoreFacade;
 	import model.ElementProxy;
 	
 	import view.shapePanel.pageForCreateCompt.CreateShapeEvent;
@@ -38,6 +39,8 @@ package view.shapePanel
 		private function shapeClickedHandler(evt:CreateShapeEvent):void
 		{
 			evt.stopPropagation();
+			
+			CoreFacade.coreMediator.createNewShapeMouseUped = true;
 			
 			evt.shapeIcon.shape.x = mainApp.stage.stageWidth / 2;
 			evt.shapeIcon.shape.y = mainApp.stage.stageHeight / 2;

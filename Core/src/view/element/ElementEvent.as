@@ -109,6 +109,8 @@ package view.element
 		public static const DEL_IMG:String = 'deleteIMG';
 		
 		
+		public static const DEL_PAGE:String = "deletePage";
+		
 		
 		
 		//--------------复制，粘贴不同元件区别对待

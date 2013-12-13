@@ -181,15 +181,17 @@ package model
 			registerCommand(Command.PRE_CREATE_TEXT, PreCreateTextCMD);
 			registerCommand(Command.CREATE_TEXT, CreateTextCMD);
 			
+			registerCommand(Command.CREATE_PAGE, CreatePageCommand);
+			
 			registerCommand(Command.DELETE_ElEMENT, DeleteElementCMD);
 			registerCommand(Command.DELETE_IMG, DeleteImgCMD);
 			registerCommand(Command.DELETE_TEXT, DeleteTextCMD);
+			registerCommand(Command.DELETE_PAGE, DeletePageCMD);
 			registerCommand(Command.DELETE_CHILD_IN_TEM_GROUP, DeleteChildInTemGroupCMD);
 			registerCommand(Command.DELETE_BG_IMG, DelBgImgCMD);
 			
 			registerCommand(Command.TEM_TO_GROUP, GroupCMD);
 			registerCommand(Command.GROUP_TO_TEM, UnGroupCMD);
-			
 			
 			// 编辑控制
 			registerCommand(Command.AUTO_ZOOM, AutoZoomCMD);
@@ -203,7 +205,6 @@ package model
 			//registerCommand(Command.SCALE_ELEMENT, ScaleElementCMD);
 			//registerCommand(Command.ROLL_ELEMENT, RollElementCMD);
 			
-			registerCommand(Command.CHANGE_ELEMENT_STYLE, ChangeElementStyleCMD);
 			registerCommand(Command.CHANGE_THEME, SetThemeCMD);
 			
 			registerCommand(Command.PREVIEW_BG_COLOR, PreviewBgColorCMD);
@@ -214,8 +215,8 @@ package model
 			
 			registerCommand(Command.CHANGE_ELEMENT_COLOR, ChangeElementColorCMD);
 			registerCommand(Command.CHANGE_ELEMENT_LAYER, ChangeElementLayerCMD);
+			registerCommand(Command.CHANGE_ELEMENT_STYLE, ChangeElementStyleCMD);
 			registerCommand(Command.CHANGE_ELEMENT_PROPERTY, ChangeElementPropertyCMD);
-			
 			
 			//复制粘贴
 			registerCommand(Command.COPY_ELEMENT, CopyElementCMD);

@@ -42,8 +42,6 @@ package view.pagePanel
 			pageManager.addEventListener(PageEvent.PAGE_ADDED, pageAdded);
 			pageManager.addEventListener(PageEvent.UPDATE_PAGES_LAYOUT, layoutPages);
 			pageManager.addEventListener(PageEvent.PAGE_DELETED, pagedDeleted);
-			
-			this.addEventListener(PageEvent.DELETE_PAGE_FROM_UI, deletePage);
 		}
 		
 		/**
@@ -68,9 +66,9 @@ package view.pagePanel
 		/**
 		 * 告知core去创建一个页面
 		 */		
-		private function addPage():void
+		public function addPage(evt:MouseEvent):void
 		{
-			pageManager.addPageFromCanvas();
+			pageManager.addPageFromUI();
 		}
 		
 		/**
@@ -104,13 +102,6 @@ package view.pagePanel
 		/**
 		 */		
 		private var pages:Vector.<Object> = new Vector.<Object>;
-		
-		/**
-		 */		
-		private function deletePage(evt:PageEvent):void
-		{
-			pageManager.removePage(evt.pageVO);
-		}
 		
 		/**
 		 * 从core中删除了某个页面后

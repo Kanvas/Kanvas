@@ -40,6 +40,7 @@ package view.pagePanel
 			frameBtn.addEventListener(MouseEvent.CLICK, frameClick);
 			addChild(frameBtn);
 			
+			shotSprite.addEventListener(MouseEvent.CLICK, pagePanel.addPage);
 			addChild(shotSprite);
 		}
 		

@@ -13,7 +13,6 @@ package commands
 	 */
 	public class SelectElementCMD extends Command
 	{
-		private var canvasMediator:CoreMediator;
 		
 		/**
 		 */		
@@ -26,18 +25,21 @@ package commands
 		 */		
 		override public function execute(notification:INotification):void
 		{
-			canvasMediator = facade.retrieveMediator(MediatorNames.CORE_MEDIATOR) as CoreMediator;
+			var coreMdt:CoreMediator = facade.retrieveMediator(MediatorNames.CORE_MEDIATOR) as CoreMediator;
 			
-			canvasMediator.currentElement = notification.getBody() as ElementBase;
-			canvasMediator.currentElement.toSelectedState();
+			coreMdt.createNewShapeTweenOver = false;
+			coreMdt.createNewShapeMouseUped = false;
 			
-			canvasMediator.toSelectedMode();
+			coreMdt.currentElement = notification.getBody() as ElementBase;
+			coreMdt.currentElement.toSelectedState();
+			
+			coreMdt.toSelectedMode();
 			
 			//防止键盘移动元件时智能组合实效，默认点击元件才会启用智能组合
-			canvasMediator.checkAutoGroup(canvasMediator.currentElement);
+			coreMdt.checkAutoGroup(coreMdt.currentElement);
 			
 			//判断元素的坐标是否超出屏幕一半
-			canvasMediator.autofitController.autofitElementPosition(canvasMediator.currentElement);
+			coreMdt.autofitController.autofitElementPosition(coreMdt.currentElement);
 			
 		}
 	}

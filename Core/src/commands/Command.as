@@ -120,6 +120,11 @@ package commands
 		public static const CREATE_IMAGE:String = "createImage";
 		
 		/**
+		 * 创建页面
+		 */
+		public static const CREATE_PAGE:String = "createPage";
+		
+		/**
 		 * 点击画布时，与创建文本框
 		 */
 		public static const PRE_CREATE_TEXT:String = "preCreateText";
@@ -145,6 +150,10 @@ package commands
 		 */		
 		public static const DELETE_IMG:String = 'deleteIMG';
 		
+		/**
+		 * 删除页面
+		 */	
+		public static const DELETE_PAGE:String = "deletePage";
 		
 		
 		
@@ -184,6 +193,8 @@ package commands
 		 * 删除临时组合的子元素
 		 */		
 		public static const DELETE_CHILD_IN_TEM_GROUP:String = 'delChildsInTemGroup';
+		
+		
 		
 		
 		
