@@ -23,7 +23,7 @@ package view.interact.interactMode
 		 */		
 		override public function addPage(index:uint):void
 		{
-			mainMediator.pageManager.addPageFromUI();
+			mainMediator.pageManager.addPageFromUI(index);
 		}
 		
 		/**

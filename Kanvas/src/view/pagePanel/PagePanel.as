@@ -443,6 +443,7 @@ package view.pagePanel
 			else
 				setCurrentPage(findPageByIndex(0));
 			
+			pageSelected(currentPage.pageVO);
 			udpateScrollForCurrPage();
 		}
 		
@@ -453,6 +454,7 @@ package view.pagePanel
 			else
 				setCurrentPage(findPageByIndex(0));
 			
+			pageSelected(currentPage.pageVO);
 			udpateScrollForCurrPage();
 		}
 		
