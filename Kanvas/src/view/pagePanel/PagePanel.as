@@ -7,6 +7,7 @@ package view.pagePanel
 	import com.kvs.utils.XMLConfigKit.style.Style;
 	
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.ui.Keyboard;
@@ -61,11 +62,15 @@ package view.pagePanel
 		
 		
 		
+		
+		
+		
+		
 		//------------------------------------------------
 		//
 		//
 		//
-		// 
+		//  页面操作，包含添加编辑与删除等
 		//
 		//
 		//
@@ -258,6 +263,62 @@ package view.pagePanel
 		
 		
 		
+		
+		
+		
+		//------------------------------------------------
+		//
+		//
+		//
+		//  焦距动画控制
+		//
+		//
+		//
+		//------------------------------------------------
+		
+		
+		
+		/**
+		 */		
+		public function showCameraShot():void
+		{
+			stage.addEventListener(Event.ENTER_FRAME, shotFlash);
+			
+			core.cameraShotShape.alpha = 0;
+			core.cameraShotShape.visible = true;
+		}
+		
+		/**
+		 */		
+		public function hideCanmeraShot():void
+		{
+			stage.removeEventListener(Event.ENTER_FRAME, shotFlash);
+			
+			core.cameraShotShape.visible = false;
+			core.cameraShotShape.alpha = 0;
+		}
+		
+		/**
+		 */		
+		private function shotFlash(evt:Event):void
+		{
+			if (core.cameraShotShape.alpha >= 1)
+				adder = - 0.05;
+			else if (core.cameraShotShape.alpha <= 0)
+				adder = 0.05;
+			
+			core.cameraShotShape.alpha += adder;
+		}
+		
+		/**
+		 */		
+		private var adder:Number = 0.1;
+		
+		
+		
+		
+		
+		
 		//------------------------------------------------
 		//
 		//
@@ -293,17 +354,6 @@ package view.pagePanel
 			updateLayout();
 		}
 		
-		/**
-		 */		
-		public function showCameraShot():void
-		{
-			core.cameraShotShape.visible = true;
-		}
-		
-		public function hideCanmeraShot():void
-		{
-			core.cameraShotShape.visible = false;
-		}
 		
 		/**
 		 */		

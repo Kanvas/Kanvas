@@ -74,10 +74,11 @@ package commands
 			
 			index1 = page.index;
 			index2 = pageVO.index;
+			
 			//动画完毕
-			CoreFacade.coreMediator.createNewShapeTweenOver = true;
-			if (CoreFacade.coreMediator.createNewShapeTweenOver && CoreFacade.coreMediator.createNewShapeMouseUped)
-				sendNotification(Command.SElECT_ELEMENT, page);
+			//CoreFacade.coreMediator.createNewShapeTweenOver = true;
+			//if (CoreFacade.coreMediator.createNewShapeTweenOver && CoreFacade.coreMediator.createNewShapeMouseUped)
+				//sendNotification(Command.SElECT_ELEMENT, page);
 			
 			UndoRedoMannager.register(this);
 		}

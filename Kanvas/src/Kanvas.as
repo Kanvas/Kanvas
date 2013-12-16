@@ -129,7 +129,6 @@ package
 			//多页面列表
 			pagePanel = new PagePanel(this);
 			pagePanel.bgStyleXML = panelBGStyleXML;
-			
 		}
 		
 		/**
@@ -210,11 +209,17 @@ package
 					stage.stageHeight - toolBar.h - gutter * 2);
 			}
 			
-			
+			drawShotFrame();
+		}
+		
+		/**
+		 * 绘制镜头区域
+		 */		
+		private function drawShotFrame():void
+		{
 			cameraShotShape.graphics.clear();
 			cameraShotShape.graphics.lineStyle(2, 0);
 			cameraShotShape.graphics.drawRect(kvsCore.bound.left, kvsCore.bound.top, kvsCore.bound.width, kvsCore.bound.height);
-			
 		}
 		
 		/**
