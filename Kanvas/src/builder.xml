@@ -2,9 +2,9 @@
 <project name="Ficharts Builder" basedir="." default="发布">
 	
 	<property name="FLEX_HOME" value="/Applications/Adobe Flash Builder 4.6/sdks/4.6.0" />
-	<property name="WORK_SPACE" value="/Users/wallenMac/Documents/Projects/Kanvas3.0" />
+	<property name="WORK_SPACE" value="/Users/wallenMac/Documents/Projects/Kanvas" />
 	
-	<property name="VER" value="3.0.0" />
+	<property name="VER" value="3.0.3" />
 	<property name="controlFlowObfuscation" value="20"/>
 	<property name="dynamicCodeWrapping" value="1"/>
 	
