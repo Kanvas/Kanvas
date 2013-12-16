@@ -133,9 +133,10 @@ package view.pagePanel
 		/**
 		 * 从页面列表中选择了某个页面
 		 */		
-		public function pageSelected(pageVO:Object):void
+		public function pageSelected(pageVO:PageVO):void
 		{
 			//通知核心core切换至当前page
+			pageManager.index = pageVO.index;
 		}
 		
 		/**
@@ -195,7 +196,7 @@ package view.pagePanel
 			if (evt.target is PageUI)
 			{
 				setCurrentPage(evt.target as PageUI);
-				pageSelected(evt.target as PageUI);
+				pageSelected((evt.target as PageUI).pageVO);
 				udpateScrollForCurrPage();
 			}
 		}

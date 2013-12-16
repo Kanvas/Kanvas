@@ -13,6 +13,8 @@ package model
 		{
 		}
 		
+		public var index:int = 0;
+		
 		/**
 		 */		
 		public var radius:Number = 0;

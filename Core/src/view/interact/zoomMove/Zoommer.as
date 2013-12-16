@@ -131,9 +131,14 @@ package view.interact.zoomMove
 			flasher.flash(time, ease);
 		}
 		
-		public function zoomRotateMoveTo(scale:Number, rotation:Number, center:Point = null, time:Number = 1, ease:Object = null):void
+		public function zoomRotateMoveTo(scale:Number, rotation:Number, x:Number, y:Number, ease:Object = null):void
 		{
+			flasher.canvasTargetScale = scale;
+			flasher.canvasTargetRotation = rotation;
+			flasher.canvasTargetX = x;
+			flasher.canvasTargetY = y;
 			
+			flasher.advancedFlash(ease);
 		}
 		
 		/**
@@ -227,9 +232,6 @@ package view.interact.zoomMove
 		 */		
 		public static var minScale:Number = 0.005;
 		
-		/**
-		 */		
-		private var zoomScale:Number = 1.06;
 		
 		/**
 		 * 画布canvas相对于主UI的布局
