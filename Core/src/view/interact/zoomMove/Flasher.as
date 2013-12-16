@@ -51,7 +51,7 @@ package view.interact.zoomMove
 
 		public function flash(time:Number = 0.3, easeFlash:Object = null):void
 		{
-			if (Math.abs(canvasTargetScale - canvas.scaleX) > .001)
+			if (Math.max(canvasTargetScale / canvas.scaleX, canvas.scaleX / canvasTargetScale) > 1.0005)
 				control.mainUI.curScreenState.disableCanvas();
 			
 			TweenMax.killTweensOf(canvas, false);
@@ -61,6 +61,36 @@ package view.interact.zoomMove
 				onComplete : finishZoom});
 			
 			isFlashing = true;	
+		}
+		
+		public function advancedFlash(easeFlash:Object = null):void
+		{
+			if (Math.max(canvasTargetScale / canvas.scaleX, canvas.scaleX / canvasTargetScale) > 1.0005)
+				control.mainUI.curScreenState.disableCanvas();
+			
+			TweenMax.killTweensOf(canvas, false);
+			
+			var scalePlus:Number = Math.max(canvasTargetScale / canvas.scaleX, canvas.scaleX / canvasTargetScale);
+			var timeScale:Number = scalePlus / speedScale;
+			var timeRotation:Number = Math.abs(canvasTargetRotation - canvas.rotation) / speedRotation;
+			var timeMove:Number = Point.distance(new Point(canvas.x, canvas.y), new Point(canvasTargetX, canvasTargetY)) / speedMove;
+			var time:Number = Math.max(timeScale, timeRotation, timeMove);
+			
+			//缩放差距不大时启用先缩小后放大式镜头缩放
+			if (scalePlus < speedScale)
+			{
+				var scaleMid:Number = Math.min(canvasTargetScale, canvas.scaleX) / 1.5;
+				TweenMax.to(canvas, time * .5, {scaleX:scaleMid, scaleY:scaleMid, ease:easeFlash});
+				TweenMax.to(canvas, time * .5, {scaleX:canvasTargetScale, scaleY:canvasTargetScale, delay:time * .5, ease : easeFlash});
+			}
+			else
+			{
+				TweenMax.to(canvas, time, {scaleX:canvasTargetScale, scaleY:canvasTargetScale, ease:easeFlash});
+			}
+			TweenMax.to(canvas, time, {rotation:canvasTargetRotation, x:canvasTargetX, y:canvasTargetY, 
+				ease : easeFlash, 
+				onUpdate : updated,
+				onComplete : finishZoom});
 		}
 		
 		/**
@@ -79,6 +109,8 @@ package view.interact.zoomMove
 			control.mainUI.curScreenState.enableCanvas();
 			isFlashing = false;
 		}
+		
+		public var canvasTargetRotation:Number = 0;
 		
 		/**
 		 */		
@@ -157,5 +189,10 @@ package view.interact.zoomMove
 		{
 			return control.mainUI.bgImgCanvas;
 		}
+		
+		
+		private var speedMove:Number = 1000;
+		private var speedScale:Number = 1.5;
+		private var speedRotation:Number = 90;
 	}
 }

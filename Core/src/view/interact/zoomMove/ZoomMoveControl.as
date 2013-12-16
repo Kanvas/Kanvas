@@ -48,12 +48,20 @@ package view.interact.zoomMove
 		/**
 		 * 
 		 */		
-		public function zoomTo(value:Number, mouseCenter:Point = null, timer:Number = 1, ease:Object = null):void
+		public function zoomMoveTo(value:Number, mouseCenter:Point = null, timer:Number = 1, ease:Object = null):void
 		{
 			if (ease == null)
 				ease = Cubic.easeInOut;
 			
 			zoomer.zoomTo(value, mouseCenter, timer, ease);
+		}
+		
+		public function zoomRotateMoveTo(scale:Number, rotation:Number, x:Number, y:Number, ease:Object = null):void
+		{
+			if (ease == null)
+				ease = Cubic.easeInOut;
+			
+			zoomer.zoomRotateMoveTo(scale, rotation, x, y, ease);
 		}
 		
 		/**

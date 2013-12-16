@@ -1,8 +1,12 @@
 package modules.pages
 {
+	import com.kvs.utils.MathUtil;
+	import com.kvs.utils.PointUtil;
+	
 	import commands.Command;
 	
 	import flash.events.EventDispatcher;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import model.ElementProxy;
@@ -30,7 +34,7 @@ package modules.pages
 		/**
 		 * 根据画布当前布局获取pageVO
 		 */
-		public function addPageFromUI():void
+		public function addPageFromUI(index:int = 0):void
 		{
 			var bound:Rectangle = coreMdt.mainUI.bound;
 			var proxy:ElementProxy = new ElementProxy;
@@ -42,6 +46,7 @@ package modules.pages
 			proxy.y = (bound.top + bound.bottom) * .5;
 			proxy.width = bound.width ;
 			proxy.height = bound.height;
+			proxy.index = (index > 0 && index < numPage) ? index : numPage;
 			
 			coreMdt.createNewShapeMouseUped = true;
 			coreMdt.sendNotification(Command.CREATE_PAGE, proxy);
@@ -52,7 +57,7 @@ package modules.pages
 		 */
 		public function addPage(pageVO:PageVO):PageVO
 		{
-			registPageVO(pageVO, pages.length);
+			registPageVO(pageVO, numPage);
 			pages.push(pageVO);
 			
 			dispatchEvent(new PageEvent(PageEvent.PAGE_ADDED, pageVO));
@@ -66,7 +71,7 @@ package modules.pages
 		 */
 		public function addPageAt(pageVO:PageVO, index:int):PageVO
 		{
-			if (index >=0 && index <= pages.length)
+			if (index >=0 && index <= numPage)
 			{
 				if (pageVO.parent != this)
 				{
@@ -79,7 +84,7 @@ package modules.pages
 				}
 				else
 				{
-					if (index < pages.length)
+					if (index < numPage)
 					{
 						setPageIndex(pageVO, index);
 						dispatchEvent(new PageEvent(PageEvent.PAGE_ADDED, pageVO));
@@ -112,7 +117,7 @@ package modules.pages
 		public function getPageAt(index:int):PageVO
 		{
 			var pageVO:PageVO;
-			if (index >=0 && index < pages.length)
+			if (index >=0 && index < numPage)
 				pageVO = pages[index];
 			else
 				throw new RangeError("提供的索引超出范围。", 2006);
@@ -160,7 +165,7 @@ package modules.pages
 		 */
 		public function removePageAt(index:int):PageVO
 		{
-			if (index >= 0 && index < pages.length)
+			if (index >= 0 && index < numPage)
 			{
 				var pageVO:PageVO = pages[index];
 				removePageVO(pageVO);
@@ -183,7 +188,7 @@ package modules.pages
 		 */
 		public function setPageIndex(pageVO:PageVO, index:int):void
 		{
-			if (index >= 0 && index < pages.length)
+			if (index >= 0 && index < numPage)
 			{
 				var cur:int = pages.indexOf(pageVO);
 				if (cur != -1)
@@ -236,6 +241,38 @@ package modules.pages
 				pages[i].pg_internal::index = i;
 		}
 		
+		
+		private function getSceneFromVO(pageVO:PageVO):Scene
+		{
+			var scale:Number = getSceneScaleFromVO(pageVO);
+			var rotation:Number = getSceneRotationFromVO(pageVO);
+			var bound:Rectangle = coreMdt.mainUI.bound;
+			var p1:Point = new Point((bound.left + bound.right) * .5, (bound.top + bound.bottom) * .5);
+			var p2:Point = PointUtil.rotatePointAround(new Point(pageVO.x * scale, pageVO.y * scale), new Point(0, 0), MathUtil.angleToRadian(rotation));
+			var scene:Scene = new Scene;
+			scene.x = p1.x - p2.x;
+			scene.y = p1.y - p2.y;
+			scene.scale = scale;
+			scene.rotation = rotation;
+			return scene;
+		}
+		
+		private function getSceneScaleFromVO(pageVO:PageVO):Number
+		{
+			var vw:Number = coreMdt.mainUI.bound.width;
+			var vh:Number = coreMdt.mainUI.bound.height;
+			var pw:Number = pageVO.scale * pageVO.width;
+			var ph:Number = pageVO.scale * pageVO.height;
+			return ((vw / vh) > (pw / ph)) ? vh / ph : vw / pw;
+		}
+		
+		private function getSceneRotationFromVO(pageVO:PageVO):Number
+		{
+			var rotation:Number = MathUtil.modRotation(- pageVO.rotation);
+			rotation = (rotation > 180) ? rotation - 360 : rotation;
+			return rotation;
+		}
+		
 		/**
 		 * 获取总页数
 		 */
@@ -263,12 +300,23 @@ package modules.pages
 		
 		public function set index(value:int):void
 		{
-			__index = value;
+			if (value >=0 && value < numPage)
+			{
+				__index = value;
+				var scene:Scene = getSceneFromVO(pages[index]);
+				coreMdt.zoomMoveControl.zoomRotateMoveTo(scene.scale, scene.rotation, scene.x, scene.y);
+			}
+			else
+			{
+				throw new RangeError("提供的索引超出范围。", 2006);
+			}
 		}
 		
 		private var __index:int;
 		
 		pg_internal var pages:Vector.<PageVO>;
+		
+		
 		
 		private var coreMdt:CoreMediator;
 	}

@@ -95,7 +95,7 @@ package view.interact
 				x /= coreMdt.layoutTransformer.canvasScale;
 				y /= coreMdt.layoutTransformer.canvasScale;
 				
-				coreMdt.zoomMoveControl.zoomTo(coreMdt.layoutTransformer.canvasScale, new Point(centerX + x, centerY + y), time);
+				coreMdt.zoomMoveControl.zoomMoveTo(coreMdt.layoutTransformer.canvasScale, new Point(centerX + x, centerY + y), time);
 				return true;
 			}
 			return false;
@@ -132,7 +132,7 @@ package view.interact
 				x /= coreMdt.layoutTransformer.canvasScale;
 				y /= coreMdt.layoutTransformer.canvasScale;
 				
-				coreMdt.zoomMoveControl.zoomTo(coreMdt.layoutTransformer.canvasScale, new Point(centerX + x, centerY + y), time);
+				coreMdt.zoomMoveControl.zoomMoveTo(coreMdt.layoutTransformer.canvasScale, new Point(centerX + x, centerY + y), time);
 				return true;
 
 			}
@@ -206,7 +206,7 @@ package view.interact
 				PointUtil.multiply(vector, 1 / aimScale);
 				vector = vector.add(cenPoint);
 				
-				coreMdt.zoomMoveControl.zoomTo(aimScale, vector, time);
+				coreMdt.zoomMoveControl.zoomMoveTo(aimScale, vector, time);
 
 				return true;
 			}

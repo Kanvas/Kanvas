@@ -54,7 +54,7 @@ package commands
 			pageVO.scale = layoutTransformer.compensateScale;
 			
 			CoreFacade.addElement(page);
-			CoreFacade.coreMediator.pageManager.addPage(pageVO);
+			CoreFacade.coreMediator.pageManager.addPageAt(pageVO, pageProxy.index);
 			
 			//放置拖动创建时 当前原件未被指定 
 			CoreFacade.coreMediator.currentElement = page;
