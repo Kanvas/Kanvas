@@ -60,6 +60,13 @@ package view.interact.interactMode
 		
 		/**
 		 */		
+		public function addPage(index:uint):void
+		{
+			
+		}
+		
+		/**
+		 */		
 		public function group():void
 		{
 			

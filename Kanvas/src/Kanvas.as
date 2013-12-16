@@ -217,9 +217,31 @@ package
 		 */		
 		private function drawShotFrame():void
 		{
+			var len:uint = 10;
+			
 			cameraShotShape.graphics.clear();
-			cameraShotShape.graphics.lineStyle(2, 0);
-			cameraShotShape.graphics.drawRect(kvsCore.bound.left, kvsCore.bound.top, kvsCore.bound.width, kvsCore.bound.height);
+			cameraShotShape.graphics.lineStyle(8, 0, 0.6, false, 'none', 'square');
+			
+			//左上角
+			cameraShotShape.graphics.moveTo(kvsCore.bound.left, kvsCore.bound.top + len);
+			cameraShotShape.graphics.lineTo(kvsCore.bound.left, kvsCore.bound.top);
+			cameraShotShape.graphics.lineTo(kvsCore.bound.left + len, kvsCore.bound.top);
+			
+			//右上角
+			cameraShotShape.graphics.moveTo(kvsCore.bound.right, kvsCore.bound.top + len);
+			cameraShotShape.graphics.lineTo(kvsCore.bound.right, kvsCore.bound.top);
+			cameraShotShape.graphics.lineTo(kvsCore.bound.right - len, kvsCore.bound.top);
+			
+			//右下角
+			cameraShotShape.graphics.moveTo(kvsCore.bound.right, kvsCore.bound.bottom - len);
+			cameraShotShape.graphics.lineTo(kvsCore.bound.right, kvsCore.bound.bottom);
+			cameraShotShape.graphics.lineTo(kvsCore.bound.right - len, kvsCore.bound.bottom);
+			
+			//左下角
+			cameraShotShape.graphics.moveTo(kvsCore.bound.left, kvsCore.bound.bottom - len);
+			cameraShotShape.graphics.lineTo(kvsCore.bound.left, kvsCore.bound.bottom);
+			cameraShotShape.graphics.lineTo(kvsCore.bound.left + len, kvsCore.bound.bottom);
+			
 		}
 		
 		/**

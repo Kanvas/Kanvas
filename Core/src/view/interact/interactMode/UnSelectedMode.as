@@ -19,6 +19,12 @@ package view.interact.interactMode
 			super(mainMediator);
 		}
 		
+		/**
+		 */		
+		override public function addPage(index:uint):void
+		{
+			mainMediator.pageManager.addPageFromUI();
+		}
 		
 		/**
 		 */		

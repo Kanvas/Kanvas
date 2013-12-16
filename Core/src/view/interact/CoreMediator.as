@@ -92,6 +92,13 @@ package view.interact
 		//
 		//---------------------------------------------------
 		
+		/**
+		 * 在目标位置加入页面
+		 */		
+		public function addPage(index:uint):void
+		{
+			currentMode.addPage(index);
+		}
 		
 		/**
 		 * 添加原件到画布上

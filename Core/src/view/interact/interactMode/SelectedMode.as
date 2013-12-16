@@ -19,6 +19,13 @@ package view.interact.interactMode
 		}
 		
 		/**
+		 */		
+		override public function addPage(index:uint):void
+		{
+			mainMediator.pageManager.addPageFromUI();
+		}
+		
+		/**
 		 * 由键盘控制的图形移动
 		 */		
 		override public function moveOff(xOff:Number, yOff:Number):void

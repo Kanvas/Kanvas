@@ -1,7 +1,6 @@
 package view.pagePanel
 {
 	import com.kvs.ui.FiUI;
-	import com.kvs.ui.button.LabelBtn;
 	import com.kvs.utils.XMLConfigKit.StyleManager;
 	import com.kvs.utils.XMLConfigKit.XMLVOMapper;
 	import com.kvs.utils.XMLConfigKit.style.Style;
@@ -12,9 +11,8 @@ package view.pagePanel
 	import flash.events.MouseEvent;
 	import flash.ui.Keyboard;
 	
-	import flashx.textLayout.elements.BreakElement;
-	
 	import model.CoreFacade;
+	import model.CoreProxy;
 	
 	import modules.pages.PageEvent;
 	import modules.pages.PageManager;
@@ -83,7 +81,28 @@ package view.pagePanel
 		 */		
 		public function addPage(evt:MouseEvent):void
 		{
-			pageManager.addPageFromUI();
+			_addPage();
+		}
+		
+		/**
+		 * Enter键会触发
+		 */		
+		private function keyBoardShot(evt:KeyboardEvent):void
+		{
+			if (evt.keyCode == Keyboard.ENTER)
+			{
+				_addPage();
+			}
+		}
+		
+		/**
+		 */		
+		private function _addPage():void
+		{
+			if (currentPage)
+				CoreFacade.coreMediator.addPage(currentPage.pageVO.index + 1);
+			else
+				CoreFacade.coreMediator.addPage(pages.length);
 		}
 		
 		/**
@@ -350,6 +369,8 @@ package view.pagePanel
 			pagesCtn.addEventListener(MouseEvent.CLICK, pageClicked);
 			
 			this.addEventListener(MouseEvent.ROLL_OVER, startKeyBordListen);
+			
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, keyBoardShot);
 			
 			updateLayout();
 		}
