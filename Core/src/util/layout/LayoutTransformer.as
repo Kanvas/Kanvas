@@ -1,6 +1,14 @@
 package util.layout
 {
+	import com.kvs.charts.chart2D.marker.MarkerPointRender;
+	
 	import flash.display.Sprite;
+	import flash.geom.Matrix;
+	
+	import model.vo.ElementVO;
+	
+	import view.element.ElementBase;
+	import view.element.shapes.LineElement;
 
 	/**
 	 * 画布坐标与stage坐标的转换器
@@ -12,6 +20,36 @@ package util.layout
 		public function LayoutTransformer(canvas:Sprite)
 		{
 			this.canvas = canvas;
+		}
+		
+		/**
+		 * 根据元素VO获取页面镜头信息，包括镜头宽高，旋转角度，
+		 */		
+		public function getLayoutInfo(ele:ElementBase):ElementVO
+		{
+			var matr:ElementVO = new ElementVO;
+			
+			matr.x = elementXToStageX(ele.x);
+			matr.y = elementYToStageY(ele.y);
+			matr.width = ele.scaledWidth * canvasScale;
+			matr.height = ele.scaledHeight * canvasScale;
+			matr.rotation = ele.rotation;
+			
+			if (ele is LineElement)
+				matr.width = matr.width / 2;
+			
+			if (matr.width / matr.height > 4 / 3)
+			{
+				var newH:Number = matr.width * 3 / 4;
+				matr.height = newH;
+			}
+			else
+			{
+				var newW:Number = matr.height * 4 / 3;
+				matr.width = newW;
+			}
+			
+			return matr;
 		}
 		
 		/**

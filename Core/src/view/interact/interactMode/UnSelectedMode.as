@@ -21,6 +21,14 @@ package view.interact.interactMode
 		
 		/**
 		 */		
+		override public function drawShotFrame():void
+		{
+			mainMediator.cameraShotShape.x = mainMediator.cameraShotShape.y = mainMediator.cameraShotShape.rotation = 0;
+			mainMediator.drawShotFrame(mainMediator.mainUI.bound);
+		}
+		
+		/**
+		 */		
 		override public function addPage(index:uint):void
 		{
 			mainMediator.pageManager.addPageFromUI(index);
@@ -61,12 +69,17 @@ package view.interact.interactMode
 		{
 			mainMediator.currentMode = mainMediator.selectedMode;
 			mainMediator.currentMode.showSelector();
+			
+			mainMediator.currentMode.drawShotFrame();
 		}
 		
 		/**
 		 */		
 		override public function toPrevMode():void
 		{
+			//切换之预览模式时需清除镜头框
+			mainMediator.cameraShotShape.graphics.clear();
+			
 			mainMediator.currentMode = mainMediator.preMode;
 			prevElements();
 			

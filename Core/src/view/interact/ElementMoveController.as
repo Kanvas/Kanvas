@@ -58,6 +58,7 @@ package view.interact
 			
 			selector.x = selectorStartX + disX;
 			selector.y = selectorStartY + disY;
+			coreMdt.currentMode.drawShotFrame();
 			
 			//stageStartX = mainUI.stage.mouseX;
 			//stageStartY = mainUI.stage.mouseY;

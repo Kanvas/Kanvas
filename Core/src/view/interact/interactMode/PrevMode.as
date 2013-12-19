@@ -17,7 +17,8 @@ package view.interact.interactMode
 		override public function toUnSelectedMode():void
 		{
 			mainMediator.currentMode = mainMediator.unSelectedMode;
-			
+			mainMediator.currentMode.drawShotFrame();
+				
 			mainMediator.zoomMoveControl.autoZoom();
 			returnFromPrevState();
 		}

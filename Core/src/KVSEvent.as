@@ -39,8 +39,14 @@ package
 		 */		
 		public static const LINK_CLICKED:String = 'linkClicked';
 		
-		
+		/**
+		 */		
 		public static const SET_CUSTOM_DATA:String = "setCustomData";
+		
+		/**
+		 * 更新画布镜头区域后触发
+		 */		
+		public static const UPATE_BOUND:String = 'updateBound';
 		
 		/**
 		 */		

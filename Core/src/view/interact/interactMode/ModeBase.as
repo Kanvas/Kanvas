@@ -66,6 +66,14 @@ package view.interact.interactMode
 		}
 		
 		/**
+		 * 选择模式下绘制的是以元素为基准，非选择模式下以画布镜头区域为基准
+		 */		
+		public function drawShotFrame():void
+		{
+			
+		}
+		
+		/**
 		 */		
 		public function group():void
 		{

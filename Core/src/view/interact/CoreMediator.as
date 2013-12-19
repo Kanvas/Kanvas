@@ -4,6 +4,8 @@ package view.interact
 	
 	import consts.ConstsTip;
 	
+	import flash.display.Shape;
+	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
@@ -11,6 +13,8 @@ package view.interact
 	import model.CoreFacade;
 	
 	import modules.pages.PageManager;
+	
+	import mx.messaging.AbstractConsumer;
 	
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
@@ -560,6 +564,12 @@ package view.interact
 			//层级自动控制
 			autoLayerController = new ElementAutoLayerController(this);
 			
+			//镜头绘制
+			cameraShotShape.visible = false;
+			mainUI.addChild(cameraShotShape);
+			currentMode.drawShotFrame();
+			mainUI.addEventListener(KVSEvent.UPATE_BOUND, renderBoundHandler);
+			
 			pageManager = new PageManager(this);
 		}
 		
@@ -730,10 +740,99 @@ package view.interact
 		
 		
 		
+		//-----------------------------------------------
+		//
+		//
+		// 镜头焦距的显示与绘制
+		// 
+		//
+		//
+		//-------------------------------------------------
+		
+		/**
+		 */		
+		public function showCameraShot():void
+		{
+			mainUI.stage.addEventListener(Event.ENTER_FRAME, shotFlash);
+			
+			cameraShotShape.alpha = 0;
+			cameraShotShape.visible = true;
+		}
+		
+		/**
+		 */		
+		public function hideCanmeraShot():void
+		{
+			mainUI.stage.removeEventListener(Event.ENTER_FRAME, shotFlash);
+			
+			cameraShotShape.visible = false;
+			cameraShotShape.alpha = 0;
+		}
+		
+		/**
+		 */		
+		private function shotFlash(evt:Event):void
+		{
+			if (cameraShotShape.alpha >= 1)
+			{
+				cameraShotShape.alpha = 1;
+				adder = - 0.05;
+			}
+			else if (cameraShotShape.alpha <= 0)
+			{
+				cameraShotShape.alpha = 0;
+				adder = 0.05;
+			}
+			
+			cameraShotShape.alpha += adder;
+		}
+		
+		/**
+		 */		
+		private var adder:Number = 0.1;
+		
+		/**
+		 */		
+		private function renderBoundHandler(evt:KVSEvent):void
+		{
+			currentMode.drawShotFrame();
+		}
+		
+		/**
+		 */		
+		public function drawShotFrame(bound:Rectangle):void
+		{
+			var len:uint = 10;
+			
+			cameraShotShape.graphics.clear();
+			cameraShotShape.graphics.lineStyle(8, 0, 0.6, false, 'none', 'square');
+			
+			//左上角
+			cameraShotShape.graphics.moveTo(bound.left, bound.top + len);
+			cameraShotShape.graphics.lineTo(bound.left, bound.top);
+			cameraShotShape.graphics.lineTo(bound.left + len, bound.top);
+			
+			//右上角
+			cameraShotShape.graphics.moveTo(bound.right, bound.top + len);
+			cameraShotShape.graphics.lineTo(bound.right, bound.top);
+			cameraShotShape.graphics.lineTo(bound.right - len, bound.top);
+			
+			//右下角
+			cameraShotShape.graphics.moveTo(bound.right, bound.bottom - len);
+			cameraShotShape.graphics.lineTo(bound.right, bound.bottom);
+			cameraShotShape.graphics.lineTo(bound.right - len, bound.bottom);
+			
+			//左下角
+			cameraShotShape.graphics.moveTo(bound.left, bound.bottom - len);
+			cameraShotShape.graphics.lineTo(bound.left, bound.bottom);
+			cameraShotShape.graphics.lineTo(bound.left + len, bound.bottom);
+		}
 		
 		
-		
-		
+		/**
+		 * 用来绘制镜头 
+		 */		
+		public var cameraShotShape:Shape = new Shape;
 		
 		
 		//-----------------------------------------------

@@ -2,10 +2,14 @@ package view.interact.interactMode
 {
 	import commands.Command;
 	
+	import flash.geom.Rectangle;
+	
 	import model.CoreFacade;
+	import model.vo.ElementVO;
 	
 	import view.element.ElementBase;
 	import view.element.GroupElement;
+	import view.element.shapes.LineElement;
 	import view.interact.CoreMediator;
 	import view.interact.multiSelect.TemGroupElement;
 	
@@ -16,6 +20,29 @@ package view.interact.interactMode
 		public function SelectedMode(mainMediator:CoreMediator)
 		{
 			super(mainMediator);
+		}
+		
+		/**
+		 */		
+		override public function drawShotFrame():void
+		{
+			var layout:ElementVO = mainMediator.layoutTransformer.getLayoutInfo(mainMediator.currentElement)
+			var tx:Number;
+			var ty:Number = - layout.height / 2;
+			var w:Number = layout.width;
+			var h:Number = layout.height;
+			
+			if (mainMediator.currentElement is LineElement)
+				tx = 0;
+			else
+				tx = - layout.width / 2;
+			
+			var bound:Rectangle = new Rectangle(tx, ty, w, h);
+			mainMediator.cameraShotShape.x = layout.x;
+			mainMediator.cameraShotShape.y = layout.y;
+			mainMediator.cameraShotShape.rotation = layout.rotation;
+				
+			mainMediator.drawShotFrame(bound);
 		}
 		
 		/**
@@ -153,6 +180,7 @@ package view.interact.interactMode
 			hideSelector();
 			
 			mainMediator.currentMode = mainMediator.unSelectedMode;
+			mainMediator.currentMode.drawShotFrame();
 		}
 		
 		/**
@@ -162,6 +190,8 @@ package view.interact.interactMode
 			mainMediator.showSelector();		
 			mainMediator.disableKeyboardControl();
 			mainMediator.currentMode = mainMediator.editMode;
+			
+			mainMediator.cameraShotShape.graphics.clear();
 		}
 		
 		/**

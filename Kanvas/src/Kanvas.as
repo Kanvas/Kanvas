@@ -52,9 +52,6 @@ package
 			uiContainer.addChild(toolBar);
 			uiContainer.addChild(zoomToolBar);
 			
-			cameraShotShape.visible = false;
-			uiContainer.addChild(cameraShotShape);
-			
 			stage.addEventListener(Event.RESIZE, stageResizeHandler, false, 0, true);
 			
 			// 工具提示初始化
@@ -202,46 +199,15 @@ package
 				// 给画布流内容留一定的边距
 				var gutter:uint = 30;
 				var w:Number =  stage.stageWidth - gutter * 2 - pagePanel.w;
-				if (shapePanel.isOpen || themePanel.isOpen)
+				
+				if (shapePanel.isOpen)
 					w -= shapePanel.w;
+				else if (themePanel.isOpen)
+					w -= themePanel.w;
 				
 				kvsCore.bound = new Rectangle(pagePanel.w + gutter, toolBar.h + gutter, w, 
 					stage.stageHeight - toolBar.h - gutter * 2);
 			}
-			
-			drawShotFrame();
-		}
-		
-		/**
-		 * 绘制镜头区域
-		 */		
-		private function drawShotFrame():void
-		{
-			var len:uint = 10;
-			
-			cameraShotShape.graphics.clear();
-			cameraShotShape.graphics.lineStyle(8, 0, 0.6, false, 'none', 'square');
-			
-			//左上角
-			cameraShotShape.graphics.moveTo(kvsCore.bound.left, kvsCore.bound.top + len);
-			cameraShotShape.graphics.lineTo(kvsCore.bound.left, kvsCore.bound.top);
-			cameraShotShape.graphics.lineTo(kvsCore.bound.left + len, kvsCore.bound.top);
-			
-			//右上角
-			cameraShotShape.graphics.moveTo(kvsCore.bound.right, kvsCore.bound.top + len);
-			cameraShotShape.graphics.lineTo(kvsCore.bound.right, kvsCore.bound.top);
-			cameraShotShape.graphics.lineTo(kvsCore.bound.right - len, kvsCore.bound.top);
-			
-			//右下角
-			cameraShotShape.graphics.moveTo(kvsCore.bound.right, kvsCore.bound.bottom - len);
-			cameraShotShape.graphics.lineTo(kvsCore.bound.right, kvsCore.bound.bottom);
-			cameraShotShape.graphics.lineTo(kvsCore.bound.right - len, kvsCore.bound.bottom);
-			
-			//左下角
-			cameraShotShape.graphics.moveTo(kvsCore.bound.left, kvsCore.bound.bottom - len);
-			cameraShotShape.graphics.lineTo(kvsCore.bound.left, kvsCore.bound.bottom);
-			cameraShotShape.graphics.lineTo(kvsCore.bound.left + len, kvsCore.bound.bottom);
-			
 		}
 		
 		/**
@@ -251,11 +217,6 @@ package
 		{
 			pagePanel.initPageManager();
 		}
-		
-		/**
-		 * 用来绘制镜头 
-		 */		
-		public var cameraShotShape:Shape = new Shape;
 		
 		/**
 		 * 装载工具条，面板的容器

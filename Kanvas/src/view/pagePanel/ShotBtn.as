@@ -7,6 +7,8 @@ package view.pagePanel
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
+	import model.CoreFacade;
+	
 	/**
 	 */	
 	public class ShotBtn extends IconBtn
@@ -53,7 +55,7 @@ package view.pagePanel
 		{
 			if (frameBtn.selected == false)
 			{
-				pagePanel.showCameraShot();
+				CoreFacade.coreMediator.showCameraShot();
 			}
 		}
 		
@@ -63,7 +65,7 @@ package view.pagePanel
 		{
 			if (frameBtn.selected == false)
 			{
-				pagePanel.hideCanmeraShot();
+				CoreFacade.coreMediator.hideCanmeraShot();
 			}
 		}
 		

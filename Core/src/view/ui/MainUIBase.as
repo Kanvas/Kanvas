@@ -82,6 +82,8 @@ package view.ui
 		public function set bound(value:Rectangle):void
 		{
 			_boundForAutoZoom = value;
+			
+			this.dispatchEvent(new KVSEvent(KVSEvent.UPATE_BOUND));
 		}
 		
 		/**
