@@ -43,7 +43,7 @@ package
 			
 			var context:LoaderContext = new LoaderContext();
 			context.applicationDomain = new ApplicationDomain();
-			laoder.load(new URLRequest('Kanvas'), context);
+			laoder.load(new URLRequest('./kanvas_kplayer/Kanvas'), context);
 		}
 		
 		/**
