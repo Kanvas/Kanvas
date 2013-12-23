@@ -276,7 +276,7 @@ package view.elementSelector
 		 */		
 		public function rote():void
 		{
-			this.rotation = element.vo.rotation;
+			this.rotation = element.vo.rotation + layoutInfo.rotation;
 			toolBar.rotation = - this.rotation;
 			
 			toolBar.layout(style);

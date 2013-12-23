@@ -4,6 +4,7 @@ package view.editor.text
 	
 	import commands.Command;
 	
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import model.vo.TextVO;
@@ -253,8 +254,10 @@ package view.editor.text
 			textVO.scale = layoutTransformer.getElementScaleByStageScale(textField.scaleX);
 			caculateInfoForRoteTransform(textVO, textVO.scale);
 			
-			textVO.x = layoutTransformer.stageXToElementX(this.x) - r * Math.cos(rad);
-			textVO.y = layoutTransformer.stageYToElementY(this.y) - r * Math.sin(rad);
+			var temp:Point = layoutTransformer.stagePointToElementPoint(x, y);
+			
+			textVO.x = temp.x - r * Math.cos(rad);
+			textVO.y = temp.y - r * Math.sin(rad);
 		}
 		
 		/**
@@ -267,8 +270,10 @@ package view.editor.text
 			
 			caculateInfoForRoteTransform(textVO, textField.scaleX);
 			
-			this.x = layoutTransformer.elementXToStageX(textVO.x) + r * Math.cos(rad);
-			this.y = layoutTransformer.elementYToStageY(textVO.y) + r * Math.sin(rad);
+			var point:Point = layoutTransformer.elementPointToStagePoint(textVO.x, textVO.y);
+			
+			this.x = point.x + r * Math.cos(rad);
+			this.y = point.y + r * Math.sin(rad);
 		}
 		
 		

@@ -3,6 +3,7 @@ package view.interact
 	//import com.kvs.utils.HitTest;
 	
 	import flash.display.DisplayObject;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import util.CoreUtil;
@@ -81,8 +82,8 @@ package view.interact
 		 */		
 		public function ifHitElement(element:ElementBase, hitElement:DisplayObject):Boolean
 		{
-			return hitElement.hitTestPoint(coreMdt.layoutTransformer.elementXToStageX(element.vo.x), 
-				coreMdt.layoutTransformer.elementYToStageY(element.vo.y), true);
+			var point:Point = coreMdt.layoutTransformer.elementPointToStagePoint(element.vo.x, element.vo.y);
+			return hitElement.hitTestPoint(point.x, point.y, true);
 		}
 		
 		/*public function ifHitElement(element:ElementBase, hitElement:DisplayObject):Boolean

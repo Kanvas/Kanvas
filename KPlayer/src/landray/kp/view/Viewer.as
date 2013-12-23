@@ -133,8 +133,9 @@ package landray.kp.view
 		 */
 		kp_internal function drawInteractor():void
 		{
-			var x:Number = transformer.stageXToElementX(0);
-			var y:Number = transformer.stageYToElementY(0);
+			var point:Point = transformer.stagePointToElementPoint(0, 0);
+			var x:Number = point.x;
+			var y:Number = point.y;
 			var w:Number = width  / transformer.canvasScale;
 			var h:Number = height / transformer.canvasScale;
 			canvas.drawBG(new Rectangle(x, y, w, h));
@@ -145,9 +146,7 @@ package landray.kp.view
 		 */
 		kp_internal function convertElementCoordsToViewer(x:Number, y:Number):Point
 		{
-			temp.x = transformer.elementXToStageX(x);
-			temp.y = transformer.elementYToStageY(y);
-			return temp;
+			return transformer.elementPointToStagePoint(x, y);
 		}
 		
 		/**

@@ -115,13 +115,13 @@ package view.interact
 					}
 					else
 					{
-						var property:String = e1pArr[i][0];
+						/*var property:String = e1pArr[i][0];
 						if (Math.abs(current[property] - element[property]) < area)
 						{
 							tempPoint[property] = element[property] - current[property];
-							drawLineAxis(element[property], property);
+							//drawLineAxis(element[property], property);
 							elementsLoopBreak = true;
-						}
+						}*/
 					}//end of if plus
 					if (elementsLoopBreak) break;
 				}//end of for element
@@ -379,7 +379,7 @@ package view.interact
 		/**
 		 * 以轴画线
 		 */
-		private function drawLineAxis(value:Number, axis:String = "x"):void
+		/*private function drawLineAxis(value:Number, axis:String = "x"):void
 		{
 			shape.graphics.lineStyle(.1, 0x555555);
 			if (axis == "x")
@@ -399,7 +399,7 @@ package view.interact
 				axisPoint2.y = value;
 			}
 			drawDashed(shape.graphics, axisPoint1, axisPoint2, 10, 10);
-		}
+		}*/
 		
 		/**
 		 * 在两点间画线
@@ -408,10 +408,8 @@ package view.interact
 		{
 			shape.graphics.lineStyle(.1, 0x555555);
 			var transformer:LayoutTransformer = coreMdt.layoutTransformer;
-			axisPoint1.x = transformer.elementXToStageX(point1.x);
-			axisPoint1.y = transformer.elementYToStageY(point1.y);
-			axisPoint2.x = transformer.elementXToStageX(point2.x);
-			axisPoint2.y = transformer.elementYToStageY(point2.y);
+			axisPoint1 = coreMdt.layoutTransformer.elementPointToStagePoint(point1.x, point1.y);
+			axisPoint2 = coreMdt.layoutTransformer.elementPointToStagePoint(point2.x, point2.y);
 			drawDashed(shape.graphics, axisPoint1, axisPoint2, 10, 10);
 		}
 		

@@ -126,7 +126,7 @@ package view.toolBar
 			{
 				display = true;
 				visible = true;
-				TweenLite.killTweensOf(subContainer, false, {alpha:true});
+				TweenLite.killTweensOf(subContainer, false);
 				TweenLite.to(subContainer, .5, {alpha:1});
 			}
 		}
@@ -136,7 +136,7 @@ package view.toolBar
 			if( display) 
 			{
 				display = false;
-				TweenLite.killTweensOf(subContainer, false, {alpha:true});
+				TweenLite.killTweensOf(subContainer, false);
 				TweenLite.to(subContainer, .5, {alpha:0, onComplete:function():void{visible = false}});
 			}
 		}

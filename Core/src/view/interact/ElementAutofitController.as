@@ -38,9 +38,6 @@ package view.interact
 				var y:Number = 0;
 				//画布矩形范围
 				var canvasBound:Rectangle = coreMdt.mainUI.bound;
-				//画布窗口中心点相对于舞台的坐标
-				var centerX:Number = coreMdt.layoutTransformer.stageXToElementX(.5 * coreMdt.mainUI.stage.stageWidth);
-				var centerY:Number = coreMdt.layoutTransformer.stageYToElementY(.5 * coreMdt.mainUI.stage.stageHeight);
 				
 				var toolBarWidth:Number = coreMdt.selector.toolBar.barWidth;
 				var toolBarHeight:Number = coreMdt.selector.toolBar.barHeight;
@@ -52,9 +49,10 @@ package view.interact
 				var centerPaddingRight:Number = canvasBound.right - toolBarWidth * .5;
 				
 				var point:Point = getToolBarPoint(element);
+				point = coreMdt.layoutTransformer.elementPointToStagePoint(point.x, point.y);
 				
 				//元素的坐标
-				var elementX:Number = coreMdt.layoutTransformer.elementXToStageX(point.x);
+				var elementX:Number = point.x;
 				//元素中心点需要偏移的坐标，元素顶部在Y方向上不可能超过工具条的位置，所以中心点不需要在Y方向进行判断
 				var centerOffsetX:Number = 0;
 				if (xDir == 0 || xDir == -1)
@@ -92,10 +90,8 @@ package view.interact
 				else if (rect.right > rectPaddingRight || elementX > centerPaddingRight)
 					x = Math.max(centerOffsetX, rectOffsetX);
 				
-				x /= coreMdt.layoutTransformer.canvasScale;
-				y /= coreMdt.layoutTransformer.canvasScale;
-				
-				coreMdt.zoomMoveControl.zoomMoveTo(coreMdt.layoutTransformer.canvasScale, new Point(centerX + x, centerY + y), time);
+				if (x != 0 || y != 0)
+					coreMdt.zoomMoveControl.zoomMoveOff(1, -x, -y, time);
 				return true;
 			}
 			return false;
@@ -113,10 +109,6 @@ package view.interact
 				var y:Number = 0;
 				//画布矩形范围
 				var canvasBound:Rectangle = coreMdt.mainUI.bound;
-				//画布窗口中心点相对于舞台的坐标
-				var centerX:Number = coreMdt.layoutTransformer.stageXToElementX(.5 * coreMdt.mainUI.stage.stageWidth);
-				var centerY:Number = coreMdt.layoutTransformer.stageYToElementY(.5 * coreMdt.mainUI.stage.stageHeight);
-				
 				var editorBound:Rectangle = coreMdt.mainUI.textEditor.editorBound;
 				
 				if (xDir == 0 || xDir == 1)
@@ -129,10 +121,8 @@ package view.interact
 				if (yDir == 0 || yDir == -1)
 					y = (y == 0) ? autofitTop(editorBound.top, canvasBound.top) : y;
 				
-				x /= coreMdt.layoutTransformer.canvasScale;
-				y /= coreMdt.layoutTransformer.canvasScale;
-				
-				coreMdt.zoomMoveControl.zoomMoveTo(coreMdt.layoutTransformer.canvasScale, new Point(centerX + x, centerY + y), time);
+				if (x != 0 || y != 0)
+					coreMdt.zoomMoveControl.zoomMoveOff(1, -x, -y, time);
 				return true;
 
 			}
@@ -149,65 +139,61 @@ package view.interact
 			{
 				var x:Number = 0;
 				var y:Number = 0;
-				var elementBound:Rectangle = CoreUtil.getRectForStage(element, false);
-				var plsScale:Number = (elementBound.height < 15) ? 15 / elementBound.height : 1;
+				//缩放前元素相对于stage所占矩形位置
+				var eleBefBound:Rectangle = CoreUtil.getRectForStage(element, false);
+				var plsScale:Number = (eleBefBound.height < 20) ? 20 / eleBefBound.height : 1;
 				var aimScale:Number = coreMdt.layoutTransformer.canvasScale * plsScale;
 				
-				//画布中心点
-				var cenPoint:Point = new Point(.5 * coreMdt.mainUI.stage.stageWidth, .5 * coreMdt.mainUI.stage.stageHeight);
-				//缩放前editor的旋转点
-				var oriPoint:Point = element.topLeft.clone();
-				oriPoint.x = coreMdt.layoutTransformer.elementXToStageX(oriPoint.x);
-				oriPoint.y = coreMdt.layoutTransformer.elementYToStageY(oriPoint.y);
+				//缩放前元素中心点
+				var eleBefPoint:Point = new Point((eleBefBound.left + eleBefBound.right) * .5, (eleBefBound.top + eleBefBound.bottom) * .5);
+				//缩放前元素中心点相对于画布原点的向量
+				var eleBefVector:Point = eleBefPoint.clone();
+				eleBefVector.offset(-coreMdt.canvas.x, -coreMdt.canvas.y);
+				//缩放后元素中心点相对于画布原点的向量
+				var eleAftVector:Point = eleBefVector.clone();
+				PointUtil.multiply(eleAftVector, plsScale);
+				//缩放后元素中心点
+				var eleAftPoint:Point = eleAftVector.clone();
+				eleAftPoint.offset(coreMdt.canvas.x, coreMdt.canvas.y);
+				//缩放后元素相对于stage所占矩形位置
+				var eleAftBound:Rectangle = eleBefBound.clone();
+				eleAftBound.width *= plsScale;
+				eleAftBound.height *= plsScale;
+				eleAftBound.x = eleBefPoint.x - .5 * eleAftBound.width;
+				eleAftBound.y = eleBefPoint.y - .5 * eleAftBound.height;
 				
-				//缩放前editor的旋转点
-				var vector:Point = oriPoint.subtract(cenPoint);
-				PointUtil.multiply(vector, plsScale);
-				oriPoint = cenPoint.add(vector);
+				//画布需要平移的向量
+				var vector:Point = eleBefVector.subtract(eleAftVector);
 				
+				//editor缩放前所占矩形
+				var edtBefBound:Rectangle = coreMdt.mainUI.textEditor.editorBound;
 				//editor缩放后所占矩形
-				var editorBound:Rectangle = coreMdt.mainUI.textEditor.editorBound;
-				editorBound.bottom = editorBound.bottom - coreMdt.mainUI.textEditor.fieldHeight * (1 - plsScale);
-				editorBound.right = editorBound.left + Math.max(coreMdt.mainUI.textEditor.offSet * 2 + elementBound.width * plsScale, coreMdt.mainUI.textEditor.panelWidth);
-				editorBound.x = oriPoint.x - coreMdt.mainUI.textEditor.offSet;
-				editorBound.y = oriPoint.y - coreMdt.mainUI.textEditor.offSet - coreMdt.mainUI.textEditor.panelHeight;
-				editorBound = RectangleUtil.rotateRectangle(editorBound, oriPoint, element.rotation);
-				//将矩形平移，以适应文本的中心点缩放
-				var elePoint:Point = element.middleCenter.clone();
-				elePoint.x = coreMdt.layoutTransformer.elementXToStageX(elePoint.x);
-				elePoint.y = coreMdt.layoutTransformer.elementYToStageY(elePoint.y);
-				vector = elePoint.subtract(cenPoint);
-				PointUtil.multiply(vector, plsScale);
-				vector = cenPoint.add(vector).subtract(elePoint);
-				editorBound.offset(-vector.x, -vector.y);
+				var edtAftBound:Rectangle = edtBefBound.clone();
+				edtAftBound.bottom -= coreMdt.mainUI.textEditor.fieldHeight * (1 - plsScale);
+				edtAftBound.right = edtAftBound.left + Math.max(coreMdt.mainUI.textEditor.offSet * 2 + eleAftBound.width, coreMdt.mainUI.textEditor.panelWidth);
+				edtAftBound.x = eleAftBound.x - coreMdt.mainUI.textEditor.offSet;
+				edtAftBound.y = eleAftBound.y - coreMdt.mainUI.textEditor.offSet - coreMdt.mainUI.textEditor.panelHeight;
+				CoreUtil.drawRect(0xFF0000, edtBefBound);
+				CoreUtil.drawRect(0x0000FF, edtAftBound);
 				
 				//画布矩形范围
 				var canvasBound:Rectangle = coreMdt.mainUI.bound;
 				
-				//-------------------------------------------------------------------------------
-				
-				//最后需要移动的相对位置
+				//检测编辑器范围是否超出画布范围
 				if (xDir == 0 || xDir == 1)
-					x = autofitRight(editorBound.right, canvasBound.right);
+					x = autofitRight(edtAftBound.right, canvasBound.right);
 				if (xDir == 0 || xDir == -1)
-					x = (x == 0) ? autofitLeft(editorBound.left, canvasBound.left) : x;
+					x = (x == 0) ? autofitLeft(edtAftBound.left, canvasBound.left) : x;
 				
 				if (yDir == 0 || yDir == 1)
-					y = autofitBottom(editorBound.bottom, canvasBound.bottom);
+					y = autofitBottom(edtAftBound.bottom, canvasBound.bottom);
 				if (yDir == 0 || yDir == -1)
-					y = (y == 0) ? autofitTop(editorBound.top, canvasBound.top) : y;
+					y = (y == 0) ? autofitTop(edtAftBound.top, canvasBound.top) : y;
 				
-				//-------------------------------------------------------------------------------
-				//画布窗口中心点相对于舞台的坐标
-				cenPoint.x = coreMdt.layoutTransformer.stageXToElementX(cenPoint.x);
-				cenPoint.y = coreMdt.layoutTransformer.stageYToElementY(cenPoint.y);
+				vector.x -= x;
+				vector.y -= y;
 				
-				vector.offset(x, y);
-				PointUtil.multiply(vector, 1 / aimScale);
-				vector = vector.add(cenPoint);
-				
-				coreMdt.zoomMoveControl.zoomMoveTo(aimScale, vector, time);
-
+				coreMdt.zoomMoveControl.zoomMoveOff(plsScale, vector.x, vector.y, time);
 				return true;
 			}
 			return false;
@@ -215,15 +201,15 @@ package view.interact
 		
 		private function getToolBarPoint(element:ElementBase):Point
 		{
-			var rotation:Number = MathUtil.modRotation(element.rotation);
+			var rotation:Number = MathUtil.modRotation(element.rotation + coreMdt.canvas.rotation);
 			var point:Point;
-			if (rotation >= 10 && rotation < 80)
+			if      (rotation >= 10  && rotation < 80 )
 				point = element.topLeft;
-			else if (rotation >= 80 && rotation < 100)
+			else if (rotation >= 80  && rotation < 100)
 				point = element.middleLeft;
 			else if (rotation >= 100 && rotation < 170)
 				point = element.bottomLeft;
-			else if (rotation >= 170 || rotation < 190)
+			else if (rotation >= 170 && rotation < 190)
 				point = element.bottomCenter;
 			else if (rotation >= 190 && rotation < 260)
 				point = element.bottomRight;

@@ -7,6 +7,7 @@ package view.elementSelector.lineControl
 	import commands.Command;
 	
 	import flash.display.Sprite;
+	import flash.geom.Point;
 	
 	import model.vo.ElementVO;
 	
@@ -40,8 +41,9 @@ package view.elementSelector.lineControl
 			var y:Number = startY;
 			
             // 全局坐标转换为画布坐标
-			vo.x = selector.layoutTransformer.stageXToElementX(x);
-			vo.y = selector.layoutTransformer.stageYToElementY(y);
+			var point:Point = selector.layoutTransformer.stagePointToElementPoint(x, y);
+			vo.x = point.x;
+			vo.y = point.y;
 			
 			var xDis:Number = (endX - startX);
 			var yDis:Number = (endY - startY);

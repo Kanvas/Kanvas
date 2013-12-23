@@ -10,16 +10,17 @@ package view.interact.multiSelect
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import flash.display.Sprite;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import model.CoreFacade;
 	
 	import util.CoreUtil;
 	
-	import view.ui.Bubble;
 	import view.element.ElementBase;
 	import view.element.ElementEvent;
 	import view.interact.CoreMediator;
+	import view.ui.Bubble;
 
 	/**
 	 * 多选与临时组合控制器
@@ -81,7 +82,6 @@ package view.interact.multiSelect
 			
 			coreMdt.autoGroupController.setGroupElements(autoGroup);
 		}
-		
 		
 		
 		
@@ -286,7 +286,7 @@ package view.interact.multiSelect
 		 */		
 		public function updateSelecterLayout():void
 		{
-			var ifFirstCheckLayout:Boolean = true;	
+			//var ifFirstCheckLayout:Boolean = true;	
 			var left:Number = 0;
 			var top:Number = 0;
 			var bottom:Number = 0;
@@ -297,62 +297,37 @@ package view.interact.multiSelect
 			
 			var minIndex:uint = coreMdt.canvas.numChildren - 1;
 			var index:uint;
+			var leftArr:Array = [];
+			var rightArr:Array = [];
+			var topArr:Array = [];
+			var bottomArr:Array = [];
 			for each(var element:ElementBase in this.childElements)
 			{
-				index = coreMdt.canvas.getChildIndex(element);
+				minIndex = Math.min(minIndex, index = element.index);
 				
-				if (index < minIndex)
-					minIndex = index;
+				elementRect = CoreUtil.getRectForStage(element, true, false);
 				
-				//根据上下左右的临界值得出组合的布局信息
-				elementRect = CoreUtil.getRectForStage(element);
-				if (ifFirstCheckLayout == false)
-				{
-					if (left > elementRect.left)
-						left = elementRect.left;
-					
-					if (top > elementRect.top)
-						top = elementRect.top;
-					
-					if (right < elementRect.right)
-						right = elementRect.right;
-					
-					if (bottom < elementRect.bottom)
-						bottom = elementRect.bottom;
-				}
-				else
-				{
-					left = elementRect.left;
-					top = elementRect.top;
-					right = elementRect.right;
-					bottom = elementRect.bottom;
-					
-					ifFirstCheckLayout = false;
-				}
-				
+				leftArr  .push(elementRect.left);
+				rightArr .push(elementRect.right);
+				topArr   .push(elementRect.top);
+				bottomArr.push(elementRect.right);
 			}
-			
-			left   = coreMdt.layoutTransformer.stageXToElementX(left);
-			right  = coreMdt.layoutTransformer.stageXToElementX(right);
-			top    = coreMdt.layoutTransformer.stageYToElementY(top);
-			bottom = coreMdt.layoutTransformer.stageYToElementY(bottom);
+			left   = Math.min.apply(null, leftArr);
+			right  = Math.max.apply(null, rightArr);
+			top    = Math.min.apply(null, topArr);
+			bottom = Math.max.apply(null, bottomArr);
 			
 			//先重设临时组合的比例和旋转角度
 			temGroupElement.scale = 1;
 			temGroupElement.vo.rotation = temGroupElement.rotation = 0;
 			
 			//全局布局信息
-			temGroupElement.vo.width = right - left;
-			temGroupElement.vo.height = bottom - top;
-			temGroupElement.vo.x = .5 * (left + right);
-			temGroupElement.vo.y = .5 * (top + bottom);
-			/*
-			//将全局信息转换为局部信息
-			temGroupElement.vo.x = coreMdt.layoutTransformer.stageXToElementX(temGroupElement.vo.x);
-			temGroupElement.vo.y = coreMdt.layoutTransformer.stageYToElementY(temGroupElement.vo.y);
-			temGroupElement.vo.width = temGroupElement.vo.width / coreMdt.layoutTransformer.canvasScale;
-			temGroupElement.vo.height = temGroupElement.vo.height / coreMdt.layoutTransformer.canvasScale;
-			*/
+			temGroupElement.vo.width = (right - left) * coreMdt.layoutTransformer.compensateScale;
+			temGroupElement.vo.height = (bottom - top) * coreMdt.layoutTransformer.compensateScale;
+			
+			temGroupElement.vo.x = (.5 * (left + right) - coreMdt.canvas.x) / coreMdt.canvas.scaleX;
+			temGroupElement.vo.y = (.5 * (top + bottom) - coreMdt.canvas.y) / coreMdt.canvas.scaleY;
+			
 			//刷新UI
 			temGroupElement.render();
 			coreMdt.selector.show(temGroupElement);
@@ -363,7 +338,7 @@ package view.interact.multiSelect
 			//确保临时组合位于子元件的最下层
 			if (temGroupElement.parent == null)
 				coreMdt.canvas.addChildAt(temGroupElement, index);
-			else if (minIndex < coreMdt.canvas.getChildIndex(temGroupElement))
+			else if (minIndex < temGroupElement.index)
 				coreMdt.canvas.addChildAt(temGroupElement, index);
 			
 			//设定临时组合的内容

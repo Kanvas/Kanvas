@@ -36,19 +36,26 @@ package util.layout
 				
 				//左上角坐标
 				_tx =  - _width / 2;
-				_ty = - _height / 2;      
+				_ty = - _height / 2;
 				
 				updateXY();
+				updateRotation();
 			}
 			
 		}
 		
 		/**
 		 */		
-		public function updateXY():void
+		private function updateXY():void
 		{
-			_x = transformer.elementXToStageX(currentElementUI.x);
-			_y = transformer.elementYToStageY(currentElementUI.y);
+			var point:Point = transformer.elementPointToStagePoint(currentElementUI.x, currentElementUI.y);
+			_x = point.x;
+			_y = point.y;
+		}
+		
+		private function updateRotation():void
+		{
+			_rotation = transformer.canvas.rotation;
 		}
 		
 		/**
@@ -112,14 +119,19 @@ package util.layout
 		
 		/**
 		 */		
-		public function angle():Number
+		public function get angle():Number
 		{
 			return currentElementVo.rotation;
 		}
 		
+		public function get rotation():Number
+		{
+			return _rotation;
+		}
+		
 		/**
 		 */		
-		private var center:Point;
+		private var _rotation:Number;
 		
 		/**
 		 */		

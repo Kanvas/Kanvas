@@ -576,8 +576,8 @@ package
 		 */		
 		public function updatePastPoint():void
 		{
-			PAST_LOC.x = this.layoutTransformer.stageXToElementX(stage.stageWidth * .5);
-			PAST_LOC.y = this.layoutTransformer.stageYToElementY(stage.stageHeight * .5);
+			
+			PAST_LOC = layoutTransformer.stagePointToElementPoint(stage.stageWidth * .5, stage.stageHeight * .5);
 		}
 		
 		/**
@@ -662,8 +662,9 @@ package
 		public function drawBgInteractorShape():void
 		{
 			var rect:Rectangle = new Rectangle;
-			rect.x = layoutTransformer.stageXToElementX(0);
-			rect.y = layoutTransformer.stageYToElementY(0);
+			var point:Point = layoutTransformer.stagePointToElementPoint(0, 0);
+			rect.x = point.x;
+			rect.y = point.y;
 			rect.width = stage.stageWidth / layoutTransformer.canvasScale;
 			rect.height = stage.stageHeight / layoutTransformer.canvasScale;
 			
