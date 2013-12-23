@@ -46,16 +46,50 @@ package view.interact.zoomMove
 		}
 		
 		/**
+		 * 画布缩放偏移一定的scale, x, y
+		 *  
+		 * @param scale
+		 * @param x
+		 * @param y
+		 * @param time
+		 * @param ease
 		 * 
 		 */		
-		public function zoomMoveTo(value:Number, mouseCenter:Point = null, timer:Number = 1, ease:Object = null):void
+		public function zoomMoveOff(scale:Number, x:Number, y:Number, time:Number = 1, ease:Object = null):void
 		{
 			if (ease == null)
 				ease = Cubic.easeInOut;
 			
-			zoomer.zoomTo(value, mouseCenter, timer, ease);
+			zoomer.zoomMoveOff(scale, x, y, time, ease);
 		}
 		
+		
+		/**
+		 * 画布缩放至一个scale，以mouseCenter为画布中心的位置
+		 * 
+		 * @param scale
+		 * @param mouseCenter
+		 * @param time
+		 * @param ease
+		 * 
+		 */
+		public function zoomMoveTo(scale:Number, mouseCenter:Point = null, time:Number = 1, ease:Object = null):void
+		{
+			if (ease == null)
+				ease = Cubic.easeInOut;
+			
+			zoomer.zoomTo(scale, mouseCenter, time, ease);
+		}
+		
+		/**
+		 * 画布缩放，旋转，移动 
+		 * @param scale
+		 * @param rotation
+		 * @param x
+		 * @param y
+		 * @param ease
+		 * 
+		 */
 		public function zoomRotateMoveTo(scale:Number, rotation:Number, x:Number, y:Number, ease:Object = null):void
 		{
 			if (ease == null)

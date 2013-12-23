@@ -104,6 +104,17 @@ package view.interact.zoomMove
 			flasher.flash(0.5);
 		}
 		
+		public function zoomMoveOff(scale:Number, x:Number, y:Number, time:Number = 1, ease:Object = null):void
+		{
+			flasher.close(false);
+			flasher.ready();
+			flasher.canvasTargetScale = canvas.scaleX * scale;
+			flasher.canvasTargetX = canvas.x + x;
+			flasher.canvasTargetY = canvas.y + y;
+			flasher.flash(time, ease);
+		}
+		
+		
 		public function zoomTo(newScale:Number, center:Point = null, time:Number = 1, ease:Object = null):void
 		{
 			flasher.close(false);

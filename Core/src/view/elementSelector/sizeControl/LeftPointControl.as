@@ -80,8 +80,9 @@ package view.elementSelector.sizeControl
 			holder.element.vo.width = Math.abs(newSize);
 			
 			var rote:Number = rad - Math.PI / 2;
-			holder.element.vo.x = holder.layoutTransformer.stageXToElementX(oldX + hDis / 2 * Math.cos(rote));
-			holder.element.vo.y = holder.layoutTransformer.stageYToElementY(oldY + hDis / 2 * Math.sin(rote));
+			var temp:Point = holder.layoutTransformer.stagePointToElementPoint(oldX + hDis / 2 * Math.cos(rote), oldY + hDis / 2 * Math.sin(rote));
+			holder.element.vo.x = temp.x;
+			holder.element.vo.y = temp.y;
 			holder.element.render();
 			
 			var currPoint:Point = (oppsite) ? holder.element.middleRight : holder.element.middleLeft;

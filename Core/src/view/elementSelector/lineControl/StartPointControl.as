@@ -2,6 +2,8 @@ package view.elementSelector.lineControl
 {
 	import fl.controls.SelectableList;
 	
+	import flash.geom.Point;
+	
 	import view.elementSelector.ControlPointBase;
 	import view.elementSelector.ElementSelector;
 	
@@ -29,8 +31,9 @@ package view.elementSelector.lineControl
 				vo.rotation = rotation;
 				var rad:Number = vo.rotation / 180 * Math.PI;
 				var r:Number = vo.width / 2 * vo.scale;
-				vo.x = selector.coreMdt.layoutTransformer.stageXToElementX(endX) - r * Math.cos(rad);
-				vo.y = selector.coreMdt.layoutTransformer.stageYToElementY(endY) - r * Math.sin(rad);
+				var point:Point = selector.layoutTransformer.stagePointToElementPoint(endX, endY);
+				vo.x = point.x - r * Math.cos(rad);
+				vo.y = point.y - r * Math.sin(rad);
 				
 				selector.element.render();
 				selector.update();

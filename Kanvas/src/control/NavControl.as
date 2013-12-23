@@ -197,7 +197,7 @@ package control
 		 */		
 		private function moveZBRight():void
 		{
-			TweenLite.killTweensOf(app.zoomToolBar, false, {x:true});
+			TweenLite.killTweensOf(app.zoomToolBar, false);
 			TweenLite.to(app.zoomToolBar, .5, {x:app.stage.stageWidth - app.zoomToolBar.width - 5});
 		}
 		
@@ -205,7 +205,7 @@ package control
 		 */		
 		private function moveZBLeft(panel:Panel):void
 		{
-			TweenLite.killTweensOf(app.zoomToolBar, false, {x:true});
+			TweenLite.killTweensOf(app.zoomToolBar, false);
 			TweenLite.to(app.zoomToolBar, .5, {x:app.stage.stageWidth - panel.w - app.zoomToolBar.width - 5});
 		}
 			

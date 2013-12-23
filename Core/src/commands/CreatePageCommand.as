@@ -3,6 +3,8 @@ package commands
 	import com.greensock.TweenLite;
 	import com.greensock.easing.Back;
 	
+	import flash.geom.Point;
+	
 	import model.CoreFacade;
 	import model.ElementProxy;
 	import model.vo.ElementVO;
@@ -37,8 +39,9 @@ package commands
 			// VO 初始化
 			pageVO = ElementCreator.getElementVO(pageProxy.type) as PageVO;
 			
-			pageVO.x = layoutTransformer.stageXToElementX(pageProxy.x);
-			pageVO.y = layoutTransformer.stageYToElementY(pageProxy.y);
+			var point:Point = layoutTransformer.stagePointToElementPoint(pageProxy.x, pageProxy.y);
+			pageVO.x = point.x;
+			pageVO.y = point.y;
 			pageVO.rotation = pageProxy.rotation;
 			pageVO.width = pageProxy.width;
 			pageVO.height = pageProxy.height;

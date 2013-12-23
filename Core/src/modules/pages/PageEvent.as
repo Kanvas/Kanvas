@@ -32,6 +32,7 @@ package modules.pages
 		 */		
 		public static const UPDATE_THUMB:String = "updateThumb";
 		
+		
 		/**
 		 */		
 		public function PageEvent(type:String, $pageVO:PageVO = null, bubbles:Boolean = false, cancelable:Boolean = false)
@@ -51,5 +52,6 @@ package modules.pages
 		}
 		
 		private var __pageVO:PageVO;
+		
 	}
 }

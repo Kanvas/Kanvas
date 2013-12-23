@@ -2,9 +2,8 @@ package view.interact.zoomMove
 {
 	import com.greensock.TweenLite;
 	import com.greensock.TweenMax;
-	import com.greensock.easing.Cubic;
-	import com.greensock.easing.Ease;
-	import com.greensock.easing.Linear;
+	import com.greensock.easing.*;
+	import com.greensock.easing.Strong;
 	
 	import flash.display.Shape;
 	import flash.display.Sprite;
@@ -51,6 +50,7 @@ package view.interact.zoomMove
 
 		public function flash(time:Number = 0.3, easeFlash:Object = null):void
 		{
+			if (packer) packer.modCanvasPositionEnd();
 			if (Math.max(canvasTargetScale / canvas.scaleX, canvas.scaleX / canvasTargetScale) > 1.0005)
 				control.mainUI.curScreenState.disableCanvas();
 			
@@ -68,35 +68,50 @@ package view.interact.zoomMove
 			if (Math.max(canvasTargetScale / canvas.scaleX, canvas.scaleX / canvasTargetScale) > 1.0005)
 				control.mainUI.curScreenState.disableCanvas();
 			
-			TweenMax.killTweensOf(canvas, false);
+			trace(TweenMax.version)
 			
-			var scalePlus:Number = Math.max(canvasTargetScale / canvas.scaleX, canvas.scaleX / canvasTargetScale);
-			var timeScale:Number = scalePlus / speedScale;
-			var timeRotation:Number = Math.abs(canvasTargetRotation - canvas.rotation) / speedRotation;
-			var timeMove:Number = Point.distance(new Point(canvas.x, canvas.y), new Point(canvasTargetX, canvasTargetY)) / speedMove;
-			var time:Number = Math.max(timeScale, timeRotation, timeMove);
+			if (canvas == null) return;
+			if (packer == null) 
+				packer = new Packer(canvas);
+			else
+				TweenMax.killTweensOf(packer, false);
+			
+			packer.modCanvasPositionStart(canvasTargetX, canvasTargetY, canvasTargetScale, canvasTargetRotation);
+			
+			var scalePlus:Number = Math.max(canvasTargetScale / packer.scale, packer.scale / canvasTargetScale);
+			var timeScale:Number = (scalePlus / speedScale) * ((scalePlus < 1.25) ? 2 : 1);
+			var timeRotation:Number = Math.abs(canvasTargetRotation - packer.rotation) / speedRotation;
+			var timeMove:Number = Point.distance(new Point(packer.x, packer.y), new Point(canvasTargetX, canvasTargetY)) / speedMove;
+			var time:Number = Math.min(Math.max(timeScale, timeRotation, timeMove, 1), 2);
 			
 			//缩放差距不大时启用先缩小后放大式镜头缩放
-			if (scalePlus < speedScale)
+			if (scalePlus < 1.25)
 			{
-				var scaleMid:Number = Math.min(canvasTargetScale, canvas.scaleX) / 1.5;
-				TweenMax.to(canvas, time * .5, {scaleX:scaleMid, scaleY:scaleMid, ease:easeFlash});
-				TweenMax.to(canvas, time * .5, {scaleX:canvasTargetScale, scaleY:canvasTargetScale, delay:time * .5, ease : easeFlash});
+				var canvasMiddleScale:Number = Math.min(canvasTargetScale, packer.scale) / 1.5;
+				TweenMax.to(packer, time * .5, {scale:canvasMiddleScale});
+				TweenMax.to(packer, time * .5, {scale:canvasTargetScale, delay:time * .5});
+				easeFlash = Strong.easeInOut;
 			}
 			else
 			{
-				TweenMax.to(canvas, time, {scaleX:canvasTargetScale, scaleY:canvasTargetScale, ease:easeFlash});
+				TweenMax.to(packer, time, {scale:canvasTargetScale});
+				easeFlash = Strong.easeOut;
 			}
-			TweenMax.to(canvas, time, {rotation:canvasTargetRotation, x:canvasTargetX, y:canvasTargetY, 
-				ease : easeFlash, 
+			TweenMax.to(packer, time, {rotation:canvasTargetRotation, x:canvasTargetX, y:canvasTargetY, 
+				progress: 1, 
+				ease : easeFlash,
 				onUpdate : updated,
 				onComplete : finishZoom});
 		}
+		
+		private var packer:Packer;
 		
 		/**
 		 */		
 		private function updated():void
 		{
+			if (packer) packer.modCanvasPosition();
+			
 			control.mainUI.synBgImgWidthCanvas();
 			
 			control.uiMediator.updateAfterZoomMove();
@@ -106,6 +121,10 @@ package view.interact.zoomMove
 		 */		
 		private function finishZoom():void
 		{
+			if (packer) {
+				packer.modCanvasPosition();
+				packer.modCanvasPositionEnd();
+			}
 			control.mainUI.curScreenState.enableCanvas();
 			isFlashing = false;
 		}
@@ -192,7 +211,7 @@ package view.interact.zoomMove
 		
 		
 		private var speedMove:Number = 1000;
-		private var speedScale:Number = 1.5;
-		private var speedRotation:Number = 90;
+		private var speedScale:Number = 1.8;
+		private var speedRotation:Number = 180;
 	}
 }

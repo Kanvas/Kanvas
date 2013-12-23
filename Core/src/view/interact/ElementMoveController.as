@@ -32,10 +32,10 @@ package view.interact
 			curMovingElement = element;
 			
 			// 选择器的位置是基准, 移动图形时先移动选择器，然后从选择器同步到图形
-			selector.x = layoutTransformer.elementXToStageX(curMovingElement.x);
-			selector.y = layoutTransformer.elementYToStageY(curMovingElement.y);
-			selectorStartX = selector.x;
-			selectorStartY = selector.y;
+			var point:Point = layoutTransformer.elementPointToStagePoint(curMovingElement.x, curMovingElement.y);
+			
+			selectorStartX = selector.x = point.x;
+			selectorStartY = selector.y = point.y;
 			
 			oldPropertyObj = {};
 			oldPropertyObj.x = element.x;
@@ -66,8 +66,9 @@ package view.interact
 			//coreMdt.moveSelector(disX, disY);
 			
 			// 元素的移动是基于选择其的位置的
-			curMovingElement.x = point.x = layoutTransformer.stageXToElementX(selector.x);
-			curMovingElement.y = point.y = layoutTransformer.stageYToElementY(selector.y);
+			var elementPoint:Point = layoutTransformer.stagePointToElementPoint(selector.x, selector.y);
+			curMovingElement.x = point.x = elementPoint.x;
+			curMovingElement.y = point.y = elementPoint.y;
 			
 			
 			var temp:Point = coreMdt.autoAlignController.checkPosition(curMovingElement);
@@ -81,11 +82,9 @@ package view.interact
 			curMovingElement.x = point.x;
 			curMovingElement.y = point.y;
 			
-			selector.x = layoutTransformer.elementXToStageX(curMovingElement.x);
-			selector.y = layoutTransformer.elementYToStageY(curMovingElement.y);
-			
-			//curMovingElement.x = layoutTransformer.stageXToElementX(selector.x);
-			//curMovingElement.y = layoutTransformer.stageYToElementY(selector.y);
+			var selectorPoint:Point = layoutTransformer.elementPointToStagePoint(curMovingElement.x, curMovingElement.y);
+			selector.x = selectorPoint.x;
+			selector.y = selectorPoint.y;
 			
 			coreMdt.autoGroupController.moveElement(curMovingElement.x - curMovingElement.vo.x, 
 													curMovingElement.y - curMovingElement.vo.y);

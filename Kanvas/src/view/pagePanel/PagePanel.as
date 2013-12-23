@@ -9,11 +9,13 @@ package view.pagePanel
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	import flash.ui.Keyboard;
 	
 	import model.CoreFacade;
 	import model.CoreProxy;
 	
+	import modules.pages.PageElement;
 	import modules.pages.PageEvent;
 	import modules.pages.PageManager;
 	import modules.pages.PageVO;
@@ -290,13 +292,92 @@ package view.pagePanel
 		//
 		//
 		//
-		//  焦距动画控制
+		//  页面拖拽控制
 		//
 		//
 		//
 		//------------------------------------------------
 		
+		/**
+		 */		
+		private function startDragPage(evt:PagePanelEvent):void
+		{
+			evt.stopPropagation();
+			
+			pagesCtn.mouseChildren = false;
+			
+			var point:Point = new Point(evt.pageUI.x, evt.pageUI.y);
+			point = pagesCtn.localToGlobal(point);
+			
+			evt.pageUI.x = point.x;
+			evt.pageUI.y = point.y;
+			stage.addChild(evt.pageUI);
+			
+			currentDragPageIndex = evt.pageUI.pageVO.index;
+			
+			evt.pageUI.startDrag();
+		}
 		
+		/**
+		 * 页面开始拖拽时，当前页面的位置
+		 */		
+		private var currentDragPageIndex:int;
+		
+		/**
+		 */		
+		private function stopDragPage(evt:PagePanelEvent):void
+		{
+			evt.stopPropagation();
+			pagesCtn.mouseChildren = true;
+			
+			evt.pageUI.stopDrag();
+			
+			pagesCtn.addChild(evt.pageUI);
+			
+			var pageUI:PageUI;
+			for each (pageUI in pages)
+			{
+				pageUI.y = pageUI.pageVO.index * pageUI.h;
+			}
+		}
+		
+		/**
+		 */		
+		private function pageDragging(evt:PagePanelEvent):void
+		{
+			evt.stopPropagation();
+			
+			
+			
+			
+		}
+		
+		/**
+		 * 当前页面的Y值
+		 */		
+		private function getCurPageStartY():Number
+		{
+			return 0;
+		}
+		
+		/**
+		 * 当前页面的Y值加上高度
+		 */		
+		private function getCurrPageEndY():Number
+		{
+			return 0;
+		}
+		
+		/**
+		 * 将页面的全局坐标转换为局部坐标
+		 */		
+		private function getPagePos(pageUI:PageUI):Point
+		{
+			var point:Point = new Point(pageUI.x, pageUI.y);
+			point = pagesCtn.globalToLocal(point);
+			
+			return point;
+		}
 		
 		
 		
@@ -333,11 +414,15 @@ package view.pagePanel
 			this.addChild(addPageBtn);
 			
 			addChild(pagesCtn);
-			pagesCtn.addEventListener(MouseEvent.CLICK, pageClicked);
+			pagesCtn.addEventListener(MouseEvent.MOUSE_DOWN, pageClicked);
 			
 			this.addEventListener(MouseEvent.ROLL_OVER, startKeyBordListen);
 			
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, keyBoardShot);
+			
+			stage.addEventListener(PagePanelEvent.START_DRAG_PAGE, startDragPage);
+			stage.addEventListener(PagePanelEvent.END_DRAG_PAGE, stopDragPage);
+			stage.addEventListener(PagePanelEvent.PAGE_DRAGGING, pageDragging);
 			
 			updateLayout();
 		}

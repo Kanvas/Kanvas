@@ -1,23 +1,19 @@
 package view.pagePanel
 {
 	import com.kvs.ui.button.IconBtn;
-	import com.kvs.ui.button.LabelBtn;
+	import com.kvs.ui.clickMove.ClickMoveControl;
+	import com.kvs.ui.clickMove.IClickMove;
 	import com.kvs.ui.label.LabelUI;
-	import com.kvs.ui.label.TextFlowLabel;
 	
 	import flash.display.Shape;
-	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
-	
-	import model.vo.TextVO;
 	
 	import modules.pages.PageEvent;
 	import modules.pages.PageVO;
 	
 	/**
 	 */	
-	public class PageUI extends IconBtn
+	public class PageUI extends IconBtn implements IClickMove
 	{
 		public function PageUI(vo:PageVO)
 		{
@@ -25,6 +21,7 @@ package view.pagePanel
 			
 			this.pageVO = vo;
 			pageVO.addEventListener(PageEvent.PAGE_SELECTED, pageSelected);
+			pageVO.addEventListener(PageEvent.UPDATE_THUMB, updateThumb);
 			
 			addChild(label);
 			
@@ -39,6 +36,58 @@ package view.pagePanel
 			
 			this.addEventListener(MouseEvent.ROLL_OVER, rollOver);
 			this.addEventListener(MouseEvent.ROLL_OUT, rollOut);
+			
+			dragMoveControl = new ClickMoveControl(this, this);
+		}
+		
+		/**
+		 */		
+		private var dragMoveControl:ClickMoveControl;
+		
+		/**
+		 * 
+		 */		
+		public function moveOff(xOff:Number, yOff:Number):void
+		{
+			this.dispatchEvent(new PagePanelEvent(PagePanelEvent.PAGE_DRAGGING, this));
+		}
+		
+		/**
+		 * 当鼠标按下对象，没有拖动就释放时触发此方法
+		 */		
+		public function clicked():void
+		{
+			
+		}
+		
+		/**
+		 */		
+		public function startMove():void
+		{
+			this.mouseChildren = this.mouseEnabled = false;
+			this.graphics.clear();
+			drawPageBg();
+			
+			this.label.visible = false;
+			this.dispatchEvent(new PagePanelEvent(PagePanelEvent.START_DRAG_PAGE, this));
+		}
+			
+		/**
+		 */			
+		public function stopMove():void
+		{
+			label.visible = true;
+			this.statesControl.toDown();
+			
+			this.dispatchEvent(new PagePanelEvent(PagePanelEvent.END_DRAG_PAGE, this));
+			this.mouseEnabled = this.mouseChildren = true;
+		}
+		
+		/**
+		 */		
+		private function updateThumb(evt:PageEvent):void
+		{
+			
 		}
 		
 		/**
@@ -75,15 +124,24 @@ package view.pagePanel
 		{
 			super.render();
 			
+			drawPageBg();
+			
+			deleteBtn.x = leftGutter + iconW;
+			deleteBtn.y = (currState.height - iconH) / 2;;
+		}
+		
+		/**
+		 * 绘制页面截图区域的背景 
+		 * 
+		 */		
+		private function drawPageBg():void
+		{
 			var ty:Number = (currState.height - iconH) / 2;
 			
 			this.graphics.lineStyle(1, 0xEEEEEE);
 			this.graphics.beginFill(0xFFFFFF);
 			this.graphics.drawRect(leftGutter, ty, iconW, iconH);
 			this.graphics.endFill();
-			
-			deleteBtn.x = leftGutter + iconW;
-			deleteBtn.y = ty;
 		}
 		
 		/**

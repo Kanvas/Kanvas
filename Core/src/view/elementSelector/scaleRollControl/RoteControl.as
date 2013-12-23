@@ -37,6 +37,8 @@ package view.elementSelector.scaleRollControl
 			
 			var rote:Number = oldRotation + dis;
 			
+			rote = rote - selector.coreMdt.canvas.rotation;
+			
 			if (rote < 0)
 				rote += 360;
 			rote = Math.ceil(rote);
@@ -47,6 +49,7 @@ package view.elementSelector.scaleRollControl
 				rote = rotation;
 			
 			dis = rote - oldRotation;
+			
 			
 			selector.element.vo.rotation = rote;
 			selector.element.rotation = rote;

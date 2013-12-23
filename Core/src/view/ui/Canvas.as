@@ -84,6 +84,16 @@ package view.ui
 			}
 		}
 		
+		override public function set scaleX(value:Number):void
+		{
+			super.scaleX = value;
+		}
+		
+		override public function get scaleX():Number
+		{
+			return super.scaleX;
+		}
+		
 		/**
 		 */		
 		public var interactorBG:Sprite = new Sprite;
