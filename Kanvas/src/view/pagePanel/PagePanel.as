@@ -338,6 +338,7 @@ package view.pagePanel
 			for each (pageUI in pages)
 			{
 				pageUI.y = pageUI.pageVO.index * pageUI.h;
+				pageUI.updataLabel();
 			}
 		}
 		
