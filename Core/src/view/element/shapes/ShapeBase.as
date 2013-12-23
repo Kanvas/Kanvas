@@ -50,7 +50,7 @@ package view.element.shapes
 			}
 			
 			xmlData.@thickness = vo.thickness;
-			
+			xmlData.@radius = shapeVO.radius;
 			
 			return xmlData;
 		}
