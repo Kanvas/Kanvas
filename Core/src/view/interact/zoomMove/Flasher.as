@@ -68,8 +68,6 @@ package view.interact.zoomMove
 			if (Math.max(canvasTargetScale / canvas.scaleX, canvas.scaleX / canvasTargetScale) > 1.0005)
 				control.mainUI.curScreenState.disableCanvas();
 			
-			trace(TweenMax.version)
-			
 			if (canvas == null) return;
 			if (packer == null) 
 				packer = new Packer(canvas);
@@ -82,6 +80,7 @@ package view.interact.zoomMove
 			var timeScale:Number = (scalePlus / speedScale) * ((scalePlus < 1.25) ? 2 : 1);
 			var timeRotation:Number = Math.abs(canvasTargetRotation - packer.rotation) / speedRotation;
 			var timeMove:Number = Point.distance(new Point(packer.x, packer.y), new Point(canvasTargetX, canvasTargetY)) / speedMove;
+			trace("scale:", timeScale, "\nrotation:", timeRotation, "\nmove:", timeMove);
 			var time:Number = Math.min(Math.max(timeScale, timeRotation, timeMove, 1), 2);
 			
 			//缩放差距不大时启用先缩小后放大式镜头缩放
@@ -211,7 +210,7 @@ package view.interact.zoomMove
 		
 		
 		private var speedMove:Number = 1000;
-		private var speedScale:Number = 1.8;
-		private var speedRotation:Number = 180;
+		private var speedScale:Number = 2.5;
+		private var speedRotation:Number = 150;
 	}
 }
