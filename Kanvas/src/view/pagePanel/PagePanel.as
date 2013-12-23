@@ -122,7 +122,7 @@ package view.pagePanel
 			var pageUI:PageUI = new PageUI(pageVO);
 			
 			pageUI.w = scrollProxy.viewWidth;
-			pageUI.h = 90;
+			pageUI.h = pageHeight;
 			
 			pageUI.iconW = 90;
 			pageUI.iconH = 70;
@@ -134,6 +134,10 @@ package view.pagePanel
 			
 			setCurrentPage(pageUI);
 		}
+		
+		/**
+		 */		
+		private var pageHeight:uint = 90;
 		
 		/**
 		 */		
@@ -348,25 +352,55 @@ package view.pagePanel
 		{
 			evt.stopPropagation();
 			
+			var min:Number = curPageStartY;
+			var max:Number = currPageEndY;
 			
+			var pageY:Number = getPagePos(evt.pageUI).y;
 			
+			if (pageY < min)
+			{
+				getPageByIndex(currentDragPageIndex).pageVO.index -= 1;
+				currentDragPageIndex -= 1;
+				getPageByIndex(currentDragPageIndex).pageVO.index += 1;
+				
+				updateTemPageLayout();
+			}
+			else if (pageY > max)
+			{
+				getPageByIndex(currentDragPageIndex).pageVO.index += 1;
+				currentDragPageIndex += 1;
+				getPageByIndex(currentDragPageIndex).pageVO.index -= 1;
+				
+				updateTemPageLayout();
+			}
+			else
+			{
+				
+			}
+		}
+		
+		/**
+		 * 拖拽页面时，临时更新页面的布局
+		 */		
+		private function updateTemPageLayout():void
+		{
 			
 		}
 		
 		/**
 		 * 当前页面的Y值
 		 */		
-		private function getCurPageStartY():Number
+		private function get curPageStartY():Number
 		{
-			return 0;
+			return currentDragPageIndex * pageHeight;
 		}
 		
 		/**
 		 * 当前页面的Y值加上高度
 		 */		
-		private function getCurrPageEndY():Number
+		private function get currPageEndY():Number
 		{
-			return 0;
+			return curPageStartY + pageHeight;
 		}
 		
 		/**
@@ -380,7 +414,22 @@ package view.pagePanel
 			return point;
 		}
 		
-		
+		/**
+		 * 根据位置信息获取页面
+		 */		
+		private function getPageByIndex(index:int):PageUI
+		{
+			var pageUI:PageUI;
+			
+			for each (pageUI in pages)
+			{
+				if (pageUI.pageVO.index == index)
+					break;
+			}
+			
+			return pageUI;
+		}
+			
 		
 		
 		
