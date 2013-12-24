@@ -58,7 +58,7 @@ package view.elementSelector.toolBar
 		
 		/**
 		 */		
-		protected var colorIconSize:uint = 25;
+		protected var colorIconSize:uint = 21;
 		
 		/**
 		 */		
