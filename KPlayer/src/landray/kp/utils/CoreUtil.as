@@ -12,11 +12,6 @@ package landray.kp.utils
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	
-	import landray.kp.core.KPConfig;
-	import landray.kp.core.kp_internal;
-	import landray.kp.view.Viewer;
-	
-	import model.CoreProxy;
 	import model.vo.ElementVO;
 	
 	import util.StyleUtil;
@@ -29,12 +24,12 @@ package landray.kp.utils
 		
 		/**
 		 */		
-		public static function applyStyle(vo:ElementVO, stypeID:String=null):void
+		public static function applyStyle(vo:ElementVO, stypeID:String = null):void
 		{
 			StyleUtil.applyStyleToElement(vo, stypeID);
 		}
 		
-		public static function clearLibPart(lib:XMLVOLib=null):void
+		public static function clearLibPart(lib:XMLVOLib = null):void
 		{
 			if(!lib) 
 				lib = XMLVOLib.currentLib;

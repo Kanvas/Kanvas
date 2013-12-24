@@ -31,12 +31,14 @@ package util
 		{
 			coreMdt.mainUI.autoAlignUI.graphics.lineStyle(1, color);
 			coreMdt.mainUI.autoAlignUI.graphics.drawRect(rect.x, rect.y, rect.width, rect.height);
+			coreMdt.mainUI.autoAlignUI.graphics.endFill();
 		}
 		
 		public static function drawCircle(color:uint, point:Point, r:Number):void
 		{
 			//var x:Number = coreMdt.layoutTransformer.elementXToStageX(point.x);
 			//var y:Number = coreMdt.layoutTransformer.elementYToStageY(point.y);
+			coreMdt.mainUI.autoAlignUI.graphics.lineStyle(0, 0, 0);
 			coreMdt.mainUI.autoAlignUI.graphics.beginFill(color);
 			coreMdt.mainUI.autoAlignUI.graphics.drawCircle(point.x, point.y, r);
 			coreMdt.mainUI.autoAlignUI.graphics.endFill();
@@ -47,6 +49,7 @@ package util
 			coreMdt.mainUI.autoAlignUI.graphics.lineStyle(1, color);
 			coreMdt.mainUI.autoAlignUI.graphics.moveTo(point1.x, point1.y);
 			coreMdt.mainUI.autoAlignUI.graphics.lineTo(point2.x, point2.y);
+			coreMdt.mainUI.autoAlignUI.graphics.endFill();
 		}
 		
 		public static function clear():void

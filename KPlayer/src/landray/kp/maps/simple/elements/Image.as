@@ -1,7 +1,5 @@
 package landray.kp.maps.simple.elements
 {
-	import com.kvs.utils.XMLConfigKit.style.Style;
-	
 	import flash.display.Shape;
 	
 	import landray.kp.ui.Loading;

@@ -1,7 +1,6 @@
 package landray.kp.maps.simple.elements
 {
 	import com.kvs.ui.label.TextFlowLabel;
-	import com.kvs.utils.XMLConfigKit.style.elements.TextFormatStyle;
 	
 	import flash.text.TextFormat;
 	

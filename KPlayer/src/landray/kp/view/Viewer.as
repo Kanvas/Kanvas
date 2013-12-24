@@ -1,6 +1,5 @@
 package landray.kp.view
 {
-	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -16,7 +15,6 @@ package landray.kp.view
 	
 	import util.layout.LayoutTransformer;
 	
-	import view.ui.Bubble;
 	import view.interact.zoomMove.ZoomMoveControl;
 	import view.toolBar.ZoomToolBar;
 	import view.ui.MainUIBase;

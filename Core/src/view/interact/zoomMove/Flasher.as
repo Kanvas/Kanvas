@@ -77,11 +77,12 @@ package view.interact.zoomMove
 			packer.modCanvasPositionStart(canvasTargetX, canvasTargetY, canvasTargetScale, canvasTargetRotation);
 			
 			var scalePlus:Number = Math.max(canvasTargetScale / packer.scale, packer.scale / canvasTargetScale);
-			var timeScale:Number = (scalePlus / speedScale) * ((scalePlus < 1.25) ? 2 : 1);
+			var timeScale:Number = (scalePlus < 1.25) ? 3 / speedScale + scalePlus / speedScale : scalePlus / speedScale;
+			//var timeScale:Number = (scalePlus / speedScale) * ((scalePlus < 1.25) ? 2 : 1);
 			var timeRotation:Number = Math.abs(canvasTargetRotation - packer.rotation) / speedRotation;
 			var timeMove:Number = Point.distance(new Point(packer.x, packer.y), new Point(canvasTargetX, canvasTargetY)) / speedMove;
-			trace("scale:", timeScale, "\nrotation:", timeRotation, "\nmove:", timeMove);
-			var time:Number = Math.min(Math.max(timeScale, timeRotation, timeMove, 1), 2);
+			var time:Number = Math.min(Math.max(timeScale, timeRotation, timeMove), 2);
+			
 			
 			//缩放差距不大时启用先缩小后放大式镜头缩放
 			if (scalePlus < 1.25)
@@ -89,16 +90,15 @@ package view.interact.zoomMove
 				var canvasMiddleScale:Number = Math.min(canvasTargetScale, packer.scale) / 1.5;
 				TweenMax.to(packer, time * .5, {scale:canvasMiddleScale});
 				TweenMax.to(packer, time * .5, {scale:canvasTargetScale, delay:time * .5});
-				easeFlash = Strong.easeInOut;
 			}
 			else
 			{
 				TweenMax.to(packer, time, {scale:canvasTargetScale});
-				easeFlash = Strong.easeOut;
 			}
+			
+			
 			TweenMax.to(packer, time, {rotation:canvasTargetRotation, x:canvasTargetX, y:canvasTargetY, 
 				progress: 1, 
-				ease : easeFlash,
 				onUpdate : updated,
 				onComplete : finishZoom});
 		}
@@ -210,7 +210,7 @@ package view.interact.zoomMove
 		
 		
 		private var speedMove:Number = 1000;
-		private var speedScale:Number = 2.5;
+		private var speedScale:Number = 2;
 		private var speedRotation:Number = 150;
 	}
 }

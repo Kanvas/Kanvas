@@ -49,17 +49,21 @@ package view.interact.zoomMove
 			modPositionNeed = true;
 			
 			var stageBound:Rectangle = coreMdt.mainUI.bound;
-			var cenScePoint:Point = new Point(.5 * (stageBound.left + stageBound.right), .5 * (stageBound.top + stageBound.bottom));
+			var startSceCenter:Point = new Point(.5 * (stageBound.left + stageBound.right), .5 * (stageBound.top + stageBound.bottom));
 			
-			startEleCenter = cenScePoint.clone();
+			startEleCenter = startSceCenter.clone();
 			startEleCenter.offset(-startX, -startY);
 			startEleCenter = PointUtil.rotatePointAround(startEleCenter, new Point, MathUtil.angleToRadian(-startRotation));
 			PointUtil.multiply(startEleCenter, 1 / startScale);
 			
-			endEleCenter = cenScePoint.clone();
+			endEleCenter = startSceCenter.clone();
 			endEleCenter.offset(-endX, -endY);
 			endEleCenter = PointUtil.rotatePointAround(endEleCenter, new Point, MathUtil.angleToRadian(-targetRotation));
 			PointUtil.multiply(endEleCenter, 1 / endScale);
+			
+			var endSceCenter:Point = coreMdt.layoutTransformer.elementPointToStagePoint(endEleCenter.x, endEleCenter.y);
+			
+			vector = endSceCenter.subtract(startSceCenter);
 			
 			modCanvasPosition();
 		}
@@ -69,13 +73,14 @@ package view.interact.zoomMove
 			if (modPositionNeed)
 			{
 				var stageBound:Rectangle = coreMdt.mainUI.bound;
-				
-				var curEleCenter:Point = Point.interpolate(endEleCenter, startEleCenter, progress);
-				var curSceCenter:Point = curEleCenter.clone();
-				PointUtil.multiply(curSceCenter, scale);
-				curSceCenter = PointUtil.rotatePointAround(curSceCenter, new Point, MathUtil.angleToRadian(rotation));
-				canvas.x = .5 * (stageBound.left + stageBound.right) - curSceCenter.x;
-				canvas.y = .5 * (stageBound.top + stageBound.bottom) - curSceCenter.y;
+				var temp:Point = vector.clone();
+				PointUtil.multiply(temp, (1 - progress));
+				var curSceCenter:Point = new Point(.5 * (stageBound.left + stageBound.right), .5 * (stageBound.top + stageBound.bottom));
+				var curAimCenter:Point = curSceCenter.add(temp);
+				var curEleCenter:Point = coreMdt.layoutTransformer.elementPointToStagePoint(endEleCenter.x, endEleCenter.y);
+				temp = curAimCenter.subtract(curEleCenter);
+				canvas.x += temp.x;
+				canvas.y += temp.y;
 			}
 		}
 		
@@ -135,6 +140,8 @@ package view.interact.zoomMove
 		private var modPositionNeed:Boolean;
 		
 		private var endEleCenter:Point;
+		
+		private var vector:Point;
 		
 		private var canvas:Sprite;
 		

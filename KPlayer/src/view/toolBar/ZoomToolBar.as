@@ -1,6 +1,6 @@
 package view.toolBar
 {	
-	import com.greensock.TweenLite;
+	import com.greensock.TweenMax;
 	import com.kvs.utils.StageUtil;
 	
 	import flash.display.SimpleButton;
@@ -9,9 +9,7 @@ package view.toolBar
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
-	import landray.kp.core.kp_internal;
 	import landray.kp.ui.*;
-	import landray.kp.view.Viewer;
 	
 	import view.interact.zoomMove.ZoomMoveControl;
 	
@@ -123,8 +121,8 @@ package view.toolBar
 			if(!display) 
 			{
 				display = true;
-				TweenLite.killTweensOf(this, false, {alpha:true});
-				TweenLite.to(this, .5, {alpha:1});
+				TweenMax.killTweensOf(this, false);
+				TweenMax.to(this, .5, {alpha:1});
 			}
 		}
 		
@@ -133,8 +131,8 @@ package view.toolBar
 			if( display) 
 			{
 				display = false;
-				TweenLite.killTweensOf(this, false, {alpha:true});
-				TweenLite.to(this, .5, {alpha:0, onComplete:function():void{visible = false}});
+				TweenMax.killTweensOf(this, false);
+				TweenMax.to(this, .5, {alpha:0, onComplete:function():void{visible = false}});
 			}
 		}
 		

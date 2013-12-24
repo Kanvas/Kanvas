@@ -1,7 +1,5 @@
 package landray.kp.maps.simple.elements
 {
-	import com.kvs.utils.XMLConfigKit.StyleManager;
-	
 	import model.vo.LineVO;
 	
 	/**

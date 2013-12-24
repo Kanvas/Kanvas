@@ -2,14 +2,10 @@ package landray.kp.maps.simple.elements
 {
 	import com.kvs.utils.XMLConfigKit.style.Style;
 	
-	import flash.display.DisplayObject;
 	import flash.display.Graphics;
 	import flash.display.Shape;
 	import flash.display.Sprite;
-	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
-	
-	import landray.kp.utils.CoreUtil;
 	
 	import model.vo.ElementVO;
 	
