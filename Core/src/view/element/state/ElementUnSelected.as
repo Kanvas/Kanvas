@@ -59,7 +59,9 @@ package view.element.state
 		 */		
 		override public function toGroupState():void
 		{
-			element.disable();
+			element.mouseChildren = element.mouseEnabled = false;
+			element.clearHoverEffect();
+			
 			element.currentState = element.groupState;
 		}
 		

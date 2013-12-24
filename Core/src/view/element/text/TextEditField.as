@@ -227,6 +227,7 @@ package view.element.text
 			textVO.height = textManager.compositionHeight;
 			
 			renderAfterLabelRender();
+			textDrawer.renderTextBMD(shape.graphics, textCanvas, textVO.scale * this.parent.scaleX);
 		}
 		
 		/**
