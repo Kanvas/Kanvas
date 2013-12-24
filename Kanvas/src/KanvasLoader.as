@@ -1,7 +1,5 @@
 package
 {
-	import com.greensock.TweenLite;
-	import com.greensock.easing.Back;
 	import com.kvs.utils.StageUtil;
 	import com.kvs.utils.graphic.BitmapUtil;
 	
@@ -18,9 +16,9 @@ package
 	/**
 	 * 负责加载主程序
 	 */	
-	public class KanvasShell extends Sprite
+	public class KanvasLoader extends Sprite
 	{
-		public function KanvasShell()
+		public function KanvasLoader()
 		{
 			StageUtil.initApplication(this, init);
 		}
@@ -42,8 +40,9 @@ package
 			laoder.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErroHander);
 			
 			var context:LoaderContext = new LoaderContext();
-			context.applicationDomain = new ApplicationDomain();
-			laoder.load(new URLRequest('./kanvas_kplayer/Kanvas'), context);
+			context.applicationDomain = ApplicationDomain.currentDomain;
+			
+			laoder.load(new URLRequest('./kanvas_kplayer/Kanvas.swf'), context);
 		}
 		
 		/**
@@ -60,18 +59,38 @@ package
 			laoder.unload();
 			laoder = null;
 			
-			TweenLite.to(logoShape, 1, {y: stage.stageHeight, alpha: 0, onComplete: removeLogo, ease:Back.easeIn});
+			stage.addEventListener(Event.ENTER_FRAME, hideLogoHandler);
 		}
 		
 		/**
 		 */		
-		private function removeLogo():void
+		private function hideLogoHandler(evt:Event):void
 		{
-			this.removeChild(logoShape);
-			logoShape = null;
-			
-			addChild(kanvas);
-			TweenLite.from(kanvas, 1, {y: - 100, ease: Back.easeInOut});
+			if (logoShape)
+			{
+				logoShape.alpha -= 0.2;
+				
+				if (logoShape.alpha <= 0)
+				{
+					logoShape.alpha = 0;
+					
+					this.removeChild(logoShape);
+					logoShape = null;
+					
+					kanvas.y = - 50;
+					addChild(kanvas);
+				}
+			}
+			else
+			{
+				this.kanvas.y += 6;
+				
+				if (kanvas.y >= 0)
+				{
+					stage.removeEventListener(Event.ENTER_FRAME, hideLogoHandler);
+					kanvas.y = 0;
+				}
+			}
 		}
 		
 		/**

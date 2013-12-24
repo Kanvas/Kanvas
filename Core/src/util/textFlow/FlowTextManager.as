@@ -411,6 +411,7 @@ package util.textFlow
 			Font.registerFont(fontLoader.content['YaHei']);
 			Font.registerFont(fontLoader.content['FangSong']);
 			Font.registerFont(fontLoader.content['KaiShu']);
+			
 			ifFontLoaded = true;
 			
 			fontInstance = ClassUtil.getObjectByClassPath('FontLib') as ISWFContext;

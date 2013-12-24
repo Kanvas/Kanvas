@@ -217,7 +217,7 @@
 		return this;
     };
     
-	Kanvas.swfURL = "Kanvas.swf";
+	Kanvas.swfURL = "KanvasLoader.swf";
 	Kanvas.prototype = function() {
 		
 		//继承至基类
