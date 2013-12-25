@@ -31,11 +31,23 @@
 			
 			//弹出属性面板
 			kvs.onLinkClicked(function(e){
-				alert('点击节点' + e.data);
+				//alert('点击节点' + e.data);
 			});
+			
+			//横向平移
+			function horizontalMove() {
+				kvs.horizontalMove(100);
+			};
+			
+			//取消选择
+			function unselected() {
+				kvs.unselected(false, true);
+			};
         </script>
     </head>
     <body>
+    	<input type="button" value="横向平移" onclick="horizontalMove()"/>
+    	<input type="button" value="取消选择" onclick="unselected()"/>
         <div id="demo"></div>
     </body>
 </html>

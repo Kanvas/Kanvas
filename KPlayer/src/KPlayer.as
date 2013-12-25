@@ -113,6 +113,23 @@ package
 			stage.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_WHEEL, true, false, NaN, NaN, null, false, false, false, false, value));
 		}
 		
+		/**
+		 * @private
+		 * js回调函数，画布横向移动一段距离
+		 */
+		private function horizontalMove(value:Number):void
+		{
+			presenter.horizontalMove(value);
+		}
+		
+		/**
+		 * @private
+		 * js回调函数，取消元素的选择状态
+		 */
+		private function unselected():void
+		{
+			presenter.unselected();
+		}
 		
 		
 		//===========================================================================
@@ -156,6 +173,10 @@ package
 				ExternalInterface.addCallback("setBase64Data"     , setBase64Data);
 				//模拟鼠标滚轮
 				ExternalInterface.addCallback("onWebMouseWheel"   , onWebMouseWheel);
+				
+				ExternalInterface.addCallback("horizontalMove"    , horizontalMove);
+				
+				ExternalInterface.addCallback("unselected"        , unselected);
 			}
 		}
 		

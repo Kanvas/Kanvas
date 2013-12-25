@@ -16,9 +16,9 @@ package landray.kp.view
 	
 	import util.layout.LayoutTransformer;
 	
-	import view.ui.Bubble;
 	import view.interact.zoomMove.ZoomMoveControl;
 	import view.toolBar.ZoomToolBar;
+	import view.ui.Bubble;
 	import view.ui.MainUIBase;
 
 	[Event(name="initialize", type="flash.events.Event")]
@@ -148,6 +148,25 @@ package landray.kp.view
 			temp.x = transformer.elementXToStageX(x);
 			temp.y = transformer.elementYToStageY(y);
 			return temp;
+		}
+		
+		kp_internal function horizontalMove(distance:Number):void
+		{
+			if (stage)
+			{
+				var center:Point = new Point;
+				center.x = transformer.stageXToElementX(stage.stageWidth * .5) - distance;
+				center.y = transformer.stageYToElementY(stage.stageHeight * .5);
+				kp_internal::controller.zoomTo(transformer.canvasScale, center);
+			}
+		}
+		
+		kp_internal function unselected():void
+		{
+			if (kp_internal::selector)
+			{
+				kp_internal::selector.visible = false;
+			}
 		}
 		
 		/**
