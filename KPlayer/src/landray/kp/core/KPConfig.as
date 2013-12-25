@@ -1,5 +1,6 @@
 package landray.kp.core
 {
+	import com.kvs.ui.toolTips.ToolTipsManager;
 	import com.kvs.utils.Map;
 	import com.kvs.utils.XMLConfigKit.XMLVOLib;
 	
@@ -44,6 +45,7 @@ package landray.kp.core
 		kp_internal var container:DisplayObjectContainer;
 		kp_internal var viewer   :Viewer;
 		kp_internal var debugger :Debugger;
+		kp_internal var tipsManager:ToolTipsManager;
 		kp_internal var graphs   :Vector.<Graph>;
 		kp_internal var templete :XML;
 		kp_internal var themes   :Map;

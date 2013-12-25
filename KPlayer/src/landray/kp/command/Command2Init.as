@@ -11,6 +11,7 @@ package landray.kp.command
 	import util.textFlow.FlowTextManager;
 	
 	import view.toolBar.Debugger;
+	import view.ui.Bubble;
 	
 	/**
 	 */	
@@ -49,6 +50,9 @@ package landray.kp.command
 			if(!config.kp_internal::viewer) 
 			{
 				config.kp_internal::viewer = new Viewer;
+				
+				
+				
 				config.kp_internal::viewer.addEventListener("initialize", function(e:Event):void
 				{
 					executeEnd();
