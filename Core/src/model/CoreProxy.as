@@ -453,7 +453,7 @@ package model
 									<header version = '3.0' styleID={currStyle}/>
 									<module/>
 									<main/>
-								  </kanvas>
+								  </kanvas>;
 		
 		
 			

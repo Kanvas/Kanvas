@@ -1,6 +1,7 @@
 package view.toolBar
 {	
 	import com.greensock.TweenLite;
+	import com.kvs.ui.button.IconBtn;
 	import com.kvs.utils.StageUtil;
 	
 	import flash.display.SimpleButton;
@@ -21,12 +22,20 @@ package view.toolBar
 		public function ZoomToolBar($controller:ZoomMoveControl = null)
 		{
 			super();
+			controller = $controller;
+			
+			StageUtil.initApplication(this, initialize);
+		}
+		
+		/**
+		 * @private
+		 */
+		private function initialize():void
+		{
 			
 			addChild(subContainer = new Sprite).alpha = 0;
 			
 			visible = false;
-			
-			controller = $controller;
 			
 			with (subContainer.graphics) 
 			{
@@ -35,24 +44,49 @@ package view.toolBar
 				endFill();
 			}
 			
+			zoomAuto   = new IconBtn;
+			zoomIn     = new IconBtn;
+			zoomOut    = new IconBtn;
 			
-			subContainer.addChild(zoomIn   = new ZoomIn  ).y = 36;
-			subContainer.addChild(zoomOut  = new ZoomOut ).y = 68;
-			subContainer.addChild(zoomAuto = new ZoomAuto).y = 4 ;
+			zoomAuto  .styleXML = btnStyleXML;
+			zoomIn    .styleXML = btnStyleXML;
+			zoomOut   .styleXML = btnStyleXML;
+			
+			zoomAuto  .tips = "自适应";
+			zoomIn    .tips = "放大";
+			zoomOut   .tips = "缩小";
+			
+			zoomAuto.w = zoomAuto.h = 28;
+			zoomIn.w = zoomIn.h = 28;
+			zoomOut.w = zoomOut.h = 28;
+			
+			zoomAuto.iconW = 12;
+			zoomAuto.iconH = 11;
+			zoomIn.iconW = 12;
+			zoomIn.iconH = 12;
+			zoomOut.iconW = 12;
+			zoomOut.iconH = 12;
+			
 			zoomIn.x = zoomOut.x = zoomAuto.x = 4;
+			
+			ZoomAuto;
+			var pathZoomAuto:String = "landray.kp.ui.ZoomAuto";
+			zoomAuto.setIcons(pathZoomAuto, pathZoomAuto, pathZoomAuto);
+			ZoomIn;
+			var pathZoomIn:String = "landray.kp.ui.ZoomIn";
+			zoomIn.setIcons(pathZoomIn, pathZoomIn, pathZoomIn);
+			ZoomOut;
+			var pathZoomOut:String = "landray.kp.ui.ZoomOut";
+			zoomOut.setIcons(pathZoomOut, pathZoomOut, pathZoomOut);
+			
+			subContainer.addChild(zoomIn  ).y = 36;
+			subContainer.addChild(zoomOut ).y = 68;
+			subContainer.addChild(zoomAuto).y = 4 ;
 			
 			zoomIn  .addEventListener(MouseEvent.CLICK, clickZoomIn  );
 			zoomOut .addEventListener(MouseEvent.CLICK, clickZoomOut );
 			zoomAuto.addEventListener(MouseEvent.CLICK, clickZoomAuto);
 			
-			StageUtil.initApplication(this, addedToStage);
-		}
-		
-		/**
-		 * @private
-		 */
-		private function addedToStage():void
-		{
 			stage.addEventListener(MouseEvent.MOUSE_MOVE, timerStartMouseMove);
 		}
 		
@@ -180,17 +214,17 @@ package view.toolBar
 		/**
 		 * @private
 		 */
-		private var zoomIn  :SimpleButton;
+		private var zoomIn  :IconBtn;
 		
 		/**
 		 * @private
 		 */
-		private var zoomOut :SimpleButton;
+		private var zoomOut :IconBtn;
 		
 		/**
 		 * @private
 		 */
-		private var zoomAuto:SimpleButton;
+		private var zoomAuto:IconBtn;
 		
 		/**
 		 * @private
@@ -205,5 +239,23 @@ package view.toolBar
 		private var subContainer:Sprite;
 		
 		private var timer:Timer;
+		
+		private var btnStyleXML:XML = 
+			<states>
+				<normal radius='0'>
+					<fill color='#686A66,#575654' angle="90"/>
+					<img/>
+				</normal>
+				<hover radius='0'>
+					<border color='#2D2C2A' alpha='1' thikness='1'/>
+					<fill color='#57524F,#4B4643' angle="90"/>
+					<img/>
+				</hover>
+				<down radius='0'>
+					<border color='#2D2C2A' alpha='1' thikness='1'/>
+					<fill color='#2D2C2A,#262626' angle="90"/>
+					<img/>
+				</down>
+			</states>;
 	}
 }

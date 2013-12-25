@@ -64,7 +64,7 @@ package landray.kp.controls
 			var w:Number = rect.width  + padding * 2;
 			var h:Number = rect.height + padding * 2;
 			
-			graphics.lineStyle(3, 0x111111);
+			graphics.lineStyle(3, 0x00AFFF);
 			graphics.drawRect(x, y, w, h);
 			graphics.lineStyle(1, 0xEEEEEE);
 			graphics.drawRect(x, y, w, h);

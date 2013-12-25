@@ -38,12 +38,7 @@ package landray.kp.command
 			config.kp_internal::graphs = new Vector.<Graph>;
 			while(config.kp_internal::viewer.canvas.numChildren>1) config.kp_internal::viewer.canvas.removeChildAt(1);
 			
-			//resolve viewer
 			
-			config.kp_internal::viewer.templete   = provider.styleXML;
-			config.kp_internal::viewer.background = config.kp_internal::bgVO;
-			
-			Bubble.init(config.kp_internal::viewer.stage);
 			
 			if (provider.dataXML)
 			{
@@ -55,6 +50,7 @@ package landray.kp.command
 				try 
 				{
 					CoreUtil.mapping(provider.dataXML.bg[0], config.kp_internal::bgVO);
+					config.kp_internal::viewer.background = config.kp_internal::bgVO;
 				} 
 				catch (e:Error) {}
 				

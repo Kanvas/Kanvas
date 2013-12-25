@@ -10,8 +10,6 @@ package view.interact.zoomMove
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	
-	import util.CoreUtil;
-	
 	/**
 	 * 画布缩放和拖动动画的控制器；
 	 */	
@@ -60,7 +58,7 @@ package view.interact.zoomMove
 				onUpdate : updated,
 				onComplete : finishZoom});
 			
-			isFlashing = true;	
+			isFlashing = true;
 		}
 		
 		/**
