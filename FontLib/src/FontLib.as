@@ -1,6 +1,8 @@
 package
 {
 	import flash.display.Sprite;
+	import flash.system.ApplicationDomain;
+	import flash.system.SecurityDomain;
 	
 	import flashx.textLayout.compose.ISWFContext;
 	
@@ -8,15 +10,6 @@ package
 	 */	
 	public class FontLib extends Sprite implements ISWFContext
 	{
-		//[Embed(source="MSYH.TTF", fontName="微软雅黑", mimeType="application/x-font")]
-		//public var YaHei:Class;
-		
-		//[Embed(source="SIMFANG.ttf", fontName="仿宋", mimeType="application/x-font")]
-		//public var FangSong:Class;
-		
-		//[Embed(source="FZKS.ttf", fontName="方正楷书", mimeType="application/x-font")]
-		//public var KaiShu:Class;
-		
 		
 		[Embed(source="YuppySC-Regular.otf", fontName="雅痞", mimeType="application/x-font")]
 		public var YaHei:Class;

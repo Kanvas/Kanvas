@@ -180,7 +180,7 @@ package view.toolBar
 					button.w = customBtnW;
 					button.h = customBtnH;
 					
-					button.x = (customBtnW + gap) * i;
+					button.x = (customBtnW + customBtnGap) * i;
 					button.y = (h - customBtnH) * .5;
 					
 					button.addEventListener(MouseEvent.CLICK, customButtonClick);
@@ -202,8 +202,9 @@ package view.toolBar
 		private var centerBtnsC:Sprite = new Sprite;
 		
 		/**
+		 * 自定义按钮之间的间距
 		 */		
-		private var gap:uint = 3;
+		private var customBtnGap:uint = 5;
 		
 		/**
 		 */		

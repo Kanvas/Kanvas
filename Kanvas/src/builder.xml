@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project name="Ficharts Builder" basedir="." default="发布">
+<project name="Kanvas Builder" basedir="." default="发布">
 	
 	<property name="FLEX_HOME" value="/Applications/Adobe Flash Builder 4.6/sdks/4.6.0" />
 	<property name="WORK_SPACE" value="/Users/wallenMac/Documents/Projects/Kanvas" />
@@ -15,7 +15,7 @@
 
 	<!--发布-->
 	<target name="发布" 
-		depends="fresh release dir, Kanvas, KPlayer, KanvasShell">
+		depends="fresh release dir, Kanvas, KPlayer, KanvasLoader">
 
 		<copy overwrite="true" todir="${WORK_SPACE}/release">
 			<fileset dir="${WORK_SPACE}/Kanvas/src">
@@ -34,22 +34,24 @@
 		       update="true"/>
 	</target>
 	
-	<target name="KanvasShell">
-			<mxmlc file="${WORK_SPACE}/Kanvas/src/KanvasShell.as" output="${WORK_SPACE}/release/Kanvas.swf" 
+	<target name="KanvasLoader">
+			<mxmlc file="${WORK_SPACE}/Kanvas/src/KanvasLoader.as" output="${WORK_SPACE}/release/KanvasLoader.swf" 
 				actionscript-file-encoding="UTF-8" keep-generated-actionscript="false" incremental="false"
 				static-link-runtime-shared-libraries="true">
 				<load-config filename="${FLEX_HOME}/frameworks/flex-config.xml"/>
 				<source-path path-element="${FLEX_HOME}/frameworks"/>
 				<source-path path-element="${WORK_SPACE}/Core/src"/>
-				<library-path dir="${WORK_SPACE}/Kanvas/libs" includes="*.swc" />
+				
+				<library-path dir="${WORK_SPACE}/Kanvas/libs" includes="*.swc" />				
 				<library-path dir="${WORK_SPACE}/Core/libs" includes="*.swc" />
+				
 				<library-path dir="${FLEX_HOME}/frameworks/libs" includes="framework.swc"/>
 				<compiler.debug>false</compiler.debug>
 			</mxmlc>
 	</target>
 
 	<target name="Kanvas">
-		<mxmlc file="${WORK_SPACE}/Kanvas/src/Kanvas.as" output="${WORK_SPACE}/release/_Kanvas.swf" 
+		<mxmlc file="${WORK_SPACE}/Kanvas/src/Kanvas.as" output="${WORK_SPACE}/release/Kanvas.swf" 
 			actionscript-file-encoding="UTF-8" keep-generated-actionscript="false" incremental="false"
 			static-link-runtime-shared-libraries="true">
 			<load-config filename="${FLEX_HOME}/frameworks/flex-config.xml"/>
@@ -66,7 +68,7 @@
 		
 		<protect keyFilePath="${WORK_SPACE}/secureSWF/key.data" outputPath="${WORK_SPACE}/release/"
 			preset="best_size" superCompression="true" removeLinesNumbers="true" slr="true">
-			<fileset dir="${WORK_SPACE}/release" includes="_Kanvas.swf"/>
+			<fileset dir="${WORK_SPACE}/release" includes="Kanvas.swf"/>
 
 			<rule filter="*" rename="false"/>
 			<rule filter="com.kvs.utils.XMLConfigKit.XMLVOMapper.*" rename="true"/>
@@ -100,7 +102,6 @@
 				publicOnly="false" rename="true"/>
 		</protect>
 		
-		<rename src="${WORK_SPACE}/release/_Kanvas.swf" dest="${WORK_SPACE}/release/Kanvas"/>
 	</target>
 
 	<target name="KPlayer">
