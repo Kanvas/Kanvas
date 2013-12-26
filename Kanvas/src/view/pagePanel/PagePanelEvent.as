@@ -31,6 +31,10 @@ package view.pagePanel
 		
 		/**
 		 */		
+		public static const PAGE_DOWN:String = 'pageDown';
+		
+		/**
+		 */		
 		public function PagePanelEvent(type:String, pageUI:PageUI = null)
 		{
 			super(type, true);

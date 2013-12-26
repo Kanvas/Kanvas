@@ -8,6 +8,8 @@ package view.pagePanel
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.filters.DropShadowFilter;
+	import flash.filters.GlowFilter;
 	
 	import modules.pages.PageEvent;
 	import modules.pages.PageVO;
@@ -26,6 +28,9 @@ package view.pagePanel
 			
 			addChild(con);
 			con.addChild(label);
+			con.addChild(imgShape);
+			imgShape.filters = [new GlowFilter(0, 0.3, 3, 3, 2, 3)];
+			con.addEventListener(MouseEvent.MOUSE_DOWN, downPage);
 			
 			deleteBtn = new IconBtn;
 			deleteBtn.tips = '删除页面';
@@ -63,6 +68,14 @@ package view.pagePanel
 		}
 		
 		/**
+		 * 鼠标按下，切换页面，但不切换镜头
+		 */		
+		private function downPage(evt:MouseEvent):void
+		{
+			this.dispatchEvent(new PagePanelEvent(PagePanelEvent.PAGE_DOWN, this));
+		}
+		
+		/**
 		 */		
 		public function startMove():void
 		{
@@ -74,8 +87,9 @@ package view.pagePanel
 		public function hoverUI():void
 		{
 			this.mouseChildren = this.mouseEnabled = false;
-			con.graphics.clear();
-			drawPageBg();
+			
+			this.graphics.clear();
+			drawPageThumb();
 			
 			this.label.visible = false;
 		}
@@ -132,24 +146,24 @@ package view.pagePanel
 		{
 			super.render();
 			
-			drawPageBg();
+			drawPageThumb();
 			
 			deleteBtn.x = leftGutter + iconW;
 			deleteBtn.y = (currState.height - iconH) / 2;;
 		}
 		
 		/**
-		 * 绘制页面截图区域的背景 
-		 * 
+		 * 绘制页面截图
 		 */		
-		private function drawPageBg():void
+		private function drawPageThumb():void
 		{
 			var ty:Number = (currState.height - iconH) / 2;
 			
-			con.graphics.lineStyle(1, 0xEEEEEE);
-			con.graphics.beginFill(0xFFFFFF);
-			con.graphics.drawRect(leftGutter, ty, iconW, iconH);
-			con.graphics.endFill();
+			imgShape.graphics.clear();
+			imgShape.graphics.lineStyle(1, 0xEEEEEE);
+			imgShape.graphics.beginFill(0xFFFFFF);
+			imgShape.graphics.drawRect(leftGutter, ty, iconW, iconH);
+			imgShape.graphics.endFill();
 		}
 		
 		/**

@@ -153,11 +153,14 @@ package view.pagePanel
 			pages.splice(pages.indexOf(pageUI), 1);
 			pagesCtn.removeChild(pageUI);
 			
+			trace(pageUI.pageVO.index);
+			
 			if (pageUI == currentPage)
 			{
 				currentPage.selected = false;
 				currentPage = null;
 			}
+			
 			
 			return;
 			
@@ -231,13 +234,20 @@ package view.pagePanel
 		}
 		
 		/**
-		 * 按下页面，切换至当前页
+		 */		
+		private function pageDown(evt:PagePanelEvent):void
+		{
+			setCurrentPage(evt.pageUI);
+			udpateScrollForCurrPage();
+		}
+		
+		
+		/**
+		 * 按下并释放页面，切换至当前页
 		 */		
 		private function pageClicked(evt:PagePanelEvent):void
 		{
-			setCurrentPage(evt.pageUI);
 			pageSelected(evt.pageUI.pageVO);
-			udpateScrollForCurrPage();
 		}
 		
 		/**
@@ -327,6 +337,8 @@ package view.pagePanel
 			pagesCtn.mouseChildren = false;
 			
 			currentDragPageUI = evt.pageUI;
+			
+			setCurrentPage(currentDragPageUI);
 			currentDragPageUI.hoverUI();
 			drawCurPageProxy();
 			
@@ -368,20 +380,15 @@ package view.pagePanel
 				
 				if (pageY < min && currentDragPageIndex >= 1)
 				{
-					getPageByIndex(currentDragPageIndex - 1).pageVO.index += 1;
-					currentDragPageUI.pageVO.index -= 1;
-					
+					pageManager.setPageIndex(getPageByIndex(currentDragPageIndex - 1).pageVO, currentDragPageIndex);
 					currentDragPageIndex -= 1;
 					
 					updateTemPageLayout();
 				}
 				else if (pageY > max && currentDragPageIndex < pages.length - 1)
 				{
-					getPageByIndex(currentDragPageIndex + 1).pageVO.index -= 1;
-					currentDragPageUI.pageVO.index += 1;
-					
+					pageManager.setPageIndex(getPageByIndex(currentDragPageIndex + 1).pageVO, currentDragPageIndex);
 					currentDragPageIndex += 1;
-					
 					
 					updateTemPageLayout();
 				}
@@ -543,6 +550,8 @@ package view.pagePanel
 			stage.addEventListener(PagePanelEvent.START_DRAG_PAGE, startDragPage);
 			stage.addEventListener(PagePanelEvent.END_DRAG_PAGE, stopDragPage);
 			stage.addEventListener(PagePanelEvent.PAGE_DRAGGING, pageDragging);
+			
+			pagesCtn.addEventListener(PagePanelEvent.PAGE_DOWN, pageDown);
 			pagesCtn.addEventListener(PagePanelEvent.PAGE_CLICKED, pageClicked);
 			
 			updateLayout();
