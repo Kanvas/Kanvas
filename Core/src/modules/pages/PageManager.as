@@ -193,12 +193,12 @@ package modules.pages
 				var cur:int = pages.indexOf(pageVO);
 				if (cur != -1)
 				{
-					var aim:int = (index > cur) ? index - 1 : index;
+					//var aim:int = (index > cur) ? index - 1 : index;
 					pages.splice(cur, 1);
-					pages.splice(aim, 0, pageVO);
-					var min:int = Math.min(cur, aim);
-					var max:int = Math.max(cur, aim);
-					udpatePageIndex(Math.min(cur, aim), Math.max(cur, aim));
+					pages.splice(index, 0, pageVO);
+					var min:int = Math.min(cur, index);
+					var max:int = Math.max(cur, index);
+					udpatePageIndex(Math.min(cur, index), Math.max(cur, index) + 1);
 					if (sendEvent)
 						dispatchEvent(new PageEvent(PageEvent.UPDATE_PAGES_LAYOUT));
 				}
