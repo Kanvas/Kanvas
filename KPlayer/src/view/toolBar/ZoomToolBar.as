@@ -11,6 +11,7 @@ package view.toolBar
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
+	import landray.kp.core.kp_internal;
 	import landray.kp.ui.*;
 	import landray.kp.utils.CoreUtil;
 	import landray.kp.view.Viewer;
@@ -22,15 +23,23 @@ package view.toolBar
 	 */
 	public final class ZoomToolBar extends Sprite
 	{
-		public function ZoomToolBar($controller:ZoomMoveControl)
+		public function ZoomToolBar($viewer:Viewer)
 		{
 			super();
 			
-			controller = $controller;
+			controller = $viewer;
 			
 			CoreUtil.initApplication(this, initialize);
 			
 			
+		}
+		
+		kp_internal function resetScreenButtons():void
+		{
+			if (screenHalf && screenFull)
+			{
+				screenHalf.visible = ! (screenFull.visible = true);
+			}
 		}
 		
 		/**
@@ -205,7 +214,7 @@ package view.toolBar
 		 */
 		private function clickZoomIn(e:MouseEvent):void
 		{
-			controller.zoomIn(true);
+			controller.kp_internal::controller.zoomIn(true);
 		}
 		
 		/**
@@ -213,7 +222,7 @@ package view.toolBar
 		 */
 		private function clickZoomOut(e:MouseEvent):void
 		{
-			controller.zoomOut(true);
+			controller.kp_internal::controller.zoomOut(true);
 		}
 		
 		/**
@@ -221,7 +230,7 @@ package view.toolBar
 		 */
 		private function clickZoomAuto(e:MouseEvent):void
 		{
-			controller.autoZoom();
+			controller.kp_internal::controller.autoZoom();
 		}
 		
 		/**
@@ -230,7 +239,7 @@ package view.toolBar
 		private function clickScreenHalf(e:MouseEvent):void
 		{
 			screenHalf.visible = ! (screenFull.visible = true);
-			controller.setScreenState(StageDisplayState.NORMAL);
+			controller.kp_internal::setScreenState(StageDisplayState.NORMAL);
 		}
 		
 		/**
@@ -239,7 +248,7 @@ package view.toolBar
 		private function clickScreenFull(e:MouseEvent):void
 		{
 			screenHalf.visible = ! (screenFull.visible = false);
-			controller.setScreenState(StageDisplayState.FULL_SCREEN);
+			controller.kp_internal::setScreenState(StageDisplayState.FULL_SCREEN);
 		}
 		
 		/**
@@ -279,7 +288,7 @@ package view.toolBar
 		/**
 		 * @private
 		 */
-		private var controller:ZoomMoveControl;
+		private var controller:Viewer;
 		
 		/**
 		 * @private

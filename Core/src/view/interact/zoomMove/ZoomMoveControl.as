@@ -26,6 +26,7 @@ package view.interact.zoomMove
 		}
 		
 		/**
+<<<<<<< HEAD
 		 * 同步canvas与背景图片的比例位置关系， 此方法在初始化， 插入背景图和画布缩放
 		 * 
 		 * 及移动时需要被调用
@@ -53,6 +54,8 @@ package view.interact.zoomMove
 		 * @param y
 		 * @param time
 		 * @param ease
+=======
+>>>>>>> fix
 		 * 
 		 */		
 		public function zoomMoveOff(scale:Number, x:Number, y:Number, time:Number = 1, ease:Object = null):void
@@ -117,16 +120,6 @@ package view.interact.zoomMove
 		public function autoZoom(originalScale:Boolean = false):void
 		{
 			zoomer.zoomAuto(originalScale);
-		}
-		
-		public function setScreenState(state:String):void
-		{
-			var center:Point = new Point;
-			center.x = (mainUI.stage.stageWidth  * .5 - canvas.x) / canvas.scaleX;
-			center.y = (mainUI.stage.stageHeight * .5 - canvas.y) / canvas.scaleX;
-			mainUI.stage.displayState = state;
-			canvas.x = mainUI.stage.stageWidth  * .5 - center.x;
-			canvas.y = mainUI.stage.stageHeight * .5 - center.y;
 		}
 		
 		/**

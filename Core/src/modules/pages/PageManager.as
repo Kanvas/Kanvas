@@ -186,7 +186,7 @@ package modules.pages
 		/**
 		 * 设定某页的顺序
 		 */
-		public function setPageIndex(pageVO:PageVO, index:int):void
+		public function setPageIndex(pageVO:PageVO, index:int, sendEvent:Boolean = false):void
 		{
 			if (index >= 0 && index < numPage)
 			{
@@ -199,8 +199,8 @@ package modules.pages
 					var min:int = Math.min(cur, aim);
 					var max:int = Math.max(cur, aim);
 					udpatePageIndex(Math.min(cur, aim), Math.max(cur, aim));
-					
-					dispatchEvent(new PageEvent(PageEvent.UPDATE_PAGES_LAYOUT));
+					if (sendEvent)
+						dispatchEvent(new PageEvent(PageEvent.UPDATE_PAGES_LAYOUT));
 				}
 				else
 				{

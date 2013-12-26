@@ -30,10 +30,7 @@ package modules.pages
 		{
 			return pg_internal::index;
 		}
-		public function set index(value:int):void
-		{
-			pg_internal::index = value;
-		}
+		
 		pg_internal var index:int = -1;
 		
 		
