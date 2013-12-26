@@ -1,19 +1,15 @@
 package util.layout
 {
-	import com.kvs.charts.chart2D.marker.MarkerPointRender;
-	
-	import flash.display.Sprite;
-	import flash.geom.Matrix;
-	
-	import model.vo.ElementVO;
-	
-	import view.element.ElementBase;
-	import view.element.shapes.LineElement;
 	import com.kvs.utils.MathUtil;
 	import com.kvs.utils.PointUtil;
 	
 	import flash.display.Sprite;
 	import flash.geom.Point;
+	
+	import model.vo.ElementVO;
+	
+	import view.element.ElementBase;
+	import view.element.shapes.LineElement;
 
 	/**
 	 * 画布坐标与stage坐标的转换器

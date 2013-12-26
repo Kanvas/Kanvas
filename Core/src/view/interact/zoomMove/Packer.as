@@ -9,10 +9,10 @@ package view.interact.zoomMove
 	
 	import model.CoreFacade;
 	
-	import util.CoreUtil;
-	
 	import view.interact.CoreMediator;
 
+	/**
+	 */	
 	public final class Packer
 	{
 		public function Packer($canvas:Sprite)
@@ -29,6 +29,7 @@ package view.interact.zoomMove
 		
 		/**
 		 * 根据画布的 起始位置和目标位置求得对应的元素中心点，并根据2中心点的直线为运动轨迹。
+		 * 
 		 * @param targetX
 		 * @param targetY
 		 * @param targetScale

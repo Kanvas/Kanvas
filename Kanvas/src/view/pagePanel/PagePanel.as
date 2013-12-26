@@ -144,7 +144,7 @@ package view.pagePanel
 		private var pages:Vector.<Object> = new Vector.<Object>;
 		
 		/**
-		 * 从core中删除了某个页面后
+		 * 从core中删除了某个页面后，页面的删除最终都源自core
 		 */		
 		public function pagedDeleted(evt:PageEvent):void
 		{
@@ -157,6 +157,16 @@ package view.pagePanel
 			{
 				currentPage.selected = false;
 				currentPage = null;
+			}
+			
+			if (pages.length)
+			{
+				pageUI = getPageByIndex(pageUI.pageVO.index);
+				
+				setCurrentPage(pageUI);
+				
+				//scrollProxy.update();
+				udpateScrollForCurrPage();
 			}
 		}
 		
@@ -221,14 +231,11 @@ package view.pagePanel
 		/**
 		 * 按下页面，切换至当前页
 		 */		
-		private function pageClicked(evt:MouseEvent):void
+		private function pageClicked(evt:PagePanelEvent):void
 		{
-			if (evt.target is PageUI)
-			{
-				setCurrentPage(evt.target as PageUI);
-				pageSelected((evt.target as PageUI).pageVO);
-				udpateScrollForCurrPage();
-			}
+			setCurrentPage(evt.pageUI);
+			pageSelected(evt.pageUI.pageVO);
+			udpateScrollForCurrPage();
 		}
 		
 		/**
@@ -292,6 +299,10 @@ package view.pagePanel
 		
 		
 		
+		
+		
+		
+		
 		//------------------------------------------------
 		//
 		//
@@ -308,19 +319,32 @@ package view.pagePanel
 		{
 			evt.stopPropagation();
 			
+			if (pages.length < 2)
+				return;
+			
 			pagesCtn.mouseChildren = false;
 			
-			var point:Point = new Point(evt.pageUI.x, evt.pageUI.y);
-			point = pagesCtn.localToGlobal(point);
+			currentDragPageUI = evt.pageUI;
+			currentDragPageUI.hoverUI();
+			drawCurPageProxy();
 			
-			evt.pageUI.x = point.x;
-			evt.pageUI.y = point.y;
-			stage.addChild(evt.pageUI);
+			temPoint.x = currentDragPageUI.x;
+			temPoint.y = currentDragPageUI.y;
+			temPoint = pagesCtn.localToGlobal(temPoint);
 			
-			currentDragPageIndex = evt.pageUI.pageVO.index;
+			currentDragPageUI.x = temPoint.x;
+			currentDragPageUI.y = temPoint.y;
+			stage.addChild(currentDragPageUI);
+			
+			currentDragPageIndex = currentDragPageUI.pageVO.index;
 			
 			evt.pageUI.startDrag();
 		}
+		
+		/**
+		 * 正在被拖放的页面 
+		 */		
+		private var currentDragPageUI:PageUI;
 		
 		/**
 		 * 页面开始拖拽时，当前页面的位置
@@ -329,54 +353,70 @@ package view.pagePanel
 		
 		/**
 		 */		
-		private function stopDragPage(evt:PagePanelEvent):void
-		{
-			evt.stopPropagation();
-			pagesCtn.mouseChildren = true;
-			
-			evt.pageUI.stopDrag();
-			
-			pagesCtn.addChild(evt.pageUI);
-			
-			var pageUI:PageUI;
-			for each (pageUI in pages)
-			{
-				pageUI.y = pageUI.pageVO.index * pageUI.h;
-				pageUI.updataLabel();
-			}
-		}
-		
-		/**
-		 */		
 		private function pageDragging(evt:PagePanelEvent):void
 		{
 			evt.stopPropagation();
 			
-			var min:Number = curPageStartY;
-			var max:Number = currPageEndY;
+			if (currentDragPageUI)
+			{
+				var min:Number = curPageStartY;
+				var max:Number = currPageEndY;
+				
+				var pageY:Number = getPagePos(currentDragPageUI).y;
+				
+				if (pageY < min && currentDragPageIndex >= 1)
+				{
+					getPageByIndex(currentDragPageIndex - 1).pageVO.index += 1;
+					currentDragPageUI.pageVO.index -= 1;
+					
+					currentDragPageIndex -= 1;
+					
+					updateTemPageLayout();
+				}
+				else if (pageY > max && currentDragPageIndex < pages.length - 1)
+				{
+					getPageByIndex(currentDragPageIndex + 1).pageVO.index -= 1;
+					currentDragPageUI.pageVO.index += 1;
+					
+					currentDragPageIndex += 1;
+					
+					
+					updateTemPageLayout();
+				}
+				else
+				{
+					
+				}
+			}
+		
+		}
+		
+		/**
+		 */		
+		private function stopDragPage(evt:PagePanelEvent):void
+		{
+			evt.stopPropagation();
 			
-			var pageY:Number = getPagePos(evt.pageUI).y;
+			if (currentDragPageUI)
+			{
+				pagesCtn.mouseChildren = true;
+				
+				currentDragPageUI.stopDrag();
+				
+				pagesCtn.addChild(currentDragPageUI);
+				currentDragPageUI = null;
+				
+				var pageUI:PageUI;
+				for each (pageUI in pages)
+				{
+					pageUI.x = 0;
+					pageUI.y = pageUI.pageVO.index * pageUI.h;
+					pageUI.updataLabel();
+				}
+				
+				pagesCtn.graphics.clear();
+			}
 			
-			if (pageY < min)
-			{
-				getPageByIndex(currentDragPageIndex).pageVO.index -= 1;
-				currentDragPageIndex -= 1;
-				getPageByIndex(currentDragPageIndex).pageVO.index += 1;
-				
-				updateTemPageLayout();
-			}
-			else if (pageY > max)
-			{
-				getPageByIndex(currentDragPageIndex).pageVO.index += 1;
-				currentDragPageIndex += 1;
-				getPageByIndex(currentDragPageIndex).pageVO.index -= 1;
-				
-				updateTemPageLayout();
-			}
-			else
-			{
-				
-			}
 		}
 		
 		/**
@@ -384,7 +424,31 @@ package view.pagePanel
 		 */		
 		private function updateTemPageLayout():void
 		{
+			var pageUI:PageUI;
+			for each (pageUI in pages)
+			{
+				if (currentDragPageUI != pageUI)
+				{
+					pageUI.x = 0;					
+					pageUI.y = pageUI.pageVO.index * pageHeight;
+				}
+			}
 			
+			drawCurPageProxy();
+			
+			//更新滚动位置，以便当前页面可以被显示
+			scrollProxy.scrollTo(currentDragPageUI.pageVO.index * pageHeight, (currentDragPageUI.pageVO.index + 1) * pageHeight);
+		}
+		
+		/**
+		 * 绘制当前拖拽页面的临时预设位置
+		 */		
+		private function drawCurPageProxy():void
+		{
+		    pagesCtn.graphics.clear();
+			pagesCtn.graphics.beginFill(0x555555);
+			pagesCtn.graphics.drawRect(30, currentDragPageUI.pageVO.index * pageHeight + 10, 5, pageHeight - 20);
+			pagesCtn.graphics.endFill();
 		}
 		
 		/**
@@ -392,7 +456,7 @@ package view.pagePanel
 		 */		
 		private function get curPageStartY():Number
 		{
-			return currentDragPageIndex * pageHeight;
+			return currentDragPageIndex * pageHeight - 40;
 		}
 		
 		/**
@@ -408,11 +472,16 @@ package view.pagePanel
 		 */		
 		private function getPagePos(pageUI:PageUI):Point
 		{
-			var point:Point = new Point(pageUI.x, pageUI.y);
-			point = pagesCtn.globalToLocal(point);
+			temPoint.x = pageUI.x
+			temPoint.y = pageUI.y;
+			temPoint = pagesCtn.globalToLocal(temPoint);
 			
-			return point;
+			return temPoint;
 		}
+		
+		/**
+		 */		
+		private var temPoint:Point = new Point;
 		
 		/**
 		 * 根据位置信息获取页面
@@ -464,7 +533,6 @@ package view.pagePanel
 			this.addChild(addPageBtn);
 			
 			addChild(pagesCtn);
-			pagesCtn.addEventListener(MouseEvent.MOUSE_DOWN, pageClicked);
 			
 			this.addEventListener(MouseEvent.ROLL_OVER, startKeyBordListen);
 			
@@ -473,6 +541,7 @@ package view.pagePanel
 			stage.addEventListener(PagePanelEvent.START_DRAG_PAGE, startDragPage);
 			stage.addEventListener(PagePanelEvent.END_DRAG_PAGE, stopDragPage);
 			stage.addEventListener(PagePanelEvent.PAGE_DRAGGING, pageDragging);
+			pagesCtn.addEventListener(PagePanelEvent.PAGE_CLICKED, pageClicked);
 			
 			updateLayout();
 		}

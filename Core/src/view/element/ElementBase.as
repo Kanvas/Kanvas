@@ -14,7 +14,6 @@ package view.element
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
-	import model.CoreProxy;
 	import model.vo.ElementVO;
 	
 	import util.ElementCreator;

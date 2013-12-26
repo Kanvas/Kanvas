@@ -1,7 +1,6 @@
 package view.interact.zoomMove
 {
 	import com.greensock.easing.Cubic;
-	import com.greensock.easing.Elastic;
 	
 	import flash.display.Shape;
 	import flash.geom.Point;

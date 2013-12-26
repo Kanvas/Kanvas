@@ -25,8 +25,13 @@ package view.pagePanel
 		public static const PAGE_DRAGGING:String = 'pageDragging';
 		
 		/**
+		 * 此时才触发镜头的页面切换，单纯鼠标按下并不触发镜头切换至当前页面 
 		 */		
-		public function PagePanelEvent(type:String, pageUI:PageUI)
+		public static const PAGE_CLICKED:String = 'pageClicked';
+		
+		/**
+		 */		
+		public function PagePanelEvent(type:String, pageUI:PageUI = null)
 		{
 			super(type, true);
 			

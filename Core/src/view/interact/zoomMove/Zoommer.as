@@ -1,11 +1,9 @@
 package view.interact.zoomMove
 {
-	import com.greensock.easing.Back;
 	import com.greensock.easing.Cubic;
 	
 	import consts.ConstsTip;
 	
-	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	

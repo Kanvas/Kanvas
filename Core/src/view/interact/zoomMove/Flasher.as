@@ -1,15 +1,11 @@
 package view.interact.zoomMove
 {
-	import com.greensock.TweenLite;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.*;
-	import com.greensock.easing.Strong;
 	
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.geom.Point;
-	
-	import util.CoreUtil;
 	
 	/**
 	 * 画布缩放和拖动动画的控制器；

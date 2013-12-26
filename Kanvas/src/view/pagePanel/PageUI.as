@@ -49,7 +49,7 @@ package view.pagePanel
 		 */		
 		public function moveOff(xOff:Number, yOff:Number):void
 		{
-			this.dispatchEvent(new PagePanelEvent(PagePanelEvent.PAGE_DRAGGING, this));
+			this.dispatchEvent(new PagePanelEvent(PagePanelEvent.PAGE_DRAGGING));
 		}
 		
 		/**
@@ -57,19 +57,25 @@ package view.pagePanel
 		 */		
 		public function clicked():void
 		{
-			
+			this.dispatchEvent(new PagePanelEvent(PagePanelEvent.PAGE_CLICKED, this));
 		}
 		
 		/**
 		 */		
 		public function startMove():void
 		{
+			this.dispatchEvent(new PagePanelEvent(PagePanelEvent.START_DRAG_PAGE, this));
+		}
+		
+		/**
+		 */		
+		public function hoverUI():void
+		{
 			this.mouseChildren = this.mouseEnabled = false;
 			this.graphics.clear();
 			drawPageBg();
 			
 			this.label.visible = false;
-			this.dispatchEvent(new PagePanelEvent(PagePanelEvent.START_DRAG_PAGE, this));
 		}
 			
 		/**
@@ -79,7 +85,7 @@ package view.pagePanel
 			label.visible = true;
 			this.statesControl.toDown();
 			
-			this.dispatchEvent(new PagePanelEvent(PagePanelEvent.END_DRAG_PAGE, this));
+			this.dispatchEvent(new PagePanelEvent(PagePanelEvent.END_DRAG_PAGE));
 			this.mouseEnabled = this.mouseChildren = true;
 		}
 		

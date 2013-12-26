@@ -5,13 +5,14 @@ package modules.pages
 	
 	import flash.display.Shape;
 	
-	import model.vo.ElementVO;
-	
 	import view.element.ElementBase;
 	import view.element.ElementEvent;
 	import view.elementSelector.ElementSelector;
 	import view.elementSelector.toolBar.ToolBarController;
 	
+	
+	/**
+	 */	
 	public final class PageElement extends ElementBase
 	{
 		public function PageElement(vo:PageVO)
@@ -116,6 +117,8 @@ package modules.pages
 			}
 		}
 		
+		/**
+		 */		
 		override public function del():void
 		{
 			dispatchEvent(new ElementEvent(ElementEvent.DEL_PAGE, this));
@@ -187,6 +190,9 @@ package modules.pages
 			ViewUtil.show(selector.scaleRollControl);
 		}
 		
+		/**
+		 * 来自主UI中的删除页面命令
+		 */		
 		private function deletePageHandler(e:PageEvent):void
 		{
 			del();
