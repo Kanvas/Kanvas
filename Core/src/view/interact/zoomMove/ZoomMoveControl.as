@@ -73,9 +73,9 @@ package view.interact.zoomMove
 		
 		/**
 		 */		
-		public function autoZoom():void
+		public function autoZoom(originalScale:Boolean = false):void
 		{
-			zoomer.zoomAuto();
+			zoomer.zoomAuto(originalScale);
 		}
 		
 		public function setScreenState(state:String):void

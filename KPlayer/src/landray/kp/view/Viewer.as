@@ -107,7 +107,7 @@ package landray.kp.view
 		 */
 		kp_internal function zoomAuto():void
 		{
-			kp_internal::controller.autoZoom();
+			kp_internal::controller.autoZoom(config.originalScale);
 		}
 		
 		/**
