@@ -42,15 +42,15 @@ package landray.kp.core
 		
 		public var id:String;
 		
-		kp_internal var container:DisplayObjectContainer;
-		kp_internal var viewer   :Viewer;
-		kp_internal var debugger :Debugger;
+		kp_internal var container  :DisplayObjectContainer;
+		kp_internal var viewer     :Viewer;
+		kp_internal var debugger   :Debugger;
 		kp_internal var tipsManager:ToolTipsManager;
-		kp_internal var graphs   :Vector.<Graph>;
-		kp_internal var templete :XML;
-		kp_internal var themes   :Map;
-		kp_internal var lib      :XMLVOLib;
-		kp_internal var theme    :String;
-		kp_internal var bgVO     :BgVO;
+		kp_internal var graphs     :Vector.<Graph>;
+		kp_internal var templete   :XML;
+		kp_internal var themes     :Map;
+		kp_internal var lib        :XMLVOLib;
+		kp_internal var theme      :String;
+		kp_internal var bgVO       :BgVO;
 	}
 }
