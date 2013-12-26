@@ -100,11 +100,6 @@
 				chart.id = arg.id;
 			}
 			
-			if (hasProp(arg.originalScale)) {
-				alert('hasProperty originalScale');
-				chart.originalScale = arg.originalScale;
-			}
-			
 			// id 参数为必选项， 可以只传递id， 此时arg为字符类型；
 			if (typeof arg === "string"){
 				
@@ -128,7 +123,6 @@
 			// 从而便于将消息分发至对应的图表对象(JS)
 			var flashvars = {};
 			flashvars.id = chart.id;
-			flashvars.originalScale = chart.originalScale;
 			
 			initSWF(chart, flashvars, transparent);
 				
@@ -361,11 +355,18 @@
 			this.dispatchEvent({type: KANVAS.event.READY, target: this});
 		};
 		
+		//设定启动时比例是否为原比例
+		that.setStartOriginalScale = function(scale) {
+			if (this.ifReady) {
+				this.swf.setStartOriginalScale(scale);
+			}
+		};
+		
 		//设定数据
 		that.setBase64Data = function(data){
 			if (this.ifReady){
 				this.swf.setBase64Data(data);
-			};
+			}
 		};
 		
 		//从服务器加载数据流

@@ -27,26 +27,6 @@ package view.interact.zoomMove
 		}
 		
 		/**
-		 * 同步canvas与背景图片的比例位置关系， 此方法在初始化， 插入背景图和画布缩放
-		 * 
-		 * 及移动时需要被调用
-		 */		
-		public function synBgImgWidthCanvas():void
-		{
-			var cDisX:Number = canvas.x - canvas.stage.stageWidth / 2;
-			var cDisY:Number = canvas.y - canvas.stage.stageHeight / 2;
-			
-			//移动的比例因子，画布比例越大，背景图片的移动因子越小
-			var pS:Number = (Zoommer.maxScale - canvas.scaleX) / Zoommer.maxScale * 0.9;
-			bgImgCanvas.x = canvas.stage.stageWidth / 2 + cDisX * pS;
-			bgImgCanvas.y = canvas.stage.stageHeight / 2 + cDisY * pS;
-			
-			//尺寸比例因子，背景图片的比例浮动要比canvas小很多
-			var sS:Number = 1 + (canvas.scaleX / Zoommer.minScale) / (Zoommer.maxScale / Zoommer.minScale) * 10;
-			bgImgCanvas.scaleX = bgImgCanvas.scaleY = sS;
-		}
-		
-		/**
 		 * 
 		 */		
 		public function zoomTo(scale:Number, mouseCenter:Point = null, time:Number = 1, ease:Object = null):void
@@ -76,16 +56,6 @@ package view.interact.zoomMove
 		public function autoZoom(originalScale:Boolean = false):void
 		{
 			zoomer.zoomAuto(originalScale);
-		}
-		
-		public function setScreenState(state:String):void
-		{
-			var center:Point = new Point;
-			center.x = (mainUI.stage.stageWidth  * .5 - canvas.x) / canvas.scaleX;
-			center.y = (mainUI.stage.stageHeight * .5 - canvas.y) / canvas.scaleX;
-			mainUI.stage.displayState = state;
-			canvas.x = mainUI.stage.stageWidth  * .5 - center.x;
-			canvas.y = mainUI.stage.stageHeight * .5 - center.y;
 		}
 		
 		/**

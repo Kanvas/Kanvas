@@ -1,6 +1,8 @@
 package landray.kp.mediator
 {
+	import flash.display.StageDisplayState;
 	import flash.events.Event;
+	import flash.events.FullScreenEvent;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.external.ExternalInterface;
@@ -48,6 +50,8 @@ package landray.kp.mediator
 			viewer.stage.addEventListener(Event.RESIZE, resize);
 			
 			viewer.stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
+			
+			viewer.stage.addEventListener(FullScreenEvent.FULL_SCREEN, fullScreen);
 			
 			viewer.addEventListener(MouseEvent.ROLL_OUT  , rollOut);
 			viewer.addEventListener(MouseEvent.ROLL_OVER , rollOver);
@@ -105,6 +109,16 @@ package landray.kp.mediator
 		{
 			if (e.keyCode == 32) 
 				viewer.kp_internal::controller.autoZoom();
+		}
+		
+		private function fullScreen(e:FullScreenEvent):void
+		{
+			if (e.fullScreen == false)
+			{
+				viewer.kp_internal::toolBar.kp_internal::resetScreenButtons();
+				viewer.kp_internal::setScreenState(StageDisplayState.NORMAL);
+			}
+			
 		}
 		
 		/**
