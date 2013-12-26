@@ -186,7 +186,7 @@ package view.interact.zoomMove
 		 * 
 		 * 并居中
 		 */
-		public function zoomAuto():void
+		public function zoomAuto(originalScale:Boolean = false):void
 		{
 			flasher.close();
 			flasher.ready();
@@ -204,21 +204,29 @@ package view.interact.zoomMove
 				else
 					scale = mainUI.bound.height / canvasBound.height;
 				
-				if (control.ifAutoZoom == false)
+				//画布保持原比例，不缩放
+				if (originalScale)
 				{
-					//检查canvas实际尺寸是否小于窗口尺寸，如果小于，则显示原始比例
-					if ( ! (canvasInerBound.width < mainUI.bound.width && canvasInerBound.height < mainUI.bound.height))
-					{
-						flasher.canvasTargetScale *= scale;
-					}
-					else
-					{
-						flasher.canvasTargetScale = 1;
-					}
+					flasher.canvasTargetScale = 1;
 				}
 				else
 				{
-					flasher.canvasTargetScale *= scale;
+					if (control.ifAutoZoom == false)
+					{
+						//检查canvas实际尺寸是否小于窗口尺寸，如果小于，则显示原始比例
+						if ( ! (canvasInerBound.width < mainUI.bound.width && canvasInerBound.height < mainUI.bound.height) && ! originalScale)
+						{
+							flasher.canvasTargetScale *= scale;
+						}
+						else
+						{
+							flasher.canvasTargetScale = 1;
+						}
+					}
+					else
+					{
+						flasher.canvasTargetScale *= scale;
+					}
 				}
 				
 

@@ -42,6 +42,11 @@ package landray.kp.core
 		
 		public var id:String;
 		
+		/**
+		 * 自动布局时，画布保持原比例，不缩放 
+		 */		
+		public var originalScale:Boolean = true;
+		
 		kp_internal var container  :DisplayObjectContainer;
 		kp_internal var viewer     :Viewer;
 		kp_internal var debugger   :Debugger;

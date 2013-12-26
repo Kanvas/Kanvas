@@ -145,8 +145,8 @@ package modules.pages
 			if (contains(pageVO))
 			{
 				var index:int = pageVO.index;
-				removePageVO(pageVO);
 				pages.splice(index, 1);
+				removePageVO(pageVO);
 				udpatePageIndex(index, numPage);
 				
 				dispatchEvent(new PageEvent(PageEvent.PAGE_DELETED, pageVO));
@@ -228,7 +228,7 @@ package modules.pages
 		 */
 		private function removePageVO(pageVO:PageVO):void
 		{
-			pageVO.pg_internal::index = - 1;
+			//pageVO.pg_internal::index = - 1;
 			pageVO.pg_internal::parent = null;
 		}
 		
