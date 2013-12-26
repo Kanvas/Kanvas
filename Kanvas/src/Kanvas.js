@@ -369,14 +369,31 @@
 			}
 		};
 		
+		//横向平移一段距离，负数为向左，正数为向右
+		that.horizontalMove = function(distance) {
+			if (this.ifReady) {
+				this.swf.horizontalMove(distance);
+			}
+		};
 		
+		//取消选择
 		that.onUnselected = function(callback) {
 			return this.addEventListener(KANVAS.event.UNSELECTED, callback);
 		};
 		
-		
 		that.unselected = function() {
-			this.dispatchEvent({type: KANVAS.event.UNSELECTED, target: this});
+			var broadcastEvent = arguments[0];
+			if (broadcastEvent == undefined) 
+				broadcastEvent = true;
+			var swfUnselect = arguments[1];
+			if (swfUnselect == undefined)
+				swfUnselect = false;
+			if (broadcastEvent) {
+				this.dispatchEvent({type: KANVAS.event.UNSELECTED, target: this});
+			}
+			if (this.ifReady && swfUnselect) {
+				this.swf.unselected();
+			}
 		};
 		
 		//添加元素点击监听

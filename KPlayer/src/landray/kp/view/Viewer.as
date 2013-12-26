@@ -1,11 +1,14 @@
 package landray.kp.view
 {
+	import com.kvs.ui.toolTips.ToolTipsManager;
+	
 	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import landray.kp.controls.Selector;
 	import landray.kp.core.KPConfig;
+	import landray.kp.core.KPEmbeds;
 	import landray.kp.core.KPProvider;
 	import landray.kp.core.kp_internal;
 	import landray.kp.mediator.MediatorViewer;
@@ -17,6 +20,7 @@ package landray.kp.view
 	
 	import view.interact.zoomMove.ZoomMoveControl;
 	import view.toolBar.ZoomToolBar;
+	import view.ui.Bubble;
 	import view.ui.MainUIBase;
 
 	[Event(name="initialize", type="flash.events.Event")]
@@ -47,12 +51,16 @@ package landray.kp.view
 		{
 			config   = KPConfig  .instance;
 			provider = KPProvider.instance;
+			
 			//创建viewer的辅助
 			//transformer为坐标舞台与画布转换类
 			transformer = new LayoutTransformer(canvas);
 			//mediator为viewer事件处理交互类
 			mediator    = new MediatorViewer(this);
 			kp_internal::controller  = new ZoomMoveControl(this, mediator);
+			
+			templete = provider.styleXML;
+			
 			//添加背景颜色
 			addChild(bgColorCanvas);
 			//背景图片
@@ -66,6 +74,11 @@ package landray.kp.view
 			addChild(kp_internal::toolBar  = new ZoomToolBar(kp_internal::controller));
 			//更新布局
 			updateLayout();
+			
+			Bubble.init(stage);
+			
+			config.kp_internal::tipsManager = new ToolTipsManager(this);
+			config.kp_internal::tipsManager.setStyleXML(KPEmbeds.instance.styleTips);
 			
 			if (width && height)
 				dispatchEvent(new Event("initialize"));
@@ -146,6 +159,27 @@ package landray.kp.view
 		{
 			return transformer.elementPointToStagePoint(x, y);
 		}
+		
+		kp_internal function horizontalMove(distance:Number):void
+		{
+			if (stage)
+			{
+				var center:Point = new Point;
+				center.x = transformer.stageXToElementX(stage.stageWidth * .5) - distance;
+				center.y = transformer.stageYToElementY(stage.stageHeight * .5);
+				kp_internal::controller.zoomMoveTo(transformer.canvasScale, center);
+			}
+		}
+		
+		kp_internal function unselected():void
+		{
+			if (kp_internal::selector)
+			{
+				kp_internal::selector.visible = false;
+			}
+		}
+		
+		
 		
 		/**
 		 * 设定背景，格式为BgVO

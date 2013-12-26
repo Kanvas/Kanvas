@@ -10,7 +10,7 @@ package view.themePanel
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
-	import landray.kp.ui.*;
+	import landray.kp.ui.Loading;
 	
 	/**
 	 * 背景图片上传选择组件
@@ -169,7 +169,7 @@ package view.themePanel
 		
 		private var loading:Loading;
 		
-		private var imgBtn :LabelBtn;
+		private var imgBtn     :LabelBtn;
 		private var shapeDashed:Bitmap;
 		private var deleteBtn  :IconBtn;
 		

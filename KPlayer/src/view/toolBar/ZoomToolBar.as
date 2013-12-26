@@ -1,15 +1,19 @@
 package view.toolBar
 {	
 	import com.greensock.TweenMax;
+	import com.kvs.ui.button.IconBtn;
 	import com.kvs.utils.StageUtil;
 	
 	import flash.display.SimpleButton;
 	import flash.display.Sprite;
+	import flash.display.StageDisplayState;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
 	import landray.kp.ui.*;
+	import landray.kp.utils.CoreUtil;
+	import landray.kp.view.Viewer;
 	
 	import view.interact.zoomMove.ZoomMoveControl;
 	
@@ -24,10 +28,20 @@ package view.toolBar
 			
 			controller = $controller;
 			
+			CoreUtil.initApplication(this, initialize);
+			
+			
+		}
+		
+		/**
+		 * @private
+		 */
+		private function initialize():void
+		{
 			with (graphics) 
 			{
 				beginFill(0x474946);
-				drawRect(0, 0, 36, 100);
+				drawRect(0, 0, 36, 132);
 				endFill();
 			}
 			
@@ -35,23 +49,73 @@ package view.toolBar
 			
 			visible = false;
 			
-			addChild(zoomIn   = new ZoomIn ).y = 36;
-			addChild(zoomOut  = new ZoomOut).y = 68;
-			addChild(zoomAuto = new ZoomAuto).y = 4 ;
-			zoomIn.x = zoomOut.x = zoomAuto.x = 4;
+			zoomAuto   = new IconBtn;
+			zoomIn     = new IconBtn;
+			zoomOut    = new IconBtn;
+			screenHalf = new IconBtn;
+			screenFull = new IconBtn;
 			
-			zoomIn  .addEventListener(MouseEvent.CLICK, clickZoomIn  );
-			zoomOut .addEventListener(MouseEvent.CLICK, clickZoomOut );
-			zoomAuto.addEventListener(MouseEvent.CLICK, clickZoomAuto);
+			zoomAuto  .styleXML = btnStyleXML;
+			zoomIn    .styleXML = btnStyleXML;
+			zoomOut   .styleXML = btnStyleXML;
+			screenHalf.styleXML = btnStyleXML;
+			screenFull.styleXML = btnStyleXML;
 			
-			StageUtil.initApplication(this, addedToStage);
-		}
-		
-		/**
-		 * @private
-		 */
-		private function addedToStage():void
-		{
+			zoomAuto  .tips = "自适应";
+			zoomIn    .tips = "放大";
+			zoomOut   .tips = "缩小";
+			screenHalf.tips = "退出全屏";
+			screenFull.tips = "全屏";
+			
+			zoomAuto.w = zoomAuto.h = 28;
+			zoomIn.w = zoomIn.h = 28;
+			zoomOut.w = zoomOut.h = 28;
+			screenHalf.w = screenHalf.h = 28;
+			screenFull.w = screenFull.h = 28;
+			
+			zoomAuto.iconW = 12;
+			zoomAuto.iconH = 11;
+			zoomIn.iconW = 12;
+			zoomIn.iconH = 12;
+			zoomOut.iconW = 12;
+			zoomOut.iconH = 12;
+			screenFull.iconW = 18;
+			screenFull.iconH = 16;
+			screenHalf.iconW = 18;
+			screenHalf.iconH = 16;
+			
+			zoomIn.x = zoomOut.x = zoomAuto.x = screenFull.x = screenHalf.x = 4;
+			
+			ZoomAuto;
+			var pathZoomAuto:String = "landray.kp.ui.ZoomAuto";
+			zoomAuto.setIcons(pathZoomAuto, pathZoomAuto, pathZoomAuto);
+			ZoomIn;
+			var pathZoomIn:String = "landray.kp.ui.ZoomIn";
+			zoomIn.setIcons(pathZoomIn, pathZoomIn, pathZoomIn);
+			ZoomOut;
+			var pathZoomOut:String = "landray.kp.ui.ZoomOut";
+			zoomOut.setIcons(pathZoomOut, pathZoomOut, pathZoomOut);
+			ScreenHalf;
+			var pathScreenHalf:String = "landray.kp.ui.ScreenHalf";
+			screenHalf.setIcons(pathScreenHalf, pathScreenHalf, pathScreenHalf);
+			ScreenFull;
+			var pathScreenFull:String = "landray.kp.ui.ScreenFull";
+			screenFull.setIcons(pathScreenFull, pathScreenFull, pathScreenFull);
+			
+			addChild(zoomAuto  ).y = 4 ;
+			addChild(zoomIn    ).y = 36;
+			addChild(zoomOut   ).y = 68;
+			addChild(screenHalf).y = 100;
+			addChild(screenFull).y = 100;
+			
+			screenHalf.visible = false;
+			
+			zoomIn    .addEventListener(MouseEvent.CLICK, clickZoomIn    );
+			zoomOut   .addEventListener(MouseEvent.CLICK, clickZoomOut   );
+			zoomAuto  .addEventListener(MouseEvent.CLICK, clickZoomAuto  );
+			screenHalf.addEventListener(MouseEvent.CLICK, clickScreenHalf);
+			screenFull.addEventListener(MouseEvent.CLICK, clickScreenFull);
+			
 			stage.addEventListener(MouseEvent.MOUSE_MOVE, timerStartMouseMove);
 		}
 		
@@ -161,6 +225,24 @@ package view.toolBar
 		}
 		
 		/**
+		 * @private
+		 */
+		private function clickScreenHalf(e:MouseEvent):void
+		{
+			screenHalf.visible = ! (screenFull.visible = true);
+			controller.setScreenState(StageDisplayState.NORMAL);
+		}
+		
+		/**
+		 * @private
+		 */
+		private function clickScreenFull(e:MouseEvent):void
+		{
+			screenHalf.visible = ! (screenFull.visible = false);
+			controller.setScreenState(StageDisplayState.FULL_SCREEN);
+		}
+		
+		/**
 		 * @inheritDoc
 		 */
 		override public function set alpha(value:Number):void
@@ -172,17 +254,27 @@ package view.toolBar
 		/**
 		 * @private
 		 */
-		private var zoomIn:SimpleButton;
+		private var zoomIn:IconBtn;
 		
 		/**
 		 * @private
 		 */
-		private var zoomOut:SimpleButton;
+		private var zoomOut:IconBtn;
 		
 		/**
 		 * @private
 		 */
-		private var zoomAuto:SimpleButton;
+		private var zoomAuto:IconBtn;
+		
+		/**
+		 * @private
+		 */
+		private var screenFull:IconBtn;
+		
+		/**
+		 * @private
+		 */
+		private var screenHalf:IconBtn;
 		
 		/**
 		 * @private
@@ -195,5 +287,23 @@ package view.toolBar
 		private var display:Boolean;
 		
 		private var timer:Timer;
+		
+		private var btnStyleXML:XML = 
+			<states>
+				<normal radius='0'>
+					<fill color='#686A66,#575654' angle="90"/>
+					<img/>
+				</normal>
+				<hover radius='0'>
+					<border color='#2D2C2A' alpha='1' thikness='1'/>
+					<fill color='#57524F,#4B4643' angle="90"/>
+					<img/>
+				</hover>
+				<down radius='0'>
+					<border color='#2D2C2A' alpha='1' thikness='1'/>
+					<fill color='#2D2C2A,#262626' angle="90"/>
+					<img/>
+				</down>
+			</states>;
 	}
 }

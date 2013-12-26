@@ -1,8 +1,15 @@
 package cn.vision.managers
 {
 	import cn.vision.core.EventDispatcherVS;
-	import cn.vision.core.vs;
 	import cn.vision.events.EventManager;
+	
+	[Event(name="queneEnd"  , type="cn.vision.events.EventManager")]
+	
+	[Event(name="queneStart", type="cn.vision.events.EventManager")]
+	
+	[Event(name="stepEnd"   , type="cn.vision.events.EventManager")]
+	
+	[Event(name="stepStart" , type="cn.vision.events.EventManager")]
 	
 	public class Manager extends EventDispatcherVS
 	{

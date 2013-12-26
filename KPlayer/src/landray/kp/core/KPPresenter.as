@@ -43,29 +43,22 @@ package landray.kp.core
 			config.kp_internal::container = container;
 			config.id = args[0];
 			
-			if (args[1]) 
-			{
-				provider.dataURL = args[2];
-				//init commands
-				commandManager.push(new Command1LoadData);
-				commandManager.push(new Command2Init);
-				commandManager.push(new Command3CreateGraph);
-				commandManager.push(new Command4ChangeTheme);
-				commandManager.push(new Command5ZoomAuto);
-				//commandManager.push(new Command6InitComplete);
-				commandManager.execute();
-			} 
-			else 
-			{
-				provider.dataXML = new XML(args[2]);
-				commandManager.push(new Command2Init);
-				commandManager.push(new Command3CreateGraph);
-				commandManager.push(new Command4ChangeTheme);
-				commandManager.push(new Command5ZoomAuto);
-				//commandManager.push(new Command6InitComplete);
-				commandManager.execute();
-			}
-			
+			commandManager.push(new Command1ProvideData(args[1], args[2]));
+			commandManager.push(new Command2Init);
+			commandManager.push(new Command3CreateGraph);
+			commandManager.push(new Command4ChangeTheme);
+			commandManager.push(new Command5ZoomAuto);
+			commandManager.execute();
+		}
+		
+		public function horizontalMove(value:Number):void
+		{
+			config.kp_internal::viewer.kp_internal::horizontalMove(value);
+		}
+		
+		public function unselected():void
+		{
+			config.kp_internal::viewer.kp_internal::unselected();
 		}
 		
 		/**
