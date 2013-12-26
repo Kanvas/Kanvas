@@ -71,7 +71,7 @@ package landray.kp.view
 			//添加selector选择框
 			addChild(kp_internal::selector = new Selector(this)).visible = false;
 			//添加按钮工具条
-			addChild(kp_internal::toolBar  = new ZoomToolBar(kp_internal::controller));
+			addChild(kp_internal::toolBar  = new ZoomToolBar(this));
 			//更新布局
 			updateLayout();
 			
@@ -179,6 +179,27 @@ package landray.kp.view
 			}
 		}
 		
+		kp_internal function setScreenState(state:String):void
+		{
+			if(isNaN(lastWidth) || isNaN(lastHeight))
+			{
+				lastWidth  = stage.stageWidth;
+				lastHeight = stage.stageHeight;
+			}
+			if (stage.displayState!= state)
+				stage.displayState = state;
+			var x:Number = (lastWidth  * .5 - canvas.x) / canvas.scaleX;
+			var y:Number = (lastHeight * .5 - canvas.y) / canvas.scaleX;
+			lastWidth  = stage.stageWidth;
+			lastHeight = stage.stageHeight;
+			canvas.x = lastWidth  * .5 - x;
+			canvas.y = lastHeight * .5 - y;
+			
+			synBgImgWidthCanvas();
+		}
+		
+		private var lastWidth:Number;
+		private var lastHeight:Number;
 		
 		
 		/**

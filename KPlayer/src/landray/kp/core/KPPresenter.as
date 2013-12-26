@@ -42,9 +42,8 @@ package landray.kp.core
 			//set config container
 			config.kp_internal::container = container;
 			config.id = args[0];
-			config.originalScale = args[1];
 			
-			commandManager.push(new Command1ProvideData(args[2], args[3]));
+			commandManager.push(new Command1ProvideData(args[1], args[2]));
 			commandManager.push(new Command2Init);
 			commandManager.push(new Command3CreateGraph);
 			commandManager.push(new Command4ChangeTheme);
@@ -60,6 +59,11 @@ package landray.kp.core
 		public function unselected():void
 		{
 			config.kp_internal::viewer.kp_internal::unselected();
+		}
+		
+		public function setStartOriginalScale(scale:Boolean):void
+		{
+			config.originalScale = scale;
 		}
 		
 		/**
