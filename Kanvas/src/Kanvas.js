@@ -100,6 +100,11 @@
 				chart.id = arg.id;
 			}
 			
+			if (hasProp(arg.originalScale)) {
+				alert('hasProperty originalScale');
+				chart.originalScale = arg.originalScale;
+			}
+			
 			// id 参数为必选项， 可以只传递id， 此时arg为字符类型；
 			if (typeof arg === "string"){
 				
@@ -123,6 +128,7 @@
 			// 从而便于将消息分发至对应的图表对象(JS)
 			var flashvars = {};
 			flashvars.id = chart.id;
+			flashvars.originalScale = chart.originalScale;
 			
 			initSWF(chart, flashvars, transparent);
 				
