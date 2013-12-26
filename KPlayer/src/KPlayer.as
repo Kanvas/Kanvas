@@ -54,7 +54,7 @@ package
 					isURL = true;
 					sData = value;
 					//kplayer presenter初始化
-					presenter.start(this, appID, originalScale, isURL, sData);
+					presenter.start(this, appID, isURL, sData);
 				}
 			}
 			catch (e:Error) { }
@@ -74,7 +74,7 @@ package
 				isURL = false;
 				sData = value;
 				//kplayer presenter初始化
-				presenter.start(this, appID, originalScale, isURL, sData);
+				presenter.start(this, appID, isURL, sData);
 			}
 		}
 		
@@ -95,7 +95,7 @@ package
 				newByte.uncompress();
 				sData = String(newByte.toString());
 				//kplayer presenter初始化
-				presenter.start(this, appID, originalScale, isURL, sData);
+				presenter.start(this, appID, isURL, sData);
 			}
 		}
 		
@@ -126,6 +126,15 @@ package
 			presenter.unselected();
 		}
 		
+		/**
+		 * @private
+		 * js回调函数，取消元素的选择状态
+		 */
+		private function setStartOriginalScale(scale:Boolean):void
+		{
+			presenter.setStartOriginalScale(scale);
+		}
+		
 		
 		//===========================================================================
 		// start the app,
@@ -141,8 +150,6 @@ package
 		{
 			//从网页获取ID参数
 			appID = (loaderInfo.parameters.id) ? loaderInfo.parameters.id : "1";
-			//启动是否保持原始比例不缩放
-			originalScale = (loaderInfo.parameters.originalScale) ? (loaderInfo.parameters.originalScale == "true") : false;
 			//安全沙箱
 			Security.allowDomain("*");
 			//初始化presenter，Kplayer主入口类
@@ -163,17 +170,19 @@ package
 			if (ExternalInterface.available) 
 			{
 				//传入一个URL，然后通过URL获取数据
-				ExternalInterface.addCallback("loadDataFromServer", loadDataFromServer);
+				ExternalInterface.addCallback("loadDataFromServer"   , loadDataFromServer);
 				//传入一个XML String数据
-				ExternalInterface.addCallback("setXMLData"        , setXMLData);
+				ExternalInterface.addCallback("setXMLData"           , setXMLData);
 				//传入一个通过BASE64和BYTEARRAY压缩的XML String
-				ExternalInterface.addCallback("setBase64Data"     , setBase64Data);
+				ExternalInterface.addCallback("setBase64Data"        , setBase64Data);
 				//模拟鼠标滚轮
-				ExternalInterface.addCallback("onWebMouseWheel"   , onWebMouseWheel);
+				ExternalInterface.addCallback("onWebMouseWheel"      , onWebMouseWheel);
 				
-				ExternalInterface.addCallback("horizontalMove"    , horizontalMove);
+				ExternalInterface.addCallback("horizontalMove"       , horizontalMove);
 				
-				ExternalInterface.addCallback("unselected"        , unselected);
+				ExternalInterface.addCallback("unselected"           , unselected);
+				
+				ExternalInterface.addCallback("setStartOriginalScale", setStartOriginalScale)
 			}
 		}
 		
@@ -195,11 +204,6 @@ package
 		 * @private
 		 */
 		private var appID:String;
-		
-		/**
-		 * @private
-		 */
-		private var originalScale:Boolean;
 		
 		/**
 		 * @private
