@@ -1,7 +1,6 @@
 package util.img
 {
 	import com.adobe.images.PNGEncoder;
-	import com.kvs.utils.graphic.BitmapUtil;
 	import com.kvs.utils.system.OS;
 	
 	import flash.display.Bitmap;
@@ -16,10 +15,6 @@ package util.img
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
-	import flash.net.URLVariables;
-	import flash.utils.ByteArray;
-	
-	import mx.events.Request;
 
 	/**
 	 * 图片插入器, 负责从客户端选取图片，并上传至指定服务器

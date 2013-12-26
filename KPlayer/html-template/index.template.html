@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!-- saved from url=(0014)about:internet -->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"> 
@@ -106,3 +107,58 @@
         </noscript>     
    </body>
 </html>
+=======
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>KPlayer</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        
+        <style>
+        	body, html {
+        		margin: 0;
+        		padding: 0;
+        	}
+        </style>
+        
+        <script type="text/javascript" src="Kanvas.js"></script>
+        <script type="text/javascript">
+        	
+            var kvs = new KPlayer({id: 'demo', width: '100%', height: '100%', originalScale: true});
+            
+            var testData = "eNrtmktOwzAQhvecwvIByKNvKWYDLHoClijUA42axpXrVO0OdckVEGdgwwaBuE0pxyBpg0BV08hVaNpmdo4f34z1j39nYafnBiN3eHZCiNMFl4MkI5BDTwSMLoeu7VOTkqGa+NC+YPSq6ymgxmLBzR3pCF/IdsBhzKiZdPcFD32Im/GHF3CiJgNg1A2VSEiMcrh1Q1/R5bRoopIAlz70IVDE4zGNKBgrRj/vn+ZvL7Pn99njR1qbkoEUA5BqwiglXHTORRhEa+1KlZJQ+lHvT6BNob4epvPpq2Wl4dbAsnF2Gs1cR8vmVTR5eWRoIHKfkavEf0mz5FDH+MPEqkDogVbFCnLDBkpyEWFF4zHZ/pikD+SbQq64lKQzY6QGsWy9P+OeEL289q/L2nLzFT27283eCyolvXtC/7CVDXg4JoLKF658kd55ZJ5eraKn48lGT0fl0dOL9OFaTStIBq1e30NXL7nCjQZqcsz6Npuo775p0mrl6aqWiQofc7VYKC/Ki5KgvCjJruVd0+kY8cOpxXMq4/c9ldN3vSCiOUbybOsbGily1A==";
+			
+			var server = "assets/kvs.xml";
+			//var server = "assets/treeContent.xml";
+			
+			kvs.onReady(function(){
+				kvs.loadDataFromServer(server);
+				//kvs.setBase64Data(testData);
+			});
+			
+			kvs.onUnselected(function(){
+				alert("unselected");
+			});
+			
+			//弹出属性面板
+			kvs.onLinkClicked(function(e){
+				//alert('点击节点' + e.data);
+			});
+			
+			//横向平移
+			function horizontalMove() {
+				kvs.horizontalMove(100);
+			};
+			
+			//取消选择
+			function unselected() {
+				kvs.unselected(false, true);
+			};
+        </script>
+    </head>
+    <body>
+    	<input type="button" value="横向平移" onclick="horizontalMove()"/>
+    	<input type="button" value="取消选择" onclick="unselected()"/>
+        <div id="demo"></div>
+    </body>
+</html>
+>>>>>>> 6ca0583cd31f0cfddd1e1a7d27c56d9e6f044277

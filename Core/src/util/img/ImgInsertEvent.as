@@ -2,7 +2,6 @@ package util.img
 {
 	import flash.display.BitmapData;
 	import flash.events.Event;
-	import flash.utils.ByteArray;
 
 	/**
 	 */	

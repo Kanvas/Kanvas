@@ -2,14 +2,10 @@ package landray.kp.maps.simple.elements
 {
 	import com.kvs.utils.XMLConfigKit.style.Style;
 	
-	import flash.display.DisplayObject;
 	import flash.display.Graphics;
 	import flash.display.Shape;
 	import flash.display.Sprite;
-	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
-	
-	import landray.kp.utils.CoreUtil;
 	
 	import model.vo.ElementVO;
 	
@@ -68,10 +64,12 @@ package landray.kp.maps.simple.elements
 				vo.style.height =   vo.height;
 			}
 			
-			rect.x      = vo.style.tx;
-			rect.y      = vo.style.ty;
-			rect.width  = vo.style.width;
-			rect.height = vo.style.height;
+			var rect:Rectangle = new Rectangle;
+			
+			rect.x      = vo.scale * vo.style.tx;
+			rect.y      = vo.scale * vo.style.ty;
+			rect.width  = vo.scale * vo.style.width;
+			rect.height = vo.scale * vo.style.height;
 			
 			return rect;
 		}
@@ -94,7 +92,5 @@ package landray.kp.maps.simple.elements
 		 * 对应的ＶＯ结构体。
 		 */
 		public var vo:ElementVO;
-		
-		private var rect:Rectangle = new Rectangle;
 	}
 }

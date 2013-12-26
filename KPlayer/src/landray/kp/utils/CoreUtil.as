@@ -24,12 +24,12 @@ package landray.kp.utils
 		
 		/**
 		 */		
-		public static function applyStyle(vo:ElementVO, stypeID:String=null):void
+		public static function applyStyle(vo:ElementVO, stypeID:String = null):void
 		{
 			StyleUtil.applyStyleToElement(vo, stypeID);
 		}
 		
-		public static function clearLibPart(lib:XMLVOLib=null):void
+		public static function clearLibPart(lib:XMLVOLib = null):void
 		{
 			if(!lib) 
 				lib = XMLVOLib.currentLib;

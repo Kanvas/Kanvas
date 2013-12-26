@@ -159,6 +159,8 @@ package view.pagePanel
 				currentPage = null;
 			}
 			
+			return;
+			
 			if (pages.length)
 			{
 				pageUI = getPageByIndex(pageUI.pageVO.index);

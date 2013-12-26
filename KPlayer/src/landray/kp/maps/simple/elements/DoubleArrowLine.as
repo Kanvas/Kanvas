@@ -2,8 +2,6 @@ package landray.kp.maps.simple.elements
 {
 	import model.vo.LineVO;
 	
-	import view.element.ElementBase;
-	
 	/**
 	 * 双箭头线条
 	 */	

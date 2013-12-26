@@ -3,6 +3,7 @@ package view.interact.zoomMove
 	import com.greensock.easing.Cubic;
 	
 	import flash.display.Shape;
+	import flash.display.StageDisplayState;
 	import flash.geom.Point;
 	
 	import view.ui.Canvas;
@@ -113,9 +114,19 @@ package view.interact.zoomMove
 		
 		/**
 		 */		
-		public function autoZoom():void
+		public function autoZoom(originalScale:Boolean = false):void
 		{
-			zoomer.zoomAuto();
+			zoomer.zoomAuto(originalScale);
+		}
+		
+		public function setScreenState(state:String):void
+		{
+			var center:Point = new Point;
+			center.x = (mainUI.stage.stageWidth  * .5 - canvas.x) / canvas.scaleX;
+			center.y = (mainUI.stage.stageHeight * .5 - canvas.y) / canvas.scaleX;
+			mainUI.stage.displayState = state;
+			canvas.x = mainUI.stage.stageWidth  * .5 - center.x;
+			canvas.y = mainUI.stage.stageHeight * .5 - center.y;
 		}
 		
 		/**

@@ -3,8 +3,6 @@ package landray.kp.maps.mindMap.model
 	import com.kvs.utils.XMLConfigKit.StyleManager;
 	import com.kvs.utils.XMLConfigKit.style.Style;
 	
-	import flash.geom.Point;
-	
 	import landray.kp.maps.mindMap.view.TreeElement;
 	
 

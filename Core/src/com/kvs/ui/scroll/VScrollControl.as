@@ -60,19 +60,19 @@ package com.kvs.ui.scroll
 			if (sourceView.off + start < 0)//目标在可视区域上方
 			{
 				off = - start;
-				TweenLite.to(sourceView, 0.5, {off: off});
+				TweenLite.to(sourceView, 0, {off: off});
 				offToScrollBarY(off);
 			}
 			else if (sourceView.off + end > sourceView.viewHeight)//目标在可视区域下方
 			{
 				off = sourceView.viewHeight - end;
-				TweenLite.to(sourceView, 0.5, {off: off});
+				TweenLite.to(sourceView, 0, {off: off});
 				
 				offToScrollBarY(off);
 			}
 			else
 			{
-				
+				trace(this);
 			}
 		}
 		
@@ -137,7 +137,7 @@ package com.kvs.ui.scroll
 				off = 0;
 			}
 			
-			TweenMax.to(sourceView, 0.3, {off: off});
+			TweenMax.to(sourceView, 0, {off: off});
 		}
 		
 		/**
@@ -154,16 +154,19 @@ package com.kvs.ui.scroll
 		{
 			if (this.sourceView.viewHeight >= this.sourceView.fullSize)
 			{
-				if (ifUpdataView)
-					this.sourceView.off = 0;
+				this.sourceView.off = 0;
 				
 				scrollBar.y = minScrollBarY
-				TweenLite.to(scrollBar, 0.5, {alpha: 0});
+				TweenLite.to(scrollBar, 0, {alpha: 0});
 			}
 			else
 			{
 				if (ifUpdataView)
 					this.sourceView.off = 0;
+				
+				// 防止下方有空余
+				if (sourceView.off + sourceView.fullSize < sourceView.viewHeight)
+					sourceView.off = sourceView.viewHeight - sourceView.fullSize;
 				
 				barHeight = this.sourceView.viewHeight / this.sourceView.fullSize * this.sourceView.viewHeight;
 				barPos = minScrollBarY - this.sourceView.off / (this.sourceView.fullSize - this.sourceView.viewHeight) * barScrollDis
@@ -172,7 +175,7 @@ package com.kvs.ui.scroll
 				scrollBar.render();
 				scrollBar.y = barPos;
 				
-				TweenLite.to(scrollBar, 0.3, {alpha: 1});
+				TweenLite.to(scrollBar, 0, {alpha: 1});
 			}
 			
 		}

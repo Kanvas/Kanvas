@@ -6,6 +6,7 @@ package view.pagePanel
 	import com.kvs.ui.label.LabelUI;
 	
 	import flash.display.Shape;
+	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
 	import modules.pages.PageEvent;
@@ -23,7 +24,8 @@ package view.pagePanel
 			pageVO.addEventListener(PageEvent.PAGE_SELECTED, pageSelected);
 			pageVO.addEventListener(PageEvent.UPDATE_THUMB, updateThumb);
 			
-			addChild(label);
+			addChild(con);
+			con.addChild(label);
 			
 			deleteBtn = new IconBtn;
 			deleteBtn.tips = '删除页面';
@@ -37,7 +39,7 @@ package view.pagePanel
 			this.addEventListener(MouseEvent.ROLL_OVER, rollOver);
 			this.addEventListener(MouseEvent.ROLL_OUT, rollOut);
 			
-			dragMoveControl = new ClickMoveControl(this, this);
+			dragMoveControl = new ClickMoveControl(this, con);
 		}
 		
 		/**
@@ -72,7 +74,7 @@ package view.pagePanel
 		public function hoverUI():void
 		{
 			this.mouseChildren = this.mouseEnabled = false;
-			this.graphics.clear();
+			con.graphics.clear();
 			drawPageBg();
 			
 			this.label.visible = false;
@@ -144,10 +146,10 @@ package view.pagePanel
 		{
 			var ty:Number = (currState.height - iconH) / 2;
 			
-			this.graphics.lineStyle(1, 0xEEEEEE);
-			this.graphics.beginFill(0xFFFFFF);
-			this.graphics.drawRect(leftGutter, ty, iconW, iconH);
-			this.graphics.endFill();
+			con.graphics.lineStyle(1, 0xEEEEEE);
+			con.graphics.beginFill(0xFFFFFF);
+			con.graphics.drawRect(leftGutter, ty, iconW, iconH);
+			con.graphics.endFill();
 		}
 		
 		/**
@@ -221,6 +223,13 @@ package view.pagePanel
 											<format color='#ffffff' font='雅痞' size='12'/>
 										  </label>
 		
+		/**
+		 * 用来响应点击，触发页面选择的容器对象；
+		 * 
+		 * 这么做的目的是为了防止点击删除按钮也触发clicked方法 
+		 */			
+		private var con:Sprite = new Sprite;
+			
 		/**
 		 */		
 		public var pageVO:PageVO;

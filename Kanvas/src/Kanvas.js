@@ -100,6 +100,11 @@
 				chart.id = arg.id;
 			}
 			
+			if (hasProp(arg.originalScale)) {
+				alert('hasProperty originalScale');
+				chart.originalScale = arg.originalScale;
+			}
+			
 			// id 参数为必选项， 可以只传递id， 此时arg为字符类型；
 			if (typeof arg === "string"){
 				
@@ -123,6 +128,7 @@
 			// 从而便于将消息分发至对应的图表对象(JS)
 			var flashvars = {};
 			flashvars.id = chart.id;
+			flashvars.originalScale = chart.originalScale;
 			
 			initSWF(chart, flashvars, transparent);
 				
@@ -369,14 +375,31 @@
 			}
 		};
 		
+		//横向平移一段距离，负数为向左，正数为向右
+		that.horizontalMove = function(distance) {
+			if (this.ifReady) {
+				this.swf.horizontalMove(distance);
+			}
+		};
 		
+		//取消选择
 		that.onUnselected = function(callback) {
 			return this.addEventListener(KANVAS.event.UNSELECTED, callback);
 		};
 		
-		
 		that.unselected = function() {
-			this.dispatchEvent({type: KANVAS.event.UNSELECTED, target: this});
+			var broadcastEvent = arguments[0];
+			if (broadcastEvent == undefined) 
+				broadcastEvent = true;
+			var swfUnselect = arguments[1];
+			if (swfUnselect == undefined)
+				swfUnselect = false;
+			if (broadcastEvent) {
+				this.dispatchEvent({type: KANVAS.event.UNSELECTED, target: this});
+			}
+			if (this.ifReady && swfUnselect) {
+				this.swf.unselected();
+			}
 		};
 		
 		//添加元素点击监听

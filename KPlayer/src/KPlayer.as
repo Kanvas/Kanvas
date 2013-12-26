@@ -54,13 +54,10 @@ package
 					isURL = true;
 					sData = value;
 					//kplayer presenter初始化
-					presenter.start(this, appID, isURL, sData);
+					presenter.start(this, appID, originalScale, isURL, sData);
 				}
 			}
-			catch (e:Error) 
-			{
-				
-			}
+			catch (e:Error) { }
 		}
 		
 		/**
@@ -77,7 +74,7 @@ package
 				isURL = false;
 				sData = value;
 				//kplayer presenter初始化
-				presenter.start(this, appID, isURL, sData);
+				presenter.start(this, appID, originalScale, isURL, sData);
 			}
 		}
 		
@@ -95,12 +92,10 @@ package
 				isURL = false;
 				//处理外部传入的BASE64压缩数据
 				var newByte:ByteArray = Base64.decode(value);
-				//trace(newByte.toString());
 				newByte.uncompress();
 				sData = String(newByte.toString());
-				//trace(sData);
 				//kplayer presenter初始化
-				presenter.start(this, appID, isURL, sData);
+				presenter.start(this, appID, originalScale, isURL, sData);
 			}
 		}
 		
@@ -113,6 +108,23 @@ package
 			stage.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_WHEEL, true, false, NaN, NaN, null, false, false, false, false, value));
 		}
 		
+		/**
+		 * @private
+		 * js回调函数，画布横向移动一段距离
+		 */
+		private function horizontalMove(value:Number):void
+		{
+			presenter.horizontalMove(value);
+		}
+		
+		/**
+		 * @private
+		 * js回调函数，取消元素的选择状态
+		 */
+		private function unselected():void
+		{
+			presenter.unselected();
+		}
 		
 		
 		//===========================================================================
@@ -129,6 +141,8 @@ package
 		{
 			//从网页获取ID参数
 			appID = (loaderInfo.parameters.id) ? loaderInfo.parameters.id : "1";
+			//启动是否保持原始比例不缩放
+			originalScale = (loaderInfo.parameters.originalScale) ? (loaderInfo.parameters.originalScale == "true") : false;
 			//安全沙箱
 			Security.allowDomain("*");
 			//初始化presenter，Kplayer主入口类
@@ -156,6 +170,10 @@ package
 				ExternalInterface.addCallback("setBase64Data"     , setBase64Data);
 				//模拟鼠标滚轮
 				ExternalInterface.addCallback("onWebMouseWheel"   , onWebMouseWheel);
+				
+				ExternalInterface.addCallback("horizontalMove"    , horizontalMove);
+				
+				ExternalInterface.addCallback("unselected"        , unselected);
 			}
 		}
 		
@@ -177,6 +195,11 @@ package
 		 * @private
 		 */
 		private var appID:String;
+		
+		/**
+		 * @private
+		 */
+		private var originalScale:Boolean;
 		
 		/**
 		 * @private
