@@ -81,7 +81,7 @@ package view.pagePanel
 		/**
 		 * 告知core去创建一个页面
 		 */		
-		public function addPage(evt:MouseEvent):void
+		public function addPage():void
 		{
 			_addPage();
 		}
