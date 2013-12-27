@@ -16,8 +16,6 @@ package landray.kp.core
 				throw new Error("Single Ton!");
 			}
 		}
-		[Embed(source="../../../Core/src/Config.xml", mimeType="application/octet-stream")]
-		public var styleClass:Class;
 		
 		public var styleTips:XML = <label hPadding='12' vPadding='8' radius='30' vMargin='10' hMargin='20'>
 										<border thikness='1' alpha='0' color='555555' pixelHinting='true'/>
