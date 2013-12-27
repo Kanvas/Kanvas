@@ -116,7 +116,7 @@ package landray.kp.view
 		kp_internal function refresh():void
 		{
 			kp_internal::drawInteractor();
-			kp_internal::drawBackground(background.color);
+			kp_internal::drawBackground((background) ? background.color : 0xFFFFFF);
 			if (kp_internal::selector) 
 			{
 				if (kp_internal::selector.visible) 
