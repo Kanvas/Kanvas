@@ -100,6 +100,14 @@ package
 		}
 		
 		/**
+		 * 创建一个页面
+		 */		
+		public function createPage(proxy:ElementProxy):void
+		{
+			facade.sendNotification(Command.CREATE_PAGE, proxy);
+		}
+		
+		/**
 		 * 插入图片
 		 */		
 		public function insertIMG():void

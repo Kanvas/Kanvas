@@ -378,6 +378,7 @@ package view.pagePanel
 				
 				var pageY:Number = getPagePos(currentDragPageUI).y;
 				
+				// 向上拖动
 				if (pageY < min && currentDragPageIndex >= 1)
 				{
 					pageManager.setPageIndex(getPageByIndex(currentDragPageIndex - 1).pageVO, currentDragPageIndex);
@@ -385,7 +386,7 @@ package view.pagePanel
 					
 					updateTemPageLayout();
 				}
-				else if (pageY > max && currentDragPageIndex < pages.length - 1)
+				else if (pageY > max && currentDragPageIndex < pages.length - 1)// 向下拖动
 				{
 					pageManager.setPageIndex(getPageByIndex(currentDragPageIndex + 1).pageVO, currentDragPageIndex);
 					currentDragPageIndex += 1;
