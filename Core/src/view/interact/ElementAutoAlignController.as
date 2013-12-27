@@ -71,7 +71,7 @@ package view.interact
 				var elementsLoopBreak:Boolean = false;
 				for each (var element:ElementBase in elements)
 				{
-					if (current == element || ! element.visible || CoreUtil.inAutoGroup(element) || CoreUtil.pointOutOfStageBounds(new Point(element.x, element.y))) continue;
+					if (current == element || ! element.visible || CoreUtil.inGroup(current, element) || CoreUtil.pointOutOfStageBounds(new Point(element.x, element.y))) continue;
 					var plus:Number = current.rotation - element.rotation;
 					//判断元素１的横向是对元素２的横向还是纵向进行对齐检测
 					if (plus % 90 == 0)

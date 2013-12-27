@@ -73,7 +73,7 @@ package commands
 		 */		
 		private function shapeCreated():void
 		{
-			CoreFacade.coreMediator.autoLayerController.autoLayer(page, true);
+			CoreFacade.coreMediator.autoLayerController.autoLayer(page);
 			
 			index1 = page.index;
 			index2 = pageVO.index;

@@ -8,6 +8,8 @@ package util
 	
 	import model.CoreFacade;
 	
+	import modules.pages.PageElement;
+	
 	import view.element.ElementBase;
 	import view.element.GroupElement;
 	import view.interact.CoreMediator;
@@ -87,6 +89,28 @@ package util
 			}
 			return false;
 		}
+		
+		
+		/**
+		 * 检测element是否在自动群组内
+		 * 检测element是否在current群组内
+		 */
+		public static function inGroup(current:ElementBase, element:ElementBase):Boolean
+		{
+			var result:Boolean;
+			//检测element是否在current临时组合内
+			if (current is TemGroupElement)
+				result = (coreMdt.multiSelectControl.childElements.indexOf(element) != -1);
+			//检测element是否在current群组
+			else if (current is GroupElement)
+				result = (GroupElement(current).childElements.indexOf(element) != -1);
+			//检测element是否在智能组合内
+			else if (element is IAutoGroupElement)
+				result = coreMdt.autoGroupController.hasElement(element);
+			
+			return result;
+		}
+		
 		
 		public static function getRectForStage(element:ElementBase, elementRotate:Boolean = true, canvasRotate:Boolean = true):Rectangle
 		{

@@ -310,7 +310,7 @@ package view.interact.multiSelect
 				leftArr  .push(elementRect.left);
 				rightArr .push(elementRect.right);
 				topArr   .push(elementRect.top);
-				bottomArr.push(elementRect.right);
+				bottomArr.push(elementRect.bottom);
 			}
 			left   = Math.min.apply(null, leftArr);
 			right  = Math.max.apply(null, rightArr);
