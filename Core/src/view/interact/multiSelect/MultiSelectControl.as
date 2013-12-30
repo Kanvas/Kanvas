@@ -312,6 +312,8 @@ package view.interact.multiSelect
 				topArr   .push(elementRect.top);
 				bottomArr.push(elementRect.bottom);
 			}
+			
+			//求元素集合边距范围
 			left   = Math.min.apply(null, leftArr);
 			right  = Math.max.apply(null, rightArr);
 			top    = Math.min.apply(null, topArr);
@@ -322,11 +324,11 @@ package view.interact.multiSelect
 			temGroupElement.vo.rotation = temGroupElement.rotation = 0;
 			
 			//全局布局信息
-			temGroupElement.vo.width = (right - left) * coreMdt.layoutTransformer.compensateScale;
+			temGroupElement.vo.width  = (right - left) * coreMdt.layoutTransformer.compensateScale;
 			temGroupElement.vo.height = (bottom - top) * coreMdt.layoutTransformer.compensateScale;
 			
-			temGroupElement.vo.x = (.5 * (left + right) - coreMdt.canvas.x) / coreMdt.canvas.scaleX;
-			temGroupElement.vo.y = (.5 * (top + bottom) - coreMdt.canvas.y) / coreMdt.canvas.scaleY;
+			temGroupElement.vo.x = (.5 * (left + right) - coreMdt.canvas.x) * coreMdt.layoutTransformer.compensateScale;
+			temGroupElement.vo.y = (.5 * (top + bottom) - coreMdt.canvas.y) * coreMdt.layoutTransformer.compensateScale;
 			
 			//刷新UI
 			temGroupElement.render();

@@ -69,7 +69,7 @@ package util
 		
 		public static function pointOutOfStageBounds(point:Point, paddingLeft:Number = 0, paddingRight:Number = 0, paddingTop:Number = 0, paddingBottom:Number = 0):Boolean
 		{
-			point = coreMdt.layoutTransformer.elementPointToStagePoint(point.x, point.y);
+			point = LayoutUtil.elementPointToStagePoint(point.x, point.y, coreMdt.canvas);
 			if (point.x > paddingLeft && point.x < coreMdt.mainUI.stage.stageWidth - paddingRight)
 			{
 				if (point.y > paddingTop && point.y < coreMdt.mainUI.stage.stageHeight - paddingBottom)
@@ -77,19 +77,6 @@ package util
 			}
 			return true;
 		}
-		public static function inAutoGroup(element:ElementBase):Boolean
-		{
-			if (element is IAutoGroupElement)
-			{
-				return coreMdt.autoGroupController.hasElement(element);
-			}
-			else if (element is TemGroupElement || element is GroupElement)
-			{
-				return true;
-			}
-			return false;
-		}
-		
 		
 		/**
 		 * 检测element是否在自动群组内
@@ -112,6 +99,15 @@ package util
 		}
 		
 		
+		/**
+		 * 返回一个element的一个矩形
+		 * 
+		 * @param element
+		 * @param elementRotate 是否考虑element的旋转因素
+		 * @param canvasRotate 是否考虑canvas的旋转因素
+		 * @return 
+		 * 
+		 */
 		public static function getRectForStage(element:ElementBase, elementRotate:Boolean = true, canvasRotate:Boolean = true):Rectangle
 		{
 			if (elementRotate)
@@ -122,10 +118,10 @@ package util
 				var bottomRight:Point = element.bottomRight;
 				if (canvasRotate)
 				{
-					topLeft     = coreMdt.layoutTransformer.elementPointToStagePoint(topLeft    .x, topLeft    .y);
-					topRight    = coreMdt.layoutTransformer.elementPointToStagePoint(topRight   .x, topRight   .y);
-					bottomLeft  = coreMdt.layoutTransformer.elementPointToStagePoint(bottomLeft .x, bottomLeft .y);
-					bottomRight = coreMdt.layoutTransformer.elementPointToStagePoint(bottomRight.x, bottomRight.y);
+					topLeft     = LayoutUtil.elementPointToStagePoint(topLeft    .x, topLeft    .y, coreMdt.canvas);
+					topRight    = LayoutUtil.elementPointToStagePoint(topRight   .x, topRight   .y, coreMdt.canvas);
+					bottomLeft  = LayoutUtil.elementPointToStagePoint(bottomLeft .x, bottomLeft .y, coreMdt.canvas);
+					bottomRight = LayoutUtil.elementPointToStagePoint(bottomRight.x, bottomRight.y, coreMdt.canvas);
 					var minX:Number = Math.min(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
 					var maxX:Number = Math.max(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
 					var minY:Number = Math.min(topLeft.y, topRight.y, bottomLeft.y, bottomRight.y);
@@ -151,7 +147,7 @@ package util
 			}
 			else
 			{
-				var point:Point = coreMdt.layoutTransformer.elementPointToStagePoint(element.left, element.top);
+				var point:Point = LayoutUtil.elementPointToStagePoint(element.left, element.top, coreMdt.canvas);
 				x = point.x;
 				w = coreMdt.layoutTransformer.canvasScale * element.scaledWidth;
 				y = point.y;

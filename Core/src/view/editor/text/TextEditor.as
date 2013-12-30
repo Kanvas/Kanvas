@@ -9,6 +9,8 @@ package view.editor.text
 	
 	import model.vo.TextVO;
 	
+	import util.LayoutUtil;
+	
 	import view.editor.EditorBase;
 	import view.element.text.TextEditField;
 	import view.interact.CoreMediator;
@@ -254,7 +256,7 @@ package view.editor.text
 			textVO.scale = layoutTransformer.getElementScaleByStageScale(textField.scaleX);
 			caculateInfoForRoteTransform(textVO, textVO.scale);
 			
-			var temp:Point = layoutTransformer.stagePointToElementPoint(x, y);
+			var temp:Point = LayoutUtil.stagePointToElementPoint(x, y, layoutTransformer.canvas);
 			
 			textVO.x = temp.x - r * Math.cos(rad);
 			textVO.y = temp.y - r * Math.sin(rad);
@@ -270,7 +272,7 @@ package view.editor.text
 			
 			caculateInfoForRoteTransform(textVO, textField.scaleX);
 			
-			var point:Point = layoutTransformer.elementPointToStagePoint(textVO.x, textVO.y);
+			var point:Point = LayoutUtil.elementPointToStagePoint(textVO.x, textVO.y, layoutTransformer.canvas);
 			
 			this.x = point.x + r * Math.cos(rad);
 			this.y = point.y + r * Math.sin(rad);

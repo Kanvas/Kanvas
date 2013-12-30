@@ -4,6 +4,8 @@ package view.elementSelector.lineControl
 	
 	import flash.geom.Point;
 	
+	import util.LayoutUtil;
+	
 	import view.elementSelector.ControlPointBase;
 	import view.elementSelector.ElementSelector;
 	
@@ -31,7 +33,7 @@ package view.elementSelector.lineControl
 				vo.rotation = rotation;
 				var rad:Number = vo.rotation / 180 * Math.PI;
 				var r:Number = vo.width / 2 * vo.scale;
-				var point:Point = selector.layoutTransformer.stagePointToElementPoint(endX, endY);
+				var point:Point = LayoutUtil.stagePointToElementPoint(endX, endY, selector.coreMdt.canvas);
 				vo.x = point.x - r * Math.cos(rad);
 				vo.y = point.y - r * Math.sin(rad);
 				

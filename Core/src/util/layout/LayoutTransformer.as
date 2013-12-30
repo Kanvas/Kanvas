@@ -8,6 +8,8 @@ package util.layout
 	
 	import model.vo.ElementVO;
 	
+	import util.LayoutUtil;
+	
 	import view.element.ElementBase;
 	import view.element.shapes.LineElement;
 
@@ -30,8 +32,10 @@ package util.layout
 		{
 			var matr:ElementVO = new ElementVO;
 			
-			matr.x = elementXToStageX(ele.x);
-			matr.y = elementYToStageY(ele.y);
+			var point:Point = LayoutUtil.elementPointToStagePoint(ele.x, ele.y, canvas);
+			
+			matr.x = point.x;
+			matr.y = point.y;
 			matr.width = ele.scaledWidth * canvasScale;
 			matr.height = ele.scaledHeight * canvasScale;
 			matr.rotation = ele.rotation;
@@ -75,63 +79,6 @@ package util.layout
 		public function getElementScaleByStageScale(scale:Number):Number
 		{
 			return scale * compensateScale;
-		}
-		
-		public function elementPointToStagePoint(x:Number, y:Number):Point
-		{
-			var result:Point = new Point(x, y);
-			//缩放
-			PointUtil.multiply(result, canvasScale);
-			//旋转
-			result = PointUtil.rotatePointAround(result, new Point(0, 0), MathUtil.angleToRadian(canvas.rotation));
-			//平移
-			result.offset(canvas.x, canvas.y);
-			return result;
-		}
-		
-		public function stagePointToElementPoint(x:Number, y:Number):Point
-		{
-			var result:Point = new Point(x, y);
-			//平移
-			result.offset(-canvas.x, -canvas.y);
-			//旋转
-			result = PointUtil.rotatePointAround(result, new Point(0, 0), MathUtil.angleToRadian(- canvas.rotation));
-			//缩放
-			PointUtil.multiply(result, compensateScale);
-			
-			return result;
-		}
-		
-		/**
-		 * 将元件的坐标转化为舞台坐标
-		 */		
-		public function elementXToStageX(value:Number):Number
-		{
-			return canvas.x + value * canvas.scaleX;
-		}
-		
-		/**
-		 * 将元件的坐标转化为舞台坐标
-		 */		
-		public function elementYToStageY(value:Number):Number
-		{
-			return canvas.y + value * canvas.scaleY;
-		}
-		
-		/**
-		 * 将舞台中某点的x坐标转换为画布上的坐标
-		 */		
-		public function stageXToElementX(stageX:Number):Number
-		{
-			return (stageX - canvas.x) / canvas.scaleX;
-		}
-		
-		/**
-		 * 将舞台中某点的y坐标转换为画布上的坐标
-		 */		
-		public function stageYToElementY(stageY:Number):Number
-		{
-			return (stageY - canvas.y) / canvas.scaleY;
 		}
 		
 		/**

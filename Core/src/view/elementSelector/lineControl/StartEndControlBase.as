@@ -11,6 +11,8 @@ package view.elementSelector.lineControl
 	
 	import model.vo.ElementVO;
 	
+	import util.LayoutUtil;
+	
 	import view.elementSelector.ControlPointBase;
 	import view.elementSelector.ElementSelector;
 
@@ -41,7 +43,7 @@ package view.elementSelector.lineControl
 			var y:Number = startY;
 			
             // 全局坐标转换为画布坐标
-			var point:Point = selector.layoutTransformer.stagePointToElementPoint(x, y);
+			var point:Point = LayoutUtil.stagePointToElementPoint(x, y, selector.coreMdt.canvas);
 			vo.x = point.x;
 			vo.y = point.y;
 			

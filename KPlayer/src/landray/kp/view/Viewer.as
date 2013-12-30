@@ -16,6 +16,7 @@ package landray.kp.view
 	
 	import model.vo.BgVO;
 	
+	import util.LayoutUtil;
 	import util.layout.LayoutTransformer;
 	
 	import view.interact.zoomMove.ZoomMoveControl;
@@ -144,7 +145,7 @@ package landray.kp.view
 		 */
 		kp_internal function drawInteractor():void
 		{
-			var point:Point = transformer.stagePointToElementPoint(0, 0);
+			var point:Point = LayoutUtil.stagePointToElementPoint(0, 0, canvas);
 			var x:Number = point.x;
 			var y:Number = point.y;
 			var w:Number = width  / transformer.canvasScale;
@@ -157,16 +158,15 @@ package landray.kp.view
 		 */
 		kp_internal function convertElementCoordsToViewer(x:Number, y:Number):Point
 		{
-			return transformer.elementPointToStagePoint(x, y);
+			return LayoutUtil.elementPointToStagePoint(x, y, canvas);
 		}
 		
 		kp_internal function horizontalMove(distance:Number):void
 		{
 			if (stage)
 			{
-				var center:Point = new Point;
-				center.x = transformer.stageXToElementX(stage.stageWidth * .5) - distance;
-				center.y = transformer.stageYToElementY(stage.stageHeight * .5);
+				var center:Point = LayoutUtil.stagePointToElementPoint(stage.stageWidth * .5, stage.stageHeight * .5, canvas);
+				center.x -= distance;
 				kp_internal::controller.zoomMoveTo(transformer.canvasScale, center);
 			}
 		}

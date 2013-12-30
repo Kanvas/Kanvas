@@ -9,6 +9,7 @@ package view.interact
 	import flash.geom.Rectangle;
 	
 	import util.CoreUtil;
+	import util.LayoutUtil;
 	
 	import view.element.ElementBase;
 	import view.element.text.TextEditField;
@@ -49,7 +50,7 @@ package view.interact
 				var centerPaddingRight:Number = canvasBound.right - toolBarWidth * .5;
 				
 				var point:Point = getToolBarPoint(element);
-				point = coreMdt.layoutTransformer.elementPointToStagePoint(point.x, point.y);
+				point = LayoutUtil.elementPointToStagePoint(point.x, point.y, coreMdt.canvas);
 				
 				//元素的坐标
 				var elementX:Number = point.x;
@@ -173,8 +174,6 @@ package view.interact
 				edtAftBound.right = edtAftBound.left + Math.max(coreMdt.mainUI.textEditor.offSet * 2 + eleAftBound.width, coreMdt.mainUI.textEditor.panelWidth);
 				edtAftBound.x = eleAftBound.x - coreMdt.mainUI.textEditor.offSet;
 				edtAftBound.y = eleAftBound.y - coreMdt.mainUI.textEditor.offSet - coreMdt.mainUI.textEditor.panelHeight;
-				CoreUtil.drawRect(0xFF0000, edtBefBound);
-				CoreUtil.drawRect(0x0000FF, edtAftBound);
 				
 				//画布矩形范围
 				var canvasBound:Rectangle = coreMdt.mainUI.bound;

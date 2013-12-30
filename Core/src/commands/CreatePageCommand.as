@@ -15,6 +15,7 @@ package commands
 	import org.puremvc.as3.interfaces.INotification;
 	
 	import util.ElementCreator;
+	import util.LayoutUtil;
 	import util.StyleUtil;
 	import util.layout.LayoutTransformer;
 	import util.undoRedo.UndoRedoMannager;
@@ -39,7 +40,7 @@ package commands
 			// VO 初始化
 			pageVO = ElementCreator.getElementVO(pageProxy.type) as PageVO;
 			
-			var point:Point = layoutTransformer.stagePointToElementPoint(pageProxy.x, pageProxy.y);
+			var point:Point = LayoutUtil.stagePointToElementPoint(pageProxy.x, pageProxy.y, layoutTransformer.canvas);
 			pageVO.x = point.x;
 			pageVO.y = point.y;
 			pageVO.rotation = pageProxy.rotation;

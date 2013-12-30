@@ -11,6 +11,7 @@ package view.interact
 	import flash.utils.getQualifiedClassName;
 	
 	import util.CoreUtil;
+	import util.LayoutUtil;
 	import util.layout.LayoutTransformer;
 	
 	import view.element.ElementBase;
@@ -146,7 +147,7 @@ package view.interact
 			var elementsLoopBreak:Boolean = false;
 			for each (var element:ElementBase in elements)
 			{
-				if (current == element || ! element.visible || CoreUtil.inAutoGroup(element) || CoreUtil.pointOutOfStageBounds(new Point(element.x, element.y))) continue;
+				if (current == element || ! element.visible || CoreUtil.inGroup(current, element) || CoreUtil.pointOutOfStageBounds(new Point(element.x, element.y))) continue;
 				var plus:Number = current.rotation - element.rotation;
 				if (plus % 90 == 0)
 				{
@@ -169,7 +170,7 @@ package view.interact
 						//两直线相交的点
 						var aimPoint:Point = getPointByIntersect(points1, points2);
 						//距离判断
-						if (Point.distance(aimPoint, curPoint) < area)
+						if (Point.distance(aimPoint, curPoint) * coreMdt.layoutTransformer.canvasScale < area)
 						{
 							drawLineInPoints(Point.interpolate(points2[0], points2[1], .5), aimPoint);
 							//此方向的增量向量
@@ -273,7 +274,7 @@ package view.interact
 		private function checkValueNear(element1:ElementBase, element2:ElementBase, value1:Number, value2:Number, property:String):Number
 		{
 			var result:Number;
-			if (element1 != element2 && element2.visible && ! CoreUtil.inAutoGroup(element2))
+			if (element1 != element2 && element2.visible && ! CoreUtil.inGroup(element1, element2))
 			{
 				if (property == "rotation")
 				{
@@ -408,8 +409,8 @@ package view.interact
 		{
 			shape.graphics.lineStyle(.1, 0x555555);
 			var transformer:LayoutTransformer = coreMdt.layoutTransformer;
-			axisPoint1 = coreMdt.layoutTransformer.elementPointToStagePoint(point1.x, point1.y);
-			axisPoint2 = coreMdt.layoutTransformer.elementPointToStagePoint(point2.x, point2.y);
+			axisPoint1 = LayoutUtil.elementPointToStagePoint(point1.x, point1.y, canvas);
+			axisPoint2 = LayoutUtil.elementPointToStagePoint(point2.x, point2.y, canvas);
 			drawDashed(shape.graphics, axisPoint1, axisPoint2, 10, 10);
 		}
 		
@@ -467,7 +468,7 @@ package view.interact
 		 * 
 		 * @default 10
 		 */
-		public var areaPosition:Number = 10;
+		public var areaPosition:Number = 5;
 		
 		/**
 		 * 旋转时自动对齐的检测范围，角度为单位

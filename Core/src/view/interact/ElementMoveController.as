@@ -5,6 +5,7 @@ package view.interact
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
+	import util.LayoutUtil;
 	import util.layout.LayoutTransformer;
 	
 	import view.element.ElementBase;
@@ -32,7 +33,7 @@ package view.interact
 			curMovingElement = element;
 			
 			// 选择器的位置是基准, 移动图形时先移动选择器，然后从选择器同步到图形
-			var point:Point = layoutTransformer.elementPointToStagePoint(curMovingElement.x, curMovingElement.y);
+			var point:Point = LayoutUtil.elementPointToStagePoint(curMovingElement.x, curMovingElement.y, coreMdt.canvas);
 			
 			selectorStartX = selector.x = point.x;
 			selectorStartY = selector.y = point.y;
@@ -66,7 +67,7 @@ package view.interact
 			//coreMdt.moveSelector(disX, disY);
 			
 			// 元素的移动是基于选择其的位置的
-			var elementPoint:Point = layoutTransformer.stagePointToElementPoint(selector.x, selector.y);
+			var elementPoint:Point = LayoutUtil.stagePointToElementPoint(selector.x, selector.y, selector.coreMdt.canvas);
 			curMovingElement.x = point.x = elementPoint.x;
 			curMovingElement.y = point.y = elementPoint.y;
 			
@@ -82,7 +83,7 @@ package view.interact
 			curMovingElement.x = point.x;
 			curMovingElement.y = point.y;
 			
-			var selectorPoint:Point = layoutTransformer.elementPointToStagePoint(curMovingElement.x, curMovingElement.y);
+			var selectorPoint:Point = LayoutUtil.elementPointToStagePoint(curMovingElement.x, curMovingElement.y, coreMdt.canvas);
 			selector.x = selectorPoint.x;
 			selector.y = selectorPoint.y;
 			
