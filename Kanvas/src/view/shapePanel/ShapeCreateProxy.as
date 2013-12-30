@@ -64,28 +64,31 @@ package view.shapePanel
 			shapeDragCreatIcon.y = rect.y;
 			shapeDragCreatIcon.startDrag();
 			
-			mainApp.shapePanel.addEventListener(MouseEvent.ROLL_OUT, outShapePanelHandler, false, 0, true);
+			mainApp.stage.addEventListener(MouseEvent.MOUSE_MOVE, outShapePanelHandler, false, 0, true);
 		}
 		
 		/**
 		 */		
 		private function outShapePanelHandler(evt:MouseEvent):void
 		{
-			var rect:Rectangle = shapeDragCreatIcon.getRect(mainApp.stage);
-			
-			stopDrag();
-			
-			rect.x += rect.width / 2;
-			rect.y += rect.height / 2;
-			
-			currShape.x = rect.x;
-			currShape.y = rect.y;
-			
-			core.createShape(currShape);
-			
-			core.hideSelector();
-			core.startDragElement();
-			isShapeCreating = true;
+			if (shapeDragCreatIcon.x < mainApp.stage.stageWidth - mainApp.shapePanel.w - shapeDragCreatIcon.width)
+			{
+				var rect:Rectangle = shapeDragCreatIcon.getRect(mainApp.stage);
+				
+				stopDrag();
+				
+				rect.x += rect.width / 2;
+				rect.y += rect.height / 2;
+				
+				currShape.x = rect.x;
+				currShape.y = rect.y;
+				
+				core.createShape(currShape);
+				
+				core.hideSelector();
+				core.startDragElement();
+				isShapeCreating = true;
+			}
 		}
 		
 		/**
@@ -94,7 +97,7 @@ package view.shapePanel
 		{
 			shapeDragCreatIcon.stopDrag();
 			shapeDragCreatIcon.graphics.clear();
-			mainApp.shapePanel.removeEventListener(MouseEvent.ROLL_OUT, outShapePanelHandler);
+			mainApp.stage.removeEventListener(MouseEvent.MOUSE_MOVE, outShapePanelHandler);
 		}
 		
 		/**
