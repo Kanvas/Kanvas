@@ -15,7 +15,12 @@ package util
 
 	public final class CoreUtil
 	{
-		/*public static function drawFrame(color:uint, points:Array):void
+		/*public static function drawRect(color:uint, rect:Rectangle):void
+		{
+			coreMdt.mainUI.autoAlignUI.graphics.lineStyle(1, color);
+			coreMdt.mainUI.autoAlignUI.graphics.drawRect(rect.x, rect.y, rect.width, rect.height);
+		}
+		public static function drawFrame(color:uint, points:Array):void
 		{
 			coreMdt.mainUI.autoAlignUI.graphics.lineStyle(1, color);
 			coreMdt.mainUI.autoAlignUI.graphics.moveTo(points[0].x, points[0].y);
