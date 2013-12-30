@@ -69,7 +69,7 @@ package com.kvs.ui.scroll
 		 */		
 		private function rollHandler(evt:MouseEvent):void
 		{
-			if (evt.delta < 0)
+			if (evt.delta > 0)
 				barPos -= scrollPer;
 			else
 				barPos += scrollPer;
