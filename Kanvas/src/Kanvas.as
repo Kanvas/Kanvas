@@ -9,11 +9,13 @@ package
 	import control.NavControl;
 	
 	import flash.display.Sprite;
+	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 	
 	import model.CoreFacade;
 	
+	import view.screenState.FullScreenState;
 	import view.shapePanel.ShapePanel;
 	import view.themePanel.ThemePanel;
 	import view.toolBar.ToolBar;
@@ -177,16 +179,19 @@ package
 		/**
 		 * 尺寸缩放，面板开始／关闭时，更新画布内容区域，此区域作为画布内容自适应，内容范围检测等事务
 		 */		
-		public function updateKvsContenBound(ifFullScreen:Boolean = false):void
+		public function updateKvsContenBound():void
 		{
-			if (ifFullScreen)
+			// 给画布流内容留一定的边距
+			var gutter:uint;
+			
+			if (stage.displayState == StageDisplayState.FULL_SCREEN)
 			{
-				kvsCore.bound = new Rectangle(0, 0, stage.stageWidth, stage.stageHeight);
+				gutter = 5;
+				kvsCore.bound = new Rectangle(gutter, gutter, stage.stageWidth - gutter * 2, stage.stageHeight - gutter * 2);
 			}
 			else
 			{
-				// 给画布流内容留一定的边距
-				var gutter:uint = 30;
+				gutter = 30;
 				var w:Number =  stage.stageWidth - gutter * 2;
 				if (shapePanel.isOpen || themePanel.isOpen)
 					w -= shapePanel.w;
