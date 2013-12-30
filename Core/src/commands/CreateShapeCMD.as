@@ -25,7 +25,6 @@ package commands
 	public class CreateShapeCMD extends Command
 	{
 		
-		
 		/**
 		 */		
 		public function CreateShapeCMD()
@@ -71,9 +70,9 @@ package commands
 			
 			//开始缓动，将此设为false当播放完毕且鼠标弹起时进入选择状态
 			CoreFacade.coreMediator.createNewShapeTweenOver = false;
+			
 			// 图形创建时 添加动画效果
 			TweenLite.from(shapeElement, elementProxy.flashTime, {alpha: 0, scaleX : 0, scaleY : 0, ease: Back.easeOut, onComplete: shapeCreated});
-			
 		}
 		
 		/**
