@@ -213,13 +213,9 @@ package view.interact.zoomMove
 					{
 						//检查canvas实际尺寸是否小于窗口尺寸，如果小于，则显示原始比例
 						if ( ! (canvasInerBound.width < mainUI.bound.width && canvasInerBound.height < mainUI.bound.height) && ! originalScale)
-						{
 							flasher.canvasTargetScale *= scale;
-						}
 						else
-						{
 							flasher.canvasTargetScale = 1;
-						}
 					}
 					else
 					{
@@ -227,7 +223,6 @@ package view.interact.zoomMove
 					}
 				}
 				
-
 				flasher.canvasTargetY = (mainUI.bound.top  - canvasInerBound.top  * flasher.canvasTargetScale) + (mainUI.bound.height - canvasInerBound.height * flasher.canvasTargetScale) * .5;
 				flasher.canvasTargetX = (mainUI.bound.left - canvasInerBound.left * flasher.canvasTargetScale) + (mainUI.bound.width  - canvasInerBound.width  * flasher.canvasTargetScale) * .5;
 			}

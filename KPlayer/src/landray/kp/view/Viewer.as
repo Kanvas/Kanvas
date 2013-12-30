@@ -2,6 +2,7 @@ package landray.kp.view
 {
 	import com.kvs.ui.toolTips.ToolTipsManager;
 	
+	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -94,7 +95,10 @@ package landray.kp.view
 			kp_internal::drawBackground();
 			kp_internal::drawInteractor();
 			//指定自适应矩形范围
-			bound = new Rectangle(0, 0, width, height);
+			var gutter:uint = (stage && stage.displayState == StageDisplayState.FULL_SCREEN) ? 5 : 30;
+			
+			bound = new Rectangle(gutter, gutter, width - gutter * 2, height - gutter * 2);
+			
 			//移动toolBar至右侧
 			if (kp_internal::toolBar) 
 			{

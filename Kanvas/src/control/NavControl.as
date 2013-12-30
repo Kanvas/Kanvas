@@ -86,7 +86,7 @@ package control
 		public function toPreview():void
 		{
 			app.stage.displayState = StageDisplayState.FULL_SCREEN;
-			app.updateKvsContenBound(true);
+			app.updateKvsContenBound();
 			app.kvsCore.toPreview();
 			
 			app.stage.addEventListener(FullScreenEvent.FULL_SCREEN, closeFullScreenHandler);

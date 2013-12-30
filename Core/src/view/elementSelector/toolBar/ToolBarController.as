@@ -579,7 +579,7 @@
 		/**
 		 * 图标大小 
 		 */		
-		public var iconSize:uint = 18;
+		public var iconSize:uint = 16;
 		
 		/**
 		 * 最上层按钮 
