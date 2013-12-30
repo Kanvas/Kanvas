@@ -22,9 +22,8 @@ package view.element.imgElement
 		 */		
 		override public function loadingImg():void
 		{
-			imgLoader = new ImgInsertor;
 			imgLoader.addEventListener(ImgInsertEvent.IMG_LOADED_FROM_SERVER, imgLoaded, false, 0, true);
-			imgLoader.loadImg(host.imgVO.url, host.imgVO.imgID);
+			imgLoader.loadImg(host.imgVO.url, host.imgVO.imgID, host.imgVO.width, host.imgVO.height);
 			
 			host.currLoadState.render();
 		}
@@ -44,6 +43,6 @@ package view.element.imgElement
 		
 		/**
 		 */		
-		private var imgLoader:ImgInsertor;
+		private var imgLoader:ImgInsertor = new ImgInsertor;
 	}
 }
