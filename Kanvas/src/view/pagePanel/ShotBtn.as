@@ -41,12 +41,14 @@ package view.pagePanel
 		 */		
 		public function startMove():void
 		{
+			pagePanel.startCreatePageByDrag();
 		}
 		
 		/**
 		 */			
 		public function stopMove():void
 		{
+			pagePanel.endCreatePageByDrag();
 		}
 		
 		/**
@@ -136,10 +138,10 @@ package view.pagePanel
 		
 		/**
 		 */		
-		private var shotSprite:Sprite = new Sprite;
+		internal var shotSprite:Sprite = new Sprite;
 		
 		/**
 		 */		
-		private var frameBtn:IconBtn = new IconBtn;
+		internal var frameBtn:IconBtn = new IconBtn;
 	}
 }

@@ -4,6 +4,7 @@ package commands
 	import com.greensock.easing.Back;
 	
 	import flash.geom.Point;
+	import flash.utils.Proxy;
 	
 	import model.CoreFacade;
 	import model.ElementProxy;
@@ -35,6 +36,11 @@ package commands
 			//来自于工具面板触发的创建，
 			var pageProxy:ElementProxy = notification.getBody() as ElementProxy;
 			var layoutTransformer:LayoutTransformer = CoreFacade.coreMediator.layoutTransformer;
+			
+			pageProxy.type = "page";
+			pageProxy.styleType = "border";
+			pageProxy.styleID = "Page";
+			ifSelectedAfterCreate = pageProxy.ifSelectedAfterCreate;
 			
 			// VO 初始化
 			pageVO = ElementCreator.getElementVO(pageProxy.type) as PageVO;
@@ -71,6 +77,10 @@ package commands
 		
 		/**
 		 */		
+		private var ifSelectedAfterCreate:Boolean;
+		
+		/**
+		 */		
 		private function shapeCreated():void
 		{
 			CoreFacade.coreMediator.autoLayerController.autoLayer(page, true);
@@ -79,9 +89,13 @@ package commands
 			index2 = pageVO.index;
 			
 			//动画完毕
-			//CoreFacade.coreMediator.createNewShapeTweenOver = true;
-			//if (CoreFacade.coreMediator.createNewShapeTweenOver && CoreFacade.coreMediator.createNewShapeMouseUped)
-				//sendNotification(Command.SElECT_ELEMENT, page);
+			
+			if (ifSelectedAfterCreate)
+			{
+				CoreFacade.coreMediator.createNewShapeTweenOver = true;
+				if (CoreFacade.coreMediator.createNewShapeTweenOver && CoreFacade.coreMediator.createNewShapeMouseUped)
+					sendNotification(Command.SElECT_ELEMENT, page);
+			}
 			
 			UndoRedoMannager.register(this);
 		}

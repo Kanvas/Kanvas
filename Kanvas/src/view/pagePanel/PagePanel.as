@@ -1,19 +1,25 @@
 package view.pagePanel
 {
+	import com.greensock.TweenLite;
+	import com.greensock.easing.Elastic;
 	import com.kvs.ui.FiUI;
 	import com.kvs.utils.XMLConfigKit.StyleManager;
 	import com.kvs.utils.XMLConfigKit.XMLVOMapper;
 	import com.kvs.utils.XMLConfigKit.style.Style;
+	import com.kvs.utils.graphic.BitmapUtil;
 	
+	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.ui.Keyboard;
 	
 	import model.CoreFacade;
 	import model.CoreProxy;
+	import model.ElementProxy;
 	
 	import modules.pages.PageElement;
 	import modules.pages.PageEvent;
@@ -310,6 +316,75 @@ package view.pagePanel
 		
 		
 		
+		//------------------------------------------------
+		//
+		//
+		//
+		//  拖拽方式创建页面
+		//
+		//
+		//
+		//------------------------------------------------
+		
+		/**
+		 */		
+		internal function startCreatePageByDrag():void
+		{
+			var rect:Rectangle = this.addPageBtn.frameBtn.getRect(stage);
+			var bmd:BitmapData = BitmapUtil.getBitmapData(this.addPageBtn.frameBtn, true);
+			
+			pageCreateIcon.graphics.clear();
+			BitmapUtil.drawBitmapDataToSprite(bmd, pageCreateIcon, bmd.width, bmd.height, 0, 0, true);
+			
+			pageCreateIcon.x = rect.x;
+			pageCreateIcon.y = rect.y;
+			pageCreateIcon.startDrag();
+			
+			this.addEventListener(MouseEvent.ROLL_OUT, outShapePanelHandler, false, 0, true);
+		}
+		
+		/**
+		 */		
+		private function outShapePanelHandler(evt:MouseEvent):void
+		{
+			var rect:Rectangle = pageCreateIcon.getRect(stage);
+			
+			pageCreateIcon.stopDrag();
+			pageCreateIcon.graphics.clear();
+			this.removeEventListener(MouseEvent.ROLL_OUT, outShapePanelHandler);
+			
+			rect.x += rect.width / 2;
+			rect.y += rect.height / 2;
+			
+			var page:ElementProxy = new ElementProxy;
+			
+			page.x = rect.x;
+			page.y = rect.y;
+			page.width = 120;
+			page.height = 90;
+			
+			core.kvsCore.createPage(page);
+			
+			core.kvsCore.hideSelector();
+			core.kvsCore.startDragElement();
+		}
+		
+		/**
+		 */		
+		private var pageCreateIcon:Sprite = new Sprite;
+		
+		/**
+		 */		
+		internal function endCreatePageByDrag():void
+		{
+			core.kvsCore.endDragElement();
+			
+			// 抖动效果
+			var tgtScale:Number = core.kvsCore.currentElement.scale * 0.8;
+			TweenLite.killTweensOf(core.kvsCore.currentElement, true);
+			TweenLite.from(core.kvsCore.currentElement, 1, {scaleX: tgtScale, scaleY: tgtScale, ease: Elastic.easeOut});
+			core.kvsCore.showSelector();
+		}
 		
 		
 		
@@ -319,7 +394,7 @@ package view.pagePanel
 		//
 		//
 		//
-		//  页面拖拽控制
+		//  页面拖拽控制, 用户调整页面顺序
 		//
 		//
 		//
@@ -556,6 +631,9 @@ package view.pagePanel
 			pagesCtn.addEventListener(PagePanelEvent.PAGE_CLICKED, pageClicked);
 			
 			updateLayout();
+			
+			pageCreateIcon.mouseEnabled = false;
+			stage.addChild(this.pageCreateIcon)
 		}
 		
 		

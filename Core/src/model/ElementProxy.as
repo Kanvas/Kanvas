@@ -58,5 +58,9 @@ package model
 		 */		
 		public var flashTime:Number = 1;
 		
+		/**
+		 */		
+		public var ifSelectedAfterCreate:Boolean = true;
+		
 	}
 }
