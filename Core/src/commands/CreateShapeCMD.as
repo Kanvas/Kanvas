@@ -17,6 +17,7 @@ package commands
 	import org.puremvc.as3.interfaces.INotification;
 	
 	import util.ElementCreator;
+	import util.LayoutUtil;
 	import util.StyleUtil;
 	import util.layout.LayoutTransformer;
 	import util.undoRedo.UndoRedoMannager;
@@ -51,7 +52,7 @@ package commands
 			// VO 初始化
 			var elementVO:ElementVO = ElementCreator.getElementVO(elementProxy.type);
 			
-			var point:Point = layoutTransformer.stagePointToElementPoint(elementProxy.x, elementProxy.y);
+			var point:Point = LayoutUtil.stagePointToElementPoint(elementProxy.x, elementProxy.y, layoutTransformer.canvas);
 			elementVO.x = point.x;
 			elementVO.y = point.y;
 			elementVO.rotation = elementProxy.rotation;
@@ -90,7 +91,7 @@ package commands
 		 */		
 		private function shapeCreated():void
 		{
-			CoreFacade.coreMediator.autoLayerController.autoLayer(shapeElement, true);
+			CoreFacade.coreMediator.autoLayerController.autoLayer(shapeElement);
 			elementIndex = CoreFacade.getElementIndex(shapeElement);
 			//动画完毕
 			CoreFacade.coreMediator.createNewShapeTweenOver = true;

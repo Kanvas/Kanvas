@@ -1,4 +1,4 @@
-package view.interact.zoomMove
+package util.layout
 {
 	import com.kvs.utils.MathUtil;
 	import com.kvs.utils.PointUtil;
@@ -7,19 +7,22 @@ package view.interact.zoomMove
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-	import model.CoreFacade;
+	import util.LayoutUtil;
 	
-	import view.interact.CoreMediator;
+	import view.ui.MainUIBase;
 
 	/**
+	 * 画布容器包装类
+	 * 用于存储一个缓动进程progress，根据当前progress计算相对应的画布需要移动的位置。
 	 */	
-	public final class Packer
+	public final class CanvasLayoutPacker
 	{
-		public function Packer($canvas:Sprite)
+		public function CanvasLayoutPacker($mainUI:MainUIBase = null)
 		{
-			if ($canvas != null)
+			if ($mainUI != null)
 			{
-				canvas = $canvas;
+				mainUI = $mainUI;
+				canvas = $mainUI.canvas;
 			}
 			else
 			{
@@ -49,7 +52,7 @@ package view.interact.zoomMove
 			progress = 0;
 			modPositionNeed = true;
 			
-			var stageBound:Rectangle = coreMdt.mainUI.bound;
+			var stageBound:Rectangle = mainUI.bound;
 			var startSceCenter:Point = new Point(.5 * (stageBound.left + stageBound.right), .5 * (stageBound.top + stageBound.bottom));
 			
 			startEleCenter = startSceCenter.clone();
@@ -62,9 +65,9 @@ package view.interact.zoomMove
 			endEleCenter = PointUtil.rotatePointAround(endEleCenter, new Point, MathUtil.angleToRadian(-targetRotation));
 			PointUtil.multiply(endEleCenter, 1 / endScale);
 			
-			var endSceCenter:Point = coreMdt.layoutTransformer.elementPointToStagePoint(endEleCenter.x, endEleCenter.y);
+			endSceCenter = LayoutUtil.elementPointToStagePoint(endEleCenter.x, endEleCenter.y, canvas);
 			
-			vector = endSceCenter.subtract(startSceCenter);
+			vector = startSceCenter.subtract(endSceCenter);
 			
 			modCanvasPosition();
 		}
@@ -73,15 +76,16 @@ package view.interact.zoomMove
 		{
 			if (modPositionNeed)
 			{
-				var stageBound:Rectangle = coreMdt.mainUI.bound;
+				var stageBound:Rectangle = mainUI.bound;
 				var temp:Point = vector.clone();
-				PointUtil.multiply(temp, (1 - progress));
-				var curSceCenter:Point = new Point(.5 * (stageBound.left + stageBound.right), .5 * (stageBound.top + stageBound.bottom));
-				var curAimCenter:Point = curSceCenter.add(temp);
-				var curEleCenter:Point = coreMdt.layoutTransformer.elementPointToStagePoint(endEleCenter.x, endEleCenter.y);
-				temp = curAimCenter.subtract(curEleCenter);
-				canvas.x += temp.x;
-				canvas.y += temp.y;
+				PointUtil.multiply(temp, progress);
+				var curSceCenter:Point = endSceCenter.add(temp);
+				var curEleCenter:Point = endEleCenter.clone();
+				PointUtil.multiply(curEleCenter, scale);
+				curEleCenter = PointUtil.rotatePointAround(curEleCenter, new Point, MathUtil.angleToRadian(rotation));
+				
+				canvas.x = curSceCenter.x - curEleCenter.x;
+				canvas.y = curSceCenter.y - curEleCenter.y;
 			}
 		}
 		
@@ -109,16 +113,11 @@ package view.interact.zoomMove
 			canvas.scaleX = canvas.scaleY = value;
 		}
 		
-		private function get coreMdt():CoreMediator
-		{
-			return CoreFacade.coreMediator;
-		}
-		
 		public var progress:Number;
 		
-		public var x:Number;
+		public var x:Number = 0;
 		
-		public var y:Number;
+		public var y:Number = 0;
 		
 		private var startX:Number;
 		
@@ -142,9 +141,12 @@ package view.interact.zoomMove
 		
 		private var endEleCenter:Point;
 		
+		private var endSceCenter:Point;
+		
 		private var vector:Point;
 		
 		private var canvas:Sprite;
 		
+		private var mainUI:MainUIBase;
 	}
 }

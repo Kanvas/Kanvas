@@ -24,6 +24,7 @@ package
 	import model.CoreFacade;
 	import model.ElementProxy;
 	
+	import util.LayoutUtil;
 	import util.layout.ElementLayoutInfo;
 	import util.layout.LayoutTransformer;
 	import util.textFlow.FlowTextManager;
@@ -584,8 +585,7 @@ package
 		 */		
 		public function updatePastPoint():void
 		{
-			
-			PAST_LOC = layoutTransformer.stagePointToElementPoint(stage.stageWidth * .5, stage.stageHeight * .5);
+			PAST_LOC = LayoutUtil.stagePointToElementPoint(stage.stageWidth * .5, stage.stageHeight * .5, canvas);
 		}
 		
 		/**
@@ -670,13 +670,13 @@ package
 		public function drawBgInteractorShape():void
 		{
 			var rect:Rectangle = new Rectangle;
-			var point:Point = layoutTransformer.stagePointToElementPoint(0, 0);
+			var point:Point = LayoutUtil.stagePointToElementPoint(0, 0, canvas);
 			rect.x = point.x;
 			rect.y = point.y;
 			rect.width = stage.stageWidth / layoutTransformer.canvasScale;
 			rect.height = stage.stageHeight / layoutTransformer.canvasScale;
 			
-			this.canvas.drawBG(rect);
+			canvas.drawBG(rect);
 		}
 		
 		

@@ -4,6 +4,8 @@ package util.layout
 	
 	import model.vo.ElementVO;
 	
+	import util.LayoutUtil;
+	
 	import view.element.ElementBase;
 
 	/**
@@ -48,7 +50,7 @@ package util.layout
 		 */		
 		private function updateXY():void
 		{
-			var point:Point = transformer.elementPointToStagePoint(currentElementUI.x, currentElementUI.y);
+			var point:Point = LayoutUtil.elementPointToStagePoint(currentElementUI.x, currentElementUI.y, transformer.canvas);
 			_x = point.x;
 			_y = point.y;
 		}

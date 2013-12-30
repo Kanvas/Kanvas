@@ -7,6 +7,7 @@ package view.interact
 	import flash.geom.Rectangle;
 	
 	import util.CoreUtil;
+	import util.LayoutUtil;
 	
 	import view.element.ElementBase;
 	import view.element.shapes.LineElement;
@@ -82,14 +83,9 @@ package view.interact
 		 */		
 		public function ifHitElement(element:ElementBase, hitElement:DisplayObject):Boolean
 		{
-			var point:Point = coreMdt.layoutTransformer.elementPointToStagePoint(element.vo.x, element.vo.y);
+			var point:Point = LayoutUtil.elementPointToStagePoint(element.vo.x, element.vo.y, coreMdt.canvas);
 			return hitElement.hitTestPoint(point.x, point.y, true);
 		}
-		
-		/*public function ifHitElement(element:ElementBase, hitElement:DisplayObject):Boolean
-		{
-			return HitTest.complexHitTestObject(element, hitElement);
-		}*/
 		
 		/**
 		 * 

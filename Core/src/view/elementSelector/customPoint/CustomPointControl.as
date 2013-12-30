@@ -70,7 +70,7 @@ package view.elementSelector.customPoint
 		 */			
 		public function stopMove():void
 		{
-			var index:Vector.<int> = selector.coreMdt.autoLayerController.autoLayer(selector.element, true);
+			var index:Vector.<int> = selector.coreMdt.autoLayerController.autoLayer(selector.element);
 			if (index)
 			{
 				oldPropertyObj.indexChangeElement = selector.coreMdt.autoLayerController.indexChangeElement;

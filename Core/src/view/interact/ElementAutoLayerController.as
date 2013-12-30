@@ -27,7 +27,7 @@ package view.interact
 		/**
 		 * 自动将元素排列至合适的层级并将元素以前的层级返回，如果为-1表示元素已在最合适的位置，无需排列
 		 */
-		public function autoLayer(current:ElementBase, shapeFlag:Boolean = false):Vector.<int>
+		public function autoLayer(current:ElementBase):Vector.<int>
 		{
 			var layer:Vector.<int>;
 			_indexChangeElement = null;
@@ -35,7 +35,7 @@ package view.interact
 			{
 				for each (var element:ElementBase in elements)
 				{
-					if (checkAutoLayerAvailable(current, element, shapeFlag))
+					if (checkAutoLayerAvailable(current, element))
 					{
 						if (_indexChangeElement == null)
 							_indexChangeElement = new Vector.<ElementBase>;
@@ -149,7 +149,7 @@ package view.interact
 			return layerAfter;
 		}
 		
-		private function checkAutoLayerAvailable(current:ElementBase, element:ElementBase, flag:Boolean):Boolean
+		private function checkAutoLayerAvailable(current:ElementBase, element:ElementBase):Boolean
 		{
 			var result:Boolean = false;
 			if (current != element)
@@ -157,7 +157,7 @@ package view.interact
 				if (! (current is TemGroupElement) && ! (current is GroupElement) && ! current.grouped && 
 					! (element is TemGroupElement) && ! (element is GroupElement) && ! element.grouped)
 				{
-					var inGroup:Boolean = (! CoreUtil.inAutoGroup(current)) && (! CoreUtil.inAutoGroup(element) || flag);
+					var inGroup:Boolean = ! CoreUtil.inGroup(current, element);
 					result = inGroup && ifInElement(element, current);
 				}
 			}

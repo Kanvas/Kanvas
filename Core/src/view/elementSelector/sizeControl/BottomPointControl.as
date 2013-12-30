@@ -6,6 +6,8 @@ package view.elementSelector.sizeControl
 	
 	import flash.geom.Point;
 	
+	import util.LayoutUtil;
+	
 	import view.elementSelector.ControlPointBase;
 	import view.elementSelector.ElementSelector;
 	
@@ -81,7 +83,7 @@ package view.elementSelector.sizeControl
 			holder.element.vo.height = Math.abs(newSize);
 			
 			var rote:Number = this.curRad - Math.PI / 2;
-			var temp:Point = holder.layoutTransformer.stagePointToElementPoint(oldX - hDis / 2 * Math.cos(rote), oldY - hDis / 2 * Math.sin(rote));
+			var temp:Point = LayoutUtil.stagePointToElementPoint(oldX - hDis / 2 * Math.cos(rote), oldY - hDis / 2 * Math.sin(rote), holder.coreMdt.canvas);
 			holder.element.vo.x = temp.x;
 			holder.element.vo.y = temp.y;
 			holder.element.render();
