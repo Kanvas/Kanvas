@@ -77,9 +77,9 @@ package util.img
 		{
 			imgLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, bmdLoadedFromServerHandler);
 			imgLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
-			imgLoader.load(new URLRequest(url));
-			
 			this.imgID = imgID;
+			
+			imgLoader.load(new URLRequest(url));
 		}
 		
 		/**
