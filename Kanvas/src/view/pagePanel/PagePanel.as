@@ -340,33 +340,37 @@ package view.pagePanel
 			pageCreateIcon.y = rect.y;
 			pageCreateIcon.startDrag();
 			
-			this.addEventListener(MouseEvent.ROLL_OUT, outShapePanelHandler, false, 0, true);
+			stage.addEventListener(MouseEvent.MOUSE_MOVE, outShapePanelHandler, false, 0, true);
 		}
 		
 		/**
 		 */		
 		private function outShapePanelHandler(evt:MouseEvent):void
 		{
-			var rect:Rectangle = pageCreateIcon.getRect(stage);
-			
-			pageCreateIcon.stopDrag();
-			pageCreateIcon.graphics.clear();
-			this.removeEventListener(MouseEvent.ROLL_OUT, outShapePanelHandler);
-			
-			rect.x += rect.width / 2;
-			rect.y += rect.height / 2;
-			
-			var page:ElementProxy = new ElementProxy;
-			
-			page.x = rect.x;
-			page.y = rect.y;
-			page.width = 120;
-			page.height = 90;
-			
-			core.kvsCore.createPage(page);
-			
-			core.kvsCore.hideSelector();
-			core.kvsCore.startDragElement();
+			if (pageCreateIcon.x > this.w )
+			{
+				var rect:Rectangle = pageCreateIcon.getRect(stage);
+				
+				pageCreateIcon.stopDrag();
+				pageCreateIcon.graphics.clear();
+				stage.removeEventListener(MouseEvent.MOUSE_MOVE, outShapePanelHandler);
+				
+				rect.x += rect.width / 2;
+				rect.y += rect.height / 2;
+				
+				var page:ElementProxy = new ElementProxy;
+				
+				page.x = rect.x;
+				page.y = rect.y;
+				
+				page.width = 120;
+				page.height = 90;
+				
+				core.kvsCore.createPage(page);
+				
+				core.kvsCore.hideSelector();
+				core.kvsCore.startDragElement();
+			}
 		}
 		
 		/**
