@@ -25,6 +25,18 @@ package view.element.shapes
 		
 		/**
 		 */		
+		override public function exportData():XML
+		{
+			xmlData = super.exportData();
+			
+			xmlData.@arrowWidth = arrowVO.arrowWidth;
+			xmlData.@trailHeight = arrowVO.trailHeight;
+			
+			return xmlData;
+		}
+		
+		/**
+		 */		
 		public function customRender(selector:ElementSelector, control:CustomPointControl):void
 		{
 			var scale:Number = selector.layoutInfo.transformer.canvasScale * vo.scale;
