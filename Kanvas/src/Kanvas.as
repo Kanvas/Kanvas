@@ -17,9 +17,10 @@ package
 	
 	import model.CoreFacade;
 	
+	import view.pagePanel.PagePanel;
+	import view.screenState.FullScreenState;
 
 	import view.pagePanel.PagePanel;
-
 
 	import view.shapePanel.ShapePanel;
 	import view.themePanel.ThemePanel;
@@ -204,7 +205,6 @@ package
 			}
 			else
 			{
-				// 给画布流内容留一定的边距
 				gutter = 30;
 				var w:Number =  stage.stageWidth - gutter * 2 - pagePanel.w;
 				if (shapePanel.isOpen)

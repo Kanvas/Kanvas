@@ -38,15 +38,13 @@ package modules.pages
 			var bound:Rectangle = coreMdt.mainUI.bound;
 			var proxy:ElementProxy = new ElementProxy;
 			
-			proxy.type = "page";
-			proxy.styleType = "border";
-			proxy.styleID = "Page";
 			proxy.x = (bound.left + bound.right) * .5;
 			proxy.y = (bound.top + bound.bottom) * .5;
 			proxy.rotation = - coreMdt.canvas.rotation;
 			proxy.width = bound.width ;
 			proxy.height = bound.height;
 			proxy.index = (index > 0 && index < numPage) ? index : numPage;
+			proxy.ifSelectedAfterCreate = false;
 			
 			coreMdt.createNewShapeMouseUped = true;
 			coreMdt.sendNotification(Command.CREATE_PAGE, proxy);

@@ -66,10 +66,8 @@ package view.interact
 				//元素矩形的范围
 				var rectPaddingLeft:Number = canvasBound.left;
 				var rectPaddingRight:Number = canvasBound.right;
-
 				var rectPaddingTop:Number = canvasBound.top + toolBarHeight;
 				var rectPaddingBottom:Number = canvasBound.bottom;
-
 				
 				//element矩形范围判断
 				var rect:Rectangle = CoreUtil.getRectForStage(element);

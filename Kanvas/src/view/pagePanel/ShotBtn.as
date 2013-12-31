@@ -1,6 +1,8 @@
 package view.pagePanel
 {
 	import com.kvs.ui.button.IconBtn;
+	import com.kvs.ui.clickMove.ClickMoveControl;
+	import com.kvs.ui.clickMove.IClickMove;
 	import com.kvs.utils.XMLConfigKit.style.elements.Img;
 	import com.kvs.utils.graphic.BitmapUtil;
 	
@@ -11,14 +13,47 @@ package view.pagePanel
 	
 	/**
 	 */	
-	public class ShotBtn extends IconBtn
+	public class ShotBtn extends IconBtn implements IClickMove
 	{
 		public function ShotBtn(pagesPanel:PagePanel)
 		{
 			super();
 			
 			this.pagePanel = pagesPanel;
+			this.dragMoveControl = new ClickMoveControl(this, shotSprite);
 		}
+		
+		/**
+		 */		
+		public function moveOff(xOff:Number, yOff:Number):void
+		{
+		}
+		
+		/**
+		 * 当鼠标按下对象，没有拖动就释放时触发此方法
+		 */		
+		public function clicked():void
+		{
+			pagePanel.addPage();
+		}
+		
+		/**
+		 */		
+		public function startMove():void
+		{
+			pagePanel.startCreatePageByDrag();
+		}
+		
+		/**
+		 */			
+		public function stopMove():void
+		{
+			pagePanel.endCreatePageByDrag();
+		}
+		
+		/**
+		 */		
+		private var dragMoveControl:ClickMoveControl;
 		
 		/**
 		 */		
@@ -42,7 +77,6 @@ package view.pagePanel
 			frameBtn.addEventListener(MouseEvent.CLICK, frameClick);
 			addChild(frameBtn);
 			
-			shotSprite.addEventListener(MouseEvent.CLICK, pagePanel.addPage);
 			addChild(shotSprite);
 			
 			this.addEventListener(MouseEvent.ROLL_OVER, showFrame);
@@ -104,10 +138,10 @@ package view.pagePanel
 		
 		/**
 		 */		
-		private var shotSprite:Sprite = new Sprite;
+		internal var shotSprite:Sprite = new Sprite;
 		
 		/**
 		 */		
-		private var frameBtn:IconBtn = new IconBtn;
+		internal var frameBtn:IconBtn = new IconBtn;
 	}
 }

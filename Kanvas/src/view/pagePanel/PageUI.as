@@ -29,7 +29,8 @@ package view.pagePanel
 			addChild(con);
 			con.addChild(label);
 			con.addChild(imgShape);
-			imgShape.filters = [new GlowFilter(0, 0.3, 3, 3, 2, 3)];
+			
+			imgShape.filters = [new GlowFilter(0x555555, 0.5, 2, 2, 2, 3)];//添加一个阴影轮廓
 			con.addEventListener(MouseEvent.MOUSE_DOWN, downPage);
 			
 			deleteBtn = new IconBtn;

@@ -1,19 +1,25 @@
 package view.pagePanel
 {
+	import com.greensock.TweenLite;
+	import com.greensock.easing.Elastic;
 	import com.kvs.ui.FiUI;
 	import com.kvs.utils.XMLConfigKit.StyleManager;
 	import com.kvs.utils.XMLConfigKit.XMLVOMapper;
 	import com.kvs.utils.XMLConfigKit.style.Style;
+	import com.kvs.utils.graphic.BitmapUtil;
 	
+	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.ui.Keyboard;
 	
 	import model.CoreFacade;
 	import model.CoreProxy;
+	import model.ElementProxy;
 	
 	import modules.pages.PageElement;
 	import modules.pages.PageEvent;
@@ -81,7 +87,7 @@ package view.pagePanel
 		/**
 		 * 告知core去创建一个页面
 		 */		
-		public function addPage(evt:MouseEvent):void
+		public function addPage():void
 		{
 			_addPage();
 		}
@@ -310,6 +316,79 @@ package view.pagePanel
 		
 		
 		
+		//------------------------------------------------
+		//
+		//
+		//
+		//  拖拽方式创建页面
+		//
+		//
+		//
+		//------------------------------------------------
+		
+		/**
+		 */		
+		internal function startCreatePageByDrag():void
+		{
+			var rect:Rectangle = this.addPageBtn.frameBtn.getRect(stage);
+			var bmd:BitmapData = BitmapUtil.getBitmapData(this.addPageBtn.frameBtn, true);
+			
+			pageCreateIcon.graphics.clear();
+			BitmapUtil.drawBitmapDataToSprite(bmd, pageCreateIcon, bmd.width, bmd.height, 0, 0, true);
+			
+			pageCreateIcon.x = rect.x;
+			pageCreateIcon.y = rect.y;
+			pageCreateIcon.startDrag();
+			
+			stage.addEventListener(MouseEvent.MOUSE_MOVE, outShapePanelHandler, false, 0, true);
+		}
+		
+		/**
+		 */		
+		private function outShapePanelHandler(evt:MouseEvent):void
+		{
+			if (pageCreateIcon.x > this.w )
+			{
+				var rect:Rectangle = pageCreateIcon.getRect(stage);
+				
+				pageCreateIcon.stopDrag();
+				pageCreateIcon.graphics.clear();
+				stage.removeEventListener(MouseEvent.MOUSE_MOVE, outShapePanelHandler);
+				
+				rect.x += rect.width / 2;
+				rect.y += rect.height / 2;
+				
+				var page:ElementProxy = new ElementProxy;
+				
+				page.x = rect.x;
+				page.y = rect.y;
+				
+				page.width = 120;
+				page.height = 90;
+				
+				core.kvsCore.createPage(page);
+				
+				core.kvsCore.hideSelector();
+				core.kvsCore.startDragElement();
+			}
+		}
+		
+		/**
+		 */		
+		private var pageCreateIcon:Sprite = new Sprite;
+		
+		/**
+		 */		
+		internal function endCreatePageByDrag():void
+		{
+			core.kvsCore.endDragElement();
+			
+			// 抖动效果
+			var tgtScale:Number = core.kvsCore.currentElement.scale * 0.8;
+			TweenLite.killTweensOf(core.kvsCore.currentElement, true);
+			TweenLite.from(core.kvsCore.currentElement, 1, {scaleX: tgtScale, scaleY: tgtScale, ease: Elastic.easeOut});
+			core.kvsCore.showSelector();
+		}
 		
 		
 		
@@ -319,7 +398,7 @@ package view.pagePanel
 		//
 		//
 		//
-		//  页面拖拽控制
+		//  页面拖拽控制, 用户调整页面顺序
 		//
 		//
 		//
@@ -378,6 +457,7 @@ package view.pagePanel
 				
 				var pageY:Number = getPagePos(currentDragPageUI).y;
 				
+				// 向上拖动
 				if (pageY < min && currentDragPageIndex >= 1)
 				{
 					pageManager.setPageIndex(getPageByIndex(currentDragPageIndex - 1).pageVO, currentDragPageIndex);
@@ -385,7 +465,7 @@ package view.pagePanel
 					
 					updateTemPageLayout();
 				}
-				else if (pageY > max && currentDragPageIndex < pages.length - 1)
+				else if (pageY > max && currentDragPageIndex < pages.length - 1)// 向下拖动
 				{
 					pageManager.setPageIndex(getPageByIndex(currentDragPageIndex + 1).pageVO, currentDragPageIndex);
 					currentDragPageIndex += 1;
@@ -555,6 +635,9 @@ package view.pagePanel
 			pagesCtn.addEventListener(PagePanelEvent.PAGE_CLICKED, pageClicked);
 			
 			updateLayout();
+			
+			pageCreateIcon.mouseEnabled = false;
+			stage.addChild(this.pageCreateIcon)
 		}
 		
 		

@@ -9,12 +9,15 @@ package util.img
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
+	import flash.events.ProgressEvent;
+	import flash.geom.Rectangle;
 	import flash.net.FileFilter;
 	import flash.net.FileReference;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
+	import flash.utils.ByteArray;
 
 	/**
 	 * 图片插入器, 负责从客户端选取图片，并上传至指定服务器
@@ -32,7 +35,23 @@ package util.img
 			imgUpLoader.dataFormat = URLLoaderDataFormat.BINARY;
 			imgUpLoader.addEventListener(IOErrorEvent.IO_ERROR, imgUploadError);
 			imgUpLoader.addEventListener(Event.COMPLETE, imgUploadHandler);
+			
+			imageByteLoader.dataFormat = URLLoaderDataFormat.BINARY;
+			imageByteLoader.addEventListener(Event.COMPLETE, imgByteLoaeded);
+			imageByteLoader.addEventListener(IOErrorEvent.IO_ERROR, imgByteLoadError);
 		}
+		
+		/**
+		 * 从服务端加载图片数据流错误
+		 */		
+		private function imgByteLoadError(e:IOErrorEvent):void
+		{
+			
+		}
+		
+		/**
+		 */		
+		private var imageByteLoader:URLLoader = new URLLoader;
 		
 		/**
 		 */		
@@ -73,29 +92,99 @@ package util.img
 		
 		/**
 		 */		
-		public function loadImg(url:String, imgID:uint):void
+		public function loadImg(url:String, imgID:uint, w:Number = 0, h:Number = 0):void
 		{
-			imgLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, bmdLoadedFromServerHandler);
-			imgLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
-			this.imgID = imgID;
-			
-			imgLoader.load(new URLRequest(url));
+			if (isLoading == false)
+			{
+				this.imgID = imgID;
+				
+				//旧图片数据需要记录图片的宽高信息，以便生成正确的bitmapdata
+				temW = w;
+				temH = h;
+				
+				var req:URLRequest = new URLRequest(url);
+				req.method = URLRequestMethod.GET;
+				req.contentType = "application/octet-stream";  
+				imageByteLoader.load(req);
+				
+				isLoading = true;
+			}
 		}
+		
+		private var temW:Number;
+		private var temH:Number;
+		
+		/**
+		 * 从服务器加载到图片的数据流
+		 */		
+		private function imgByteLoaeded(evt:Event):void
+		{
+			//这里做了兼容处理，如果加载失败则可能是旧的图片数据
+			imgLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, bmdLoadedFromServerHandler);
+			imgLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imgLoadIoError);
+			
+			imgLoader.loadBytes(imageByteLoader.data)
+		}
+		
+		/**
+		 * 数据为旧图片数据时也可能导致io错误
+		 */		
+		private function imgLoadIoError(e:IOErrorEvent):void
+		{
+			isLoading = false;
+			
+			if (imageByteLoader.data)
+			{
+				try
+				{
+					var data:ByteArray = imageByteLoader.data as ByteArray;
+					data.uncompress();
+					
+					imageByteLoader.data.position = 0;
+					var bmd:BitmapData = new BitmapData(temW, temH);
+					bmd.setPixels(new Rectangle(0, 0, bmd.width, bmd.height), imageByteLoader.data);
+					
+					(imageByteLoader.data as ByteArray).clear();// 清空数据
+					
+					//图片加载完毕
+					imageLoaedEnd(bmd);
+				} 
+				catch(error:Error) 
+				{
+					//数据格式异常
+				}
+			}
+		}
+		
+		/**
+		 */		
+		public var isLoading:Boolean = false;
 		
 		/**
 		 * 图片加载成功后，注册至图片库中
 		 */		
 		private function bmdLoadedFromServerHandler(evt:Event):void
 		{
+			(imageByteLoader.data as ByteArray).clear();// 清空数据
+			
+			imageLoaedEnd((imgLoader.content as Bitmap).bitmapData);
+			
+			imgLoader.unload();
+		}
+		
+		/**
+		 */		
+		private function imageLoaedEnd(bmd:BitmapData):void
+		{
 			imgLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, bmdLoadedFromServerHandler);
-			imgLoader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
+			imgLoader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imgLoadIoError);
 			
-			bitmapData = (imgLoader.content as Bitmap).bitmapData;
+			this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_LOADED_FROM_SERVER, bmd, imgID));
 			
-			this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_LOADED_FROM_SERVER, bitmapData, imgID));
-			
-			ImgLib.register(imgID.toString(), bitmapData);
+			ImgLib.register(imgID.toString(), bmd);
 			bitmapData = null;
+			
+			isLoading = false;
 		}
 		
 		
