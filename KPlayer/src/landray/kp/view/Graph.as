@@ -1,10 +1,6 @@
 package landray.kp.view
 {	
-	import com.kvs.utils.Map;
-	import com.kvs.utils.XMLConfigKit.XMLVOLib;
-	
 	import flash.display.Sprite;
-	import flash.geom.Point;
 	
 	import landray.kp.core.GRConfig;
 	import landray.kp.utils.CoreUtil;

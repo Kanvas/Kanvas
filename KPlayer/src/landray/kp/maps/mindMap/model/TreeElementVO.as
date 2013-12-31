@@ -1,11 +1,6 @@
 package landray.kp.maps.mindMap.model
 {
-	import flash.display.Sprite;
-	import flash.events.IEventDispatcher;
-	
 	import landray.kp.maps.mindMap.view.TreeElement;
-	
-	import model.vo.LineVO;
 	
 	public class TreeElementVO extends Object
 	{

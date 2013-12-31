@@ -2,15 +2,12 @@ package landray.kp.model
 {
 	import cn.vision.utils.LogUtil;
 	
-	import com.kvs.utils.Base64;
-	
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
-	import flash.utils.ByteArray;
 
 	public final class Model1Maps extends _InternalModel
 	{

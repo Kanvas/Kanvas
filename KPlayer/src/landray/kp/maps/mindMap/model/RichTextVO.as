@@ -3,8 +3,6 @@ package landray.kp.maps.mindMap.model
 	import com.kvs.utils.XMLConfigKit.StyleManager;
 	import com.kvs.utils.XMLConfigKit.style.LabelStyle;
 	
-	import flash.events.IEventDispatcher;
-	
 	import model.vo.TextVO;
 
 	public class RichTextVO extends TextVO
