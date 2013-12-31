@@ -1,6 +1,6 @@
 package view.interact.zoomMove
 {
-	import com.greensock.easing.Cubic;
+	import com.greensock.easing.*;
 	
 	import flash.display.Shape;
 	import flash.display.StageDisplayState;
@@ -26,7 +26,6 @@ package view.interact.zoomMove
 		}
 		
 		/**
-<<<<<<< HEAD
 		 * 同步canvas与背景图片的比例位置关系， 此方法在初始化， 插入背景图和画布缩放
 		 * 
 		 * 及移动时需要被调用
@@ -54,8 +53,6 @@ package view.interact.zoomMove
 		 * @param y
 		 * @param time
 		 * @param ease
-=======
->>>>>>> fix
 		 * 
 		 */		
 		public function zoomMoveOff(scale:Number, x:Number, y:Number, time:Number = 1, ease:Object = null):void
@@ -86,6 +83,7 @@ package view.interact.zoomMove
 		
 		/**
 		 * 画布缩放，旋转，移动 
+		 * 
 		 * @param scale
 		 * @param rotation
 		 * @param x
@@ -96,7 +94,7 @@ package view.interact.zoomMove
 		public function zoomRotateMoveTo(scale:Number, rotation:Number, x:Number, y:Number, ease:Object = null):void
 		{
 			if (ease == null)
-				ease = Cubic.easeInOut;
+				ease = Quad.easeInOut;
 			
 			zoomer.zoomRotateMoveTo(scale, rotation, x, y, ease);
 		}

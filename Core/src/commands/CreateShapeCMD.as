@@ -80,14 +80,11 @@ package commands
 			
 			// 图形创建时 添加动画效果
 			TweenLite.from(shapeElement, elementProxy.flashTime, {alpha: 0, scaleX : 0, scaleY : 0, ease: Back.easeOut, onComplete: shapeCreated});
-<<<<<<< HEAD
 			
 			if (shapeElement is PageElement)
 			{
 				CoreFacade.coreMediator.pageManager.addPage(shapeElement.vo as PageVO);
 			}
-=======
->>>>>>> fix
 		}
 		
 		/**

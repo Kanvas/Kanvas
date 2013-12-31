@@ -66,13 +66,10 @@ package view.interact
 				//元素矩形的范围
 				var rectPaddingLeft:Number = canvasBound.left;
 				var rectPaddingRight:Number = canvasBound.right;
-<<<<<<< HEAD
+
 				var rectPaddingTop:Number = canvasBound.top + toolBarHeight;
 				var rectPaddingBottom:Number = canvasBound.bottom;
-=======
-				var rectPaddingTop:Number = canvasBound.top + toolBarHeight + 20;
-				var rectPaddingBottom:Number = canvasBound.bottom - 20;
->>>>>>> fix
+
 				
 				//element矩形范围判断
 				var rect:Rectangle = CoreUtil.getRectForStage(element);
@@ -185,11 +182,7 @@ package view.interact
 				
 				//检测编辑器范围是否超出画布范围
 				if (xDir == 0 || xDir == 1)
-<<<<<<< HEAD
 					x = autofitRight(edtAftBound.right, canvasBound.right);
-=======
-					x = autofitRight(editorBound.right, canvasBound.right);
->>>>>>> fix
 				if (xDir == 0 || xDir == -1)
 					x = (x == 0) ? autofitLeft(edtAftBound.left, canvasBound.left) : x;
 				
@@ -211,22 +204,6 @@ package view.interact
 		{
 			var rotation:Number = MathUtil.modRotation(element.rotation + coreMdt.canvas.rotation);
 			var point:Point;
-<<<<<<< HEAD
-			if      (rotation >= 10  && rotation < 80 )
-				point = element.topLeft;
-			else if (rotation >= 80  && rotation < 100)
-				point = element.middleLeft;
-			else if (rotation >= 100 && rotation < 170)
-				point = element.bottomLeft;
-			else if (rotation >= 170 && rotation < 190)
-				point = element.bottomCenter;
-			else if (rotation >= 190 && rotation < 260)
-				point = element.bottomRight;
-			else if (rotation >= 260 && rotation < 280)
-				point = element.middleRight;
-			else if (rotation >= 280 && rotation < 350)
-				point = element.topRight;
-=======
 			if (element is LineElement)
 			{
 				if (element.rotation >= 0 && element.rotation < 180)
@@ -234,7 +211,6 @@ package view.interact
 				else
 					point = element.topRight;
 			}
->>>>>>> fix
 			else
 			{
 				if (rotation >= 10 && rotation < 80)

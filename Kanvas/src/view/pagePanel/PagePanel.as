@@ -181,7 +181,7 @@ package view.pagePanel
 		public function pageSelected(pageVO:PageVO):void
 		{
 			//通知核心core切换至当前page
-			pageManager.index = pageVO.index;
+			pageManager.viewPage(pageVO.index);
 		}
 		
 		/**

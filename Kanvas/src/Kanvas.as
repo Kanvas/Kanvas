@@ -206,8 +206,8 @@ package
 			{
 				// 给画布流内容留一定的边距
 				gutter = 30;
-				var w:Number =  stage.stageWidth - gutter * 2;
-				if (shapePanel.isOpen || themePanel.isOpen)
+				var w:Number =  stage.stageWidth - gutter * 2 - pagePanel.w;
+				if (shapePanel.isOpen)
 					w -= shapePanel.w;
 				else if (themePanel.isOpen)
 					w -= themePanel.w;

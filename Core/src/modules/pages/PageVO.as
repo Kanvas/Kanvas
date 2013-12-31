@@ -1,6 +1,7 @@
 package modules.pages
 {
 	import model.vo.ElementVO;
+	
 	import modules.pages.pg_internal;
 	
 	[Event(name="updateThumb", type="modules.pages.PageEvent")]
@@ -18,11 +19,11 @@ package modules.pages
 		
 		
 		
-		public function get parent():PageManager
+		public function get parent():PageQuene
 		{
 			return pg_internal::parent;
 		}
-		pg_internal var parent:PageManager
+		pg_internal var parent:PageQuene
 		
 		
 		

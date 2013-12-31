@@ -44,6 +44,7 @@ package view.shapePanel
 			
 			evt.shapeIcon.shape.x = mainApp.stage.stageWidth / 2;
 			evt.shapeIcon.shape.y = mainApp.stage.stageHeight / 2;
+			evt.shapeIcon.shape.rotation = - core.canvas.rotation;
 			
 			evt.shapeIcon.shape.flashTime = 0.5;
 			core.createShape(evt.shapeIcon.shape);

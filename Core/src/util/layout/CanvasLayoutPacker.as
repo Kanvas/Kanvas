@@ -69,7 +69,6 @@ package util.layout
 			
 			vector = startSceCenter.subtract(endSceCenter);
 			
-			modCanvasPosition();
 		}
 		
 		public function modCanvasPosition():void
@@ -91,7 +90,6 @@ package util.layout
 		
 		public function modCanvasPositionEnd():void
 		{
-			modCanvasPosition();
 			modPositionNeed = false;
 		}
 		
