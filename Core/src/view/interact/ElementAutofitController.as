@@ -1,6 +1,5 @@
 package view.interact
 {
-
 	import com.kvs.utils.MathUtil;
 	import com.kvs.utils.PointUtil;
 	import com.kvs.utils.RectangleUtil;
@@ -12,6 +11,7 @@ package view.interact
 	import util.LayoutUtil;
 	
 	import view.element.ElementBase;
+	import view.element.shapes.LineElement;
 	import view.element.text.TextEditField;
 
 	/**
@@ -202,22 +202,32 @@ package view.interact
 		{
 			var rotation:Number = MathUtil.modRotation(element.rotation + coreMdt.canvas.rotation);
 			var point:Point;
-			if      (rotation >= 10  && rotation < 80 )
-				point = element.topLeft;
-			else if (rotation >= 80  && rotation < 100)
-				point = element.middleLeft;
-			else if (rotation >= 100 && rotation < 170)
-				point = element.bottomLeft;
-			else if (rotation >= 170 && rotation < 190)
-				point = element.bottomCenter;
-			else if (rotation >= 190 && rotation < 260)
-				point = element.bottomRight;
-			else if (rotation >= 260 && rotation < 280)
-				point = element.middleRight;
-			else if (rotation >= 280 && rotation < 350)
-				point = element.topRight;
+			if (element is LineElement)
+			{
+				if (element.rotation >= 0 && element.rotation < 180)
+					point = element.topLeft;
+				else
+					point = element.topRight;
+			}
 			else
-				point = element.topCenter;
+			{
+				if (rotation >= 10 && rotation < 80)
+					point = element.topLeft;
+				else if (rotation >= 80 && rotation < 100)
+					point = element.middleLeft;
+				else if (rotation >= 100 && rotation < 170)
+					point = element.bottomLeft;
+				else if (rotation >= 170 || rotation < 190)
+					point = element.bottomCenter;
+				else if (rotation >= 190 && rotation < 260)
+					point = element.bottomRight;
+				else if (rotation >= 260 && rotation < 280)
+					point = element.middleRight;
+				else if (rotation >= 280 && rotation < 350)
+					point = element.topRight;
+				else
+					point = element.topCenter;
+			}
 			return point;
 		}
 		

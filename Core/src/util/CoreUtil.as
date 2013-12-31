@@ -18,6 +18,12 @@ package util
 
 	public final class CoreUtil
 	{
+		/*public static function drawRect(color:uint, rect:Rectangle):void
+		{
+			coreMdt.mainUI.autoAlignUI.graphics.lineStyle(1, color);
+			coreMdt.mainUI.autoAlignUI.graphics.drawRect(rect.x, rect.y, rect.width, rect.height);
+		}
+
 		public static function drawFrame(color:uint, points:Array):void
 		{
 			coreMdt.mainUI.autoAlignUI.graphics.lineStyle(1, color);
@@ -53,6 +59,7 @@ package util
 			coreMdt.mainUI.autoAlignUI.graphics.lineTo(point2.x, point2.y);
 			coreMdt.mainUI.autoAlignUI.graphics.endFill();
 		}
+		*/
 		
 		public static function clear():void
 		{

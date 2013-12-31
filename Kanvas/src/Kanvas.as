@@ -19,6 +19,9 @@ package
 	
 	import view.pagePanel.PagePanel;
 	import view.screenState.FullScreenState;
+
+	import view.pagePanel.PagePanel;
+
 	import view.shapePanel.ShapePanel;
 	import view.themePanel.ThemePanel;
 	import view.toolBar.ToolBar;
