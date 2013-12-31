@@ -2,9 +2,7 @@ package view.toolBar
 {	
 	import com.greensock.TweenMax;
 	import com.kvs.ui.button.IconBtn;
-	import com.kvs.utils.StageUtil;
 	
-	import flash.display.SimpleButton;
 	import flash.display.Sprite;
 	import flash.display.StageDisplayState;
 	import flash.events.MouseEvent;
@@ -15,8 +13,6 @@ package view.toolBar
 	import landray.kp.ui.*;
 	import landray.kp.utils.CoreUtil;
 	import landray.kp.view.Viewer;
-	
-	import view.interact.zoomMove.ZoomMoveControl;
 	
 	/**
 	 * 工具栏

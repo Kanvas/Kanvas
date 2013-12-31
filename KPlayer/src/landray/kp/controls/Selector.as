@@ -1,20 +1,12 @@
 package landray.kp.controls
 {
-	import com.kvs.utils.XMLConfigKit.StyleManager;
-	import com.kvs.utils.XMLConfigKit.style.Style;
-	import com.kvs.utils.XMLConfigKit.style.elements.BorderLine;
-	
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import landray.kp.core.kp_internal;
-	import landray.kp.utils.CoreUtil;
 	import landray.kp.view.Viewer;
-	
-	import util.layout.ElementLayoutInfo;
-	import util.layout.LayoutTransformer;
 	
 	/**
 	 * 选择框

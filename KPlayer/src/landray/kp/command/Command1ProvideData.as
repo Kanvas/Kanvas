@@ -4,14 +4,6 @@ package landray.kp.command
 	import cn.vision.managers.ManagerModel;
 	import cn.vision.utils.LogUtil;
 	
-	import flash.events.Event;
-	import flash.events.IOErrorEvent;
-	import flash.external.ExternalInterface;
-	import flash.net.URLLoader;
-	import flash.net.URLLoaderDataFormat;
-	import flash.net.URLRequest;
-	import flash.net.URLRequestMethod;
-	
 	import landray.kp.model.*;
 	
 	public final class Command1ProvideData extends _InernalCommand

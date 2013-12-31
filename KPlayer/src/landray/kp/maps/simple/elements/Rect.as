@@ -14,7 +14,6 @@ package landray.kp.maps.simple.elements
 		{
 			super.render();
 			
-			
 			vo.style.radius = rectVO.radius * 2;
 			StyleManager.drawRect( this, vo.style, vo );
 		}

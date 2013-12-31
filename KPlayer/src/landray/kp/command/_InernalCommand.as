@@ -6,8 +6,6 @@ package landray.kp.command
 	import landray.kp.core.*;
 	import landray.kp.manager.ManagerGraph;
 	
-	import view.toolBar.Debugger;
-	
 	internal class _InernalCommand extends Command
 	{
 		public function _InernalCommand()

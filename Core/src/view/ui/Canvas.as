@@ -5,8 +5,6 @@ package view.ui
 	
 	import landray.kp.ui.Loading;
 	
-	import view.element.ElementBase;
-	
 	/**
 	 */	
 	public class Canvas extends Sprite

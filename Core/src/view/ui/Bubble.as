@@ -1,14 +1,10 @@
 package view.ui
 {
 	import com.greensock.TweenLite;
-	import com.greensock.TweenMax;
 	import com.greensock.easing.Back;
-	import com.kvs.ui.button.LabelBtn;
 	import com.kvs.ui.label.LabelUI;
 	
 	import flash.display.Stage;
-	import flash.filters.DropShadowFilter;
-	import flash.filters.GlowFilter;
 	
 	/**
 	 * 全局信息提示

@@ -2,13 +2,11 @@ package landray.kp.maps.mindMap
 {
 	import com.kvs.utils.XMLConfigKit.XMLVOMapper;
 	
-	import flash.display.Sprite;
-	
 	import landray.kp.maps.mindMap.model.TreeElementVO;
 	import landray.kp.maps.mindMap.view.TreeElement;
 	
 	
-	public class MindData extends Sprite
+	public class MindData
 	{
 		[Embed(source='Tree.xml', mimeType='application/octet-stream')]
 		private static var ConfigXmlStyle:Class;

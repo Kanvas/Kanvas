@@ -5,9 +5,6 @@ package landray.kp.command
 	import landray.kp.maps.simple.GraphSimple;
 	import landray.kp.utils.CoreUtil;
 	import landray.kp.view.Graph;
-	
-	import view.ui.Bubble;
-	import view.toolBar.Debugger;
 
 	public final class Command3CreateGraph extends _InernalCommand
 	{

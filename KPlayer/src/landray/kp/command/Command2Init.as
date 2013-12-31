@@ -1,17 +1,11 @@
 package landray.kp.command
 {	
 	import flash.events.Event;
-	import flash.text.TextFormat;
-	import flash.utils.ByteArray;
 	
 	import landray.kp.core.kp_internal;
-	import landray.kp.utils.CoreUtil;
 	import landray.kp.view.Viewer;
 	
 	import util.textFlow.FlowTextManager;
-	
-	import view.toolBar.Debugger;
-	import view.ui.Bubble;
 	
 	/**
 	 */	

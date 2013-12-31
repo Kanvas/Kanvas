@@ -18,7 +18,6 @@ package landray.kp.view
 	import model.vo.BgVO;
 	
 	import util.LayoutUtil;
-	import util.layout.LayoutTransformer;
 	
 	import view.interact.zoomMove.ZoomMoveControl;
 	import view.toolBar.ZoomToolBar;
@@ -55,8 +54,6 @@ package landray.kp.view
 			provider = KPProvider.instance;
 			
 			//创建viewer的辅助
-			//transformer为坐标舞台与画布转换类
-			transformer = new LayoutTransformer(canvas);
 			//mediator为viewer事件处理交互类
 			mediator    = new MediatorViewer(this);
 			kp_internal::controller  = new ZoomMoveControl(this, mediator);
@@ -152,8 +149,8 @@ package landray.kp.view
 			var point:Point = LayoutUtil.stagePointToElementPoint(0, 0, canvas);
 			var x:Number = point.x;
 			var y:Number = point.y;
-			var w:Number = width  / transformer.canvasScale;
-			var h:Number = height / transformer.canvasScale;
+			var w:Number = width  / canvas.scaleX;
+			var h:Number = height / canvas.scaleX;
 			canvas.drawBG(new Rectangle(x, y, w, h));
 		}
 		
@@ -171,7 +168,7 @@ package landray.kp.view
 			{
 				var center:Point = LayoutUtil.stagePointToElementPoint(stage.stageWidth * .5, stage.stageHeight * .5, canvas);
 				center.x -= distance;
-				kp_internal::controller.zoomMoveTo(transformer.canvasScale, center);
+				kp_internal::controller.zoomMoveTo(canvas.scaleX, center);
 			}
 		}
 		
@@ -289,11 +286,6 @@ package landray.kp.view
 		 */
 		private var __height:Number = 0;
 		
-		/**
-		 * @private
-		 */
-		private var transformer:LayoutTransformer;
-				
 		/**
 		 * @private
 		 */

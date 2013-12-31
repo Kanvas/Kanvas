@@ -1,7 +1,5 @@
 package landray.kp.command
 {
-	import com.kvs.utils.XMLConfigKit.XMLVOLib;
-	
 	import landray.kp.core.kp_internal;
 	import landray.kp.view.Graph;
 
