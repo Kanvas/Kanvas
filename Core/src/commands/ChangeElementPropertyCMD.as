@@ -26,45 +26,47 @@ package commands
 		override public function execute(notification:INotification):void
 		{
 			element  = CoreFacade.coreMediator.currentElement;
-			selector = CoreFacade.coreMediator.selector;
-			
-			oldPropertyObj = notification.getBody();
-			
-			newPropertyObj = {};
-			
-			for (var propertyName:String in oldPropertyObj) 
+			if (element)
 			{
-				if (propertyName == "indexChangeElement")
+				selector = CoreFacade.coreMediator.selector;
+				
+				oldPropertyObj = notification.getBody();
+				
+				newPropertyObj = {};
+				
+				for (var propertyName:String in oldPropertyObj) 
 				{
-					newPropertyObj["indexChangeElement"] = oldPropertyObj["indexChangeElement"];
+					if (propertyName == "indexChangeElement")
+					{
+						newPropertyObj["indexChangeElement"] = oldPropertyObj["indexChangeElement"];
+					}
+					else if (propertyName == "index")
+					{
+						//获取改变层级元素的新层级关系
+						var layer:Vector.<int> = new Vector.<int>;
+						var length:int =  oldPropertyObj["indexChangeElement"].length;
+						for (var i:int = 0; i <　length; i++)
+							layer[i] = oldPropertyObj["indexChangeElement"][i].index;
+						newPropertyObj[propertyName] = layer;
+					}
+					else if (propertyName == "x" || propertyName == "y")
+					{
+						newPropertyObj[propertyName] = element[propertyName];
+					}
+					else
+					{
+						newPropertyObj[propertyName] = element.vo[propertyName];
+					}
 				}
-				else if (propertyName == "index")
-				{
-					//获取改变层级元素的新层级关系
-					var layer:Vector.<int> = new Vector.<int>;
-					var length:int =  oldPropertyObj["indexChangeElement"].length;
-					for (var i:int = 0; i <　length; i++)
-						layer[i] = oldPropertyObj["indexChangeElement"][i].index;
-					newPropertyObj[propertyName] = layer;
-				}
-				else if (propertyName == "x" || propertyName == "y")
-				{
-					newPropertyObj[propertyName] = element[propertyName];
-				}
-				else
-				{
-					newPropertyObj[propertyName] = element.vo[propertyName];
-				}
+				
+				groupElements = CoreFacade.coreMediator.autoGroupController.elements;
+				
+				autoGroupEnabled = CoreFacade.coreMediator.autoGroupController.enabled;
+				
+				setProperty(newPropertyObj, false);
+				
+				UndoRedoMannager.register(this);
 			}
-			
-			groupElements = CoreFacade.coreMediator.autoGroupController.elements;
-			
-			autoGroupEnabled = CoreFacade.coreMediator.autoGroupController.enabled;
-			
-			setProperty(newPropertyObj, false);
-			
-			UndoRedoMannager.register(this);
-			
 		}
 		
 		override public function undoHandler():void

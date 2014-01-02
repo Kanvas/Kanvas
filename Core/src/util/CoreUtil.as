@@ -18,7 +18,7 @@ package util
 
 	public final class CoreUtil
 	{
-		/*public static function drawRect(color:uint, rect:Rectangle):void
+		public static function drawRect(color:uint, rect:Rectangle):void
 		{
 			coreMdt.mainUI.autoAlignUI.graphics.lineStyle(1, color);
 			coreMdt.mainUI.autoAlignUI.graphics.drawRect(rect.x, rect.y, rect.width, rect.height);
@@ -33,13 +33,6 @@ package util
 				coreMdt.mainUI.autoAlignUI.graphics.lineTo(points[i].x, points[i].y);
 			}
 			coreMdt.mainUI.autoAlignUI.graphics.lineTo(points[0].x, points[0].y);
-		}
-		
-		public static function drawRect(color:uint, rect:Rectangle):void
-		{
-			coreMdt.mainUI.autoAlignUI.graphics.lineStyle(1, color);
-			coreMdt.mainUI.autoAlignUI.graphics.drawRect(rect.x, rect.y, rect.width, rect.height);
-			coreMdt.mainUI.autoAlignUI.graphics.endFill();
 		}
 		
 		public static function drawCircle(color:uint, point:Point, r:Number):void
@@ -58,7 +51,7 @@ package util
 			coreMdt.mainUI.autoAlignUI.graphics.moveTo(point1.x, point1.y);
 			coreMdt.mainUI.autoAlignUI.graphics.lineTo(point2.x, point2.y);
 			coreMdt.mainUI.autoAlignUI.graphics.endFill();
-		}*/
+		}
 
 		
 		public static function clear():void

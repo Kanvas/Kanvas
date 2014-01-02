@@ -106,7 +106,7 @@ package view.elementSelector.toolBar
 			}
 			
 			//画布所方时，防止两个动画冲突导致的工具条动画停顿
-			if (TweenMax.isTweening(toolBar.selector.coreMdt.mainUI.canvas))
+			if (toolBar.selector.coreMdt.zoomMoveControl.isTweening)
 			{
 				toolBar.x = Math.ceil(newX);
 				toolBar.y = Math.ceil(newY);
@@ -116,7 +116,6 @@ package view.elementSelector.toolBar
 				TweenLite.killTweensOf(toolBar, false);
 				TweenLite.to(toolBar, 0.2, {x:newX, y: newY, ease: Cubic.easeOut});
 			}
-			
 		}
 		
 		/**

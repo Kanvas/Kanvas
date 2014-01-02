@@ -68,6 +68,21 @@ package com.kvs.utils
 		}
 		
 		/**
+		 * 判断2个数是否相等，
+		 * 
+		 * @param value1
+		 * @param value2
+		 * @param accuracy 精度
+		 * @return 
+		 * 
+		 */
+		public static function equals(value1:Number, value2:Number, accuracy:int = 10):Boolean
+		{
+			var factor:Number = Math.pow(10, accuracy);
+			return Math.floor(value1 * factor) == Math.floor(value2 * factor);
+		}
+		
+		/**
 		 * 按照保留小数点的位数向上取整
 		 */		
 	    public static function ceil(value:Number, length:uint):Number

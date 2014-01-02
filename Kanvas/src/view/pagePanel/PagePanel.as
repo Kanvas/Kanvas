@@ -365,6 +365,7 @@ package view.pagePanel
 				
 				page.width = 120;
 				page.height = 90;
+				page.rotation = - core.kvsCore.canvas.rotation;
 				
 				core.kvsCore.createPage(page);
 				

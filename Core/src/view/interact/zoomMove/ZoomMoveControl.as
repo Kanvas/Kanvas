@@ -136,6 +136,11 @@ package view.interact.zoomMove
 			mover.ifEnable = false;
 		}
 		
+		public function get isTweening():Boolean
+		{
+			return flasher.isFlashing;
+		}
+		
 		/**
 		 */		
 		private function get canvas():Canvas

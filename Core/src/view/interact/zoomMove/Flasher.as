@@ -2,11 +2,12 @@ package view.interact.zoomMove
 {
 	import com.greensock.TweenMax;
 	import com.greensock.easing.*;
-	import com.greensock.easing.*;
+	import com.kvs.utils.MathUtil;
 	
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.geom.Point;
+	
 	import util.layout.CanvasLayoutPacker;
 	
 	/**
@@ -63,6 +64,8 @@ package view.interact.zoomMove
 		
 		public function advancedFlash(easeFlash:Object = null):void
 		{
+			if (MathUtil.equals(canvas.scaleX, canvasTargetScale) && MathUtil.equals(canvas.rotation, canvasTargetRotation) && MathUtil.equals(canvas.x, canvasTargetX) && MathUtil.equals(canvas.y, canvasTargetY))
+				return;
 			if (Math.max(canvasTargetScale / canvas.scaleX, canvas.scaleX / canvasTargetScale) > 1.0005)
 				control.mainUI.curScreenState.disableCanvas();
 			
@@ -109,6 +112,7 @@ package view.interact.zoomMove
 					onUpdate:updated,
 					onComplete:finishZoom});
 			}
+			isFlashing = true;
 		}
 		
 		private var packer:CanvasLayoutPacker;

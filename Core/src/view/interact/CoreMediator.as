@@ -14,8 +14,6 @@ package view.interact
 	
 	import modules.pages.PageManager;
 	
-	import mx.messaging.AbstractConsumer;
-	
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
 	import util.layout.LayoutTransformer;
@@ -800,32 +798,41 @@ package view.interact
 		
 		/**
 		 */		
-		public function drawShotFrame(bound:Rectangle):void
+		public function drawShotFrame(bound:Rectangle, rotation:Number = 0):void
 		{
 			var len:uint = 10;
+			
+			cameraShotShape.x = (bound.left + bound.right) * .5;
+			cameraShotShape.y = (bound.top + bound.bottom) * .5;
+			cameraShotShape.rotation = rotation;
+			
+			var w:Number = bound.width;
+			var h:Number = bound.height;
+			var cw:Number = bound.width * .5;
+			var ch:Number = bound.height * .5;
 			
 			cameraShotShape.graphics.clear();
 			cameraShotShape.graphics.lineStyle(8, 0, 0.6, false, 'none', 'square');
 			
 			//左上角
-			cameraShotShape.graphics.moveTo(bound.left, bound.top + len);
-			cameraShotShape.graphics.lineTo(bound.left, bound.top);
-			cameraShotShape.graphics.lineTo(bound.left + len, bound.top);
+			cameraShotShape.graphics.moveTo(- cw, - ch + len);
+			cameraShotShape.graphics.lineTo(- cw, - ch);
+			cameraShotShape.graphics.lineTo(- cw + len, - ch);
 			
 			//右上角
-			cameraShotShape.graphics.moveTo(bound.right, bound.top + len);
-			cameraShotShape.graphics.lineTo(bound.right, bound.top);
-			cameraShotShape.graphics.lineTo(bound.right - len, bound.top);
+			cameraShotShape.graphics.moveTo(cw, - ch + len);
+			cameraShotShape.graphics.lineTo(cw, - ch);
+			cameraShotShape.graphics.lineTo(cw - len, - ch);
 			
 			//右下角
-			cameraShotShape.graphics.moveTo(bound.right, bound.bottom - len);
-			cameraShotShape.graphics.lineTo(bound.right, bound.bottom);
-			cameraShotShape.graphics.lineTo(bound.right - len, bound.bottom);
+			cameraShotShape.graphics.moveTo(cw, ch - len);
+			cameraShotShape.graphics.lineTo(cw, ch);
+			cameraShotShape.graphics.lineTo(cw - len, ch);
 			
 			//左下角
-			cameraShotShape.graphics.moveTo(bound.left, bound.bottom - len);
-			cameraShotShape.graphics.lineTo(bound.left, bound.bottom);
-			cameraShotShape.graphics.lineTo(bound.left + len, bound.bottom);
+			cameraShotShape.graphics.moveTo(- cw, ch - len);
+			cameraShotShape.graphics.lineTo(- cw, ch);
+			cameraShotShape.graphics.lineTo(- cw + len, ch);
 		}
 		
 		

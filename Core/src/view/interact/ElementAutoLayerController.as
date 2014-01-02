@@ -152,7 +152,7 @@ package view.interact
 		private function checkAutoLayerAvailable(current:ElementBase, element:ElementBase):Boolean
 		{
 			var result:Boolean = false;
-			if (current != element)
+			if (current && current != element)
 			{
 				if (! (current is TemGroupElement) && ! (current is GroupElement) && ! current.grouped && 
 					! (element is TemGroupElement) && ! (element is GroupElement) && ! element.grouped)

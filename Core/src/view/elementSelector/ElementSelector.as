@@ -9,7 +9,9 @@ package view.elementSelector
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import flash.display.Sprite;
+	import flash.geom.Point;
 	
+	import util.CoreUtil;
 	import util.layout.ElementLayoutInfo;
 	import util.layout.LayoutTransformer;
 	
@@ -257,6 +259,8 @@ package view.elementSelector
 			style.ty = layoutInfo.ty - offSet;
 			style.width = layoutInfo.width + offSet * 2;
 			style.height = layoutInfo.height + offSet * 2;
+			
+			//CoreUtil.drawCircle(0xFF0000, new Point(style.tx, style.ty), 3);
 			
 			if (frame.visible)
 			{

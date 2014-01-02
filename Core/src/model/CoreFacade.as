@@ -181,7 +181,7 @@ package model
 			registerCommand(Command.PRE_CREATE_TEXT, PreCreateTextCMD);
 			registerCommand(Command.CREATE_TEXT, CreateTextCMD);
 			
-			registerCommand(Command.CREATE_PAGE, CreatePageCommand);
+			registerCommand(Command.CREATE_PAGE, CreatePageCMD);
 			
 			registerCommand(Command.DELETE_ElEMENT, DeleteElementCMD);
 			registerCommand(Command.DELETE_IMG, DeleteImgCMD);

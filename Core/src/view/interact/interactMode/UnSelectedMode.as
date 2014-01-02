@@ -23,7 +23,7 @@ package view.interact.interactMode
 		 */		
 		override public function drawShotFrame():void
 		{
-			mainMediator.cameraShotShape.x = mainMediator.cameraShotShape.y = mainMediator.cameraShotShape.rotation = 0;
+			//mainMediator.cameraShotShape.x = mainMediator.cameraShotShape.y = mainMediator.cameraShotShape.rotation = 0;
 			mainMediator.drawShotFrame(mainMediator.mainUI.bound);
 		}
 		

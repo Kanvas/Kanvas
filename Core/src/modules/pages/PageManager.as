@@ -116,9 +116,15 @@ package modules.pages
 		
 		public function viewPage(page:int):void
 		{
-			var scene:Scene = PageUtil.getSceneFromVO(pages[page], coreMdt.mainUI);
-			coreMdt.zoomMoveControl.zoomRotateMoveTo(scene.scale, scene.rotation, scene.x, scene.y);
+			if (! (coreMdt.zoomMoveControl.isTweening && lastViewPage == page))
+			{
+				lastViewPage = page;
+				var scene:Scene = PageUtil.getSceneFromVO(pages[page], coreMdt.mainUI);
+				coreMdt.zoomMoveControl.zoomRotateMoveTo(scene.scale, scene.rotation, scene.x, scene.y);
+			}
 		}
+		
+		private var lastViewPage:int = -1;
 		
 		private function defaultHandler(e:PageEvent):void
 		{
