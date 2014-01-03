@@ -1,8 +1,6 @@
 package view.ui
 {
 	import com.greensock.TweenLite;
-	import com.greensock.easing.Back;
-	import com.greensock.easing.Cubic;
 	
 	import flash.display.InterpolationMethod;
 	import flash.display.SpreadMethod;
