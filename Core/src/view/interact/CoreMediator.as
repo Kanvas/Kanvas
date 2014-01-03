@@ -882,8 +882,11 @@ package view.interact
 		{
 			elementMoveController.stopMove();
 			
-			currentElement.vo.x = currentElement.x;
-			currentElement.vo.y = currentElement.y;
+			if (currentElement)
+			{
+				currentElement.vo.x = currentElement.x;
+				currentElement.vo.y = currentElement.y;
+			}
 		}
 		
 		/**

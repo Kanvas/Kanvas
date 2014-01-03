@@ -40,7 +40,7 @@ package commands
 		override public function undoHandler():void
 		{
 			for each (var item:ElementBase in groupElements)
-			CoreFacade.addElement(item);
+				CoreFacade.addElement(item);
 		}
 		
 		/**
@@ -48,7 +48,7 @@ package commands
 		override public function redoHandler():void
 		{
 			for each (var item:ElementBase in groupElements)
-			CoreFacade.removeElement(item);
+				CoreFacade.removeElement(item);
 		}
 		
 		/**

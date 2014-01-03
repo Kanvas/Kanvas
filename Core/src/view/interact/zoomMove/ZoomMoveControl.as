@@ -1,6 +1,7 @@
 package view.interact.zoomMove
 {
 	import com.greensock.easing.*;
+	import com.greensock.easing.Strong;
 	
 	import flash.display.Shape;
 	import flash.display.StageDisplayState;

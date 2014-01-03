@@ -385,10 +385,13 @@ package view.pagePanel
 			core.kvsCore.endDragElement();
 			
 			// 抖动效果
-			var tgtScale:Number = core.kvsCore.currentElement.scale * 0.8;
-			TweenLite.killTweensOf(core.kvsCore.currentElement, true);
-			TweenLite.from(core.kvsCore.currentElement, 1, {scaleX: tgtScale, scaleY: tgtScale, ease: Elastic.easeOut});
-			core.kvsCore.showSelector();
+			if (core.kvsCore.currentElement)
+			{
+				var tgtScale:Number = core.kvsCore.currentElement.scale * 0.8;
+				TweenLite.killTweensOf(core.kvsCore.currentElement, true);
+				TweenLite.from(core.kvsCore.currentElement, 1, {scaleX: tgtScale, scaleY: tgtScale, ease: Elastic.easeOut});
+				core.kvsCore.showSelector();
+			}
 		}
 		
 		
