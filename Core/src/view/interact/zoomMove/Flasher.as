@@ -89,11 +89,11 @@ package view.interact.zoomMove
 			{
 				var canvasMiddleScale:Number = Math.min(canvasTargetScale, packer.scale) * .8;
 				TweenMax.to(packer, time * .5, {
-					scale:canvasMiddleScale,
+					scale:canvasMiddleScale, 
 					ease:easeFlash});
 				TweenMax.to(packer, time * .5, {
 					scale:canvasTargetScale, 
-					delay:time * .5,
+					delay:time * .5, 
 					ease:easeFlash});
 				TweenMax.to(packer, time, {
 					progress:1, 
@@ -109,7 +109,7 @@ package view.interact.zoomMove
 					rotation:canvasTargetRotation, 
 					progress:1, 
 					ease:easeFlash, 
-					onUpdate:updated,
+					onUpdate:updated, 
 					onComplete:finishZoom});
 			}
 			isFlashing = true;

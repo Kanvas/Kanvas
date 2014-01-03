@@ -28,7 +28,9 @@ package commands
 			//CoreFacade.coreMediator.autoGroupController.
 			
 			for each (var item:ElementBase in groupElements)
-			CoreFacade.removeElement(item);
+			{
+				CoreFacade.removeElement(item);
+			}
 			
 			UndoRedoMannager.register(this);
 		}
