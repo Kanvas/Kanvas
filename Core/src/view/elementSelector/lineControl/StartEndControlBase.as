@@ -64,7 +64,7 @@ package view.elementSelector.lineControl
 		public function startMove():void
 		{
 			//获取结束点的坐标
-			var rad:Number = vo.rotation / 180 * Math.PI;
+			var rad:Number = (vo.rotation + selector.coreMdt.canvas.rotation) / 180 * Math.PI;
 			var r:Number = vo.width / 2 * vo.scale * selector.layoutTransformer.canvasScale;
 				
 			endX = selector.x + r * Math.cos(rad);

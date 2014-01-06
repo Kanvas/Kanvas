@@ -1,7 +1,7 @@
 package view.themePanel
 {
 	import com.kvs.ui.Panel;
-	import com.kvs.ui.Scale9GridDisplayObject;
+	import com.kvs.ui.Scale9GridSprite;
 	import com.kvs.ui.button.IconBtn;
 	import com.kvs.ui.colorPanel.ColorPanel;
 	import com.kvs.ui.colorPanel.IColorPanelHost;

@@ -86,6 +86,7 @@ package view.shapePanel
 				
 				currShape.x = rect.x;
 				currShape.y = rect.y;
+				currShape.rotation = - mainApp.kvsCore.canvas.rotation;
 				
 				core.createShape(currShape);
 				
