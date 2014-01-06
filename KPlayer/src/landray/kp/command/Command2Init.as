@@ -1,6 +1,7 @@
 package landray.kp.command
 {	
 	import flash.events.Event;
+	import flash.text.TextFormat;
 	
 	import landray.kp.core.kp_internal;
 	import landray.kp.view.Viewer;
@@ -37,15 +38,9 @@ package landray.kp.command
 			//加载字体
 			FlowTextManager.loadFont("FontLib.swf");
 			
-			/*if(!config.kp_internal::debugger)
-				config.kp_internal::container.addChild(config.kp_internal::debugger = new Debugger);
-			var f:TextFormat = new TextFormat("宋体", 12, 0x000000);
-			config.kp_internal::debugger.setTextFormat(f);*/
 			if(!config.kp_internal::viewer) 
 			{
 				config.kp_internal::viewer = new Viewer;
-				
-				
 				
 				config.kp_internal::viewer.addEventListener("initialize", function(e:Event):void
 				{

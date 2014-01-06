@@ -15,15 +15,15 @@
         	
             var kvs = new KPlayer({id: 'demo', width: '100%', height: '100%'});
             
-            var testData = "eNrtmktOwzAQhvecwvIByKNvKWYDLHoClijUA42axpXrVO0OdckVEGdgwwaBuE0pxyBpg0BV08hVaNpmdo4f34z1j39nYafnBiN3eHZCiNMFl4MkI5BDTwSMLoeu7VOTkqGa+NC+YPSq6ymgxmLBzR3pCF/IdsBhzKiZdPcFD32Im/GHF3CiJgNg1A2VSEiMcrh1Q1/R5bRoopIAlz70IVDE4zGNKBgrRj/vn+ZvL7Pn99njR1qbkoEUA5BqwiglXHTORRhEa+1KlZJQ+lHvT6BNob4epvPpq2Wl4dbAsnF2Gs1cR8vmVTR5eWRoIHKfkavEf0mz5FDH+MPEqkDogVbFCnLDBkpyEWFF4zHZ/pikD+SbQq64lKQzY6QGsWy9P+OeEL289q/L2nLzFT27283eCyolvXtC/7CVDXg4JoLKF658kd55ZJ5eraKn48lGT0fl0dOL9OFaTStIBq1e30NXL7nCjQZqcsz6Npuo775p0mrl6aqWiQofc7VYKC/Ki5KgvCjJruVd0+kY8cOpxXMq4/c9ldN3vSCiOUbybOsbGily1A==";
+            var testData = "eJy9VEtu2zAQ3QfIHQQuuov1oSRLqVkjQFHASLxpXHQZUCJpEaZIQaIS+wA9QxcFcr2it+hQdmwZSYCuKhDiPA7n82ZGms23tfIeedtJowkKJwHyuC4Nk3pNUG/FVYbmny4vZhuqH2kHkufNKk4Zb09W2Fl1dqf44jNB3ytpOfL8/d3asF7xI6JSDxLIneXNqpVUr0EvGQRHXtOahrd2RxDy7K7hBI1vHYKsBoWQSo2ifhngliBIZTe8nySzFXiNQK64XFf2AFpjqR0SB1AaZVqCqBDiABaa8b2frqSKD3m5YDeqqSicT3LIrZLlRvOuIygFh5TJvhtM/Bd2sl4PpKK3SIHyjMsJOyq6P1DB+BWZNDhn8w6daZSJsHyPUDDBYZQgr28VQZW1zbXvKwO6ynT2OguywOebxt/UsKjbH9z+4JoH4BbkG2snzMxrbivDCDNPWhnKPtC6+SjY0jCuFoyEMU6TNEjoNCqiCDNWiDzBRVxERY7TaYw84O0Ih6O6Wb61Q+HwW4Vz2rPKjQ6cp/u+WEnrJgUIX+E0HeqXJ6NpSE71w/G/DkM4HgYplr2Vd1K7KaSqg2guDYJul/ewYFqMBvTn14/fP5+PH4J/nP1ZsX6JJIbnVZ+gLt++3v2H3uQ8m6ZJnCWlyHCcZbFgES3iPDv2JtoTmPnHH8DlxV/7f03N";
 			
 			var server = "assets/kvs.xml";
 			//var server = "assets/treeContent.xml";
 			
 			kvs.onReady(function(){
-				kvs.setStartOriginalScale(true);
-				kvs.loadDataFromServer(server);
-				//kvs.setBase64Data(testData);
+				//kvs.setStartOriginalScale(true);
+				//kvs.loadDataFromServer(server);
+				kvs.setBase64Data(testData);
 			});
 			
 			kvs.onUnselected(function(){
