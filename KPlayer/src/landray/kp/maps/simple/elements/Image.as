@@ -32,7 +32,7 @@ package landray.kp.maps.simple.elements
 			{
 				imgLoader = new ImgInsertor;
 				imgLoader.addEventListener(ImgInsertEvent.IMG_LOADED_FROM_SERVER, imgLoaded, false, 0, true);
-				imgLoader.loadImg(imgVO.url, imgVO.imgID);
+				imgLoader.loadImg(imgVO.url, imgVO.imgID, imgVO.width, imgVO.height);
 				
 				toLoadingState();
 			}
