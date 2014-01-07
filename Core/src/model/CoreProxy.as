@@ -236,7 +236,7 @@ package model
 				imgDataBytes = PNGEncoder.encode(ImgLib.getData(imgID));//以png格式存储图片
 				fileData.writeBytes(imgDataBytes, fileData.position, imgDataBytes.bytesAvailable);
 				
-				ze = new ZipEntry(imgID.toString());
+				ze = new ZipEntry(imgID.toString() + '.png');
 				zipOut.putNextEntry(ze);
 				zipOut.write(fileData);
 				zipOut.closeEntry();

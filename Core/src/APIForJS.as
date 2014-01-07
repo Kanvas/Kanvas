@@ -191,8 +191,11 @@ package
 		 */		
 		private function getXMLData():String
 		{
-			return core.exportData().toXMLString();
+			var str:String = core.exportData().toXMLString();
+			
+			return str;
 		}
+		
 		
 		/**
 		 * 将数据压缩后再进行64编码,XML压缩率可达85%
@@ -211,8 +214,6 @@ package
 		 */		
 		private function stringToBase64(str:String, ifCompress:Boolean = false):String
 		{
-			//trace("imgList:"+str);
-			
 			var byte:ByteArray = new ByteArray();
 			byte.writeUTFBytes(str);
 			byte.compress();
@@ -235,7 +236,6 @@ package
 		}
 		
 		/**
-		 * 
 		 */		
 		private function getShotCut(w:Number, h:Number):String
 		{
