@@ -24,13 +24,14 @@
 			};
 			
 			function getData(){
-				var data = kvs.getBase64Data();
-				alert(kvs.getImgURLList());
+				
+				var data = kvs.getXMLData();
+				//alert(kvs.getImgURLList());
 				alert(data);
 			};
 			
 			//测试数据导入, 成功后会看到一个正方形
-			var testData = "eNpdkMFqwzAMhu99CqF7mzZdC4W4pzEo9LSxB/BiEYs6drDVrnn72VkKpbfvR7/Eh5qL9jedjguAxpI2FOFGMXHwCuvVGiHJ6Oj0rvCL+8ERVlO1D+bqaGbNvkDGSK0AG4UbhCGGgaKMChFkHEhhmT4d/GDnEO4Kl4fDaoeQm8tNvSv4y0ZsvlJnAUvcWZlDDKJlksuhDS5Ehdvt2/6RTt7QfRqK5fbiKaVJJrXaUaF/5erh3Px0r4vcd9+f52KdqXiuy1JTzY/6AzhdWXg=";
+			var testData = "eJxtUktu2zAQ3QfIHdhZdBdTlClZCUQbbrPJorsAXRhBwIi0KYQSBWmcWBdo0W5ygFyiJ8htglwjpD8yElQAhXlDzps3j8xnm8qSB912pasFsFEERNeFU2W9ErDG5VkGs+npSX4v6wfZ+YiQ3GipdHusGoeqDnurry4F/DQlaiB0d7Zyam31gGRZbyMfo94gCT8Br/+e3n79fX1+efvzGwj2jRYQdvas158Toc03p3ogpfKigTSta3SLvQAgj6VC47NJAsTocmV8Az4BshGQ8Gzks/4YS8chKpx1bSiiB1VltSJ+hQ5sRx//n35yfqRncbzlnyRs4E+CKQN/61Di1qzoMKDv8mG+Iw7N67W1sBflZa1bO82/LL5fzq/nC4PYXFBqXSGtcR1eZFEWUX3f0K7vqESUhal0jQHeengbbA9gjvjDhyPlZpVG45RQ7rG2TqqvS3WlBOPjtIjGRcrSKI4Z55lMeMw5S7mURaxvbqY5DVL2ZlGveXexdLjZ/G51GHu5/Xbm5nR4Qacn73Hyvw4=";
 			function importData(){
 				kvs.setBase64Data(testData);	
 			};
@@ -54,9 +55,9 @@
         </script>
     </head>
     <body>
-    	<!--input type="button" value="导出数据" onclick="getData()"/>
+    	<input type="button" value="导出数据" onclick="getData()"/>
     	<input type="button" value="导入数据" onclick="importData()"/>
-    	<input type="button" value="设置数据关联" onclick="getShotCut()"/-->
+    	<input type="button" value="设置数据关联" onclick="getShotCut()"/>
         <div id="demo"></div>
     </body>
 </html>

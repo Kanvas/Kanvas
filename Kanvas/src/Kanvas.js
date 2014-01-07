@@ -287,10 +287,18 @@
 			}
 		};
 		
-		//获取数据，数据为base64编码
-		that.getBase64Data = function(){
+
+		//设定数据, 数据格式为xml结构的字符串
+		that.setXMLData = function(data){
 			if (this.ifReady){
-				return this.swf.getBase64Data();
+				this.swf.setXMLData(data);
+			}
+		};
+
+		//获取数据，数据为base64编码
+		that.getXMLData = function(){
+			if (this.ifReady){
+				return this.swf.getXMLData();
 			}
 			
 			return null;
@@ -302,6 +310,15 @@
 				this.swf.setBase64Data(data);
 			};
 			
+		};
+
+		//获取数据，数据为base64编码
+		that.getBase64Data = function(){
+			if (this.ifReady){
+				return this.swf.getBase64Data();
+			}
+			
+			return null;
 		};
 		
 		//给当前选中的节点设置关联信息
@@ -872,9 +889,9 @@
 		for (var i = 0; i < length; i ++)
 		{
 			src = items[i].src;
-			if (src.indexOf('KANVAS.js') != - 1)
+			if (src.indexOf('Kanvas.js') != - 1)
 			{
-				src = src.slice(0, src.indexOf('KANVAS.js'));
+				src = src.slice(0, src.indexOf('Kanvas.js'));
 				url = src + swfURL;
 			}
 		}
