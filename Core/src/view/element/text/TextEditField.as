@@ -61,10 +61,16 @@ package view.element.text
 		 */		
 		override public function exportData():XML
 		{
+			xmlData = <text/>;
 			xmlData = super.exportData();
 			
 			xmlData.@ifMutiLine = textVO.ifMutiLine;
-			xmlData.@text = textVO.text;
+			//xmlData.@text = textVO.text;
+			
+			//防止文本有特殊字符
+			var text:String = '<text><![CDATA[' + textVO.text + ']]></text>';
+			xmlData.appendChild(XML(text));
+			
 			
 			xmlData.@font = (textVO.label.format as TextFormatStyle).font;
 			
