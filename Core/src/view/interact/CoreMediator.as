@@ -698,7 +698,7 @@ package view.interact
 			var elements:Vector.<ElementBase> = CoreFacade.coreProxy.elements;
 			for each (var element:ElementBase in elements)
 			{
-				if (element is TextEditField)
+				if (element is TextEditField && element.visible)
 				{
 					(element as TextEditField).checkTextBm(canvas.scaleX);
 				}

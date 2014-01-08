@@ -15,13 +15,13 @@
         	
             var kvs = new KPlayer({id: 'demo', width: '100%', height: '100%'});
             
-            var testData = "eJy9VEtu2zAQ3QfIHQQuuov1oSRLqVkjQFHASLxpXHQZUCJpEaZIQaIS+wA9QxcFcr2it+hQdmwZSYCuKhDiPA7n82ZGms23tfIeedtJowkKJwHyuC4Nk3pNUG/FVYbmny4vZhuqH2kHkufNKk4Zb09W2Fl1dqf44jNB3ytpOfL8/d3asF7xI6JSDxLIneXNqpVUr0EvGQRHXtOahrd2RxDy7K7hBI1vHYKsBoWQSo2ifhngliBIZTe8nySzFXiNQK64XFf2AFpjqR0SB1AaZVqCqBDiABaa8b2frqSKD3m5YDeqqSicT3LIrZLlRvOuIygFh5TJvhtM/Bd2sl4PpKK3SIHyjMsJOyq6P1DB+BWZNDhn8w6daZSJsHyPUDDBYZQgr28VQZW1zbXvKwO6ynT2OguywOebxt/UsKjbH9z+4JoH4BbkG2snzMxrbivDCDNPWhnKPtC6+SjY0jCuFoyEMU6TNEjoNCqiCDNWiDzBRVxERY7TaYw84O0Ih6O6Wb61Q+HwW4Vz2rPKjQ6cp/u+WEnrJgUIX+E0HeqXJ6NpSE71w/G/DkM4HgYplr2Vd1K7KaSqg2guDYJul/ewYFqMBvTn14/fP5+PH4J/nP1ZsX6JJIbnVZ+gLt++3v2H3uQ8m6ZJnCWlyHCcZbFgES3iPDv2JtoTmPnHH8DlxV/7f03N";
+            var testData = "eNqVks1u1DAUhfc8hXUXLBMnmcxkyhgEYjNSu0EglpUnvplYdewoudNOXgA2gMSGDbwCUncsKvE2U+AtsNNU5W+DV+f45/rcT3d1Ju257B/eY2xVo1TYsXPseu2sgCziwHoaDK6fCnhZa0KIx5uNUzuDk5baBuGlbrZMKwEJsLZzLXY0CABGQ4sC/OFU7fkfPlS3O2OA7QXkeQ7MP0uyObALragWUHhZo97WdKM7R5LGiD5g6Yzr7tTaKtyPti+lwTHMrjMCaqL2KI6TZRol8yLKo2RZHBW84DGetXE/9LEkkmXdoKVgT709Dc0F85joxMtIuUcNUu2UUO7CGifVfdm0Dyq1ViKZZfNNmcpytkwLTHPcKJ5xNav4ZrlQaQHMtxx6TW4oemCEexqJpf8iFk5/Q/bLRqjzxKlhZLZY8Giilo9q4pak/A5cxv8fnK5OdqSPtfW2kqZHH81nEPD98sv15zeHT5eHj1+BVc76vcPbd9cfXn+7evXj6v00J/HtcKw229v/qnH99aln8+LZcWh+osRDjVU8zedP7UHZ4g==";
 			
 			var server = "assets/kvs.xml";
 			//var server = "assets/treeContent.xml";
 			
 			kvs.onReady(function(){
-				//kvs.setStartOriginalScale(true);
+				kvs.setStartOriginalScale(true);
 				//kvs.loadDataFromServer(server);
 				kvs.setBase64Data(testData);
 			});

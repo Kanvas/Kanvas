@@ -1,6 +1,7 @@
 package 
 {
 	import com.adobe.images.JPGEncoder;
+	import com.adobe.images.PNGEncoder;
 	import com.kvs.utils.Base64;
 	import com.kvs.utils.ExternalUtil;
 	
@@ -16,6 +17,7 @@ package
 	import flash.utils.ByteArray;
 	
 	import util.img.ImgInsertor;
+	import util.img.PNGDecoder;
 
 	/**
 	 * JS与kanvas核心core之间的API管理
@@ -237,14 +239,13 @@ package
 		
 		/**
 		 */		
-		private function getShotCut(w:Number, h:Number):String
+		private function getShotCut(w:Number = 296, h:Number = 160):String
 		{
 			var bmd:BitmapData = core.thumbManager.getShotCut(w, h);
 			var str:String = "";
 			if (bmd)
 			{
-				var encoder:JPGEncoder = new JPGEncoder;
-				var bytes:ByteArray = encoder.encode(bmd);
+				var bytes:ByteArray = PNGEncoder.encode(bmd);
 				//bytes.compress();
 				str = Base64.encode(bytes);
 			}

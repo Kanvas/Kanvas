@@ -31,7 +31,7 @@ package view.interact
 		 */
 		public function autofitElementPosition(element:ElementBase, xDir:int = 0, yDir:int = 0):Boolean
 		{
-			if (enabled && element && ! CoreUtil.elementOutOfCanvasBounds(element))
+			if (enabled && element && CoreUtil.elementOutOfCanvasBounds(element))
 			{
 				//最后需要移动的相对位置
 				var x:Number = 0;
