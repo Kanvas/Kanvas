@@ -18,7 +18,6 @@ package landray.kp.core
 			}
 		}
 		
-		public var dataURL :String;
 		public var dataXML :XML;
 		
 		public var styleXML:XML;

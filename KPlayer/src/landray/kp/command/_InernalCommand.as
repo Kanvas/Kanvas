@@ -6,6 +6,8 @@ package landray.kp.command
 	import landray.kp.core.*;
 	import landray.kp.manager.ManagerGraph;
 	
+	import view.toolBar.Debugger;
+	
 	internal class _InernalCommand extends Command
 	{
 		public function _InernalCommand()
@@ -23,12 +25,12 @@ package landray.kp.command
 		}
 		override protected function executeEnd():void
 		{
-			LogUtil.log(className, "executeEnd");
+			Debugger.debug(className, "executeEnd");
 			super.executeEnd();
 		}
 		override protected function executeStart():void
 		{
-			LogUtil.log(className, "executeStart");
+			Debugger.debug(className, "executeStart");
 			super.executeStart();
 		}
 		public var config   :KPConfig;

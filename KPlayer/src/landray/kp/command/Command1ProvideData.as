@@ -6,6 +6,8 @@ package landray.kp.command
 	
 	import landray.kp.model.*;
 	
+	import view.toolBar.Debugger;
+	
 	public final class Command1ProvideData extends _InernalCommand
 	{
 		public function Command1ProvideData($isURI:Boolean, $data:Object)
@@ -24,14 +26,15 @@ package landray.kp.command
 			executeStart();
 			if (isURI)
 			{
-				provider.dataURL = data as String;
+				Debugger.debug("loadDataFromUrl:", data);
 				modelManager.addEventListener(EventManager.QUENE_END, queneEnd);
-				modelManager.execute(new Model1Maps(provider.dataURL));
+				modelManager.execute(new Model1Maps(data as String));
 			}
 			else
 			{
 				try
 				{
+					Debugger.debug("setXMLData:\n", data);
 					provider.dataXML = new XML(data);
 				}
 				catch (e:Error)
