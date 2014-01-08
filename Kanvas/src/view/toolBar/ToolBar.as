@@ -254,7 +254,7 @@ package view.toolBar
 		 * 自定义按钮文字样式配置文件 
 		 */		
 		private const customBtn_labelStyle:XML = <label vAlign="center">
-									                <format color='#FFFFFF' font='雅痞' size='12' letterSpacing="3"/>
+									                <format color='#FFFFFF' font='华文细黑' size='12' letterSpacing="3"/>
 									            </label>;
 		
 		/**

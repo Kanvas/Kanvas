@@ -14,6 +14,7 @@ package
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
+	import flash.text.Font;
 	
 	import model.CoreFacade;
 	
@@ -305,7 +306,7 @@ package
 		private var tipsStyle:XML = <label hPadding='12' vPadding='8' radius='30' vMargin='10' hMargin='20'>
 										<border thikness='1' alpha='0' color='555555' pixelHinting='true'/>
 										<fill color='e96565' alpha='0.9'/>
-										<format font='雅痞' size='13' color='ffffff'/>
+										<format font='华文细黑' size='13' color='ffffff'/>
 										<text value='${tips}'>
 											<effects>
 												<shadow color='0' alpha='0.3' distance='1' blur='1' angle='90'/>

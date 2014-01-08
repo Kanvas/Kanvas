@@ -192,8 +192,8 @@ package view.element.text
 			renderAfterLabelRender();
 			
 			textDrawer.renderTextBMD(shape.graphics, textCanvas, textVO.scale * this.parent.scaleX);
+			textDrawer.checkVisible(shape.graphics, textCanvas, textVO.scale * this.parent.scaleX);
 		}
-		
 		
 		/**
 		 * 检测截图是否满足要求
@@ -228,6 +228,7 @@ package view.element.text
 			
 			renderAfterLabelRender();
 			textDrawer.renderTextBMD(shape.graphics, textCanvas, textVO.scale * this.parent.scaleX);
+			textDrawer.checkVisible(shape.graphics, textCanvas, textVO.scale * this.parent.scaleX);
 		}
 		
 		/**
