@@ -25,6 +25,18 @@ package view.element.shapes
 			xmlData = <star/>
 		}
 		
+		
+		/**
+		 */		
+		override public function exportData():XML
+		{
+			xmlData = super.exportData();
+			
+			xmlData.@innerRadius = starVO.innerRadius;
+			
+			return xmlData;
+		}
+		
 		/**
 		 */		
 		override public function showToolBar(toolbar:ToolBarController):void
