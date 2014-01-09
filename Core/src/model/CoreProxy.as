@@ -331,13 +331,21 @@ package model
 		{
 			temElementMap.clear();
 			
+			//先设置总体样式风格
+			setCurrTheme(xml.header.@styleID);
+			//更新文本编辑器样式属性
+			CoreFacade.coreMediator.mainUI.textEditor.initStyle();
+			// 通知UI更新
+			CoreFacade.coreMediator.mainUI.themeUpdated(xml.header.@styleID);
+			CoreFacade.coreMediator.mainUI.bgColorsUpdated(bgColorsXML);
+			
 			//先创建所有元素，再匹配组合关系
 			var groupElements:Array = [];
 			var element:ElementBase;
 			var item:XML;
 			for each(item in xml.main.children())
 			{
-				element = createElement(item);
+				element = createElement(item);//创建并初始化元素
 				if (element is GroupElement)
 				{
 					element.xmlData = item;
@@ -361,20 +369,14 @@ package model
 			groupElements.length = 0;
 			groupElements = null;
 			
-			//根据样式模板，渲染场景
-			sendNotification(Command.CHANGE_THEME, xml.header.@styleID);
+			for each (element in this.elements)
+				element.render();
 			
-			//如果数据中指定的背景色非当前风格下默认值，则重绘背景
-			if (uint(xml.bg.@colorIndex) != bgVO.colorIndex)
-			{
-				XMLVOMapper.fuck(xml.bg, bgVO);
-				
-				updateBgColor();
-				sendNotification(Command.RENDER_BG_COLOR, bgColor);
-				CoreFacade.coreMediator.mainUI.bgColorUpdated(bgColorIndex);
-			}
-			
+			//处理背景颜色绘制
 			XMLVOMapper.fuck(xml.bg, bgVO);
+			updateBgColor();
+			sendNotification(Command.RENDER_BG_COLOR, bgColor);
+			CoreFacade.coreMediator.mainUI.bgColorUpdated(bgColorIndex);
 			ElementCreator.setID(bgVO.imgID);
 			
 			//背景图片加载
@@ -401,6 +403,11 @@ package model
 			var vo:ElementVO = ElementCreator.getElementVO(item.name().toString());
 			
 			XMLVOMapper.fuck(item, vo);
+			applyStyleToElement(vo);
+			
+			//再次应用xml中的属性，为了兼容旧数据的颜色，字体大小等属性；
+			XMLVOMapper.fuck(item, vo);
+			
 			ElementCreator.setID(vo.id);
 			
 			if (vo is ImgVO)

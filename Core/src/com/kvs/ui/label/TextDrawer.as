@@ -28,18 +28,24 @@ package com.kvs.ui.label
 		{
 			if (scale < 0)
 				scale *= - 1;
-			
-			var r:Number = textBMD.width / (scale * textCanvas.width);
-			
-			//截图有最大尺寸限制，最大宽高乘积为 imgMaxSize
-			var max:Number = scale * textCanvas.width * scale * textCanvas.height * scaleMultiple * scaleMultiple;
-			
-			if (host.visible && max < imgMaxSize && (textBMD.width < textCanvas.width * scale || r > bmMaxScaleMultiple))
+			try
 			{
-				renderTextBMD(shape, textCanvas, scale, tx, ty, (max < minSmoothSize) ? true : false);
+				var r:Number = textBMD.width / (scale * textCanvas.width);
+				
+				//截图有最大尺寸限制，最大宽高乘积为 imgMaxSize
+				var max:Number = scale * textCanvas.width * scale * textCanvas.height * scaleMultiple * scaleMultiple;
+				
+				if (host.visible && max < imgMaxSize && (textBMD.width < textCanvas.width * scale || r > bmMaxScaleMultiple))
+				{
+					renderTextBMD(shape, textCanvas, scale, tx, ty, (max < minSmoothSize) ? true : false);
+				}
+				
+				checkVisible(shape, textCanvas, scale, tx, ty);
+			} 
+			catch(error:Error) 
+			{
+				
 			}
-			
-			checkVisible(shape, textCanvas, scale, tx, ty);
 		}
 		
 		/**
@@ -52,11 +58,19 @@ package com.kvs.ui.label
 			if (scale < 0)
 				scale *= - 1;
 			
-			textBMD = BitmapUtil.getBitmapData(textCanvas, true, scale * scaleMultiple);
-			
-			BitmapUtil.drawBitmapDataToGraphics(textBMD ,shape, textCanvas.width, textCanvas.height, 
+			try
+			{
+				textBMD = BitmapUtil.getBitmapData(textCanvas, true, scale * scaleMultiple);
+				
+				BitmapUtil.drawBitmapDataToGraphics(textBMD ,shape, textCanvas.width, textCanvas.height, 
 					- textCanvas.width / 2 + tx,  - textCanvas.height / 2 + ty, smooth);
-		}
+			} 
+			catch(error:Error) 
+			{
+				
+			}
+			
+		}			
 		
 		/**
 		 * 检测字体原始字体是否可见，文字放大时用位图以提升性能；
