@@ -1,5 +1,7 @@
 package landray.kp.maps.simple
 {
+	import flash.geom.Rectangle;
+	
 	import landray.kp.maps.simple.elements.BaseElement;
 	import landray.kp.maps.simple.elements.Label;
 	import landray.kp.maps.simple.util.SimpleUtil;
@@ -26,11 +28,24 @@ package landray.kp.maps.simple
 		
 		override public function render(scale:Number = 1):void
 		{
-			for each (var element:BaseElement in elements)
+			if (stage)
 			{
-				if (element is Label)
-					element.render(scale);
+				var count:int = 0;
+				for each (var element:BaseElement in elements)
+				{
+					addChild(element);
+					var bound:Rectangle = element.getBounds(stage);
+					element.visible = ! (bound.left > stage.stageWidth || bound.right < 0 || bound.bottom < 0 || bound.top > stage.stageHeight);
+					if(!element.visible)
+						removeChild(element);
+					if (element.visible && element is Label)
+					{
+						count ++;
+						element.render(scale);
+					}
+				}
 			}
+			
 		}
 		
 		override public function set dataProvider(value:XML):void

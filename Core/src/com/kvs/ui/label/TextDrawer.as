@@ -3,6 +3,7 @@ package com.kvs.ui.label
 	import com.kvs.utils.graphic.BitmapUtil;
 	
 	import flash.display.BitmapData;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Graphics;
 	import flash.display.Shape;
 	import flash.display.Sprite;
@@ -44,14 +45,15 @@ package com.kvs.ui.label
 			} 
 			catch(error:Error) 
 			{
-				
+				trace(error.getStackTrace())
 			}
+			
 		}
 		
 		/**
 		 * 将textCanvas上的文本转换为bitmapdata并绘制
 		 */		
-		public function renderTextBMD(shape:Graphics, textCanvas:Sprite, scale:Number = 1, tx:Number = 0, ty:Number = 0, smooth:Boolean = true):void
+		public function renderTextBMD(shape:Graphics, textCanvas:Sprite, scale:Number = 1, tx:Number = 0, ty:Number = 0, smooth:Boolean = false):void
 		{
 			shape.clear();
 			
@@ -60,7 +62,7 @@ package com.kvs.ui.label
 			
 			try
 			{
-				textBMD = BitmapUtil.getBitmapData(textCanvas, true, scale * scaleMultiple);
+				textBMD = BitmapUtil.getBitmapData(textCanvas, false, scale * scaleMultiple);
 				
 				BitmapUtil.drawBitmapDataToGraphics(textBMD ,shape, textCanvas.width, textCanvas.height, 
 					- textCanvas.width / 2 + tx,  - textCanvas.height / 2 + ty, smooth);
@@ -87,7 +89,10 @@ package com.kvs.ui.label
 			if (scale <= 1.5 && scale >= 0.3)
 			{
 				textCanvas.visible = true;
-				
+				if (textCanvasParent)
+				{
+					textCanvasParent.addChild(textCanvas);
+				}
 				shape.clear();
 			}
 			else
@@ -95,13 +100,20 @@ package com.kvs.ui.label
 				if (textCanvas.visible)
 				{
 					BitmapUtil.drawBitmapDataToGraphics(textBMD ,shape, textCanvas.width, textCanvas.height, 
-						- textCanvas.width / 2 + tx,  - textCanvas.height / 2 + ty, true);
+						- textCanvas.width / 2 + tx,  - textCanvas.height / 2 + ty, false);
 				}
 				
 				textCanvas.visible = false;
+				if (textCanvas.parent)
+				{
+					textCanvasParent = textCanvas.parent;
+					textCanvas.parent.removeChild(textCanvas);
+				}
 			}
 			
 		}
+		
+		private var textCanvasParent:DisplayObjectContainer;
 		
 		/**
 		 * 截图时不会恰好截取满足要求的尺寸，而是要多放大一些，这样截图计算就会少一点

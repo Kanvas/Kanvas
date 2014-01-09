@@ -74,7 +74,7 @@ package landray.kp.maps.simple.elements
 		private function drawIMGProxy():void
 		{
 			graphics.clear();
-			graphics.beginFill(0x555555);
+			graphics.beginFill(0x555555, .5);
 			graphics.drawRect( - vo.width * .5, - vo.height * .5, vo.width, vo.height);
 			graphics.endFill();
 			
