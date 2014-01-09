@@ -46,8 +46,7 @@ package landray.kp.core
 			commandManager.push(new Command1ProvideData(args[1], args[2]));
 			commandManager.push(new Command2Init);
 			commandManager.push(new Command3CreateGraph);
-			commandManager.push(new Command4ChangeTheme);
-			commandManager.push(new Command5ZoomAuto);
+			commandManager.push(new Command4ZoomAuto);
 			commandManager.execute();
 		}
 		
