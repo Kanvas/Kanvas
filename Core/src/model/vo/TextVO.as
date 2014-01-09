@@ -3,7 +3,6 @@ package model.vo
 	import com.kvs.utils.XMLConfigKit.XMLVOMapper;
 	import com.kvs.utils.XMLConfigKit.style.LabelStyle;
 	
-	import flash.events.IEventDispatcher;
 	import flash.text.TextFormat;
 	
 	/**
@@ -33,9 +32,6 @@ package model.vo
 		override public function set color(value:Object):void
 		{
 			super.color = value;
-			
-			/*if (label && label.format)
-				label.*/
 		}
 		
 		/**
