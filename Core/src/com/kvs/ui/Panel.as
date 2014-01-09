@@ -275,7 +275,7 @@ package com.kvs.ui
 		 *  标题样式的配置文件
 		 */		
 		public var titleStyleXML:XML = <label radius='0' vPadding='20' hPadding='20'>
-											<format color='#555555' font='雅痞' size='14'/>
+											<format color='#555555' font='华文细黑' size='14'/>
 										</label>
 			
 		

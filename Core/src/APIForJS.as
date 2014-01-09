@@ -1,6 +1,7 @@
 package 
 {
 	import com.adobe.images.JPGEncoder;
+	import com.adobe.images.PNGEncoder;
 	import com.kvs.utils.Base64;
 	import com.kvs.utils.ExternalUtil;
 	
@@ -16,6 +17,7 @@ package
 	import flash.utils.ByteArray;
 	
 	import util.img.ImgInsertor;
+	import util.img.PNGDecoder;
 
 	/**
 	 * JS与kanvas核心core之间的API管理
@@ -191,8 +193,11 @@ package
 		 */		
 		private function getXMLData():String
 		{
-			return core.exportData().toXMLString();
+			var str:String = core.exportData().toXMLString();
+			
+			return str;
 		}
+		
 		
 		/**
 		 * 将数据压缩后再进行64编码,XML压缩率可达85%
@@ -211,8 +216,6 @@ package
 		 */		
 		private function stringToBase64(str:String, ifCompress:Boolean = false):String
 		{
-			//trace("imgList:"+str);
-			
 			var byte:ByteArray = new ByteArray();
 			byte.writeUTFBytes(str);
 			byte.compress();
@@ -235,16 +238,14 @@ package
 		}
 		
 		/**
-		 * 
 		 */		
-		private function getShotCut(w:Number, h:Number):String
+		private function getShotCut(w:Number = 296, h:Number = 160):String
 		{
 			var bmd:BitmapData = core.thumbManager.getShotCut(w, h);
 			var str:String = "";
 			if (bmd)
 			{
-				var encoder:JPGEncoder = new JPGEncoder;
-				var bytes:ByteArray = encoder.encode(bmd);
+				var bytes:ByteArray = PNGEncoder.encode(bmd);
 				//bytes.compress();
 				str = Base64.encode(bytes);
 			}

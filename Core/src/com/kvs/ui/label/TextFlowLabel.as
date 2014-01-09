@@ -58,14 +58,26 @@ package com.kvs.ui.label
 			FlowTextManager.render(this, textformat, ifUseEmbedFont);
 			
 			if (ifTextBitmap)
+			{
 				textDrawer.renderTextBMD(this.graphics, textCanvas, 1, textCanvas.width / 2, textCanvas.height / 2);
+				textDrawer.checkVisible(this.graphics, textCanvas, 1, textCanvas.width / 2, textCanvas.height / 2);
+			}
 		}
 		
+		/**
+		 */		
 		public function checkTextBm(scale:Number):void
 		{
+			globleScale = scale;
+			
 			if (ifTextBitmap)
-				textDrawer.checkTextBm(graphics, textCanvas, scale, textCanvas.width / 2, textCanvas.height / 2);
+				textDrawer.checkTextBm(graphics, textCanvas, globleScale, textCanvas.width / 2, textCanvas.height / 2);
 		}
+		
+		/**
+		 * 记录全局比例
+		 */		
+		private var globleScale:Number = 1;
 		
 		/**
 		 */
@@ -157,7 +169,12 @@ package com.kvs.ui.label
 		public function afterReRender():void
 		{
 			if (ifTextBitmap)
-				textDrawer.renderTextBMD(this.graphics, textCanvas, 1, textCanvas.width / 2, textCanvas.height / 2);
+			{
+				//todo
+				textDrawer.renderTextBMD(this.graphics, textCanvas, globleScale, textCanvas.width / 2, textCanvas.height / 2);
+				textDrawer.checkVisible(this.graphics, textCanvas, globleScale, textCanvas.width / 2, textCanvas.height / 2);
+			}
+				
 		}
 	}
 }

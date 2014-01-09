@@ -26,6 +26,9 @@ package com.kvs.ui.label
 		 */		
 		public function checkTextBm(shape:Graphics, textCanvas:Sprite, scale:Number = 1, tx:Number = 0, ty:Number = 0):void
 		{
+			if (scale < 0)
+				scale *= - 1;
+			
 			var r:Number = textBMD.width / (scale * textCanvas.width);
 			
 			//截图有最大尺寸限制，最大宽高乘积为 imgMaxSize
@@ -33,23 +36,22 @@ package com.kvs.ui.label
 			
 			if (host.visible && max < imgMaxSize && (textBMD.width < textCanvas.width * scale || r > bmMaxScaleMultiple))
 			{
-				//textCanvas.visible = true;
 				renderTextBMD(shape, textCanvas, scale, tx, ty, (max < minSmoothSize) ? true : false);
 			}
+			
+			checkVisible(shape, textCanvas, scale, tx, ty);
 		}
-		
 		
 		/**
 		 * 将textCanvas上的文本转换为bitmapdata并绘制
 		 */		
-		public function renderTextBMD(shape:Graphics, textCanvas:Sprite, scale:Number = 1, tx:Number = 0, ty:Number = 0, smooth:Boolean = false):void
+		public function renderTextBMD(shape:Graphics, textCanvas:Sprite, scale:Number = 1, tx:Number = 0, ty:Number = 0, smooth:Boolean = true):void
 		{
 			shape.clear();
 			
 			if (scale < 0)
 				scale *= - 1;
 			
-			trace(textCanvas.width, textCanvas.height)
 			try
 			{
 				textBMD = BitmapUtil.getBitmapData(textCanvas, false, scale * scaleMultiple);
@@ -61,16 +63,38 @@ package com.kvs.ui.label
 			{
 				trace(e.getStackTrace())
 			}
-			
-			
-			
-			if (textCanvas.parent)
-			{
-				textCanvas.parent.removeChild(textCanvas);
-			}
-			//textCanvas.visible = false;
 		}
 		
+		/**
+		 * 检测字体原始字体是否可见，文字放大时用位图以提升性能；
+		 * 
+		 * 文字较小时用原始字体，提升可读性；
+		 * 
+		 * 文字太小时，隐藏文字；
+		 */		
+		public function checkVisible(shape:Graphics, textCanvas:Sprite, scale:Number = 1, tx:Number = 0, ty:Number = 0):void
+		{
+			if (scale < 0)
+				scale *= - 1;
+			
+			if (scale <= 1.5 && scale >= 0.3)
+			{
+				textCanvas.visible = true;
+				
+				shape.clear();
+			}
+			else
+			{
+				if (textCanvas.visible)
+				{
+					BitmapUtil.drawBitmapDataToGraphics(textBMD ,shape, textCanvas.width, textCanvas.height, 
+						- textCanvas.width / 2 + tx,  - textCanvas.height / 2 + ty, true);
+				}
+				
+				textCanvas.visible = false;
+			}
+			
+		}
 		
 		/**
 		 * 截图时不会恰好截取满足要求的尺寸，而是要多放大一些，这样截图计算就会少一点

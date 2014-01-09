@@ -24,13 +24,14 @@
 			};
 			
 			function getData(){
+				
 				var data = kvs.getBase64Data();
-				alert(kvs.getImgURLList());
+				//alert(kvs.getImgURLList());
 				alert(data);
 			};
 			
 			//测试数据导入, 成功后会看到一个正方形
-			var testData = "eNpdkMFqwzAMhu99CqF7mzZdC4W4pzEo9LSxB/BiEYs6drDVrnn72VkKpbfvR7/Eh5qL9jedjguAxpI2FOFGMXHwCuvVGiHJ6Oj0rvCL+8ERVlO1D+bqaGbNvkDGSK0AG4UbhCGGgaKMChFkHEhhmT4d/GDnEO4Kl4fDaoeQm8tNvSv4y0ZsvlJnAUvcWZlDDKJlksuhDS5Ehdvt2/6RTt7QfRqK5fbiKaVJJrXaUaF/5erh3Px0r4vcd9+f52KdqXiuy1JTzY/6AzhdWXg=";
+			var testData = "eNplUcFOwkAQvfsV62AMmNhWoFqTbSORCwleFOOBcFjotN1YumR3QfgCDkYvJn6Gf+DfiN/hbilqdJJJ3szuzLx5Q+9ZsWAq2iOEZshilGSBUnFRhNByPCBKr3LsdUO4y7hGcMufUxHPc6ww44UFBmpcasLjEE6AzKSYodSrEIDo1QxDsK9Vv8HfhB1wMx8PuM4RyNJ08M4dH4gpP/YDx/d+2SmQBx7rLIS23wSSIU8zbdgaslJopkvuJpiIXMgf1CtiXJahmrAcS5I8uZpr3ueFCROWKzM7EYVptnl6/nxdb94eP95fYLtdtV9E94eX3c6gM1QyVWhcBq2zttdstYOgUT+qHR406tYvaqNRRN2yZivPN6buTjQ6Tnc8k9L+keXT9Pa6b1U0yMrk2RtQt7rbFy4AiA8=";
 			function importData(){
 				kvs.setBase64Data(testData);	
 			};
@@ -54,9 +55,9 @@
         </script>
     </head>
     <body>
-    	<!--input type="button" value="导出数据" onclick="getData()"/>
+    	<input type="button" value="导出数据" onclick="getData()"/>
     	<input type="button" value="导入数据" onclick="importData()"/>
-    	<input type="button" value="设置数据关联" onclick="getShotCut()"/-->
+    	<input type="button" value="设置数据关联" onclick="getShotCut()"/>
         <div id="demo"></div>
     </body>
 </html>

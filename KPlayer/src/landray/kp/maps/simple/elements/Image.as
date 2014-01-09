@@ -11,6 +11,8 @@ package landray.kp.maps.simple.elements
 	import util.img.ImgInsertEvent;
 	import util.img.ImgInsertor;
 	
+	import view.toolBar.Debugger;
+	
 	public final class Image extends BaseElement
 	{
 		public function Image($vo:ElementVO)
@@ -28,7 +30,7 @@ package landray.kp.maps.simple.elements
 			{
 				imgLoader = new ImgInsertor;
 				imgLoader.addEventListener(ImgInsertEvent.IMG_LOADED_FROM_SERVER, imgLoaded, false, 0, true);
-				imgLoader.loadImg(imgVO.url, imgVO.imgID);
+				imgLoader.loadImg(imgVO.url, imgVO.imgID, imgVO.width, imgVO.height);
 				
 				toLoadingState();
 			}
@@ -41,6 +43,7 @@ package landray.kp.maps.simple.elements
 		
 		private function imgLoaded(e:ImgInsertEvent):void
 		{
+			Debugger.debug("imgLoaded:", imgVO.url);
 			imgVO.sourceData = e.bitmapData;
 			
 			imgLoader.removeEventListener(ImgInsertEvent.IMG_LOADED_TO_LOCAL, imgLoaded);

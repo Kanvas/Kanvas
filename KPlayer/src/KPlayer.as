@@ -13,6 +13,8 @@ package
 	import landray.kp.core.KPPresenter;
 	import landray.kp.utils.CoreUtil;
 	
+	import view.toolBar.Debugger;
+	
 	/**
 	 * KPlayer主容器类
 	 */
@@ -148,6 +150,9 @@ package
 		 */
 		private function initialize():void
 		{
+			//initDebugger();
+			
+			Debugger.debug("初始化");
 			//从网页获取ID参数
 			appID = (loaderInfo.parameters.id) ? loaderInfo.parameters.id : "1";
 			//安全沙箱
@@ -156,6 +161,7 @@ package
 			presenter = KPPresenter.instance;
 			//添加JS回调函数
 			addJSCallBack();
+			
 			//调用READY方法通知网页kplayer已准备完毕
 			if (ExternalInterface.available) 
 				ExternalInterface.call("KANVAS.ready", appID);
@@ -194,6 +200,11 @@ package
 			return Base64.encode(bytes);
 		}
 		
+		private function initDebugger():void
+		{
+			if(!debugger)
+				addChild(debugger = new Debugger);
+		}
 		
 		/**
 		 * @private
@@ -216,5 +227,6 @@ package
 		 */
 		private var presenter:KPPresenter;
 		
+		private var debugger:Debugger;
 	}
 }

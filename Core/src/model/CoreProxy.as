@@ -260,7 +260,9 @@ package model
 			// xml文件
 			entry = zipFile.getEntry('kvs.xml');
 			data = zipFile.getInput(entry);
-			var xml:XML = XML(data.toString());
+			
+			var s:String = data.toString();			
+			var xml:XML = XML(s);
 			
 			var index:uint = zipFile.entries.indexOf(entry);
 			zipFile.entries.splice(index, 1);
