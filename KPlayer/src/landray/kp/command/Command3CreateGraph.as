@@ -51,6 +51,8 @@ package landray.kp.command
 				} 
 				catch (e:Error) {}
 				
+				config.kp_internal::viewer.theme = config.kp_internal::theme;
+				
 				//resolve main
 				var xml:XML = provider.dataXML.main[0];
 				if (xml && xml.children()&&xml.children().length()) 
@@ -58,6 +60,7 @@ package landray.kp.command
 					var reference:Class = graphManager.getGraph(String(xml.name()));
 					var graph:Graph = new reference;
 					graph.templete = provider.styleXML;
+					graph.theme = config.kp_internal::theme;
 					graph.dataProvider = xml;
 					config.kp_internal::graphs.push(graph);
 					config.kp_internal::viewer.canvas.addChild(graph);
