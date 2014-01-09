@@ -85,6 +85,7 @@ package util.layout
 				
 				canvas.x = curSceCenter.x - curEleCenter.x;
 				canvas.y = curSceCenter.y - curEleCenter.y;
+				trace(canvas.x, canvas.y)
 			}
 		}
 		

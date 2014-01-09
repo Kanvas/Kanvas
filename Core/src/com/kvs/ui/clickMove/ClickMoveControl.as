@@ -1,11 +1,7 @@
 package com.kvs.ui.clickMove
 {
-	import flash.display.DisplayObject;
 	import flash.display.Sprite;
-	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
-	
-	import view.interact.zoomMove.Mover;
 
 	/**
 	 * 控制元素的拖动，当元件被拖动后，鼠标释放时，告知原件被点击；
@@ -36,7 +32,6 @@ package com.kvs.ui.clickMove
 		 */		
 		private function mouseDownHandler(evt:MouseEvent):void
 		{
-			//trace("ClickMoveControl.mouseDownHandler", moveTarget, target, ifMoving)
 			ifMoving = false;
 			
 			startX = moveTarget.stage.mouseX;
@@ -74,7 +69,6 @@ package com.kvs.ui.clickMove
 		 */		
 		public function stopMoveCanvas(evt:MouseEvent = null):void
 		{
-			//trace("ClickMoveControl.stopMoveCanvas:", moveTarget, target, ifMoving)
 			moveTarget.stage.removeEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
 			moveTarget.stage.removeEventListener(MouseEvent.MOUSE_MOVE, moveHandler);
 			moveTarget.stage.removeEventListener(MouseEvent.MOUSE_UP, stopMoveCanvas);

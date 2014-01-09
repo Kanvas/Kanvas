@@ -1,4 +1,4 @@
-package cn.vision.events
+package cn.vision.core
 {
 	import cn.vision.core.vs;
 	import cn.vision.interfaces.IExtra;
@@ -6,17 +6,19 @@ package cn.vision.events
 	import cn.vision.interfaces.IName;
 	import cn.vision.utils.ClassUtil;
 	
-	import flash.events.Event;
+	import flash.events.EventDispatcher;
+	import flash.events.IEventDispatcher;
 	
-	use namespace vs;
-	
-	public class EventVS extends Event implements IExtra, IID, IName
+	public class VSEventDispatcher extends EventDispatcher implements IExtra, IID, IName
 	{
-		public function EventVS($type:String, $bubbles:Boolean=false, $cancelable:Boolean=false)
+		public function VSEventDispatcher(target:IEventDispatcher=null)
 		{
-			super($type, $bubbles, $cancelable);
+			super(target);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function get className():String
 		{
 			if(!vs::className)
@@ -24,6 +26,9 @@ package cn.vision.events
 			return vs::className;
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function get extra():Object
 		{
 			if(!vs::extra)
@@ -31,27 +36,53 @@ package cn.vision.events
 			return vs::extra;
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function get id():String
 		{
 			return vs::id;
 		}
+		
+		/**
+		 * @private
+		 */
 		public function set id($value:String):void
 		{
 			vs::id = $value;
 		}
 		
-		public function get name():String
-		{
-			return vs::name;
-		}
+		/**
+		 * @inheritDoc
+		 */
+		public function get name():String {return vs::name; }
+		
+		/**
+		 * @private
+		 */
 		public function set name($value:String):void
 		{
 			vs::name = $value;
 		}
 		
+		/**
+		 * @private
+		 */
 		vs var className:String;
+		
+		/**
+		 * @private
+		 */
 		vs var extra:Object;
+		
+		/**
+		 * @private
+		 */
 		vs var name:String;
+		
+		/**
+		 * @private
+		 */
 		vs var id:String;
 	}
 }

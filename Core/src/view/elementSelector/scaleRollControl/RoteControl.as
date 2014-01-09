@@ -55,7 +55,7 @@ package view.elementSelector.scaleRollControl
 			selector.element.rotation = rote;
 			selector.rote();
 			
-			selector.coreMdt.autoGroupController.roll(dis, selector.element);
+			selector.coreMdt.autoGroupController.roll(dis + selector.coreMdt.canvas.rotation, selector.element);
 		}
 		
 		/**
@@ -101,7 +101,7 @@ package view.elementSelector.scaleRollControl
 			oldAngle = selector.currentRote;
 			oldRotation = selector.rotation;
 			oldPropertyObj = {};
-			oldPropertyObj.rotation = selector.rotation;
+			oldPropertyObj.rotation = selector.element.rotation;
 			
 			lastMouseX = selector.coreMdt.mainUI.stage.mouseX;
 			lastMouseY = selector.coreMdt.mainUI.stage.mouseY;

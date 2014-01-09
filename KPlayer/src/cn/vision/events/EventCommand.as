@@ -1,8 +1,8 @@
 package cn.vision.events
 {
-	public class EventCommand extends EventVS
+	public class EventCommand extends VSEvent
 	{
-		public function EventCommand($type:String, $bubbles:Boolean=false, $cancelable:Boolean=false)
+		public function EventCommand($type:String, $bubbles:Boolean = false, $cancelable:Boolean = false)
 		{
 			super($type, $bubbles, $cancelable);
 		}

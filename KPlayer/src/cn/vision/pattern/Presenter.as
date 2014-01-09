@@ -2,14 +2,14 @@ package cn.vision.pattern
 {
 	import cn.vision.containers.WebApplicaion;
 	import cn.vision.core.vs;
-	import cn.vision.core.EventDispatcherVS;
+	import cn.vision.core.VSEventDispatcher;
 	import cn.vision.managers.ManagerCommand;
 	import cn.vision.managers.ManagerModel;
 	import cn.vision.utils.ClassUtil;
 	
 	import flash.display.DisplayObjectContainer;
 
-	public class Presenter extends EventDispatcherVS
+	public class Presenter extends VSEventDispatcher
 	{
 		public function Presenter()
 		{

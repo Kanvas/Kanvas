@@ -49,10 +49,19 @@ package com.kvs.ui.label
 			if (scale < 0)
 				scale *= - 1;
 			
-			textBMD = BitmapUtil.getBitmapData(textCanvas, false, scale * scaleMultiple);
+			trace(textCanvas.width, textCanvas.height)
+			try
+			{
+				textBMD = BitmapUtil.getBitmapData(textCanvas, false, scale * scaleMultiple);
+				
+				BitmapUtil.drawBitmapDataToGraphics(textBMD ,shape, textCanvas.width, textCanvas.height, 
+					- textCanvas.width / 2 + tx,  - textCanvas.height / 2 + ty, smooth);
+			}
+			catch (e:Error)
+			{
+				trace(e.getStackTrace())
+			}
 			
-			BitmapUtil.drawBitmapDataToGraphics(textBMD ,shape, textCanvas.width, textCanvas.height, 
-				- textCanvas.width / 2 + tx,  - textCanvas.height / 2 + ty, smooth);
 			
 			
 			if (textCanvas.parent)

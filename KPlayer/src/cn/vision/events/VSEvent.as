@@ -1,4 +1,4 @@
-package cn.vision.core
+package cn.vision.events
 {
 	import cn.vision.core.vs;
 	import cn.vision.interfaces.IExtra;
@@ -6,15 +6,17 @@ package cn.vision.core
 	import cn.vision.interfaces.IName;
 	import cn.vision.utils.ClassUtil;
 	
-	import flash.events.EventDispatcher;
-	import flash.events.IEventDispatcher;
+	import flash.events.Event;
 	
-	public class EventDispatcherVS extends EventDispatcher implements IName, IExtra, IID
+	use namespace vs;
+	
+	public class VSEvent extends Event implements IExtra, IID, IName
 	{
-		public function EventDispatcherVS(target:IEventDispatcher=null)
+		public function VSEvent($type:String, $bubbles:Boolean=false, $cancelable:Boolean=false)
 		{
-			super(target);
+			super($type, $bubbles, $cancelable);
 		}
+		
 		public function get className():String
 		{
 			if(!vs::className)
@@ -38,7 +40,10 @@ package cn.vision.core
 			vs::id = $value;
 		}
 		
-		public function get name():String {return vs::name; }
+		public function get name():String
+		{
+			return vs::name;
+		}
 		public function set name($value:String):void
 		{
 			vs::name = $value;

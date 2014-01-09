@@ -1,7 +1,7 @@
 package cn.vision.pattern
 {
 	import cn.vision.core.vs;
-	import cn.vision.core.EventDispatcherVS;
+	import cn.vision.core.VSEventDispatcher;
 	import cn.vision.events.EventModel;
 	import cn.vision.interfaces.IData;
 	
@@ -12,7 +12,7 @@ package cn.vision.pattern
 	/**
 	 * Model use to process data.
 	 */
-	public class Model extends EventDispatcherVS implements IData
+	public class Model extends VSEventDispatcher implements IData
 	{
 		public function Model()
 		{

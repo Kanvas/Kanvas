@@ -11,6 +11,7 @@ package view.elementSelector.lineControl
 	
 	import model.vo.ElementVO;
 	
+	import util.CoreUtil;
 	import util.LayoutUtil;
 	
 	import view.elementSelector.ControlPointBase;
@@ -74,6 +75,9 @@ package view.elementSelector.lineControl
 			
 			startX = selector.x;// + r * Math.cos(rad)
 			startY = selector.y;// + r * Math.sin(rad)
+			
+			//CoreUtil.drawCircle(0xFF0000, new Point(startX, startY), 2);
+			//CoreUtil.drawCircle(0x00FF00, new Point(endX, endY), 2);
 				
 			oldObj = {};
 			oldObj.x = vo.x;

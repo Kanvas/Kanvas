@@ -1,6 +1,6 @@
 package cn.vision.events
 {
-	public class EventModel extends EventVS
+	public class EventModel extends VSEvent
 	{
 		public function EventModel($type:String, $bubbles:Boolean=false, $cancelable:Boolean=false)
 		{

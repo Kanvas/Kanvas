@@ -468,7 +468,7 @@ package view.interact
 		 * 
 		 * @default 10
 		 */
-		public var areaPosition:Number = 5;
+		public var areaPosition:Number = 3;
 		
 		/**
 		 * 旋转时自动对齐的检测范围，角度为单位

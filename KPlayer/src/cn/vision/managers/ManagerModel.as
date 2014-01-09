@@ -1,6 +1,6 @@
 package cn.vision.managers
 {
-	import cn.vision.core.EventDispatcherVS;
+	import cn.vision.core.VSEventDispatcher;
 	import cn.vision.core.vs;
 	import cn.vision.events.EventModel;
 	import cn.vision.pattern.Model;

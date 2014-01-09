@@ -1,7 +1,6 @@
 package view.interact.zoomMove
 {
 	import com.greensock.easing.*;
-	import com.greensock.easing.Strong;
 	
 	import flash.display.Shape;
 	import flash.display.StageDisplayState;
@@ -95,7 +94,7 @@ package view.interact.zoomMove
 		public function zoomRotateMoveTo(scale:Number, rotation:Number, x:Number, y:Number, ease:Object = null):void
 		{
 			if (ease == null)
-				ease = Quad.easeInOut;
+				ease = Cubic.easeInOut;
 			
 			zoomer.zoomRotateMoveTo(scale, rotation, x, y, ease);
 		}

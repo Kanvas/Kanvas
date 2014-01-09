@@ -164,12 +164,9 @@ package landray.kp.view
 		
 		kp_internal function horizontalMove(distance:Number):void
 		{
-			if (stage)
-			{
-				var center:Point = LayoutUtil.stagePointToElementPoint(stage.stageWidth * .5, stage.stageHeight * .5, canvas);
-				center.x -= distance;
-				kp_internal::controller.zoomMoveTo(canvas.scaleX, center);
-			}
+			
+			kp_internal::controller.zoomMoveOff(1, distance, 0);
+			
 		}
 		
 		kp_internal function unselected():void

@@ -3,21 +3,15 @@ package
 	import com.kvs.utils.RexUtil;
 	import com.kvs.utils.XMLConfigKit.IApp;
 	import com.kvs.utils.XMLConfigKit.XMLVOLib;
-	import com.kvs.utils.system.OS;
 	
 	import commands.Command;
 	
-	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
-	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import flash.system.Security;
-	import flash.system.System;
 	import flash.utils.ByteArray;
 	
 	import model.ConfigInitor;

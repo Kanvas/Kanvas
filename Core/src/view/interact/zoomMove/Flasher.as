@@ -80,8 +80,8 @@ package view.interact.zoomMove
 			var scalePlus:Number = Math.max(canvasTargetScale / packer.scale, packer.scale / canvasTargetScale);
 			var timeScale:Number = (scalePlus < 1.25) ? 3 / speedScale + scalePlus / speedScale : scalePlus / speedScale;
 			var timeRotation:Number = Math.abs(canvasTargetRotation - packer.rotation) / speedRotation;
-			var timeMove:Number = Point.distance(new Point(packer.x, packer.y), new Point(canvasTargetX, canvasTargetY)) * packer.scale / speedMove;
-			var time:Number = Math.min(Math.max(timeScale, timeRotation, timeMove, 1), 1.5);
+			var timeMove:Number = Point.distance(new Point(packer.x, packer.y), new Point(canvasTargetX, canvasTargetY)) / speedMove;
+			var time:Number = Math.min(Math.max(timeScale, timeRotation, timeMove, 1), 2.5);
 			
 			
 			//缩放差距不大时启用先缩小后放大式镜头缩放
@@ -222,6 +222,6 @@ package view.interact.zoomMove
 		
 		private var speedMove:Number = 1200;
 		private var speedScale:Number = 3;
-		private var speedRotation:Number = 90;
+		private var speedRotation:Number = 60;
 	}
 }
