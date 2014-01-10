@@ -44,6 +44,7 @@ package landray.kp.maps.simple
 						element.render(scale);
 					}
 				}
+				trace("label rendered:", count);
 			}
 			
 		}
