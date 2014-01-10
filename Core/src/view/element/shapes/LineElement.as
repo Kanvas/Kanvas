@@ -2,7 +2,6 @@ package view.element.shapes
 {
 	import com.kvs.utils.ViewUtil;
 	import com.kvs.utils.XMLConfigKit.StyleManager;
-	import com.kvs.utils.XMLConfigKit.style.Style;
 	
 	import flash.geom.Point;
 	
@@ -24,6 +23,19 @@ package view.element.shapes
 			super(vo);
 			
 			xmlData = <line/>
+		}
+		
+		
+		/**
+		 */		
+		override public function exportData():XML
+		{
+			xmlData = super.exportData();
+			
+			xmlData.@thickness = vo.thickness;
+			xmlData.@borderAlpha = vo.style.getBorder.alpha;
+			
+			return xmlData;
 		}
 		
 		/**

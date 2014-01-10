@@ -73,6 +73,7 @@ package view.element.text
 			
 			
 			xmlData.@font = (textVO.label.format as TextFormatStyle).font;
+			xmlData.@size = textVO.size;
 			
 			return xmlData;
 		}

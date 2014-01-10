@@ -60,6 +60,12 @@ package landray.kp.mediator
 			viewer.stage.focus = viewer;
 		}
 		
+		private function refresh():void
+		{
+			for each (var graph:Graph in config.kp_internal::graphs)
+				graph.render(viewer.canvas.scaleX);
+		}
+		
 		/**
 		 * @private
 		 */
@@ -244,16 +250,10 @@ package landray.kp.mediator
 			}
 		}
 		
-		kp_internal function checkRenderAfterScale():void
-		{
-			for each (var graph:Graph in config.kp_internal::graphs)
-				graph.render(viewer.canvas.scaleX);
-		}
-		
 		public function updateAfterZoomMove():void
 		{
 			viewer.kp_internal::refresh();
-			kp_internal::checkRenderAfterScale();
+			refresh();
 		}
 		
 		public function bgClicked():void
