@@ -65,7 +65,7 @@ package com.kvs.ui.label
 				textBMD = BitmapUtil.getBitmapData(textCanvas, false, scale * scaleMultiple);
 				
 				BitmapUtil.drawBitmapDataToGraphics(textBMD ,shape, textCanvas.width, textCanvas.height, 
-					- textCanvas.width / 2 + tx,  - textCanvas.height / 2 + ty, smooth);
+					- textCanvas.width / 2 + tx,  - textCanvas.height / 2 + ty, false);
 			} 
 			catch(error:Error) 
 			{
