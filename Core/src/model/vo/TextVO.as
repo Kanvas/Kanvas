@@ -51,7 +51,25 @@ package model.vo
 		/**
 		 * 文字
 		 */
-		public var text:String = "";
+		private var _text:String = "";
+		
+		/**
+		 */		
+		public function set text(value:String):void
+		{
+			//防止此字符导致的崩溃
+			if (value.indexOf('\r\r'))
+				value = value.split('\r\r').join('');
+			
+			_text = value;
+		}
+		
+		/**
+		 */		
+		public function get text():String
+		{
+			return _text;
+		}
 		
 		/**
 		 */		
