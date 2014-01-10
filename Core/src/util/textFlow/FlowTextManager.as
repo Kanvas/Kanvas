@@ -329,14 +329,7 @@ package util.textFlow
 			//重绘文本
 			field.textManager.setText(textVO.text);
 			
-			var bd:Rectangle = updateSingleLineBound(textVO.text, field.textManager);
-			field.textManager.compositionWidth = bd.width;
-			field.textManager.compositionHeight = bd.height;
-			
-			textVO.width = bd.width;
-			textVO.height = bd.height;
-			
-			/*if (field.ifMutiLine == false)
+			if (field.ifMutiLine == false)
 			{
 				//防止文本vo定义的尺寸太小
 				var bd:Rectangle = updateSingleLineBound(textVO.text, field.textManager);
@@ -350,7 +343,7 @@ package util.textFlow
 			{
 				field.textManager.compositionWidth = textVO.width;
 				field.textManager.compositionHeight = textVO.height;
-			}*/
+			}
 			
 			field.textManager.updateContainer();
 		}
