@@ -2,6 +2,9 @@ package commands
 {
 	import model.CoreFacade;
 	
+	import modules.pages.PageElement;
+	import modules.pages.PageVO;
+	
 	import org.puremvc.as3.interfaces.INotification;
 	
 	import util.undoRedo.UndoRedoMannager;
@@ -41,6 +44,8 @@ package commands
 					var item:ElementBase = groupElements[i];
 					elementIndexArray[i] = CoreFacade.getElementIndex(item);
 					CoreFacade.removeElement(item);
+					if (item is PageElement)
+						CoreFacade.coreMediator.pageManager.removePage(item.vo as PageVO);
 				}
 			}
 			
@@ -58,7 +63,15 @@ package commands
 			{
 				var l:int = groupElements.length;
 				for (var i:int = l - 1; i >= 0; i --)
+				{
+					var item:ElementBase = groupElements[i];
 					CoreFacade.addElementAt(groupElements[i], elementIndexArray[i]);
+					if (item is PageElement)
+					{
+						var pageVO:PageVO = item.vo as PageVO;
+						CoreFacade.coreMediator.pageManager.addPageAt(pageVO, pageVO.index);
+					}
+				}
 			}
 			
 			CoreFacade.addElementAt(shape, elementIndex);
@@ -71,7 +84,11 @@ package commands
 			if (autoGroupEnabled)
 			{
 				for each (var item:ElementBase in groupElements)
-				CoreFacade.removeElement(item);
+				{
+					CoreFacade.removeElement(item);
+					if (item is PageElement)
+						CoreFacade.coreMediator.pageManager.removePage(item.vo as PageVO);
+				}
 			}
 		}
 		

@@ -3,6 +3,8 @@ package commands
 	import model.CoreFacade;
 	import model.CoreProxy;
 	
+	import modules.pages.PageElement;
+	
 	import org.puremvc.as3.interfaces.INotification;
 	
 	import util.undoRedo.UndoRedoMannager;
@@ -50,6 +52,7 @@ package commands
 			
 			(newElement is Camera) ? CoreFacade.addElementAt(newElement, 1) : CoreFacade.addElement(newElement);
 			elementIndex = newElement.index;
+			
 			
 			autoGroupEnabled = CoreFacade.coreMediator.autoGroupController.enabled;
 			if (autoGroupEnabled)

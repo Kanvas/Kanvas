@@ -1,5 +1,8 @@
 package view.interact.autoGroup
 {
+	import com.kvs.utils.MathUtil;
+	import com.kvs.utils.PointUtil;
+	
 	import flash.geom.Point;
 	
 	import model.CoreFacade;
@@ -177,18 +180,14 @@ package view.interact.autoGroup
 		public function roll(dis:Number, curElement:ElementBase):void
 		{
 			if (enabled == false) return;
-			var r:Number;
-			var rad:Number;
+			//dis += coreMdt.canvas.rotation;
 			for each(var element:ElementBase in _elements)
 			{
 				element.rotation = element.vo.rotation + dis;
-				r = getR(curElement, element);
-				
-				//转化为弧度
-				rad = (getRad(curElement, element) + dis) * Math.PI / 180;
-				
-				element.x = curElement.x + r * Math.cos(rad);
-				element.y = curElement.y + r * Math.sin(rad);
+				tempRollPoint.setTo(element.vo.x, element.vo.y);
+				var point:Point = PointUtil.rotatePointAround(tempRollPoint, curElement.middleCenter, MathUtil.angleToRadian(dis));
+				element.x = point.x;
+				element.y = point.y;
 			}
 		}
 		
@@ -197,40 +196,19 @@ package view.interact.autoGroup
 		public function rollTo(dis:Number, curElement:ElementBase):void
 		{
 			if (enabled == false) return;
-			var r:Number;
-			var rad:Number;
-			
+			//dis += coreMdt.canvas.rotation;
 			for each(var element:ElementBase in _elements)
 			{
-				r = getR(curElement, element);
-				rad = (getRad(curElement, element) + dis) * Math.PI / 180;
-				
-				element.rotation = element.vo.rotation = element.vo.rotation + dis;
-				
-				element.x = element.vo.x = curElement.x + r * Math.cos(rad);
-				element.y = element.vo.y = curElement.y + r * Math.sin(rad);
+				element.rotation = element.vo.rotation += dis;
+				tempRollPoint.setTo(element.vo.x, element.vo.y);
+				var point:Point = PointUtil.rotatePointAround(tempRollPoint, curElement.middleCenter, MathUtil.angleToRadian(dis));
+				element.x = element.vo.x = point.x;
+				element.y = element.vo.y = point.y;
 			}
 		}
 		
-		/**
-		 * 子元素与当前元素坐标中心点的夹角
-		 */		
-		private function getRad(curElement:ElementBase, element:ElementBase):Number
-		{
-			return coreMdt.selector.getRote(element.vo.y, element.vo.x, curElement.y, curElement.x);
-		}
-		
-		/**
-		 * 子元素到当前元素的距离
-		 */		
-		private function getR(curElement:ElementBase, element:ElementBase):Number
-		{
-			var xDis:Number = element.vo.x - curElement.vo.x;
-			var yDis:Number = element.vo.y - curElement.vo.y;
-			
-			return Math.sqrt(xDis * xDis + yDis * yDis);
-		}
-		
+		private var tempRollPoint:Point = new Point;
+				
 		/**
 		 * 清空智能组合的元素，每次只能组合检测时或者
 		 * 

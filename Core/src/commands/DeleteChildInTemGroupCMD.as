@@ -2,6 +2,9 @@ package commands
 {
 	import model.CoreFacade;
 	
+	import modules.pages.PageElement;
+	import modules.pages.PageVO;
+	
 	import org.puremvc.as3.interfaces.INotification;
 	
 	import util.undoRedo.UndoRedoMannager;
@@ -25,11 +28,18 @@ package commands
 			sendNotification(Command.UN_SELECT_ELEMENT);
 			
 			groupElements = CoreFacade.coreMediator.autoGroupController.elements;
+			groupElementIndexs = new Vector.<int>;
 			//CoreFacade.coreMediator.autoGroupController.
 			
-			for each (var item:ElementBase in groupElements)
+			groupLength = groupElements.length;
+			
+			for (var i:int = 0; i < groupLength; i++)
 			{
+				var item:ElementBase = groupElements[i];
+				groupElementIndexs[i] = item.index;
 				CoreFacade.removeElement(item);
+				if (item is PageElement)
+					CoreFacade.coreMediator.pageManager.removePage(item.vo as PageVO);
 			}
 			
 			UndoRedoMannager.register(this);
@@ -39,8 +49,16 @@ package commands
 		 */		
 		override public function undoHandler():void
 		{
-			for each (var item:ElementBase in groupElements)
-				CoreFacade.addElement(item);
+			for (var i:int = groupLength - 1; i >= 0; i--)
+			{
+				var item:ElementBase = groupElements[i];
+				CoreFacade.addElementAt(item, groupElementIndexs[i]);
+				if (item is PageElement)
+				{
+					var pageVO:PageVO = item.vo as PageVO;
+					CoreFacade.coreMediator.pageManager.addPageAt(pageVO, pageVO.index);
+				}
+			}
 		}
 		
 		/**
@@ -48,7 +66,11 @@ package commands
 		override public function redoHandler():void
 		{
 			for each (var item:ElementBase in groupElements)
+			{
 				CoreFacade.removeElement(item);
+				if (item is PageElement)
+					CoreFacade.coreMediator.pageManager.removePage(item.vo as PageVO);
+			}
 		}
 		
 		/**
@@ -58,6 +80,7 @@ package commands
 		/**
 		 */		
 		private var groupElements:Vector.<ElementBase>;
-		
+		private var groupElementIndexs:Vector.<int>;
+		private var groupLength:int;
 	}
 }

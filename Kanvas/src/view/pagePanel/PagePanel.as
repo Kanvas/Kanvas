@@ -10,7 +10,6 @@ package view.pagePanel
 	
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -18,10 +17,8 @@ package view.pagePanel
 	import flash.ui.Keyboard;
 	
 	import model.CoreFacade;
-	import model.CoreProxy;
 	import model.ElementProxy;
 	
-	import modules.pages.PageElement;
 	import modules.pages.PageEvent;
 	import modules.pages.PageManager;
 	import modules.pages.PageVO;
@@ -191,14 +188,6 @@ package view.pagePanel
 		}
 		
 		/**
-		 * 把某个页面移动到新位置
-		 */		
-		public function switchPage(page:Object, newIndex:uint):void
-		{
-			
-		}
-		
-		/**
 		 * 页面初始化，数据导入时用到
 		 */		
 		public function initPages(pages:Vector.<PageVO>):void
@@ -347,10 +336,10 @@ package view.pagePanel
 		 */		
 		private function outShapePanelHandler(evt:MouseEvent):void
 		{
+			
 			if (pageCreateIcon.x > this.w )
 			{
 				var rect:Rectangle = pageCreateIcon.getRect(stage);
-				
 				pageCreateIcon.stopDrag();
 				pageCreateIcon.graphics.clear();
 				stage.removeEventListener(MouseEvent.MOUSE_MOVE, outShapePanelHandler);
@@ -366,6 +355,7 @@ package view.pagePanel
 				page.width = 120;
 				page.height = 90;
 				page.rotation = - core.kvsCore.canvas.rotation;
+				page.index = (currentPage) ? currentPage.pageVO.index + 1 : 0;
 				
 				core.kvsCore.createPage(page);
 				
@@ -382,6 +372,9 @@ package view.pagePanel
 		 */		
 		internal function endCreatePageByDrag():void
 		{
+			pageCreateIcon.stopDrag();
+			pageCreateIcon.graphics.clear();
+			
 			core.kvsCore.endDragElement();
 			
 			// 抖动效果

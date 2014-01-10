@@ -63,16 +63,15 @@ package com.kvs.ui.label
 			try
 			{
 				textBMD = BitmapUtil.getBitmapData(textCanvas, false, scale * scaleMultiple);
-				
 				BitmapUtil.drawBitmapDataToGraphics(textBMD ,shape, textCanvas.width, textCanvas.height, 
 					- textCanvas.width / 2 + tx,  - textCanvas.height / 2 + ty, smooth);
-			} 
-			catch(error:Error) 
-			{
-				
 			}
-			
-		}			
+			catch (e:Error)
+			{
+				trace(e.getStackTrace())
+			}
+		}
+
 		
 		/**
 		 * 检测字体原始字体是否可见，文字放大时用位图以提升性能；

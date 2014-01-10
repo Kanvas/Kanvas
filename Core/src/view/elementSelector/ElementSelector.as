@@ -1,6 +1,7 @@
 package view.elementSelector
 {
 	import com.greensock.TweenLite;
+	import com.kvs.utils.MathUtil;
 	import com.kvs.utils.ViewUtil;
 	import com.kvs.utils.XMLConfigKit.StyleManager;
 	import com.kvs.utils.XMLConfigKit.XMLVOMapper;
@@ -181,8 +182,9 @@ package view.elementSelector
 			var rate:Number = Math.atan2(ydis, xdis);
 			var angle:Number = rate * 180 / Math.PI;
 			
-			if (angle < 0)
-				angle += 360;
+			angle -= coreMdt.canvas.rotation;
+			
+			angle = MathUtil.modRotation(angle);
 			
 			return angle;
 		}

@@ -3,7 +3,11 @@ package view.elementSelector.lineControl
 	import com.kvs.ui.clickMove.ClickMoveControl;
 	import com.kvs.ui.clickMove.IClickMove;
 	
+	import flash.geom.Point;
+	
 	import model.vo.ElementVO;
+	
+	import util.CoreUtil;
 	
 	import view.elementSelector.ControlPointBase;
 	import view.elementSelector.ElementSelector;
@@ -23,6 +27,7 @@ package view.elementSelector.lineControl
 		{
 			endX += xOff;
 			endY += yOff;
+			//CoreUtil.drawCircle(0x00FF00, new Point(endX, endY), 2);
 			
 			super.moveOff(xOff, yOff);
 			

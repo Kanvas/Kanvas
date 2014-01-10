@@ -4,6 +4,7 @@ package view.elementSelector.lineControl
 	
 	import flash.geom.Point;
 	
+	import util.CoreUtil;
 	import util.LayoutUtil;
 	
 	import view.elementSelector.ControlPointBase;
@@ -24,6 +25,7 @@ package view.elementSelector.lineControl
 		{
 			startX += xOff;
 			startY += yOff;
+			//CoreUtil.drawCircle(0xFF0000, new Point(startX, startY), 2);
 			
 			super.moveOff(xOff, yOff);
 			

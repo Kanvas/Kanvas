@@ -1,8 +1,8 @@
 package cn.vision.events
 {
-	public class EventManager extends EventVS
+	public class EventManager extends VSEvent
 	{
-		public function EventManager($type:String, $bubbles:Boolean=false, $cancelable:Boolean=false)
+		public function EventManager($type:String, $bubbles:Boolean = false, $cancelable:Boolean = false)
 		{
 			super($type, $bubbles, $cancelable);
 		}

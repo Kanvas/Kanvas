@@ -1,10 +1,10 @@
 package cn.vision.pattern
 {
-	import cn.vision.core.EventDispatcherVS;
+	import cn.vision.core.VSEventDispatcher;
 	import cn.vision.core.vs;
 	import cn.vision.events.EventCommand;
 	
-	public class Command extends EventDispatcherVS
+	public class Command extends VSEventDispatcher
 	{
 		public function Command(repeatable:Boolean=false)
 		{

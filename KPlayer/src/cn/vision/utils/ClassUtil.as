@@ -10,6 +10,7 @@ package cn.vision.utils
 	 * ClassUtil defines some function that is useful, 
 	 * basicly the utils for class, function.
 	 * 
+	 * @author vision
 	 * @langversion 3.0
 	 * @playerversion Flash 9, AIR 1.1
 	 * @productversion vision 1.0
@@ -37,13 +38,12 @@ package cn.vision.utils
 		 * 
 		 * @return <code>String</code>
 		 */
-		public static function getClassName($value:*, $qualified:Boolean=false):String
+		public static function getClassName($value:*, $qualified:Boolean = false):String
 		{
 			var qualifiedClassName:String = getQualifiedClassName($value);
 			var index:int = -1;
-			if ($qualified) {
+			if ($qualified) 
 				index = qualifiedClassName.indexOf("::");
-			}
 			return (index==-1)?qualifiedClassName:qualifiedClassName.substr(index+2);
 		}
 		
@@ -54,13 +54,17 @@ package cn.vision.utils
 		 * 
 		 * @return <code>Class</code>
 		 */
-		public static function getFunctionName($value:Function=null):String
+		public static function getFunctionName($value:Function = null):String
 		{
 			var result:String;
-			if ($value is Function) {
-				try{
+			if ($value is Function) 
+			{
+				try
+				{
 					NoInstance($value);
-				}catch(error:Error){
+				}
+				catch(error:Error)
+				{
 					// start of first line
 					var startIndex:int = error.message.indexOf("/");
 					// end of function name
@@ -75,8 +79,8 @@ package cn.vision.utils
 		 * Get the super class name of instance.
 		 * It will return an <code>Array</code> that contains 
 		 * a series of super class name at the series you seted.
-		 * if level=0, will not set the series an to Object class.
-		 * if level>0, will to the series you seted.
+		 * if level = 0, will not set the series an to Object class.
+		 * if level > 0, will to the series you seted.
 		 * if the super class series is less than the series you seted,
 		 * it will to the super class series.
 		 * 
@@ -86,19 +90,21 @@ package cn.vision.utils
 		 * 
 		 * @return <code>Array</code>
 		 */
-		public static function getSuperClassNameArray($value:*, $qualified:Boolean=false, $level:uint=1):Array
+		public static function getSuperClassNameArray($value:*, $qualified:Boolean = false, $level:uint = 1):Array
 		{
 			var index:int = -1;
 			var superClassNameArray:Array = [];
 			var superClassName:String = getQualifiedSuperclassName($value);
-			while ($level>=0&&superClassName) {
+			while ($level >= 0 && superClassName) 
+			{
 				if ($qualified) index = superClassName.indexOf("::");
-				superClassNameArray.push((index==-1)
+				superClassNameArray.push((index == -1)
 					? superClassName
-					: superClassName.substr(index+2));
-				if ($level!=1) {
+					: superClassName.substr(index + 2));
+				if ($level != 1) 
+				{
 					superClassName = getQualifiedSuperclassName(getDefinitionByName(superClassName));
-					if ($level>1) $level--;
+					if ($level > 1) $level--;
 				} else break;
 			}
 			return superClassNameArray;

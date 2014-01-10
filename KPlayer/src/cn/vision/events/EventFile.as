@@ -8,7 +8,7 @@ package cn.vision.events
 		 * @param bubbles
 		 * @param cancelable
 		 */
-		public function EventFile($type:String, $bubbles:Boolean=false, $cancelable:Boolean=false)
+		public function EventFile($type:String, $bubbles:Boolean = false, $cancelable:Boolean = false)
 		{
 			super($type, $bubbles, $cancelable);
 		}

@@ -20,9 +20,6 @@ package
 	
 	import view.pagePanel.PagePanel;
 	import view.screenState.FullScreenState;
-
-	import view.pagePanel.PagePanel;
-
 	import view.shapePanel.ShapePanel;
 	import view.themePanel.ThemePanel;
 	import view.toolBar.ToolBar;
@@ -36,6 +33,12 @@ package
 		public function Kanvas()
 		{
 			StageUtil.initApplication(this, init, true);
+			
+			var fonts:Array = Font.enumerateFonts(true);
+			for each (var font:Object in fonts)
+			{
+				trace(font.fontName);
+			}
 		}
 		
 		/**
