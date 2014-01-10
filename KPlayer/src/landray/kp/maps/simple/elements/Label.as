@@ -27,6 +27,11 @@ package landray.kp.maps.simple.elements
 				super.render();
 				
 				text.text = textVO.text;
+				
+				//兼容文本换行
+				text.ifMutiLine = textVO.ifMutiLine;
+				text.fixWidth = textVO.width;
+				
 				text.renderLabel(textVO.label.format.getFormat(textVO));
 				
 				text.x = - text.width  * .5;

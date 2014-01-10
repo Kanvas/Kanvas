@@ -1,5 +1,7 @@
 package landray.kp.maps.simple
 {
+	import flash.geom.Rectangle;
+	
 	import landray.kp.maps.simple.elements.BaseElement;
 	import landray.kp.maps.simple.elements.Label;
 	import landray.kp.maps.simple.util.SimpleUtil;
@@ -7,6 +9,7 @@ package landray.kp.maps.simple
 	import landray.kp.view.Graph;
 	
 	import model.vo.ElementVO;
+	import model.vo.TextVO;
 	
 	
 	
@@ -26,13 +29,24 @@ package landray.kp.maps.simple
 		
 		override public function render(scale:Number = 1):void
 		{
-			for each (var element:BaseElement in elements)
+			if (stage)
 			{
-				if (element is Label)
+				var count:int = 0;
+				for each (var element:BaseElement in elements)
 				{
-					element.render(scale);
+					addChild(element);
+					var bound:Rectangle = element.getBounds(stage);
+					element.visible = ! (bound.left > stage.stageWidth || bound.right < 0 || bound.bottom < 0 || bound.top > stage.stageHeight);
+					if(!element.visible)
+						removeChild(element);
+					if (element.visible && element is Label)
+					{
+						count ++;
+						element.render(scale);
+					}
 				}
 			}
+			
 		}
 		
 		override public function set dataProvider(value:XML):void
@@ -43,25 +57,28 @@ package landray.kp.maps.simple
 			
 			//create vos and elements
 			var list:XMLList = value.children();
-			for each (var xml:XML in list) {
+			for each (var xml:XML in list) 
+			{
 				var vo:ElementVO = SimpleUtil.getElementVO(String(xml.@type));
 				CoreUtil.mapping(xml, vo);
-				var element:BaseElement = SimpleUtil.getElementUI(vo);
-				addChild(element);
-				elements.push(element);
+				
+				try
+				{
+					//这里他妈的有特殊字符的话就导致崩溃了
+					var element:BaseElement = SimpleUtil.getElementUI(vo);
+					CoreUtil.applyStyle(element.vo);
+					CoreUtil.mapping(xml, vo);
+					element.render();
+					addChild(element);
+					elements.push(element);
+				} 
+				catch(error:Error) 
+				{
+					trace('fuck you');
+				}
+				
 			}
 		}
-		
-		override public function set theme(value:String):void
-		{
-			super.theme = value;
-			
-			for each (var element:BaseElement in elements) {
-				CoreUtil.applyStyle(element.vo);
-				element.render();
-			}
-		}
-		
 		
 		private var elements:Vector.<BaseElement>;
 		

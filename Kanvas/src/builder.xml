@@ -67,7 +67,7 @@
 			<compiler.debug>false</compiler.debug>
 		</mxmlc>
 		
-		<protect keyFilePath="${WORK_SPACE}/secureSWF/key.data" outputPath="${WORK_SPACE}/release/"
+		<!--protect keyFilePath="${WORK_SPACE}/secureSWF/key.data" outputPath="${WORK_SPACE}/release/"
 			preset="best_size" superCompression="true" removeLinesNumbers="true" slr="true">
 			<fileset dir="${WORK_SPACE}/release" includes="Kanvas.swf"/>
 
@@ -101,7 +101,7 @@
 				controlFlowObfuscation="${controlFlowObfuscation}" 
 				dynamicCodeWrapping="${dynamicCodeWrapping}"
 				publicOnly="false" rename="true"/>
-		</protect>
+		</protect-->
 		
 	</target>
 

@@ -2,9 +2,9 @@ package landray.kp.command
 {
 	import landray.kp.core.kp_internal;
 	
-	public final class Command5ZoomAuto extends _InernalCommand
+	public final class Command4ZoomAuto extends _InernalCommand
 	{
-		public function Command5ZoomAuto(tween:Boolean=true)
+		public function Command4ZoomAuto(tween:Boolean=true)
 		{
 			super();
 			initialize(tween);
