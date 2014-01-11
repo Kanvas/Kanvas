@@ -137,7 +137,8 @@ package util.textFlow
 					
 					if (text.indexOf("\n") != -1 || text.indexOf("\r") != -1)
 					{
-						var stringToTextFlow:ITextImporter;
+						//这里待处理
+						var stringToTextFlow:ITextImporter// = new TextFlowTextLineFactory
 						
 						multyLineTextFlow = stringToTextFlow.importToFlow(text);
 						multyLineTextFlow.hostFormat = txtManager.hostFormat;

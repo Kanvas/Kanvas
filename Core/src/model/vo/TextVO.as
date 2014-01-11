@@ -61,6 +61,10 @@ package model.vo
 			if (value.indexOf('\r\r'))
 				value = value.split('\r\r').join('');
 			
+			//防止此字符导致的崩溃
+			if (value.indexOf('\n'))
+				value = value.split('\n').join('');
+			
 			_text = value;
 		}
 		
