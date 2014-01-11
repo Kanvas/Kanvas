@@ -32,9 +32,12 @@ package view.element.imgElement
 		 */		
 		override public function render():void
 		{
-			host.graphics.clear();
-			host.shape.visible = true;
-			host.drawBmd();
+			if (host.imgVO.sourceData)
+			{
+				host.graphics.clear();
+				host.shape.visible = true;
+				host.drawBmd();
+			}
 		}
 	}
 }
