@@ -4,7 +4,7 @@
 	<property name="FLEX_HOME" value="/Applications/Adobe Flash Builder 4.6/sdks/4.6.0" />
 	<property name="WORK_SPACE" value="/Users/wallenMac/Documents/Projects/Kanvas" />
 	
-	<property name="VER" value="3.0.6" />
+	<property name="VER" value="3.0.7" />
 	<property name="controlFlowObfuscation" value="20"/>
 	<property name="dynamicCodeWrapping" value="1"/>
 	

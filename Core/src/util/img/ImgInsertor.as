@@ -50,7 +50,7 @@ package util.img
 		 */		
 		private function imgByteLoadError(e:IOErrorEvent):void
 		{
-			
+			this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_LOADED_ERROR));
 		}
 		
 		/**
@@ -127,7 +127,14 @@ package util.img
 			imgLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, bmdLoadedFromServerHandler);
 			imgLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imgLoadIoError);
 			
-			imgLoader.loadBytes(imageByteLoader.data)
+			try
+			{
+				imgLoader.loadBytes(imageByteLoader.data)
+			} 
+			catch(error:Error) 
+			{
+				this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_LOADED_ERROR));
+			}
 		}
 		
 		/**
@@ -155,7 +162,7 @@ package util.img
 				} 
 				catch(error:Error) 
 				{
-					//数据格式异常
+					this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_LOADED_ERROR));
 				}
 			}
 		}
