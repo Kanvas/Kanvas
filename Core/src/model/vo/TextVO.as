@@ -57,14 +57,15 @@ package model.vo
 		 */		
 		public function set text(value:String):void
 		{
+			/*
 			//防止此字符导致的崩溃
-			if (value.indexOf('\r\r'))
-				value = value.split('\r\r').join('');
+			if (value.indexOf('\r') != -1)
+				value = value.split('\r').join('');
 			
 			//防止此字符导致的崩溃
-			if (value.indexOf('\n'))
+			if (value.indexOf('\n') != -1)
 				value = value.split('\n').join('');
-			
+			*/
 			_text = value;
 		}
 		
