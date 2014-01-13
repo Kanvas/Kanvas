@@ -1,5 +1,6 @@
 package landray.kp.maps.simple.elements
 {
+	import com.kvs.utils.graphic.BitmapUtil;
 	import flash.display.Shape;
 	
 	import landray.kp.ui.Loading;
@@ -13,6 +14,9 @@ package landray.kp.maps.simple.elements
 	
 	import view.toolBar.Debugger;
 	
+	/**
+	 * 
+	 */	
 	public final class Image extends BaseElement
 	{
 		public function Image($vo:ElementVO)
@@ -30,6 +34,7 @@ package landray.kp.maps.simple.elements
 			{
 				imgLoader = new ImgInsertor;
 				imgLoader.addEventListener(ImgInsertEvent.IMG_LOADED_FROM_SERVER, imgLoaded, false, 0, true);
+				imgLoader.addEventListener(ImgInsertEvent.IMG_LOADED_ERROR, imgLoadError, false, 0, true);
 				imgLoader.loadImg(imgVO.url, imgVO.imgID, imgVO.width, imgVO.height);
 				
 				toLoadingState();
@@ -41,12 +46,15 @@ package landray.kp.maps.simple.elements
 			}
 		}
 		
+		/**
+		 */		
 		private function imgLoaded(e:ImgInsertEvent):void
 		{
 			Debugger.debug("imgLoaded:", imgVO.url);
 			imgVO.sourceData = e.bitmapData;
 			
 			imgLoader.removeEventListener(ImgInsertEvent.IMG_LOADED_TO_LOCAL, imgLoaded);
+			imgLoader.removeEventListener(ImgInsertEvent.IMG_LOADED_ERROR, imgLoadError);
 			imgLoader = null;
 			
 			drawBmd();
@@ -54,6 +62,30 @@ package landray.kp.maps.simple.elements
 			toNomalState();
 		}
 		
+		/**
+		 */		
+		private function imgLoadError(evt:ImgInsertEvent):void
+		{
+			imgLoader.removeEventListener(ImgInsertEvent.IMG_LOADED_TO_LOCAL, imgLoaded);
+			imgLoader.removeEventListener(ImgInsertEvent.IMG_LOADED_ERROR, imgLoadError);
+			imgLoader = null;
+			
+			graphics.clear();
+			imgCanvas.visible = true;
+			imgCanvas.graphics.clear();
+			
+			imgCanvas.graphics.beginFill(0xff0000, 0.3);
+			imgCanvas.graphics.drawRect( - vo.width / 2, - vo.height / 2, vo.width, vo.height);
+			imgCanvas.graphics.endFill();
+			
+			var iconSize:Number = (vo.width > vo.height) ? vo.height * 0.5 : vo.width * 0.5;
+			BitmapUtil.drawBitmapDataToShape(new load_error, imgCanvas, iconSize, iconSize, - iconSize * 0.5, - iconSize * 0.5, true);
+			
+			removeLoading();
+		}
+		
+		/**
+		 */		
 		private function toNomalState():void
 		{
 			graphics.clear();
@@ -69,29 +101,41 @@ package landray.kp.maps.simple.elements
 			drawIMGProxy();
 		}
 		
+		/**
+		 */		
 		private function drawIMGProxy():void
 		{
 			graphics.clear();
-			graphics.beginFill(0x555555, .5);
+			graphics.beginFill(0x555555, .3);
 			graphics.drawRect( - vo.width * .5, - vo.height * .5, vo.width, vo.height);
 			graphics.endFill();
 			
 			if (! loading) 
 				addChild(loading = new Loading);
-			loading.play();
 			
+			loading.play();
 		}
 		
+		/**
+		 */		
 		private function drawBmd():void
 		{
 			imgCanvas.graphics.clear();
 			CoreUtil.drawBitmapDataToShape(imgVO.sourceData, imgCanvas, 
 				vo.width, vo.height, - vo.width * .5, - vo.height * .5, true);
 			
+			removeLoading();
+		}
+		
+		/**
+		 */		
+		private function removeLoading():void
+		{
 			if (loading) 
 			{
 				if (contains(loading)) 
 					removeChild(loading);
+				
 				loading.stop();
 				loading = null;
 			}
@@ -102,8 +146,8 @@ package landray.kp.maps.simple.elements
 			return vo as ImgVO;
 		}
 		
-		
-		
+		/**
+		 */		
 		private var imgCanvas:Shape = new Shape;
 		private var imgLoader:ImgInsertor;
 		

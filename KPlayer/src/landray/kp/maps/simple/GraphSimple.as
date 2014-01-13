@@ -9,6 +9,7 @@ package landray.kp.maps.simple
 	import landray.kp.view.Graph;
 	
 	import model.vo.ElementVO;
+	import model.vo.TextVO;
 	
 	
 	
@@ -61,12 +62,22 @@ package landray.kp.maps.simple
 			{
 				var vo:ElementVO = SimpleUtil.getElementVO(String(xml.@type));
 				CoreUtil.mapping(xml, vo);
-				var element:BaseElement = SimpleUtil.getElementUI(vo);
-				CoreUtil.applyStyle(element.vo);
-				CoreUtil.mapping(xml, vo);
-				element.render();
-				addChild(element);
-				elements.push(element);
+				
+				try
+				{
+					//这里他妈的有特殊字符的话就导致崩溃了
+					var element:BaseElement = SimpleUtil.getElementUI(vo);
+					CoreUtil.applyStyle(element.vo);
+					CoreUtil.mapping(xml, vo);
+					element.render();
+					addChild(element);
+					elements.push(element);
+				} 
+				catch(error:Error) 
+				{
+					trace('fuck you');
+				}
+				
 			}
 		}
 		

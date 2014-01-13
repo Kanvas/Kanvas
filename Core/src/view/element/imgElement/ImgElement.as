@@ -143,11 +143,18 @@ package view.element.imgElement
 			BitmapUtil.drawBitmapDataToShape(imgVO.sourceData, shape, 
 				vo.width, vo.height, - vo.width / 2, - vo.height / 2, false);
 			
+			removeLoading();
+		}
+		
+		/**
+		 */		
+		internal function removeLoading():void
+		{
 			if (loading) 
 			{
 				if (contains(loading)) 
 					removeChild(loading)
-					
+				
 				loading.stop();
 				loading = null;
 			}
@@ -158,11 +165,11 @@ package view.element.imgElement
 		internal function drawIMGProxy():void
 		{
 			this.graphics.clear();
-			this.graphics.beginFill(0x555555);
+			this.graphics.beginFill(0x555555, 0.3);
 			this.graphics.drawRect( - vo.width / 2, - vo.height / 2, vo.width, vo.height);
 			this.graphics.endFill();
 			
-			if (! loading) 
+			if (!loading) 
 				addChild(loading = new Loading);
 			
 			loading.play();

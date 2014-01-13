@@ -460,7 +460,7 @@ package
 			configInitor = new ConfigInitor(this);
 			
 			// 加载嵌入子体
-			FlowTextManager.loadFont("./FontLib.swf");
+			//FlowTextManager.loadFont("./FontLib.swf");
 		}
 		
 		/**

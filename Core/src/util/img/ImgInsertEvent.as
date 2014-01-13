@@ -23,6 +23,11 @@ package util.img
 		public static const IMG_UPLOADED_TO_SERVER:String = 'imgUploadedToServer';
 		
 		/**
+		 * 图片从服务器加载失败, 地址错误或服务器链接失败 
+		 */		
+		public static const IMG_LOADED_ERROR:String = 'imgLoadError';
+		
+		/**
 		 */		
 		public function ImgInsertEvent(type:String, data:BitmapData = null, imgID:uint = 0, imgURL:String = null)
 		{

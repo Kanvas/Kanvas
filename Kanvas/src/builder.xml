@@ -4,8 +4,12 @@
 	<property name="FLEX_HOME" value="/Applications/Adobe Flash Builder 4.6/sdks/4.6.0" />
 	<property name="WORK_SPACE" value="/Users/wallenMac/Documents/Projects/Kanvas" />
 	
+<<<<<<< HEAD
 	<property name="VER" value="3.0.6" />
 
+=======
+	<property name="VER" value="3.0.7" />
+>>>>>>> fix
 	<property name="controlFlowObfuscation" value="20"/>
 	<property name="dynamicCodeWrapping" value="1"/>
 	
@@ -67,7 +71,7 @@
 			<compiler.debug>false</compiler.debug>
 		</mxmlc>
 		
-		<protect keyFilePath="${WORK_SPACE}/secureSWF/key.data" outputPath="${WORK_SPACE}/release/"
+		<!--protect keyFilePath="${WORK_SPACE}/secureSWF/key.data" outputPath="${WORK_SPACE}/release/"
 			preset="best_size" superCompression="true" removeLinesNumbers="true" slr="true">
 			<fileset dir="${WORK_SPACE}/release" includes="Kanvas.swf"/>
 
@@ -101,7 +105,7 @@
 				controlFlowObfuscation="${controlFlowObfuscation}" 
 				dynamicCodeWrapping="${dynamicCodeWrapping}"
 				publicOnly="false" rename="true"/>
-		</protect>
+		</protect-->
 		
 	</target>
 
