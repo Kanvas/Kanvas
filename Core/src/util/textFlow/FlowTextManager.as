@@ -13,18 +13,16 @@ package util.textFlow
 	import flash.text.Font;
 	import flash.text.TextFormat;
 	import flash.text.engine.FontLookup;
-	import flash.text.engine.Kerning;
 	import flash.text.engine.TextLine;
 	
 	import flashx.textLayout.compose.ISWFContext;
 	import flashx.textLayout.compose.TextLineRecycler;
 	import flashx.textLayout.container.TextContainerManager;
 	import flashx.textLayout.conversion.ITextImporter;
+	import flashx.textLayout.conversion.TextConverter;
 	import flashx.textLayout.elements.TextFlow;
 	import flashx.textLayout.factory.StringTextLineFactory;
 	import flashx.textLayout.factory.TextFlowTextLineFactory;
-	import flashx.textLayout.formats.FormatValue;
-	import flashx.textLayout.formats.TextJustify;
 	
 	import model.vo.TextVO;
 
@@ -137,8 +135,9 @@ package util.textFlow
 					
 					if (text.indexOf("\n") != -1 || text.indexOf("\r") != -1)
 					{
-						//这里待处理
-						var stringToTextFlow:ITextImporter// = new TextFlowTextLineFactory
+						//多行文本
+						
+						var stringToTextFlow:ITextImporter = TextConverter.getImporter(TextConverter.TEXT_LAYOUT_FORMAT);
 						
 						multyLineTextFlow = stringToTextFlow.importToFlow(text);
 						multyLineTextFlow.hostFormat = txtManager.hostFormat;
@@ -192,6 +191,7 @@ package util.textFlow
 		 * 防止txtManager上的更新时间造成刷新的死循环
 		 */	
 		private var ifNeedUpdate:Boolean = true;
+		
 		
 		/**
 		 * 根据字符，得出文本框尺寸(单行)

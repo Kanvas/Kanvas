@@ -49,7 +49,7 @@ package util
 			var elementBound:Rectangle = getRectForStage(element);
 			var mainUIBound :Rectangle = coreMdt.mainUI.bound;
 			return ((elementBound.left <= mainUIBound.left && elementBound.right >= mainUIBound.right) || 
-				(elementBound.top <= mainUIBound.top && elementBound.bottom >= mainUIBound.bottom));
+				(elementBound.top <= mainUIBound.top && elementBound.bottom >= mainUIBound.bottom));;
 		}
 		
 		public static function pointOutOfStageBounds(point:Point, paddingLeft:Number = 0, paddingRight:Number = 0, paddingTop:Number = 0, paddingBottom:Number = 0):Boolean
