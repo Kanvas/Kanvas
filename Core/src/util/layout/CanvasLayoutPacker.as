@@ -82,10 +82,9 @@ package util.layout
 				var curEleCenter:Point = endEleCenter.clone();
 				PointUtil.multiply(curEleCenter, scale);
 				curEleCenter = PointUtil.rotatePointAround(curEleCenter, new Point, MathUtil.angleToRadian(rotation));
-				
 				canvas.x = curSceCenter.x - curEleCenter.x;
 				canvas.y = curSceCenter.y - curEleCenter.y;
-				trace(canvas.x, canvas.y)
+				trace(canvas.x, canvas.y, canvas.scaleX, canvas.rotation)
 			}
 		}
 		

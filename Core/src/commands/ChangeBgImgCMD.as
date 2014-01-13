@@ -65,12 +65,13 @@ package commands
 					handler();
 					handler = null;
 				}
-				var w:Number = imgInsertor.bitmapData.width;
+				/*var w:Number = imgInsertor.bitmapData.width;
 				var h:Number = imgInsertor.bitmapData.height;
 				var x:Number = - w * .5;
 				var y:Number = - h * .5;
-				var rect:Rectangle = new Rectangle(x, y, w, h);
-				CoreFacade.coreMediator.mainUI.canvas.showLoading(rect);
+				//var rect:Rectangle = new Rectangle(x, y, w, h);
+				//CoreFacade.coreMediator.mainUI.canvas.showLoading(rect);
+				*/
 			}
 		}
 		
@@ -91,7 +92,7 @@ package commands
 			newImgObj.imgData = evt.bitmapData;
 			newImgObj.imgURL  = evt.imgURL;
 			
-			CoreFacade.coreMediator.mainUI.canvas.hideLoading();
+			//CoreFacade.coreMediator.mainUI.canvas.hideLoading();
 			
 			updateBgImg(newImgObj);
 			

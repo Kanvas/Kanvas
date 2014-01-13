@@ -52,7 +52,7 @@ package cn.vision.utils
 		 * 
 		 * @param $value <code>Function</code>.
 		 * 
-		 * @return <code>Class</code>
+		 * @return <code>String</code>
 		 */
 		public static function getFunctionName($value:Function = null):String
 		{
@@ -85,8 +85,8 @@ package cn.vision.utils
 		 * it will to the super class series.
 		 * 
 		 * @param $value The istance.
-		 * @param $qualified Defines
-		 * @param $level The series you want to get.
+		 * @param $qualified Return the qualified class name if true, default false.
+		 * @param $level The number of parent level you want to get, default 1.
 		 * 
 		 * @return <code>Array</code>
 		 */

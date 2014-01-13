@@ -22,7 +22,7 @@ package cn.vision.utils
 		 */
 		public static function colorString2uint($value:String):uint
 		{
-			if ($value.charAt(0)=="#") 
+			if ($value.charAt(0) == "#") 
 				$value = "0x"+$value.substr(1);
 			return uint($value);
 		}
@@ -34,7 +34,7 @@ package cn.vision.utils
 		 * 
 		 * @return <code>String</code>
 		 */
-		public static function colorUint2String($value:uint, $prefix:String="0x"):String
+		public static function colorUint2String($value:uint, $prefix:String = "0x"):String
 		{
 			$prefix = ($prefix=="#") ? "#" : "0x";
 			return $prefix+$value.toString(16);

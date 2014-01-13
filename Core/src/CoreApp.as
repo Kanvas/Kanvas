@@ -1,5 +1,7 @@
 package 
 {
+	import com.kvs.utils.MathUtil;
+	import com.kvs.utils.PointUtil;
 	import com.kvs.utils.RexUtil;
 	import com.kvs.utils.XMLConfigKit.IApp;
 	import com.kvs.utils.XMLConfigKit.XMLVOLib;
@@ -664,12 +666,12 @@ package
 		public function drawBgInteractorShape():void
 		{
 			var rect:Rectangle = new Rectangle;
-			var point:Point = LayoutUtil.stagePointToElementPoint(0, 0, canvas);
+			var point:Point = new Point(-canvas.x, -canvas.y);
+			point = PointUtil.rotatePointAround(point, new Point(0, 0), MathUtil.angleToRadian(- canvas.rotation));
 			rect.x = point.x;
 			rect.y = point.y;
-			rect.width = stage.stageWidth / layoutTransformer.canvasScale;
-			rect.height = stage.stageHeight / layoutTransformer.canvasScale;
-			
+			rect.width  = stage.stageWidth;
+			rect.height = stage.stageHeight;
 			canvas.drawBG(rect);
 		}
 		

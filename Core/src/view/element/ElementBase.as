@@ -19,21 +19,17 @@ package view.element
 	import util.ElementCreator;
 	import util.StyleUtil;
 	
-	import view.element.state.ElementGroupState;
-	import view.element.state.ElementMultiSelected;
-	import view.element.state.ElementPrevState;
-	import view.element.state.ElementSelected;
-	import view.element.state.ElementStateBase;
-	import view.element.state.ElementUnSelected;
+	import view.element.state.*;
 	import view.elementSelector.ElementSelector;
 	import view.elementSelector.toolBar.ToolBarController;
+	import view.ui.ICanvasLayout;
 	
 	/**
 	 * 所有元素UI的基类
 	 * 
 	 * 元素包括、图片、形状、视频、线条、文字
 	 */
-	public class ElementBase extends Sprite implements IClickMove
+	public class ElementBase extends Sprite implements IClickMove, ICanvasLayout
 	{
 		/**
 		 * 数据
@@ -365,6 +361,130 @@ package view.element
 		private var cos:Number = Math.cos(0);
 		private var sin:Number = Math.sin(0);
 		
+		
+		
+		
+		override public function get scaleX():Number
+		{
+			return __scaleX;
+		}
+		
+		override public function set scaleX(value:Number):void
+		{
+			__scaleX = value;
+			if (parent)
+				value *= parent.scaleX;
+			super.scaleX = value;
+		}
+		
+		private var __scaleX:Number = 1;
+		
+		override public function get scaleY():Number
+		{
+			return __scaleY;
+		}
+		
+		override public function set scaleY(value:Number):void
+		{
+			__scaleY = value;
+			if (parent)
+				value *= parent.scaleY;
+			super.scaleY = value;
+		}
+		
+		private var __scaleY:Number = 1;
+		
+		override public function get x():Number
+		{
+			return __x;
+		}
+		
+		override public function set x(value:Number):void
+		{
+			if (__x!= value)
+			{
+				__x = value;
+				updateLayoutToCanvas();
+			}
+		}
+		
+		private var __x:Number = 0;
+		
+		override public function get y():Number
+		{
+			return __y;
+		}
+		
+		override public function set y(value:Number):void
+		{
+			if (__y!= value)
+			{
+				__y = value;
+				updateLayoutToCanvas();
+			}
+		}
+		
+		private var __y:Number = 0;
+		
+		public function get measureScaleX():Number
+		{
+			return super.scaleX;
+		}
+		public function set measureScaleX(value:Number):void
+		{
+			super.scaleX = value;
+		}
+		
+		public function get measureScaleY():Number
+		{
+			return super.scaleY;
+		}
+		
+		public function set measureScaleY(value:Number):void
+		{
+			super.scaleY = value;
+		}
+		
+		public function get measureX():Number
+		{
+			return super.x;
+		}
+		
+		public function set measureX(value:Number):void
+		{
+			super.x = value;
+		}
+		
+		public function get measureY():Number
+		{
+			return super.y;
+		}
+		
+		public function set measureY(value:Number):void
+		{
+			super.y = value;
+		}
+		
+		public function updateXToCanvas():void
+		{
+			var tmpScaleX:Number = (parent) ? parent.scaleX : 1;
+			super.scaleX = tmpScaleX * scaleX;
+			super.x = tmpScaleX * x;
+		}
+		
+		public function updateYToCanvas():void
+		{
+			var tmpScaleY:Number = (parent) ? parent.scaleY : 1;
+			super.scaleY = tmpScaleY * scaleY;
+			super.y = tmpScaleY * y;
+		}
+		
+		public function updateLayoutToCanvas():void
+		{
+			
+		}
+		
+		
 		/**
 		 * 
 		 * 元素的原始尺寸 乘以 缩放比例  = 实际尺寸；
@@ -398,9 +518,7 @@ package view.element
 		 */		
 		public function clone():ElementBase
 		{
-			var element:ElementBase;
-			
-			return element;
+			return null;
 		}
 		
 		/**
@@ -461,14 +579,6 @@ package view.element
 		{
 			return (parent) ? parent.getChildIndex(this) : -1;
 		}
-		public function set index(value:int):void
-		{
-			if (parent)
-			{
-				parent.setChildIndex(this, value);
-			}
-		}
-		
 		
 		override public function get graphics():Graphics
 		{
@@ -724,10 +834,12 @@ package view.element
 		public var multiSelectedState:ElementStateBase;
 		
 		/**
+		 * 组合状态
 		 */		
 		public var groupState:ElementGroupState;
 		
 		/**
+		 * 预览状态
 		 */		
 		public var prevState:ElementPrevState;
 		

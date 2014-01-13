@@ -39,7 +39,7 @@ package commands
 			
 			updateBgImg(newImgObj);
 			
-			CoreFacade.coreMediator.mainUI.canvas.hideLoading();
+			//CoreFacade.coreMediator.mainUI.canvas.hideLoading();
 			
 			
 		}

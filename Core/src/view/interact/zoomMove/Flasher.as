@@ -80,9 +80,45 @@ package view.interact.zoomMove
 			var scalePlus:Number = Math.max(canvasTargetScale / packer.scale, packer.scale / canvasTargetScale);
 			var timeScale:Number = (scalePlus < 1.25) ? 3 / speedScale + scalePlus / speedScale : scalePlus / speedScale;
 			var timeRotation:Number = Math.abs(canvasTargetRotation - packer.rotation) / speedRotation;
-			var timeMove:Number = Point.distance(new Point(packer.x, packer.y), new Point(canvasTargetX, canvasTargetY)) / speedMove;
-			var time:Number = Math.min(Math.max(timeScale, timeRotation, timeMove, 1), 2.5);
+			//var timeMove:Number = Point.distance(new Point(packer.x, packer.y), new Point(canvasTargetX, canvasTargetY)) / speedMove;
+			var time:Number = Math.min(Math.max(timeScale, timeRotation, 1), 2);
+			//var time:Number = Math.max(timeScale, timeRotation/*, timeMove*/);
+			/*var tweenScaleObj   :Object = {ease:easeFlash, scale:canvasTargetScale};
+			var tweenRotationObj:Object = {ease:easeFlash, rotation:canvasTargetRotation};
+			//var tweenMoveObj    :Object = {ease:easeFlash, x:canvasTargetX, y:canvasTargetY, progress:1};
+			switch (time)
+			{
+				case timeScale:
+					tweenScaleObj.onUpdate   = updated;
+					tweenScaleObj.onComplete = finishZoom;
+					tweenScaleObj.progress = 1;
+					break;
+				case timeRotation:
+					tweenRotationObj.onUpdate   = updated;
+					tweenRotationObj.onComplete = finishZoom;
+					tweenRotationObj.progress = 1;
+					break;
+				case timeMove:
+					tweenMoveObj.onUpdate   = updated;
+					tweenMoveObj.onComplete = finishZoom;
+					break;
+			}
+			if (scalePlus < 1.25)
+			{
+				var canvasMiddleScale:Number = Math.min(canvasTargetScale, packer.scale) * .5;
+				var tweenScalePls:Object = {ease:easeFlash, scale:canvasMiddleScale, onUpdate:tweenScaleObj.onUpdate};
+				tweenScaleObj.delay = timeScale * .5;
+				TweenMax.to(packer, timeScale * .5, tweenScalePls);
+				TweenMax.to(packer, timeScale * .5, tweenScaleObj);
+			}
+			else
+			{
+				TweenMax.to(packer, timeScale, tweenScaleObj);
+			}
 			
+			TweenMax.to(packer, timeRotation, tweenRotationObj);
+			//TweenMax.to(packer, timeMove, tweenMoveObj);
+			*/
 			
 			//缩放差距不大时启用先缩小后放大式镜头缩放
 			if (scalePlus < 1.25)
