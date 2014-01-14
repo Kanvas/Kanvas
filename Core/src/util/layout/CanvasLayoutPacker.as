@@ -80,11 +80,11 @@ package util.layout
 				PointUtil.multiply(temp, progress);
 				var curSceCenter:Point = endSceCenter.add(temp);
 				var curEleCenter:Point = endEleCenter.clone();
-				PointUtil.multiply(curEleCenter, scale);
+				PointUtil.multiply(curEleCenter, canvas.scaleX);
 				curEleCenter = PointUtil.rotatePointAround(curEleCenter, new Point, MathUtil.angleToRadian(rotation));
 				canvas.x = curSceCenter.x - curEleCenter.x;
 				canvas.y = curSceCenter.y - curEleCenter.y;
-				trace(canvas.x, canvas.y, canvas.scaleX, canvas.rotation)
+				trace("pos:", canvas.x, canvas.y, "\nscale:", canvas.scaleX, "\nrotation:", canvas.rotation);
 			}
 		}
 		
@@ -104,11 +104,11 @@ package util.layout
 		
 		public function get scale():Number
 		{
-			return canvas.scaleX;
+			return MathUtil.log2(canvas.scaleX);
 		}
 		public function set scale(value:Number):void
 		{
-			canvas.scaleX = canvas.scaleY = value;
+			canvas.scaleX = canvas.scaleY = MathUtil.exp2(value);
 		}
 		
 		public var progress:Number;

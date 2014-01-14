@@ -18,8 +18,6 @@ package view.ui
 		function set measureScaleX(value:Number):void
 		function get measureScaleY():Number
 		function set measureScaleY(value:Number):void
-		function updateXToCanvas():void
-		function updateYToCanvas():void
-		function updateLayoutToCanvas():void
+		function updateView():void
 	}
 }

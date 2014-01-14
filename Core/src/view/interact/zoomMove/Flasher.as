@@ -64,71 +64,37 @@ package view.interact.zoomMove
 		
 		public function advancedFlash(easeFlash:Object = null):void
 		{
-			if (MathUtil.equals(canvas.scaleX, canvasTargetScale) && MathUtil.equals(canvas.rotation, canvasTargetRotation) && MathUtil.equals(canvas.x, canvasTargetX) && MathUtil.equals(canvas.y, canvasTargetY))
+			if (MathUtil.equals(canvas.scaleX, canvasTargetScale) && 
+				MathUtil.equals(MathUtil.modRotation(canvas.rotation), MathUtil.modRotation(canvasTargetRotation)) && 
+				MathUtil.equals(canvas.x, canvasTargetX) && 
+				MathUtil.equals(canvas.y, canvasTargetY))
 				return;
 			if (Math.max(canvasTargetScale / canvas.scaleX, canvas.scaleX / canvasTargetScale) > 1.0005)
 				control.mainUI.curScreenState.disableCanvas();
 			
-			if (canvas == null) return;
 			if (packer == null) 
 				packer = new CanvasLayoutPacker(control.mainUI);
 			else
 				TweenMax.killTweensOf(packer, false);
 			
+			canvasTargetRotation = MathUtil.modTargetRotation(packer.rotation, canvasTargetRotation);
+			
 			packer.modCanvasPositionStart(canvasTargetX, canvasTargetY, canvasTargetScale, canvasTargetRotation);
 			
-			var scalePlus:Number = Math.max(canvasTargetScale / packer.scale, packer.scale / canvasTargetScale);
+			var scalePlus:Number = Math.max(canvasTargetScale / canvas.scaleX, canvas.scaleX / canvasTargetScale);
 			var timeScale:Number = (scalePlus < 1.25) ? 3 / speedScale + scalePlus / speedScale : scalePlus / speedScale;
 			var timeRotation:Number = Math.abs(canvasTargetRotation - packer.rotation) / speedRotation;
-			//var timeMove:Number = Point.distance(new Point(packer.x, packer.y), new Point(canvasTargetX, canvasTargetY)) / speedMove;
-			var time:Number = Math.min(Math.max(timeScale, timeRotation, 1), 2);
-			//var time:Number = Math.max(timeScale, timeRotation/*, timeMove*/);
-			/*var tweenScaleObj   :Object = {ease:easeFlash, scale:canvasTargetScale};
-			var tweenRotationObj:Object = {ease:easeFlash, rotation:canvasTargetRotation};
-			//var tweenMoveObj    :Object = {ease:easeFlash, x:canvasTargetX, y:canvasTargetY, progress:1};
-			switch (time)
-			{
-				case timeScale:
-					tweenScaleObj.onUpdate   = updated;
-					tweenScaleObj.onComplete = finishZoom;
-					tweenScaleObj.progress = 1;
-					break;
-				case timeRotation:
-					tweenRotationObj.onUpdate   = updated;
-					tweenRotationObj.onComplete = finishZoom;
-					tweenRotationObj.progress = 1;
-					break;
-				case timeMove:
-					tweenMoveObj.onUpdate   = updated;
-					tweenMoveObj.onComplete = finishZoom;
-					break;
-			}
-			if (scalePlus < 1.25)
-			{
-				var canvasMiddleScale:Number = Math.min(canvasTargetScale, packer.scale) * .5;
-				var tweenScalePls:Object = {ease:easeFlash, scale:canvasMiddleScale, onUpdate:tweenScaleObj.onUpdate};
-				tweenScaleObj.delay = timeScale * .5;
-				TweenMax.to(packer, timeScale * .5, tweenScalePls);
-				TweenMax.to(packer, timeScale * .5, tweenScaleObj);
-			}
-			else
-			{
-				TweenMax.to(packer, timeScale, tweenScaleObj);
-			}
-			
-			TweenMax.to(packer, timeRotation, tweenRotationObj);
-			//TweenMax.to(packer, timeMove, tweenMoveObj);
-			*/
+			var time:Number = Math.min(Math.max(timeScale, timeRotation, 1), 3);
 			
 			//缩放差距不大时启用先缩小后放大式镜头缩放
 			if (scalePlus < 1.25)
 			{
-				var canvasMiddleScale:Number = Math.min(canvasTargetScale, packer.scale) * .8;
+				var canvasMiddleScale:Number = Math.min(canvasTargetScale, canvas.scaleX) * .8;
 				TweenMax.to(packer, time * .5, {
-					scale:canvasMiddleScale, 
+					scale:MathUtil.log2(canvasMiddleScale), 
 					ease:easeFlash});
 				TweenMax.to(packer, time * .5, {
-					scale:canvasTargetScale, 
+					scale:MathUtil.log2(canvasTargetScale), 
 					delay:time * .5, 
 					ease:easeFlash});
 				TweenMax.to(packer, time, {
@@ -141,7 +107,7 @@ package view.interact.zoomMove
 			else
 			{
 				TweenMax.to(packer, time, {
-					scale:canvasTargetScale, 
+					scale:MathUtil.log2(canvasTargetScale), 
 					rotation:canvasTargetRotation, 
 					progress:1, 
 					ease:easeFlash, 

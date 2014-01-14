@@ -31,8 +31,7 @@ package view.ui
 			if (child is ICanvasLayout)
 			{
 				var item:ICanvasLayout = ICanvasLayout(child);
-				item.updateXToCanvas();
-				item.updateYToCanvas();
+				item.updateView();
 				items.push(item);
 				indexs[item] = items.length;
 			}
@@ -45,8 +44,7 @@ package view.ui
 			if (child is ICanvasLayout)
 			{
 				var item:ICanvasLayout = ICanvasLayout(child);
-				item.updateXToCanvas();
-				item.updateYToCanvas();
+				item.updateView();
 				items.push(item);
 				indexs[item] = items.length;
 			}
@@ -59,6 +57,7 @@ package view.ui
 			if (child is ICanvasLayout)
 			{
 				var item:ICanvasLayout = ICanvasLayout(child);
+				item.updateView();
 				items.splice(indexs[item], 1);
 				delete indexs[item];
 			}
@@ -71,6 +70,7 @@ package view.ui
 			if (child is ICanvasLayout)
 			{
 				var item:ICanvasLayout = ICanvasLayout(child);
+				item.updateView();
 				items.splice(indexs[item], 1);
 				delete indexs[item];
 			}
@@ -168,7 +168,7 @@ package view.ui
 			{
 				__scaleX = value;
 				for each (var item:ICanvasLayout in items)
-					item.updateLayoutToCanvas();
+					item.updateView();
 			}
 		}
 		
@@ -185,7 +185,7 @@ package view.ui
 			{
 				__scaleY = value;
 				for each (var item:ICanvasLayout in items)
-					item.updateLayoutToCanvas();
+					item.updateView();
 			}
 		}
 		
@@ -202,7 +202,7 @@ package view.ui
 			{
 				__rotation = value;
 				for each (var item:ICanvasLayout in items)
-					item.updateLayoutToCanvas();
+					item.updateView();
 			}
 		}
 		
@@ -219,7 +219,7 @@ package view.ui
 			{
 				__x = value;
 				for each (var item:ICanvasLayout in items)
-					item.updateLayoutToCanvas();
+					item.updateView();
 			}
 		}
 		
@@ -236,7 +236,7 @@ package view.ui
 			{
 				__y = value;
 				for each (var item:ICanvasLayout in items)
-					item.updateLayoutToCanvas();
+					item.updateView();
 			}
 		}
 		

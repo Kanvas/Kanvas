@@ -4,21 +4,15 @@ package view.interact
 	
 	import flash.display.Graphics;
 	import flash.display.Shape;
-	import flash.display.Stage;
 	import flash.geom.Point;
-	import flash.utils.Dictionary;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	
 	import util.CoreUtil;
 	import util.LayoutUtil;
-	import util.layout.LayoutTransformer;
 	
 	import view.element.ElementBase;
-	import view.element.GroupElement;
 	import view.element.text.TextEditField;
-	import view.interact.autoGroup.IAutoGroupElement;
-	import view.interact.multiSelect.TemGroupElement;
 	import view.ui.Canvas;
 
 	public final class ElementAutoAlignController
@@ -72,59 +66,51 @@ package view.interact
 				var elementsLoopBreak:Boolean = false;
 				for each (var element:ElementBase in elements)
 				{
-					if (current == element || ! element.visible || CoreUtil.inGroup(current, element) || CoreUtil.pointOutOfStageBounds(new Point(element.x, element.y))) continue;
-					var plus:Number = current.rotation - element.rotation;
-					//判断元素１的横向是对元素２的横向还是纵向进行对齐检测
-					if (plus % 90 == 0)
+					if (checkElementAutoAlignable(current, element))
 					{
-						var bool:Boolean = (plus % 180 == 0);
-						//元素２检测的属性集
-						var e2pArr:Array = (bool) ? [xArr, yArr] : [yArr, xArr];
-						var j:int = 0;
-						var k:int = 0;
-						while (j < 3)
+						var plus:Number = current.rotation - element.rotation;
+						//判断元素１的横向是对元素２的横向还是纵向进行对齐检测
+						if (plus % 90 == 0)
 						{
-							var e1p:String = e1pArr[i][j];
-							var e2p:String = e2pArr[i][k];
-							//获取移动点
-							var curPoint:Point = getPoint(current, e1p);
-							//获得判断点
-							var chkPoint:Point = getPoint(element, e2p);
-							//第一直线经过的点
-							var points1:Array = getOriginPointsByProperty(current, e1p);
-							//第二直线经过的点
-							var points2:Array = getTargetPointsByProperty(element, e2p);
-							//两直线相交的点
-							var aimPoint:Point = getPointByIntersect(points1, points2);
-							//距离判断
-							if (Point.distance(aimPoint, curPoint) < area)
+							var bool:Boolean = (plus % 180 == 0);
+							//元素２检测的属性集
+							var e2pArr:Array = (bool) ? [xArr, yArr] : [yArr, xArr];
+							var j:int = 0;
+							var k:int = 0;
+							while (j < 3)
 							{
-								alignArr[i] = new Point;
-								drawLineInPoints(Point.interpolate(points2[0], points2[1], .5), aimPoint);
-								//此方向的增量向量
-								alignArr[i].x = tempPoint.x = aimPoint.x - curPoint.x;
-								alignArr[i].y = tempPoint.y = aimPoint.y - curPoint.y;
-								elementsLoopBreak = true;
-								break;
-							}
-							if (++k>=3)
-							{
-								j++;
-								k = 0;
-							}
-						}//end of while
+								var e1p:String = e1pArr[i][j];
+								var e2p:String = e2pArr[i][k];
+								//获取移动点
+								var curPoint:Point = getPoint(current, e1p);
+								//获得判断点
+								var chkPoint:Point = getPoint(element, e2p);
+								//第一直线经过的点
+								var points1:Array = getOriginPointsByProperty(current, e1p);
+								//第二直线经过的点
+								var points2:Array = getTargetPointsByProperty(element, e2p);
+								//两直线相交的点
+								var aimPoint:Point = getPointByIntersect(points1, points2);
+								//距离判断
+								if (Point.distance(aimPoint, curPoint) < area)
+								{
+									alignArr[i] = new Point;
+									drawLineInPoints(Point.interpolate(points2[0], points2[1], .5), aimPoint);
+									//此方向的增量向量
+									alignArr[i].x = tempPoint.x = aimPoint.x - curPoint.x;
+									alignArr[i].y = tempPoint.y = aimPoint.y - curPoint.y;
+									elementsLoopBreak = true;
+									break;
+								}
+								if (++k >= 3)
+								{
+									j++;
+									k = 0;
+								}
+							}//end of while
+						}//end of if plus
+						if (elementsLoopBreak) break;
 					}
-					else
-					{
-						/*var property:String = e1pArr[i][0];
-						if (Math.abs(current[property] - element[property]) < area)
-						{
-							tempPoint[property] = element[property] - current[property];
-							//drawLineAxis(element[property], property);
-							elementsLoopBreak = true;
-						}*/
-					}//end of if plus
-					if (elementsLoopBreak) break;
 				}//end of for element
 			}//end of for i
 			if (alignArr[0] && alignArr[1])
@@ -147,65 +133,46 @@ package view.interact
 			var elementsLoopBreak:Boolean = false;
 			for each (var element:ElementBase in elements)
 			{
-				if (current == element || ! element.visible || CoreUtil.inGroup(current, element) || CoreUtil.pointOutOfStageBounds(new Point(element.x, element.y))) continue;
-				var plus:Number = current.rotation - element.rotation;
-				if (plus % 90 == 0)
+				if (checkElementAutoAlignable(current, element))
 				{
-					var bool:Boolean = (plus % 180 == 0);
-					//元素２检测的属性集
-					var pArr:Array = (bool) ? ((axis == "x") ? xArr : yArr) : ((axis == "x") ? yArr : xArr);
-					var j:int = 0;
-					while (j < 3)
+					var plus:Number = current.rotation - element.rotation;
+					if (plus % 90 == 0)
 					{
-						var e1p:String = axis;
-						var e2p:String = pArr[j];
-						//获取移动点
-						var curPoint:Point = point;
-						//获得判断点
-						var chkPoint:Point = getPoint(element, e2p);
-						//第一直线经过的点
-						var points1:Array = getOriginPointsByProperty(current, e1p);
-						//第二直线经过的点
-						var points2:Array = getTargetPointsByProperty(element, e2p);
-						//两直线相交的点
-						var aimPoint:Point = getPointByIntersect(points1, points2);
-						//距离判断
-						if (Point.distance(aimPoint, curPoint) * coreMdt.layoutTransformer.canvasScale < area)
+						var bool:Boolean = (plus % 180 == 0);
+						//元素２检测的属性集
+						var pArr:Array = (bool) ? ((axis == "x") ? xArr : yArr) : ((axis == "x") ? yArr : xArr);
+						var j:int = 0;
+						while (j < 3)
 						{
-							drawLineInPoints(Point.interpolate(points2[0], points2[1], .5), aimPoint);
-							//此方向的增量向量
-							tempPoint.x = aimPoint.x;
-							tempPoint.y = aimPoint.y;
-							elementsLoopBreak = true;
-							break;
-						}
-						j++;
-					}//end of while
+							var e1p:String = axis;
+							var e2p:String = pArr[j];
+							//获取移动点
+							var curPoint:Point = point;
+							//获得判断点
+							var chkPoint:Point = getPoint(element, e2p);
+							//第一直线经过的点
+							var points1:Array = getOriginPointsByProperty(current, e1p);
+							//第二直线经过的点
+							var points2:Array = getTargetPointsByProperty(element, e2p);
+							//两直线相交的点
+							var aimPoint:Point = getPointByIntersect(points1, points2);
+							//距离判断
+							if (Point.distance(aimPoint, curPoint) * coreMdt.canvas.scaleX < area)
+							{
+								drawLineInPoints(Point.interpolate(points2[0], points2[1], .5), aimPoint);
+								//此方向的增量向量
+								tempPoint.x = aimPoint.x;
+								tempPoint.y = aimPoint.y;
+								elementsLoopBreak = true;
+								break;
+							}
+							j++;
+						}//end of while
+					}
+					if (elementsLoopBreak) break;
 				}
-				if (elementsLoopBreak) break;
 			}//end of for element
 			return tempPoint;
-		}
-		
-		private function getPointByIntersect(points1:Array, points2:Array):Point
-		{
-			var a:Array = [];
-			var b:Array = [];
-			var c:Array = [];
-			
-			//第一直线a1x+b1y+c1=0
-			a[1] = points1[0].y - points1[1].y;
-			b[1] = points1[1].x - points1[0].x;
-			c[1] = points1[0].x * points1[1].y - points1[0].y * points1[1].x;
-			//第二直线a2x+b2y+c2=0
-			a[2] = points2[0].y - points2[1].y;
-			b[2] = points2[1].x - points2[0].x;
-			c[2] = points2[0].x * points2[1].y - points2[0].y * points2[1].x;
-			//两直线相交的点
-			var x:Number = (b[1] * c[2] - b[2] * c[1]) / (a[1] * b[2] - a[2] * b[1]);
-			var y:Number = (a[2] * c[1] - a[1] * c[2]) / (a[1] * b[2] - a[2] * b[1]);
-			
-			return new Point(x, y);
 		}
 		
 		/**
@@ -244,7 +211,8 @@ package view.interact
 			{
 				clearHoverEffect();
 				
-				scale = (element is TextEditField) ? NaN : checkValue(element, scale, "scaleX");
+				//scale = (element is TextEditField) ? NaN : checkValue(element, scale, "scaleX");
+				scale = checkValue(element, scale, "scaleX");
 				
 				if (currentAlignElement)
 				{
@@ -269,12 +237,10 @@ package view.interact
 			return NaN;
 		}
 		
-		
-		
-		private function checkValueNear(element1:ElementBase, element2:ElementBase, value1:Number, value2:Number, property:String):Number
+		private function checkValueNear(current:ElementBase, element:ElementBase, value1:Number, value2:Number, property:String):Number
 		{
 			var result:Number;
-			if (element1 != element2 && element2.visible && ! CoreUtil.inGroup(element1, element2))
+			if (checkElementAutoAlignable(current, element))
 			{
 				if (property == "rotation")
 				{
@@ -285,34 +251,32 @@ package view.interact
 					if (mda < areaRotation)
 					{
 						result = value1 - mod;
-						//trace("first:"+result);
 					}
 					else if (mda > 90 - areaRotation)
 					{
 						result = value1 - ((mod < 0) ? 90 + mod : mod - 90);
-						//trace("second:"+result, "mod:", mod);
 					}
 					
 				}
 				else if (property == "scaleX")
 				{
-					if (getClass(element1) == getClass(element2) && (element1.rotation - element2.rotation) % 90 == 0)
+					if (getClass(current) == getClass(element) && (current.rotation - element.rotation) % 90 == 0)
 					{
-						var w1:Number = value1 * element1.vo.width;
-						var w2:Number = value2 * element2.vo.width;
-						var h1:Number = value1 * element1.vo.height;
-						var h2:Number = value2 * element2.vo.height;
+						var w1:Number = value1 * current.vo.width;
+						var w2:Number = value2 * element.vo.width;
+						var h1:Number = value1 * current.vo.height;
+						var h2:Number = value2 * element.vo.height;
 						var ds:Number = areaScale / canvas.scaleX;
 						var dp:Number = areaPosition / canvas.scaleX;
 						
 						if (Math.abs(w1 - w2) < dp)
-							result = w2 / element1.vo.width;
+							result = w2 / current.vo.width;
 						else if (Math.abs(w1 - h2) < dp)
-							result = h2 / element1.vo.width;
+							result = h2 / current.vo.width;
 						else if (Math.abs(h1 - w2) < dp)
-							result = w2 / element1.vo.height;
+							result = w2 / current.vo.height;
 						else if (Math.abs(h1 - h2) < dp)
-							result = h2 / element1.vo.height;
+							result = h2 / current.vo.height;
 					}
 				}
 			}
@@ -324,46 +288,45 @@ package view.interact
 			return getDefinitionByName((getQualifiedClassName(obj)));
 		}
 		
+		//根据属性获取element对应点
+		private function getPoint(element:ElementBase, property:String):Point
+		{
+			return element[pointObj[property]];
+		}
+		
 		//获取当前移动元素的检测点集合，形成直线
 		private function getOriginPointsByProperty(element:ElementBase, property:String):Array
 		{
 			return [element[originPointObj[property][0]], element[originPointObj[property][1]]];
 		}
-		private const originPointObj:Object = {
-			x     :["middleLeft", "middleRight" ],
-			left  :["middleLeft", "middleRight" ],
-			right :["middleLeft", "middleRight" ],
-			y     :["topCenter" , "bottomCenter"],
-			top   :["topCenter" , "bottomCenter"],
-			bottom:["topCenter" , "bottomCenter"]
-		};
 		
 		//获取检测元素的检测点集合，形成直线
 		private function getTargetPointsByProperty(element:ElementBase, property:String):Array
 		{
 			return [element[targetPointObj[property][0]], element[targetPointObj[property][1]]];
 		}
-		private const targetPointObj:Object = {
-			x     :["topCenter" , "bottomCenter"],
-			left  :["topLeft"   , "bottomLeft"  ],
-			right :["topRight"  , "bottomRight" ],
-			y     :["middleLeft", "middleRight" ],
-			top   :["topLeft"   , "topRight"    ],
-			bottom:["bottomLeft", "bottomRight" ]
-		};
-			
-		private function getPoint(element:ElementBase, property:String):Point
+		
+		//获取2直线相交的点
+		private function getPointByIntersect(points1:Array, points2:Array):Point
 		{
-			return element[pointObj[property]];
+			var a:Array = [];
+			var b:Array = [];
+			var c:Array = [];
+			
+			//第一直线a1x+b1y+c1=0
+			a[1] = points1[0].y - points1[1].y;
+			b[1] = points1[1].x - points1[0].x;
+			c[1] = points1[0].x * points1[1].y - points1[0].y * points1[1].x;
+			//第二直线a2x+b2y+c2=0
+			a[2] = points2[0].y - points2[1].y;
+			b[2] = points2[1].x - points2[0].x;
+			c[2] = points2[0].x * points2[1].y - points2[0].y * points2[1].x;
+			//两直线相交的点
+			var x:Number = (b[1] * c[2] - b[2] * c[1]) / (a[1] * b[2] - a[2] * b[1]);
+			var y:Number = (a[2] * c[1] - a[1] * c[2]) / (a[1] * b[2] - a[2] * b[1]);
+			
+			return new Point(x, y);
 		}
-		private const pointObj:Object = {
-			left  :"middleLeft",
-			right :"middleRight",
-			top   :"topCenter",
-			bottom:"bottomCenter",
-			x     :"middleCenter",
-			y     :"middleCenter"
-		};
 		
 		/**
 		 * 清除当前目标对齐元素的hoverEffect
@@ -378,37 +341,11 @@ package view.interact
 		}
 		
 		/**
-		 * 以轴画线
-		 */
-		/*private function drawLineAxis(value:Number, axis:String = "x"):void
-		{
-			shape.graphics.lineStyle(.1, 0x555555);
-			if (axis == "x")
-			{
-				value = coreMdt.mainUI.layoutTransformer.elementXToStageX(value);
-				axisPoint1.x = value;
-				axisPoint1.y = 0;
-				axisPoint2.x = value;
-				axisPoint2.y = canvas.stage.stageHeight;
-			}
-			else
-			{
-				value = coreMdt.mainUI.layoutTransformer.elementYToStageY(value);
-				axisPoint1.x = 0;
-				axisPoint1.y = value;
-				axisPoint2.x = canvas.stage.stageWidth;
-				axisPoint2.y = value;
-			}
-			drawDashed(shape.graphics, axisPoint1, axisPoint2, 10, 10);
-		}*/
-		
-		/**
 		 * 在两点间画线
 		 */
 		private function drawLineInPoints(point1:Point, point2:Point):void
 		{
 			shape.graphics.lineStyle(.1, 0x555555);
-			var transformer:LayoutTransformer = coreMdt.layoutTransformer;
 			axisPoint1 = LayoutUtil.elementPointToStagePoint(point1.x, point1.y, canvas);
 			axisPoint2 = LayoutUtil.elementPointToStagePoint(point2.x, point2.y, canvas);
 			drawDashed(shape.graphics, axisPoint1, axisPoint2, 10, 10);
@@ -420,7 +357,6 @@ package view.interact
 		private function drawDashed(graphics:Graphics, beginPoint:Point, endPoint:Point, width:Number, grap:Number):void
 		{
 			if (!graphics || !beginPoint || !endPoint || width <= 0 || grap <= 0) return;
-			
 			var Ox:Number = beginPoint.x;
 			var Oy:Number = beginPoint.y;
 			
@@ -444,7 +380,14 @@ package view.interact
 				
 				currLen += grap;
 			}
-			
+		}
+		
+		private function checkElementAutoAlignable(current:ElementBase, element:ElementBase):Boolean
+		{
+			return (element != current && 
+					element.visible && 
+					! CoreUtil.inGroup(current, element) && 
+					! CoreUtil.elementOutOfInteract(element));
 		}
 		
 		/**
@@ -468,7 +411,7 @@ package view.interact
 		 * 
 		 * @default 10
 		 */
-		public var areaPosition:Number = 3;
+		public var areaPosition:Number = 5;
 		
 		/**
 		 * 旋转时自动对齐的检测范围，角度为单位
@@ -513,5 +456,29 @@ package view.interact
 		
 		private const xArr:Array = ["x", "left", "right"];
 		private const yArr:Array = ["y", "top", "bottom"];
+		private const originPointObj:Object = {
+			x     :["middleLeft", "middleRight" ],
+			left  :["middleLeft", "middleRight" ],
+			right :["middleLeft", "middleRight" ],
+			y     :["topCenter" , "bottomCenter"],
+			top   :["topCenter" , "bottomCenter"],
+			bottom:["topCenter" , "bottomCenter"]
+		};
+		private const targetPointObj:Object = {
+			x     :["topCenter" , "bottomCenter"],
+			left  :["topLeft"   , "bottomLeft"  ],
+			right :["topRight"  , "bottomRight" ],
+			y     :["middleLeft", "middleRight" ],
+			top   :["topLeft"   , "topRight"    ],
+			bottom:["bottomLeft", "bottomRight" ]
+		};
+		private const pointObj:Object = {
+			left  :"middleLeft",
+			right :"middleRight",
+			top   :"topCenter",
+			bottom:"bottomCenter",
+			x     :"middleCenter",
+			y     :"middleCenter"
+		};
 	}
 }

@@ -2,6 +2,8 @@ package view.interact
 {
 	//import com.kvs.utils.HitTest;
 	
+	import com.kvs.utils.RectangleUtil;
+	
 	import flash.display.DisplayObject;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -97,18 +99,14 @@ package view.interact
 		 */		
 		public function updateAfterZoomMove():void
 		{
-			var bound:Rectangle;
 			for each (var element:ElementBase in elements)
 			{
-				if (element.hitTestObject(hitObject))
+				var bound:Rectangle = CoreUtil.getRectForStage(element);
+				var stage:Rectangle = CoreUtil.getStageRect();
+				
+				if (RectangleUtil.rectOverlapping(bound, stage))
 				{
-					//bound = element.getBounds(hitObject.stage);
-					bound = CoreUtil.getRectForStage(element, false);
-					
-					if (bound.width < minVisibleSize && bound.height < minVisibleSize)
-						element.visible = false;
-					else
-						element.visible = true;
+					element.visible = !(bound.width < minVisibleSize && bound.height < minVisibleSize);
 					
 					if (element is LineElement)
 					{

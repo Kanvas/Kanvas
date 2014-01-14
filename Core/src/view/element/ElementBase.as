@@ -3,6 +3,7 @@ package view.element
 	import com.kvs.ui.clickMove.ClickMoveControl;
 	import com.kvs.ui.clickMove.IClickMove;
 	import com.kvs.utils.MathUtil;
+	import com.kvs.utils.PointUtil;
 	import com.kvs.utils.StageUtil;
 	import com.kvs.utils.ViewUtil;
 	import com.kvs.utils.XMLConfigKit.StyleManager;
@@ -349,20 +350,30 @@ package view.element
 			return y + .5 * vo.scale * vo.height;
 		}
 		
-		/**
-		 */		
+		
+		
+		
+		override public function get rotation():Number
+		{
+			return __rotation;
+		}
+		
 		override public function set rotation(value:Number):void
 		{
-			super.rotation = value;
-			cos = Math.cos(MathUtil.angleToRadian(rotation));
-			sin = Math.sin(MathUtil.angleToRadian(rotation));
+			if (__rotation!= value)
+			{
+				__rotation = value;
+				cos = Math.cos(MathUtil.angleToRadian(rotation));
+				sin = Math.sin(MathUtil.angleToRadian(rotation));
+				if (parent)
+					value += parent.rotation;
+				super.rotation = value;
+			}
 		}
+		private var __rotation:Number;
 		
 		private var cos:Number = Math.cos(0);
 		private var sin:Number = Math.sin(0);
-		
-		
-		
 		
 		override public function get scaleX():Number
 		{
@@ -371,10 +382,13 @@ package view.element
 		
 		override public function set scaleX(value:Number):void
 		{
-			__scaleX = value;
-			if (parent)
-				value *= parent.scaleX;
-			super.scaleX = value;
+			if (__scaleX!= value)
+			{
+				__scaleX = value;
+				if (parent)
+					value *= parent.scaleX;
+				super.scaleX = value;
+			}
 		}
 		
 		private var __scaleX:Number = 1;
@@ -386,10 +400,13 @@ package view.element
 		
 		override public function set scaleY(value:Number):void
 		{
-			__scaleY = value;
-			if (parent)
-				value *= parent.scaleY;
-			super.scaleY = value;
+			if (__scaleY!= value)
+			{
+				__scaleY = value;
+				if (parent)
+					value *= parent.scaleY;
+				super.scaleY = value;
+			}
 		}
 		
 		private var __scaleY:Number = 1;
@@ -404,7 +421,7 @@ package view.element
 			if (__x!= value)
 			{
 				__x = value;
-				updateLayoutToCanvas();
+				updateView();
 			}
 		}
 		
@@ -420,7 +437,7 @@ package view.element
 			if (__y!= value)
 			{
 				__y = value;
-				updateLayoutToCanvas();
+				updateView();
 			}
 		}
 		
@@ -465,24 +482,28 @@ package view.element
 			super.y = value;
 		}
 		
-		public function updateXToCanvas():void
+		public function updateView():void
 		{
-			var tmpScaleX:Number = (parent) ? parent.scaleX : 1;
-			super.scaleX = tmpScaleX * scaleX;
-			super.x = tmpScaleX * x;
+			if (parent && visible)
+			{
+				var prtScale :Number  = parent.scaleX;
+				var prtRadian:Number = MathUtil.angleToRadian(parent.rotation);
+				var prtCos:Number = Math.cos(prtRadian);
+				var prtSin:Number = Math.sin(prtRadian);
+				//scale
+				var tmpX:Number = x * prtScale;
+				var tmpY:Number = y * prtScale;
+				//rotate, move
+				super.rotation = parent.rotation + rotation;
+				super.scaleX = prtScale * scaleX;
+				super.scaleY = prtScale * scaleY;
+				super.x = tmpX * prtCos - tmpY * prtSin + parent.x;
+				super.y = tmpX * prtSin + tmpY * prtCos + parent.y;
+			}
 		}
 		
-		public function updateYToCanvas():void
-		{
-			var tmpScaleY:Number = (parent) ? parent.scaleY : 1;
-			super.scaleY = tmpScaleY * scaleY;
-			super.y = tmpScaleY * y;
-		}
-		
-		public function updateLayoutToCanvas():void
-		{
-			
-		}
+		private var tmpPoint:Point = new Point;
+		private var oriPoint:Point = new Point;
 		
 		
 		/**
@@ -909,7 +930,7 @@ package view.element
 			var w:Number = Math.max(vo.width, 10);
 			var h:Number = Math.max(vo.height, 10);
 			bg.graphics.clear();
-			bg.graphics.beginFill(0xe0e0e0, 0);
+			bg.graphics.beginFill(0x000000, 0);
 			bg.graphics.drawRect(- vo.width / 2, - vo.height / 2, w, h);
 			bg.graphics.endFill();
 		}

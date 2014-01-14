@@ -27,5 +27,16 @@ package com.kvs.utils
 			rectangle = new Rectangle(left, top, right - left, bottom - top);
 			return rectangle;
 		}
+		
+		/**
+		 * 判断两矩形是否重叠。
+		 */
+		public static function rectOverlapping(rect1:Rectangle, rect2:Rectangle):Boolean
+		{
+			return  ! ( rect1.left   > rect2.right  ||
+						rect1.right  < rect2.left   ||
+						rect1.top    > rect2.bottom ||
+						rect1.bottom < rect2.top);
+		}
 	}
 }

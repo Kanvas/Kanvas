@@ -1,14 +1,9 @@
 package util
 {
-	import com.kvs.utils.MathUtil;
-	import com.kvs.utils.PointUtil;
-	
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import model.CoreFacade;
-	
-	import modules.pages.PageElement;
 	
 	import view.element.ElementBase;
 	import view.element.GroupElement;
@@ -18,7 +13,7 @@ package util
 
 	public final class CoreUtil
 	{
-		public static function drawRect(color:uint, rect:Rectangle):void
+		/*public static function drawRect(color:uint, rect:Rectangle):void
 		{
 			coreMdt.mainUI.autoAlignUI.graphics.lineStyle(1, color);
 			coreMdt.mainUI.autoAlignUI.graphics.drawRect(rect.x, rect.y, rect.width, rect.height);
@@ -37,8 +32,6 @@ package util
 		
 		public static function drawCircle(color:uint, point:Point, r:Number):void
 		{
-			//var x:Number = coreMdt.layoutTransformer.elementXToStageX(point.x);
-			//var y:Number = coreMdt.layoutTransformer.elementYToStageY(point.y);
 			coreMdt.mainUI.autoAlignUI.graphics.lineStyle(0, 0, 0);
 			coreMdt.mainUI.autoAlignUI.graphics.beginFill(color);
 			coreMdt.mainUI.autoAlignUI.graphics.drawCircle(point.x, point.y, r);
@@ -57,25 +50,22 @@ package util
 		public static function clear():void
 		{
 			coreMdt.mainUI.autoAlignUI.graphics.clear();
-		}
+		}*/
 		
-		public static function elementOutOfCanvasBounds(element:ElementBase):Boolean
+		/**
+		 * element 不在可交互范围内
+		 * 有两种情况，一为element尺寸太大，超过了stage尺寸
+		 */
+		public static function elementOutOfInteract(element:ElementBase):Boolean
 		{
-			var elementBound:Rectangle = getRectForStage(element);
-			var mainUIBound :Rectangle = coreMdt.mainUI.bound;
-			return ((elementBound.left <= mainUIBound.left && elementBound.right >= mainUIBound.right) || 
-				(elementBound.top <= mainUIBound.top && elementBound.bottom >= mainUIBound.bottom));;
-		}
-		
-		public static function pointOutOfStageBounds(point:Point, paddingLeft:Number = 0, paddingRight:Number = 0, paddingTop:Number = 0, paddingBottom:Number = 0):Boolean
-		{
-			point = LayoutUtil.elementPointToStagePoint(point.x, point.y, coreMdt.canvas);
-			if (point.x > paddingLeft && point.x < coreMdt.mainUI.stage.stageWidth - paddingRight)
-			{
-				if (point.y > paddingTop && point.y < coreMdt.mainUI.stage.stageHeight - paddingBottom)
-					return false;
-			}
-			return true;
+			var bound:Rectangle = getRectForStage(element);
+			var stage:Rectangle = getStageRect();
+			return (bound.width  > stage.width  || 
+					bound.height > stage.height ||
+					bound.left   > stage.right  || 
+					bound.right  < stage.left   || 
+					bound.top    > stage.bottom || 
+					bound.bottom < stage.top);
 		}
 		
 		/**
@@ -155,55 +145,12 @@ package util
 			}
 			return new Rectangle(x, y, w, h);
 		}
-		/*
-		public static function getPoint(element:ElementBase, h:String, v:String):Point
+		
+		public static function getStageRect():Rectangle
 		{
-			var point:Point = new Point;
-			point.x = .5 * getSymbolH(h) * element.vo.scale * element.vo.width;
-			point.y = .5 * getSymbolV(v) * element.vo.scale * element.vo.height;
-			var cos:Number = Math.cos(MathUtil.angleToRadian(element.vo.rotation));
-			var sin:Number = Math.sin(MathUtil.angleToRadian(element.vo.rotation));
-			var rx:Number = point.x * cos - point.y * sin;
-			var ry:Number = point.x * sin + point.y * cos;
-			point.x = rx;
-			point.y = ry;
-			point.x += element.x;
-			point.y += element.y;
-			return point;
+			return (coreMdt.mainUI.stage) ? new Rectangle(0, 0, coreMdt.mainUI.stage.stageWidth, coreMdt.mainUI.stage.stageHeight) : new Rectangle;
 		}
 		
-		public static function getElementSide(element:ElementBase, value:String):Number
-		{
-			var side:int = 0
-			var result:Number = 0;
-			if (symbolH[value] == undefined)
-			{
-				if (symbolV[value] != undefined)
-				{
-					side = symbolV[value];
-					result = .5 * side * element.vo.scale * element.vo.height;
-				}
-			}
-			else
-			{
-				side = symbolH[value];
-				result = .5 * side * element.vo.scale * element.vo.width;
-			}
-			return result;
-		}
-		
-		private static function getSymbolH(value:String):int
-		{
-			return (symbolH[value] != undefined) ? symbolH[value] : 0;
-		}
-		
-		private static function getSymbolV(value:String):int
-		{
-			return (symbolV[value] != undefined) ? symbolV[value] : 0;
-		}
-		private static const symbolH:Object = {left:-1, center:0, right:1};
-		private static const symbolV:Object = {top:-1, middle:0, bottom:1};
-		*/
 		private static function get coreMdt():CoreMediator
 		{
 			return CoreFacade.coreMediator;

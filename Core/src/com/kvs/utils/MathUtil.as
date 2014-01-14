@@ -25,6 +25,17 @@ package com.kvs.utils
 		}
 		
 		/**
+		 * 修正目标旋转角度使之小于180
+		 */
+		public static function modTargetRotation(start:Number, target:Number):Number
+		{
+			if (Math.abs(start - target) > 180)
+				target = (target > start) ? target - 360 : target + 360;
+			return target;
+		}
+		
+		/**
+		 * 是否为偶数
 		 */		
 		public static function ifOddNumber(value:uint):Boolean
 		{
@@ -110,5 +121,20 @@ package com.kvs.utils
 			return Math.floor(value * factor) / factor; 
 		}
 		
+		/**
+		 * 求以2为底的对数
+		 */		
+		public static function log2(value:Number):Number
+		{
+			return Math.log(value) / Math.LN2;
+		}
+		
+		/**
+		 * 求以2为底的次幂
+		 */		
+		public static function exp2(value:Number):Number
+		{
+			return Math.pow(2, value);
+		}
 	}
 }

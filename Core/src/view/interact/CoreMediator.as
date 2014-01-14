@@ -725,7 +725,7 @@ package view.interact
 				}
 			}
 			
-			mainUI.drawBgInteractorShape();
+			//mainUI.drawBgInteractorShape();
 			mainUI.updatePastPoint();
 		}
 		

@@ -19,7 +19,7 @@ package view.element
 			super(vo);
 			
 			xmlData = <camera/>;
-			
+			mouseChildren = false;
 		}
 		
 		

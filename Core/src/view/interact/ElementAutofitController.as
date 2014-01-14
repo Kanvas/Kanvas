@@ -32,7 +32,7 @@ package view.interact
 		 */
 		public function autofitElementPosition(element:ElementBase, xDir:int = 0, yDir:int = 0):Boolean
 		{
-			if (enabled && element && ! CoreUtil.elementOutOfCanvasBounds(element))
+			if (enabled && element && element.mouseEnabled)
 			{
 				//最后需要移动的相对位置
 				var x:Number = 0;
@@ -40,13 +40,13 @@ package view.interact
 				//画布矩形范围
 				var canvasBound:Rectangle = coreMdt.mainUI.bound;
 				
-				var toolBarWidth:Number = coreMdt.selector.toolBar.barWidth;
+				var toolBarWidth :Number = coreMdt.selector.toolBar.barWidth;
 				var toolBarHeight:Number = coreMdt.selector.toolBar.barHeight;
 				
 				//-------------------------------------------------------------------------------
 				
 				//元素坐标的范围判断
-				var centerPaddingLeft:Number = canvasBound.left + toolBarWidth * .5;
+				var centerPaddingLeft :Number = canvasBound.left  + toolBarWidth * .5;
 				var centerPaddingRight:Number = canvasBound.right - toolBarWidth * .5;
 				
 				var point:Point = getToolBarPoint(element);
@@ -56,7 +56,7 @@ package view.interact
 				var elementX:Number = point.x;
 				//元素中心点需要偏移的坐标，元素顶部在Y方向上不可能超过工具条的位置，所以中心点不需要在Y方向进行判断
 				var centerOffsetX:Number = 0;
-				if (xDir == 0 || xDir == -1)
+				if (xDir == 0 || xDir ==-1)
 					centerOffsetX = autofitLeft(elementX, centerPaddingLeft);
 				if (xDir == 0 || xDir == 1)
 					centerOffsetX = (centerOffsetX == 0) ? autofitRight(elementX, centerPaddingRight) : centerOffsetX;
@@ -64,9 +64,9 @@ package view.interact
 				//-------------------------------------------------------------------------------
 				
 				//元素矩形的范围
-				var rectPaddingLeft:Number = canvasBound.left;
-				var rectPaddingRight:Number = canvasBound.right;
-				var rectPaddingTop:Number = canvasBound.top + toolBarHeight;
+				var rectPaddingLeft  :Number = canvasBound.left;
+				var rectPaddingRight :Number = canvasBound.right;
+				var rectPaddingTop   :Number = canvasBound.top + toolBarHeight;
 				var rectPaddingBottom:Number = canvasBound.bottom;
 				
 				//element矩形范围判断

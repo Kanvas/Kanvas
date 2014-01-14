@@ -69,7 +69,7 @@ package
 			{
 				facade.sendNotification(Command.RENDER_BG_COLOR);
 				drawBgInteractorShape();
-				this.updatePastPoint();
+				updatePastPoint();
 			}
 		}
 		
@@ -666,10 +666,6 @@ package
 		public function drawBgInteractorShape():void
 		{
 			var rect:Rectangle = new Rectangle;
-			var point:Point = new Point(-canvas.x, -canvas.y);
-			point = PointUtil.rotatePointAround(point, new Point(0, 0), MathUtil.angleToRadian(- canvas.rotation));
-			rect.x = point.x;
-			rect.y = point.y;
 			rect.width  = stage.stageWidth;
 			rect.height = stage.stageHeight;
 			canvas.drawBG(rect);
