@@ -93,7 +93,7 @@ package
 				//传入的参数不为URL
 				isURL = false;
 				//处理外部传入的BASE64压缩数据
-				var newByte:ByteArray = Base64.decode(value);
+				var newByte:ByteArray = Base64.decodeToByteArray(value);
 				newByte.uncompress();
 				sData = String(newByte.toString());
 				//kplayer presenter初始化
@@ -197,7 +197,7 @@ package
 			var bytes:ByteArray = new ByteArray;
 			bytes.writeUTFBytes(value);
 			bytes.compress();
-			return Base64.encode(bytes);
+			return Base64.encodeByteArray(bytes);
 		}
 		
 		private function initDebugger():void

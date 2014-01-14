@@ -305,9 +305,17 @@
 		};
 		
 		//设定数据，数据格式为Baes64编码的字符串
-		that.setBase64Data = function(data){
+		that.setBase64Data = function(){
 			if (this.ifReady){
-				this.swf.setBase64Data(data);
+
+				if (arguments.length == 1){
+					this.swf.setBase64Data(arguments[0]);
+				} else if (arguments.length == 2){
+					this.swf.setBase64Data(arguments[0], arguments[1]);
+				} else{
+
+				}
+				
 			};
 			
 		};
@@ -315,7 +323,15 @@
 		//获取数据，数据为base64编码
 		that.getBase64Data = function(){
 			if (this.ifReady){
-				return this.swf.getBase64Data();
+
+				if (arguments.length == 0){
+					return this.swf.getBase64Data();
+				}else if (arguments.length == 1){
+					return this.swf.getBase64Data(arguments[1]);
+				}else{
+					return null;
+				}
+				
 			}
 			
 			return null;
@@ -380,9 +396,22 @@
 		};
 		
 		//设定数据
-		that.setBase64Data = function(data){
+		that.setBase64Data = function(){
 			if (this.ifReady){
-				this.swf.setBase64Data(data);
+				if (arguments.length == 1){
+					this.swf.setBase64Data(arguments[0]);
+				}else if (arguments.length == 2){
+					this.swf.setBase64Data(arguments[0], arguments[1]);
+				}else{
+
+				}
+			}
+
+		};
+
+		that.setXMLData = function(data){
+			if (this.ifReady){
+				this.swf.setXMLData(data);
 			}
 		};
 		
