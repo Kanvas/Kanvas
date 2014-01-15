@@ -238,11 +238,11 @@ package view.interact.zoomMove
 		
 		/**
 		 */		
-		public static var maxScale:Number = 55;
+		public static var maxScale:Number = 100000000000000;
 		
 		/**
 		 */		
-		public static var minScale:Number = 0.005;
+		public static var minScale:Number = 0.0000000000001;
 		
 		
 		/**
