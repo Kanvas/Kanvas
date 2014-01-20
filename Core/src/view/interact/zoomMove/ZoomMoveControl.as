@@ -95,7 +95,7 @@ package view.interact.zoomMove
 		public function zoomRotateMoveTo(scale:Number, rotation:Number, x:Number, y:Number, ease:Object = null):void
 		{
 			if (ease == null)
-				ease = Quad.easeInOut;
+				ease = Cubic.easeInOut;
 			
 			zoomer.zoomRotateMoveTo(scale, rotation, x, y, ease);
 		}

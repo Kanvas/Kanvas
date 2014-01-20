@@ -7,14 +7,15 @@ package util.layout
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+	import util.CoreUtil;
 	import util.LayoutUtil;
 	
 	import view.ui.MainUIBase;
-
+	
 	/**
 	 * 画布容器包装类
 	 * 用于存储一个缓动进程progress，根据当前progress计算相对应的画布需要移动的位置。
-	 */	
+	 */        
 	public final class CanvasLayoutPacker
 	{
 		public function CanvasLayoutPacker($mainUI:MainUIBase = null)
@@ -39,58 +40,74 @@ package util.layout
 		 * @param targetRotation
 		 * 
 		 */
-		public function modCanvasPositionStart(targetX:Number, targetY:Number, targetScale:Number, targetRotation:Number):void
+		public function modCanvasPositionStart(targetX:Number, targetY:Number, targetScale:Number, targetRotation:Number, inOut:Boolean = false, middleScale:Number = 1):void
 		{
-			startX = x = canvas.x;
-			startY = y = canvas.y;
-			startScale = canvas.scaleX;
-			startRotation = canvas.rotation;
+			modInOut = inOut;
+			centerScale = middleScale;
 			endX = targetX;
 			endY = targetY;
 			endScale = targetScale;
 			endRotation = targetRotation;
+			startX = x = canvas.x;
+			startY = y = canvas.y;
+			startScale = lastScale = canvas.scaleX;
+			startRotation = canvas.rotation;
 			progress = 0;
 			modPositionNeed = true;
 			
-			var stageBound:Rectangle = mainUI.bound;
-			var startSceCenter:Point = new Point(.5 * (stageBound.left + stageBound.right), .5 * (stageBound.top + stageBound.bottom));
+			//caculate scale distance
+			scaleDis = (modInOut) ? Math.abs(startScale - centerScale) + Math.abs(centerScale - endScale) : Math.abs(startScale - endScale);
 			
-			startEleCenter = startSceCenter.clone();
-			startEleCenter.offset(-startX, -startY);
-			startEleCenter = PointUtil.rotatePointAround(startEleCenter, new Point, MathUtil.angleToRadian(-startRotation));
-			PointUtil.multiply(startEleCenter, 1 / startScale);
+			var center:Point = new Point(.5 * (mainUI.bound.left + mainUI.bound.right), .5 * (mainUI.bound.top + mainUI.bound.bottom));
 			
-			endEleCenter = startSceCenter.clone();
-			endEleCenter.offset(-endX, -endY);
-			endEleCenter = PointUtil.rotatePointAround(endEleCenter, new Point, MathUtil.angleToRadian(-targetRotation));
-			PointUtil.multiply(endEleCenter, 1 / endScale);
+			//point B
+			eleBO = center.clone();
+			eleBO.offset(-endX, -endY);
+			eleBO = PointUtil.rotatePointAround(eleBO, orignal, MathUtil.angleToRadian(-endRotation));
+			PointUtil.multiply(eleBO, 1 / endScale);
 			
-			endSceCenter = LayoutUtil.elementPointToStagePoint(endEleCenter.x, endEleCenter.y, canvas);
+			sceBF = eleBO.clone();
+			PointUtil.multiply(sceBF, startScale);
+			sceBF = PointUtil.rotatePointAround(sceBF, orignal, MathUtil.angleToRadian(startRotation));
+			sceBF.offset(startX, startY);
 			
-			vector = startSceCenter.subtract(endSceCenter);
+			sceBT = center.clone();
 			
+			sceCO = center.clone();
 		}
 		
+		/**
+		 * 根据当前rotation,scale计算canvas的坐标
+		 */
 		public function modCanvasPosition():void
 		{
 			if (modPositionNeed)
 			{
-				var stageBound:Rectangle = mainUI.bound;
-				var temp:Point = vector.clone();
-				PointUtil.multiply(temp, progress);
-				var curSceCenter:Point = endSceCenter.add(temp);
-				var curEleCenter:Point = endEleCenter.clone();
-				PointUtil.multiply(curEleCenter, canvas.scaleX);
-				curEleCenter = PointUtil.rotatePointAround(curEleCenter, new Point, MathUtil.angleToRadian(rotation));
-				canvas.x = curSceCenter.x - curEleCenter.x;
-				canvas.y = curSceCenter.y - curEleCenter.y;
-				trace("pos:", canvas.x, canvas.y, "\nscale:", canvas.scaleX, "\nrotation:", canvas.rotation);
+				//由于progress有误差，根据重新计算当前distance progress
+				var percent:Number = (modInOut)
+					? ((lastScale > canvas.scaleX) 
+						? Math.abs( canvas.scaleX - startScale  ) / scaleDis
+						:(Math.abs( canvas.scaleX - centerScale ) + Math.abs(centerScale - startScale)) / scaleDis)
+					: Math.abs(canvas.scaleX - startScale) / scaleDis;
+				progress = percent;
+				//需要将移动到的点
+				//progress
+				var curSce:Point = Point.interpolate(sceBT, sceBF, progress);
+				//rotation
+				curSce = PointUtil.rotatePointAround(curSce, sceCO, MathUtil.angleToRadian(canvas.rotation - startRotation));
+				var curEle:Point = eleBO.clone();
+				PointUtil.multiply(curEle, canvas.scaleX);
+				curEle = PointUtil.rotatePointAround(curEle, orignal, MathUtil.angleToRadian(rotation));
+				canvas.x = curSce.x - curEle.x;
+				canvas.y = curSce.y - curEle.y;
+				lastScale = canvas.scaleX;
 			}
 		}
 		
 		public function modCanvasPositionEnd():void
 		{
 			modPositionNeed = false;
+			modInOut = false;
 		}
 		
 		public function get rotation():Number
@@ -125,8 +142,6 @@ package util.layout
 		
 		private var startRotation:Number;
 		
-		private var startEleCenter:Point;
-		
 		private var endX:Number;
 		
 		private var endY:Number;
@@ -137,14 +152,77 @@ package util.layout
 		
 		private var modPositionNeed:Boolean;
 		
-		private var endEleCenter:Point;
+		private var modInOut:Boolean;
 		
-		private var endSceCenter:Point;
+		private var transform:Boolean;
 		
-		private var vector:Point;
+		private var centerScale:Number;
+		
+		//----------------------------------------
+		// point A
+		//----------------------------------------
+		
+		/**
+		 * point A 在画布中的坐标 
+		 */
+		private var eleAO:Point;
+		
+		/**
+		 * point A 相对于舞台的缓动起始位置
+		 */
+		private var sceAF:Point;
+		
+		/**
+		 * point A 相对于舞台的缓动终止位置
+		 */
+		private var sceAT:Point;
+		
+		/**
+		 * point A 相对于舞台的移动向量
+		 */
+		private var sceAV:Point;
+		
+		
+		
+		//----------------------------------------
+		// point B
+		//----------------------------------------
+		
+		/**
+		 * point B 在画布中的坐标 
+		 */
+		private var eleBO:Point;
+		
+		/**
+		 * point B 相对于舞台的缓动起始位置
+		 */
+		private var sceBF:Point;
+		
+		/**
+		 * point B 相对于舞台的缓动终止位置
+		 */
+		private var sceBT:Point;
+		
+		/**
+		 * point B 相对于舞台的移动向量
+		 */
+		private var sceBV:Point;
+		
+		//----------------------------------------
+		// point center
+		//----------------------------------------
+		private var sceCO:Point;
+		
+		private var lastScale:Number;
+		
+		private var scaleDis:Number;
+		
+		
+		private var orignal:Point = new Point;
 		
 		private var canvas:Sprite;
 		
 		private var mainUI:MainUIBase;
+		
 	}
 }

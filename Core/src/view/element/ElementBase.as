@@ -486,7 +486,7 @@ package view.element
 		{
 			if (parent && visible)
 			{
-				var prtScale :Number  = parent.scaleX;
+				var prtScale :Number = parent.scaleX;
 				var prtRadian:Number = MathUtil.angleToRadian(parent.rotation);
 				var prtCos:Number = Math.cos(prtRadian);
 				var prtSin:Number = Math.sin(prtRadian);
@@ -505,6 +505,17 @@ package view.element
 		private var tmpPoint:Point = new Point;
 		private var oriPoint:Point = new Point;
 		
+		override public function set visible(value:Boolean):void
+		{
+			if (visible != value)
+			{
+				if (value)
+				{
+					updateView();
+				}
+				super.visible = value;
+			}
+		}
 		
 		/**
 		 * 

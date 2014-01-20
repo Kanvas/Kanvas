@@ -106,34 +106,27 @@ package view.interact
 				
 				if (RectangleUtil.rectOverlapping(bound, stage))
 				{
-					element.visible = !(bound.width < minVisibleSize && bound.height < minVisibleSize);
-					
+					element.visible = ! (bound.width < minVisibleSize && bound.height < minVisibleSize);
+					var w:Number = stage.width  - 100;
+					var h:Number = stage.height - 100;
 					if (element is LineElement)
 					{
-						var size:Number = Math.sqrt(bound.width * bound.width + bound.height * bound.height);
-						if (size / 2 > hitObject.stage.stageWidth - 100)
-							element.disable();
-						else if (size / 2 < minInteractSize)
+						var size:Number = Math.sqrt(bound.width * bound.width + bound.height * bound.height) >> 1;
+						if (size > w || size < minInteractSize)
 							element.disable();//过小禁止交互
 						else
-							element.enable();	
+							element.enable();
 					}
 					else if (element is TextEditField)
 					{
-						if (bound.width > hitObject.stage.stageWidth - 100 || bound.height > hitObject.stage.stageHeight - 100)
-							element.disable();
-						else if (bound.width < 15 || bound.height < 5)
+						if (bound.width > w || bound.height > h || bound.width < 15 || bound.height < 5)
 							element.disable();
 						else
 							element.enable();
 					}
-					else if (bound.width > hitObject.stage.stageWidth - 100 || bound.height > hitObject.stage.stageHeight - 100)
+					else if (bound.width > w || bound.width < minInteractSize || bound.height > h || bound.height < minInteractSize)
 					{
 						element.disable();
-					}
-					else if (bound.width < minInteractSize || bound.height < minInteractSize)
-					{
-						element.disable();//过小禁止交互
 					}
 					else
 					{
