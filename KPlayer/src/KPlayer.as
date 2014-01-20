@@ -3,8 +3,6 @@ package
 	import com.kvs.utils.Base64;
 	
 	import flash.display.Sprite;
-	import flash.display.Stage;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.external.ExternalInterface;
 	import flash.system.Security;
@@ -86,7 +84,7 @@ package
 		 * 
 		 * @param value 传入的加密XML String
 		 */
-		private function setBase64Data(value:String):void
+		private function setBase64Data(value:String, ifCompress:Boolean = true):void
 		{
 			if (value) 
 			{
@@ -94,7 +92,10 @@ package
 				isURL = false;
 				//处理外部传入的BASE64压缩数据
 				var newByte:ByteArray = Base64.decodeToByteArray(value);
-				newByte.uncompress();
+				
+				if (ifCompress)
+					newByte.uncompress();
+				
 				sData = String(newByte.toString());
 				//kplayer presenter初始化
 				presenter.start(this, appID, isURL, sData);
