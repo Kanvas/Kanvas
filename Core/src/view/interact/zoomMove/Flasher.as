@@ -72,14 +72,13 @@ package view.interact.zoomMove
 			if (Math.max(canvasTargetScale / canvas.scaleX, canvas.scaleX / canvasTargetScale) > 1.0005)
 				control.mainUI.curScreenState.disableCanvas();
 			
+			
 			if (packer == null) 
 				packer = new CanvasLayoutPacker(control.mainUI);
 			else
 				TweenMax.killTweensOf(packer, false);
 			
 			canvasTargetRotation = MathUtil.modTargetRotation(packer.rotation, canvasTargetRotation);
-			
-			packer.modCanvasPositionStart(canvasTargetX, canvasTargetY, canvasTargetScale, canvasTargetRotation);
 			
 			var scalePlus:Number = Math.max(canvasTargetScale / canvas.scaleX, canvas.scaleX / canvasTargetScale);
 			var timeScale:Number = (scalePlus < 1.25) ? 3 / speedScale + scalePlus / speedScale : scalePlus / speedScale;
@@ -90,29 +89,35 @@ package view.interact.zoomMove
 			if (scalePlus < 1.25)
 			{
 				var canvasMiddleScale:Number = Math.min(canvasTargetScale, canvas.scaleX) * .8;
+				packer.modCanvasPositionStart(canvasTargetX, canvasTargetY, canvasTargetScale, canvasTargetRotation, true, canvasMiddleScale);
 				TweenMax.to(packer, time * .5, {
 					scale:MathUtil.log2(canvasMiddleScale), 
-					ease:easeFlash});
+					ease:Cubic.easeIn
+				});
 				TweenMax.to(packer, time * .5, {
 					scale:MathUtil.log2(canvasTargetScale), 
 					delay:time * .5, 
-					ease:easeFlash});
+					ease:Cubic.easeOut
+				});
 				TweenMax.to(packer, time, {
 					progress:1, 
 					rotation:canvasTargetRotation, 
 					ease:easeFlash, 
 					onUpdate:updated, 
-					onComplete:finishZoom});
+					onComplete:finishZoom
+				});
 			}
 			else
 			{
+				packer.modCanvasPositionStart(canvasTargetX, canvasTargetY, canvasTargetScale, canvasTargetRotation);
 				TweenMax.to(packer, time, {
+					progress:1, 
 					scale:MathUtil.log2(canvasTargetScale), 
 					rotation:canvasTargetRotation, 
-					progress:1, 
 					ease:easeFlash, 
 					onUpdate:updated, 
-					onComplete:finishZoom});
+					onComplete:finishZoom
+				});
 			}
 			isFlashing = true;
 		}
@@ -134,9 +139,8 @@ package view.interact.zoomMove
 		 */		
 		private function finishZoom():void
 		{
-			if (packer) {
-				packer.modCanvasPositionEnd();
-			}
+			if (packer) packer.modCanvasPositionEnd();
+			
 			control.mainUI.curScreenState.enableCanvas();
 			isFlashing = false;
 		}

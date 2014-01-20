@@ -13,7 +13,7 @@ package util
 
 	public final class CoreUtil
 	{
-		/*public static function drawRect(color:uint, rect:Rectangle):void
+		public static function drawRect(color:uint, rect:Rectangle):void
 		{
 			coreMdt.mainUI.autoAlignUI.graphics.lineStyle(1, color);
 			coreMdt.mainUI.autoAlignUI.graphics.drawRect(rect.x, rect.y, rect.width, rect.height);
@@ -50,7 +50,7 @@ package util
 		public static function clear():void
 		{
 			coreMdt.mainUI.autoAlignUI.graphics.clear();
-		}*/
+		}
 		
 		/**
 		 * element 不在可交互范围内
