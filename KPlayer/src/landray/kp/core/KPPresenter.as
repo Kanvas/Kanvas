@@ -50,21 +50,6 @@ package landray.kp.core
 			commandManager.execute();
 		}
 		
-		public function horizontalMove(value:Number):void
-		{
-			config.kp_internal::viewer.kp_internal::horizontalMove(value);
-		}
-		
-		public function unselected():void
-		{
-			config.kp_internal::viewer.kp_internal::unselected();
-		}
-		
-		public function setStartOriginalScale(scale:Boolean):void
-		{
-			config.originalScale = scale;
-		}
-		
 		/**
 		 */		
 		public var config  :KPConfig;

@@ -23,7 +23,6 @@ package landray.kp.maps.simple
 		
 		private function initialize():void
 		{
-			mouseEnabled = false;
 			elements = new Vector.<BaseElement>;
 		}
 		
@@ -34,18 +33,15 @@ package landray.kp.maps.simple
 				var count:int = 0;
 				for each (var element:BaseElement in elements)
 				{
-					addChild(element);
 					var bound:Rectangle = element.getBounds(stage);
 					element.visible = ! (bound.left > stage.stageWidth || bound.right < 0 || bound.bottom < 0 || bound.top > stage.stageHeight);
-					if(!element.visible)
-						removeChild(element);
 					if (element.visible && element is Label)
 					{
 						count ++;
 						element.render(scale);
 					}
 				}
-				trace("label rendered:", count);
+				//trace("label rendered:", count);
 			}
 			
 		}

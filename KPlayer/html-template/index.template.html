@@ -15,7 +15,7 @@
         	
             var kvs = new KPlayer({id: 'demo', width: '100%', height: '100%'});
             
-            var testData = "eJzNlk2P3DQYgO+V+h9CDtya+Dt2mexqYYW0UntBRRyqqsrEnk20mSRKPO0O990FtVsJCXrpBYQQByQuPQAqon+GTMu/wMlkkgyMViMNpZ2TnbyO/Tz2+45H+6fTxHqgijLOUt+GDrAtlYaZjNNj357pyQ1u7+9dvzY6CdIHQWlaljWKVCBV0Y/C9ahSzxN1dOjbn0WxVrblLmOnmZwlqusFcdq0TDueHluxNHPaVl5kuSr03LdtS89z5dvmZfvJO//o11OksySxrVPfZszMbIYhQR1qWw9jqSPf9ji3rUjFx5E2IcCzrSLTgW7WauLDLMmKvnWUSnXadMswSFSzoFmR+HakdX7TdaFADmTcoQ4U/CYHHLjqJHfLeekGWgdhNFWprrv3Tfd+TVh3DrS+bZqOzPanSkeZ9GX2ME2yQL4fTPMPJvJI+pBgDhhUVAahxIpM5JiEICREgLHyFLItg13zwpVOoy2Mi9AIrc2hTeaW79fkTeJaV2fv47i1hzlu7BGMBvY46uVxuNmdh/gEhlcIrKc8SPIoMM8dYdYWxeFJqsrSbIj5ZCDjWdkM6bgKFeqGCm+iqt9uxUQRcDijFAoIiIc5XZ4PgByEBQMEIc7NqREdroA9rreGe4N0vHTshQK9GV6yEy/zsIMZ5IQCRjEmcLmjhDgEco8RgRGibIA72N368QAX0v+Fl+7Ea5gcSAE3iQMQRJ5Y8nrcQRQzCgAXAlCv44VgUAu8NWDI3+R5HuQp2zFPBWuqmxkMiTfIVIhFzwYx3ZyrwpMy+E/RtDpdbqU3BNPFTK3g6og1tMGDGu3DTM7bEsTaEtRvGSc9FWGboRgm48C7giqe3J7p+FacqtXKJllqPlhdPlk8vXj14vyvF1+Z+Phz1RyEFq2F2xu9d/ejw4M7B3df//h9df588fS3xXdfmIjFtxfVxXn1+Ozevb2R24S2TtY6nSC+syCKsLOqYaRXRAeK0NtV9OrZr9XZ8+rrn6svL+uIPNdb2hE722Eeb+vdu3l8qpc/LS5/ef3yWXX2Qx1xqKbZlnIg2NkO57A9O4SD3o94d/yspZc0chaPL6rfv9lW0car49Z6BFvWHvN3svHwoLcsZ5lYxsyffzy6wsjI7W7Vo/HxapGT5vevRZoL5aef3KpltVfLtq6P3O6Cf/3a3773yjs=";
+            var testData = "eNq9lctu1DAUhvc8ReQFOxLfL2UCKkJIldoNArGsMrGnsZpJRomn7bDnIiGQ2LBhxTOwQarE09BWvAV25paBUQUqkJWPfeyc7/c5x4PjrDrJ2nu3omhQmEybJjoxTWvrKgUkhiBq3aw0ew9T8KywzoAo6VzHtZ6WZmlktgoDP7Tjo8jqFCAQTZp6Yho3SwGI3GxiUuAXF+c9+ckO51fTsgTRWQo497/127BiMQPRqdWuSIGQEkSFsUeF8y5QgKipXea6QL1/Xpd1sx7tVdqcdWabZ6XpApo2ZQoK5yY7SYIUjhGXMYuRkjsSSpiY40nSztokcy7Li7GpXDAPvXkYAIOx69yBH8a6vj82rqh1quvTqqwzfTsbT+6O9J5OESUScmSYznJNDB3pIc1hTqmCQyMMBpHHDrxooaVXLbdN7tUMwuG+cK6ZmqV4c58N/UY2KLYS8JFdCEgk6QSkBPcElHitn0Tb5RNYjlB+jYbhl7vlpMj8fKx8bIXNjyvTtv5O/JGZttO227JEa0zuOjCyLSPC6m8hMQxjyRlDCkEqiGTzDIE4xkRxSDGW0ueNWtEqtKYVG7R36AqXDUWu8D/BpTfC5YLEhCNJGeSMEIrm90lpTJEUnCqCMeM92t7dhukeLWL/A5fdCNcjxYhB6QsHYoSFmuMKGWNGOINQKgWZWOEi2OsFYoMXyX+YzL065duA/6BGFe+am9+MqOhVKSJqjYYI216nSmid/U0yZ87mF4m2du6wvIHVmwhYD2o9W2DxORSD68ZD10SYbwfihA4zcQ2RHR1Mnd23lVm2xVFd+QMv3r67/PDq6vzl9/P33t8+N/McCAGm4Orjl4sXny8/vf729Q1YoCZhqXu3kuXDNRgeLQMZdd8vgfie/fTxfhBk0b3n2g2S5fP5A3C6NXg=";
 			
 			var server = "assets/kvs.xml";
 			//var server = "assets/treeContent.xml";
@@ -27,12 +27,17 @@
 			});
 			
 			kvs.onUnselected(function(){
-				alert("unselected");
+				//alert("unselected");
 			});
 			
 			//弹出属性面板
 			kvs.onLinkClicked(function(e){
 				//alert('点击节点' + e.data);
+			});
+			
+			kvs.onLinkOvered(function(e){
+				//alert('鼠标移入节点' + e.data);
+				kvs.showLinkOveredTip("提示信息!");
 			});
 			
 			//横向平移
