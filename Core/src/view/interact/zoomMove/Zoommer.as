@@ -68,7 +68,8 @@ package view.interact.zoomMove
 		 */
 		public function zoomIn(notMouseCenter:Boolean = false):void
 		{
-			this.flasher.ready();
+			flasher.close();
+			flasher.ready();
 			
 			var newScale:Number = flasher.canvasTargetScale * control.zoomScale;
 			
@@ -88,7 +89,8 @@ package view.interact.zoomMove
 		 */
 		public function zoomOut(notMouseCenter:Boolean = false):void
 		{
-			this.flasher.ready();
+			flasher.close();
+			flasher.ready();
 			
 			var newScale:Number = flasher.canvasTargetScale / control.zoomScale;
 			if (newScale < minScale)
@@ -104,7 +106,7 @@ package view.interact.zoomMove
 		
 		public function zoomMoveOff(scale:Number, x:Number, y:Number, time:Number = 1, ease:Object = null):void
 		{
-			flasher.close(false);
+			flasher.close();
 			flasher.ready();
 			flasher.canvasTargetScale = canvas.scaleX * scale;
 			flasher.canvasTargetX = canvas.x + x;
@@ -112,36 +114,10 @@ package view.interact.zoomMove
 			flasher.flash(time, ease);
 		}
 		
-		
-		public function zoomTo(newScale:Number, center:Point = null, time:Number = 1, ease:Object = null):void
-		{
-			flasher.close(false);
-			flasher.ready();
-			flasher.canvasTargetScale = newScale;
-			
-			if (center)
-			{
-				flasher.canvasTargetX = - center.x * newScale + canvas.stage.stageWidth * .5;
-				flasher.canvasTargetY = - center.y * newScale + canvas.stage.stageHeight * .5;
-			}
-			else
-			{
-				var curScale:Number = canvas.scaleX;
-				var scaleDis:Number = newScale - curScale;
-				center = new Point(canvas.stage.mouseX, canvas.stage.mouseY);
-				
-				flasher.canvasTargetX = (canvas.stage.stageWidth / 2 - point.x) * scaleDis / curScale 
-					+ canvas.stage.stageWidth / 2 + (canvas.x - canvas.stage.stageWidth / 2) / curScale * newScale;
-				
-				flasher.canvasTargetY = (canvas.stage.height / 2 - point.y) * scaleDis / curScale 
-					+ canvas.stage.height / 2 + (canvas.y - canvas.stage.height / 2) / curScale * newScale;
-			}
-			
-			flasher.flash(time, ease);
-		}
-		
 		public function zoomRotateMoveTo(scale:Number, rotation:Number, x:Number, y:Number, ease:Object = null):void
 		{
+			flasher.close();
+			flasher.ready();
 			flasher.canvasTargetScale = scale;
 			flasher.canvasTargetRotation = rotation;
 			flasher.canvasTargetX = x;

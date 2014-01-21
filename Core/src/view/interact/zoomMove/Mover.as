@@ -66,7 +66,10 @@ package view.interact.zoomMove
 		public function startMove():void
 		{
 			if (ifEnable)
+			{
+				flasher.close();
 				flasher.ready();
+			}
 			
 			
 			control.isMoving = true;

@@ -3,6 +3,7 @@ package modules.pages
 	import commands.Command;
 	
 	import flash.events.EventDispatcher;
+	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	
 	import model.ElementProxy;
@@ -28,6 +29,30 @@ package modules.pages
 			pageQuene.addEventListener(PageEvent.PAGE_ADDED, defaultHandler);
 			pageQuene.addEventListener(PageEvent.PAGE_DELETED, defaultHandler);
 			pageQuene.addEventListener(PageEvent.UPDATE_PAGES_LAYOUT, defaultHandler);
+			coreMdt.mainUI.addEventListener(MouseEvent.MOUSE_DOWN, mouseDown);
+			coreMdt.mainUI.addEventListener(MouseEvent.MOUSE_WHEEL, mouseWheel);
+		}
+		
+		private function mouseDown(e:MouseEvent):void
+		{
+			coreMdt.mainUI.stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
+			coreMdt.mainUI.stage.addEventListener(MouseEvent.MOUSE_UP, mouseUp);
+		}
+		private function mouseMove(e:MouseEvent):void
+		{
+			resetView();
+			coreMdt.mainUI.stage.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
+			coreMdt.mainUI.stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUp);
+		}
+		private function mouseUp(e:MouseEvent):void
+		{
+			coreMdt.mainUI.stage.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
+			coreMdt.mainUI.stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUp);
+		}
+		
+		private function mouseWheel(e:MouseEvent):void
+		{
+			resetView();
 		}
 		
 		/**
@@ -116,12 +141,17 @@ package modules.pages
 		
 		public function viewPage(page:int):void
 		{
-			if (! (coreMdt.zoomMoveControl.isTweening && lastViewPage == page))
+			if (coreMdt.zoomMoveControl.isTweening == false && lastViewPage != page)
 			{
 				lastViewPage = page;
 				var scene:Scene = PageUtil.getSceneFromVO(pages[page], coreMdt.mainUI);
 				coreMdt.zoomMoveControl.zoomRotateMoveTo(scene.scale, scene.rotation, scene.x, scene.y);
 			}
+		}
+		
+		public function resetView():void
+		{
+			lastViewPage = -1;
 		}
 		
 		private var lastViewPage:int = -1;

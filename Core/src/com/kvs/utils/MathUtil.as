@@ -136,5 +136,23 @@ package com.kvs.utils
 		{
 			return Math.pow(2, value);
 		}
+		
+		/**
+		 * 求以3为底的对数
+		 */		
+		public static function log3(value:Number):Number
+		{
+			return Math.log(value) / MathUtil.LN3;
+		}
+		
+		/**
+		 * 求以3为底的次幂
+		 */		
+		public static function exp3(value:Number):Number
+		{
+			return Math.pow(3, value);
+		}
+		
+		public static const LN3:Number = Math.log(3);
 	}
 }
