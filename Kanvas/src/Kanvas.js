@@ -18,6 +18,7 @@
 	KANVAS.event.READY = "ready"; 
 	KANVAS.event.LINK_BTN_CLICKED = 'linkBtnClicked';
 	KANVAS.event.LINK_CLICKED = 'linkClicked';
+	KANVAS.event.LINK_OVERED = "linkOvered";
 	KANVAS.event.UNSELECTED = "unselected";
 	
 	KANVAS.navigatorType = {};
@@ -70,6 +71,9 @@
 		getChartByID(id).linkClicked(value);
 	};
 	
+	KANVAS.linkOvered = function(id, value) {
+		getChartByID(id).linkOvered(value);
+	};
 	
 	
 	
@@ -400,6 +404,13 @@
 			}
 		};
 		
+		//显示鼠标移入时的提示
+		that.showLinkOveredTip = function(value) {
+			if (this.ifReady) {
+				this.swf.showLinkOveredTip(value);
+			}
+		};
+		
 		//取消选择
 		that.onUnselected = function(callback) {
 			return this.addEventListener(KANVAS.event.UNSELECTED, callback);
@@ -425,9 +436,17 @@
 			return this.addEventListener(KANVAS.event.LINK_CLICKED, callback);
 		};
 		
-		//
 		that.linkClicked = function(value) {
 			this.dispatchEvent({type: KANVAS.event.LINK_CLICKED, target: this, data: value});
+		};
+		
+		//添加元素鼠标移入监听
+		that.onLinkOvered = function(callback) {
+			return this.addEventListener(KANVAS.event.LINK_OVERED, callback);
+		};
+		
+		that.linkOvered = function(value) {
+			this.dispatchEvent({type: KANVAS.event.LINK_OVERED, target: this, data: value});
 		};
 		
 		return that;
