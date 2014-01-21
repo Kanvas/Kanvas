@@ -13,6 +13,7 @@ package landray.kp.mediator
 	import landray.kp.core.kp_internal;
 	import landray.kp.maps.simple.elements.BaseElement;
 	import landray.kp.utils.CoreUtil;
+	import landray.kp.utils.ExternalUtil;
 	import landray.kp.view.Graph;
 	import landray.kp.view.Viewer;
 	
@@ -52,9 +53,8 @@ package landray.kp.mediator
 			viewer.stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
 			
 			viewer.stage.addEventListener(FullScreenEvent.FULL_SCREEN, fullScreen);
+			viewer.stage.addEventListener(MouseEvent.MOUSE_WHEEL, mouseWheel, false, 0, true);
 			
-			viewer.addEventListener(MouseEvent.ROLL_OUT  , rollOut);
-			viewer.addEventListener(MouseEvent.ROLL_OVER , rollOver);
 			viewer.addEventListener(MouseEvent.CLICK     , click);
 			
 			viewer.stage.focus = viewer;
@@ -130,22 +130,6 @@ package landray.kp.mediator
 		/**
 		 * @private
 		 */
-		private function rollOut(e:MouseEvent):void
-		{
-			viewer.stage.removeEventListener(MouseEvent.MOUSE_WHEEL, mouseWheel);
-		}
-		
-		/**
-		 * @private
-		 */
-		private function rollOver(e:MouseEvent):void
-		{
-			viewer.stage.addEventListener(MouseEvent.MOUSE_WHEEL, mouseWheel, false, 0, true);
-		}
-		
-		/**
-		 * @private
-		 */
 		private function mouseWheel(e:MouseEvent):void
 		{
 			if (e.delta > 0)
@@ -173,7 +157,7 @@ package landray.kp.mediator
 							var visible:Boolean = true;
 							selector.render(element.getRectangleForViewer());
 						}
-						ExternalInterface.call("KANVAS.linkClicked", config.id, element.vo.id);
+						ExternalUtil.kanvasLinkClicked(element.vo.id);
 					}
 				}
 				viewer.kp_internal::selector.visible = visible;
@@ -261,7 +245,7 @@ package landray.kp.mediator
 			if (viewer.kp_internal::selector.visible)
 			{
 				viewer.kp_internal::selector.visible = false;
-				ExternalInterface.call("KANVAS.unselected", config.id);
+				ExternalUtil.kanvasUnselected();
 			}
 		}
 		

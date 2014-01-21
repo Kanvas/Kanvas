@@ -12,6 +12,7 @@ package landray.kp.view
 	import landray.kp.core.KPEmbeds;
 	import landray.kp.core.KPProvider;
 	import landray.kp.core.kp_internal;
+	import landray.kp.maps.simple.comman.ToolTipManager;
 	import landray.kp.mediator.MediatorViewer;
 	import landray.kp.utils.CoreUtil;
 	
@@ -34,7 +35,6 @@ package landray.kp.view
 	 */
 	public final class Viewer extends MainUIBase
 	{
-		
 		/**
 		 * 构造函数.
 		 */
@@ -77,6 +77,8 @@ package landray.kp.view
 			updateLayout();
 			
 			Bubble.init(stage);
+			
+			toolTip = new ToolTipManager(this);
 			
 			config.kp_internal::tipsManager = new ToolTipsManager(this);
 			config.kp_internal::tipsManager.setStyleXML(KPEmbeds.instance.styleTips);
@@ -182,6 +184,11 @@ package landray.kp.view
 			{
 				kp_internal::selector.visible = false;
 			}
+		}
+		
+		kp_internal function showLinkOveredTip(value:String):void
+		{
+			toolTip.showToolTip(value);
 		}
 		
 		kp_internal function setScreenState(state:String):void
@@ -293,16 +300,6 @@ package landray.kp.view
 		/**
 		 * @private
 		 */
-		private var transformer:LayoutTransformer;
-				
-		/**
-		 * @private
-		 */
-		private var mediator:MediatorViewer;
-		
-		/**
-		 * @private
-		 */
 		kp_internal var controller:ZoomMoveControl;
 		
 		/**
@@ -318,12 +315,27 @@ package landray.kp.view
 		/**
 		 * @private
 		 */
+		private var toolTip:ToolTipManager;
+		
+		/**
+		 * @private
+		 */
 		private var config:KPConfig;
 		
 		/**
 		 * @private
 		 */
 		private var provider:KPProvider;
+		
+		/**
+		 * @private
+		 */
+		private var transformer:LayoutTransformer;
+		
+		/**
+		 * @private
+		 */
+		private var mediator:MediatorViewer;
 		
 		/**
 		 * @private
