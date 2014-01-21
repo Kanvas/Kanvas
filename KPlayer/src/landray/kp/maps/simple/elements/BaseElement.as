@@ -1,17 +1,12 @@
 package landray.kp.maps.simple.elements
 {
 	import com.kvs.ui.toolTips.ITipsSender;
-	import com.kvs.ui.toolTips.ToolTipHolder;
 	import com.kvs.utils.XMLConfigKit.style.Style;
 	
-	import flash.display.DisplayObject;
 	import flash.display.Graphics;
 	import flash.display.Shape;
 	import flash.display.Sprite;
-	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
-	
-	import landray.kp.utils.CoreUtil;
 	
 	import model.vo.ElementVO;
 	
@@ -35,18 +30,6 @@ package landray.kp.maps.simple.elements
 			
 			if (vo.style) 
 				render();
-			
-			toolTipManager = new ToolTipHolder;
-			
-			addEventListener(MouseEvent.ROLL_OVER, rollOverHandler);
-		}
-		
-		private function rollOverHandler(e:MouseEvent):void
-		{
-			if (related)
-			{
-				
-			}
 		}
 		
 		public function render(scale:Number = 1):void
@@ -131,6 +114,5 @@ package landray.kp.maps.simple.elements
 		public var vo:ElementVO;
 		
 		private var shape:Shape;
-		private var toolTipManager:ToolTipHolder;
 	}
 }
