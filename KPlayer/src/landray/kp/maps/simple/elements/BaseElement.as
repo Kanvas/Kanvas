@@ -1,7 +1,6 @@
 package landray.kp.maps.simple.elements
 {
 	import com.kvs.ui.toolTips.ITipsSender;
-	import com.kvs.ui.toolTips.ToolTipHolder;
 	import com.kvs.utils.XMLConfigKit.style.Style;
 	
 	import flash.display.Graphics;
@@ -32,7 +31,6 @@ package landray.kp.maps.simple.elements
 			if (vo.style) 
 				render();
 		}
-		
 		
 		public function render(scale:Number = 1):void
 		{
@@ -116,6 +114,5 @@ package landray.kp.maps.simple.elements
 		public var vo:ElementVO;
 		
 		private var shape:Shape;
-		private var toolTipManager:ToolTipHolder;
 	}
 }
