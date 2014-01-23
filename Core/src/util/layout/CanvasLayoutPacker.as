@@ -66,13 +66,16 @@ package util.layout
 			eleBO = PointUtil.rotatePointAround(eleBO, orignal, MathUtil.angleToRadian(-endRotation));
 			PointUtil.multiply(eleBO, 1 / endScale);
 			
+			//point b move from with out rotation
 			sceBF = eleBO.clone();
 			PointUtil.multiply(sceBF, startScale);
 			sceBF = PointUtil.rotatePointAround(sceBF, orignal, MathUtil.angleToRadian(startRotation));
 			sceBF.offset(startX, startY);
 			
+			//point b move to with out rotation
 			sceBT = center.clone();
 			
+			//scene center
 			sceCO = center.clone();
 		}
 		
@@ -84,12 +87,11 @@ package util.layout
 			if (modPositionNeed)
 			{
 				//由于progress有误差，根据重新计算当前distance progress
-				var percent:Number = (modInOut)
+				progress = (modInOut)
 					? ((lastScale > canvas.scaleX) 
 						? Math.abs( canvas.scaleX - startScale  ) / scaleDis
 						:(Math.abs( canvas.scaleX - centerScale ) + Math.abs(centerScale - startScale)) / scaleDis)
 					: Math.abs(canvas.scaleX - startScale) / scaleDis;
-				progress = percent;
 				//需要将移动到的点
 				//progress
 				var curSce:Point = Point.interpolate(sceBT, sceBF, progress);
@@ -98,6 +100,7 @@ package util.layout
 				var curEle:Point = eleBO.clone();
 				PointUtil.multiply(curEle, canvas.scaleX);
 				curEle = PointUtil.rotatePointAround(curEle, orignal, MathUtil.angleToRadian(rotation));
+				//move canvas
 				canvas.x = curSce.x - curEle.x;
 				canvas.y = curSce.y - curEle.y;
 				lastScale = canvas.scaleX;

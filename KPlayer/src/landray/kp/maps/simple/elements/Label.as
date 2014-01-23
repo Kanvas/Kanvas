@@ -15,6 +15,7 @@ package landray.kp.maps.simple.elements
 			super($vo);
 			addChild(text = new TextFlowLabel);
 			text.ifTextBitmap = true;
+			mouseChildren = false;
 		}
 		
 		/**

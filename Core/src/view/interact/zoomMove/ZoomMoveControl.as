@@ -5,6 +5,8 @@ package view.interact.zoomMove
 	
 	import flash.display.Shape;
 	import flash.display.StageDisplayState;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
 	import view.ui.Canvas;
@@ -64,23 +66,6 @@ package view.interact.zoomMove
 			zoomer.zoomMoveOff(scale, x, y, time, ease);
 		}
 		
-		
-		/**
-		 * 画布缩放至一个scale，以mouseCenter为画布中心的位置
-		 * 
-		 * @param scale
-		 * @param mouseCenter
-		 * @param time
-		 * @param ease
-		 * 
-		 */
-		public function zoomMoveTo(scale:Number, mouseCenter:Point = null, time:Number = 1, ease:Object = null):void
-		{
-			if (ease == null)
-				ease = Cubic.easeInOut;
-			
-			zoomer.zoomTo(scale, mouseCenter, time, ease);
-		}
 		
 		/**
 		 * 画布缩放，旋转，移动 
@@ -156,7 +141,16 @@ package view.interact.zoomMove
 			return mainUI.bgImgCanvas;
 		}
 		
-		public var zoomScale:Number = 1.2;
+		public var zoomScale:Number = 1.5;
+		
+		public var speedScale:Number = 4;
+		
+		public var speedRotation:Number = 90;
+		
+		public var maxTweenTime:Number = 5;
+		public var minTweenTime:Number = 1;
+		
+		public var plusScale:Number = .5;
 		
 		/**
 		 * 默认不管画布中的元素有多大都自动对焦， 关闭后则

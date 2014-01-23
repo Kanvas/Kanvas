@@ -1,5 +1,6 @@
 package cn.vision.utils
 {
+	import cn.vision.consts.ConstsMath;
 	import cn.vision.core.NoInstance;
 	
 	/**
@@ -39,7 +40,7 @@ package cn.vision.utils
 		}
 		
 		/**
-		 * ModuloAngle
+		 * Modulo angle, if value is larger than 360 or smaller than 0, modulo it to 0-360.
 		 * 
 		 * @param angle
 		 * @return Angle in the range of 0-360 degrees.
@@ -52,15 +53,15 @@ package cn.vision.utils
 		}
 		
 		/**
-		 * Determine whether two numbers are equal.
+		 * Determine whether two numbers are close.
 		 * 
 		 * @param value1
 		 * @param value2
 		 * @param accuracy Digits after the decimal, 0 to use the system default precision.
-		 * @return 
+		 * @return Boolean
 		 * 
 		 */
-		public static function equals(value1:Number, value2:Number, accuracy:int = 0):Boolean
+		public static function close(value1:Number, value2:Number, accuracy:int = 0):Boolean
 		{
 			var result:Boolean;
 			if (accuracy == 0)
@@ -73,6 +74,30 @@ package cn.vision.utils
 				result = (Math.floor(value1 * factor) == Math.floor(value2 * factor));
 			}
 			return result;
+		}
+		
+		/**
+		 * Returns the 2 logarithm of the parameter val.
+		 * 
+		 * @param value
+		 * @return Number
+		 * 
+		 */
+		public static function log2(value:Number):Number
+		{
+			return Math.log(value) / Math.LN2;
+		}
+		
+		/**
+		 * Returns the 3 logarithm of the parameter val.
+		 * 
+		 * @param value
+		 * @return Number
+		 * 
+		 */
+		public static function log3(value:Number):Number
+		{
+			return Math.log(value) / ConstsMath.LN3;
 		}
 	}
 }

@@ -21,9 +21,9 @@ package landray.kp.view
 	 */
 	public class Graph extends Sprite
 	{
-		
 		/**
 		 * 构造函数。
+		 * 
 		 */
 		public function Graph()
 		{
@@ -36,12 +36,15 @@ package landray.kp.view
 		 */
 		private function initialize():void
 		{
+			mouseEnabled = false;
 			__config = new configClass(this);
 		}
 		
-		
 		/**
 		 * 画布缩放后的渲染接口
+		 * 
+		 * @param scale
+		 * 
 		 */
 		public function render(scale:Number = 1):void
 		{
@@ -57,6 +60,9 @@ package landray.kp.view
 		 * 设定Graph的数据。
 		 * <p>
 		 * Graph类不会做任何操作，子类需要重写该setter方法以实现添加子元素操作。
+		 * 
+		 * @param value
+		 * 
 		 */
 		public function set dataProvider(value:XML):void
 		{
@@ -73,6 +79,9 @@ package landray.kp.view
 		
 		/**
 		 * 设定Graph的模板。
+		 * 
+		 * @param value
+		 * 
 		 */
 		public function set templete(value:XML):void
 		{
@@ -91,7 +100,8 @@ package landray.kp.view
 		}
 		
 		/**
-		 * 切换graph的主题。
+		 * 设置graph的主题。
+		 * 
 		 */
 		public function get theme():String
 		{

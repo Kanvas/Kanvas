@@ -56,7 +56,6 @@ package view.interact
 		{
 			tempPoint.x = NaN;
 			tempPoint.y = NaN;
-			var area:Number = areaPosition / canvas.scaleX;
 			//元素１检测的属性集
 			var e1pArr:Array = [xArr, yArr];
 			var alignArr:Array = [false, false];
@@ -92,11 +91,14 @@ package view.interact
 								//两直线相交的点
 								var aimPoint:Point = getPointByIntersect(points1, points2);
 								//距离判断
-								if (Point.distance(aimPoint, curPoint) < area)
+								var distance:Number = distance(aimPoint, curPoint);
+								trace(distance, areaPosition);
+								if (distance < areaPosition)
 								{
 									alignArr[i] = new Point;
 									drawLineInPoints(Point.interpolate(points2[0], points2[1], .5), aimPoint);
 									//此方向的增量向量
+									trace("found near");
 									alignArr[i].x = tempPoint.x = aimPoint.x - curPoint.x;
 									alignArr[i].y = tempPoint.y = aimPoint.y - curPoint.y;
 									elementsLoopBreak = true;
@@ -115,6 +117,7 @@ package view.interact
 			}//end of for i
 			if (alignArr[0] && alignArr[1])
 			{
+				trace("two all near")
 				tempPoint.x = alignArr[0].x + alignArr[1].x;
 				tempPoint.y = alignArr[0].y + alignArr[1].y;
 			}
@@ -157,7 +160,7 @@ package view.interact
 							//两直线相交的点
 							var aimPoint:Point = getPointByIntersect(points1, points2);
 							//距离判断
-							if (Point.distance(aimPoint, curPoint) * coreMdt.canvas.scaleX < area)
+							if (distance(aimPoint, curPoint) < area)
 							{
 								drawLineInPoints(Point.interpolate(points2[0], points2[1], .5), aimPoint);
 								//此方向的增量向量
@@ -173,6 +176,15 @@ package view.interact
 				}
 			}//end of for element
 			return tempPoint;
+		}
+		
+		private function distance(p1:Point, p2:Point):Number
+		{
+			p1 = LayoutUtil.elementPointToStagePoint(p1.x, p1.y, canvas);
+			p2 = LayoutUtil.elementPointToStagePoint(p2.x, p2.y, canvas);
+			CoreUtil.drawCircle(0xFF0000, p1, 2);
+			CoreUtil.drawCircle(0x0000FF, p2, 2);
+			return Point.distance(p1, p2);
 		}
 		
 		/**

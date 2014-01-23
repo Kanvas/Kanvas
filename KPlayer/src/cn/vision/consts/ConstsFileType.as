@@ -2,7 +2,7 @@ package cn.vision.consts
 {
 	import cn.vision.core.NoInstance;
 
-	public final class FileType extends NoInstance
+	public final class ConstsFileType extends NoInstance
 	{
 		
 		public static const FLV:String = "flv";
