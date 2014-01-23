@@ -1,21 +1,22 @@
 package view.toolBar
 {	
-	import com.greensock.TweenLite;
 	import com.kvs.ui.button.IconBtn;
 	import com.kvs.utils.StageUtil;
 	
-	import flash.display.SimpleButton;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
-	import landray.kp.ui.*;
+	import landray.kp.ui.ZoomAuto; ZoomAuto;
+	import landray.kp.ui.ZoomIn  ; ZoomIn;
+	import landray.kp.ui.ZoomOut ; ZoomOut;
 	
 	import view.interact.zoomMove.ZoomMoveControl;
+	import com.greensock.TweenMax;
 	
 	/**
-	 * 工具栏
+	 * 缩放工具栏
 	 */
 	public final class ZoomToolBar extends Sprite
 	{
@@ -44,40 +45,32 @@ package view.toolBar
 				endFill();
 			}
 			
-			zoomAuto   = new IconBtn;
-			zoomIn     = new IconBtn;
-			zoomOut    = new IconBtn;
+			zoomAuto = new IconBtn;
+			zoomIn   = new IconBtn;
+			zoomOut  = new IconBtn;
 			
-			zoomAuto  .styleXML = btnStyleXML;
-			zoomIn    .styleXML = btnStyleXML;
-			zoomOut   .styleXML = btnStyleXML;
+			zoomAuto.styleXML = zoomIn.styleXML = zoomOut.styleXML = btnStyleXML;
 			
-			zoomAuto  .tips = "自适应";
-			zoomIn    .tips = "放大";
-			zoomOut   .tips = "缩小";
+			zoomAuto.tips = "自适应";
+			zoomIn  .tips = "放大";
+			zoomOut .tips = "缩小";
 			
 			zoomAuto.w = zoomAuto.h = 28;
-			zoomIn.w = zoomIn.h = 28;
-			zoomOut.w = zoomOut.h = 28;
+			zoomIn  .w = zoomIn  .h = 28;
+			zoomOut .w = zoomOut .h = 28;
 			
-			zoomAuto.iconW = 12;
-			zoomAuto.iconH = 11;
-			zoomIn.iconW = 12;
-			zoomIn.iconH = 12;
-			zoomOut.iconW = 12;
-			zoomOut.iconH = 12;
+			zoomAuto.iconW = zoomAuto.iconH = 12;
+			zoomIn  .iconW = zoomIn  .iconH = 12;
+			zoomOut .iconW = zoomOut .iconH = 12;
 			
-			zoomIn.x = zoomOut.x = zoomAuto.x = 4;
+			zoomAuto.x = zoomIn.x = zoomOut.x = 4;
 			
-			ZoomAuto;
 			var pathZoomAuto:String = "landray.kp.ui.ZoomAuto";
 			zoomAuto.setIcons(pathZoomAuto, pathZoomAuto, pathZoomAuto);
-			ZoomIn;
-			var pathZoomIn:String = "landray.kp.ui.ZoomIn";
-			zoomIn.setIcons(pathZoomIn, pathZoomIn, pathZoomIn);
-			ZoomOut;
-			var pathZoomOut:String = "landray.kp.ui.ZoomOut";
-			zoomOut.setIcons(pathZoomOut, pathZoomOut, pathZoomOut);
+			var pathZoomIn  :String = "landray.kp.ui.ZoomIn";
+			zoomIn  .setIcons(pathZoomIn  , pathZoomIn  , pathZoomIn);
+			var pathZoomOut :String = "landray.kp.ui.ZoomOut";
+			zoomOut .setIcons(pathZoomOut , pathZoomOut , pathZoomOut);
 			
 			subContainer.addChild(zoomIn  ).y = 36;
 			subContainer.addChild(zoomOut ).y = 68;
@@ -87,20 +80,16 @@ package view.toolBar
 			zoomOut .addEventListener(MouseEvent.CLICK, clickZoomOut );
 			zoomAuto.addEventListener(MouseEvent.CLICK, clickZoomAuto);
 			
-			stage.addEventListener(MouseEvent.MOUSE_MOVE, timerStartMouseMove);
+			stage.addEventListener(MouseEvent.MOUSE_MOVE, timerShowMouseMove);
 		}
 		
-		/**
-		 * @private
-		 */
-		private function timerStartMouseMove(e:MouseEvent):void
+		private function timerShowMouseMove(e:MouseEvent):void
 		{
 			if (mouseX　>=　-　100 && mouseX <= width) 
 			{
-				stage.removeEventListener(MouseEvent.MOUSE_MOVE, timerStartMouseMove);
+				stage.removeEventListener(MouseEvent.MOUSE_MOVE, timerShowMouseMove);
 				stage.addEventListener(MouseEvent.MOUSE_MOVE, timerProcessMouseMove);
-				//start timer record
-				timerStart();
+				timerShowStart();
 			} 
 		}
 		
@@ -113,26 +102,37 @@ package view.toolBar
 			else
 			{
 				stage.removeEventListener(MouseEvent.MOUSE_MOVE, timerProcessMouseMove);
-				stage.addEventListener(MouseEvent.MOUSE_MOVE, timerStartMouseMove);
-				
-				timerStop();
-				hideToolBar();
+				stage.addEventListener(MouseEvent.MOUSE_MOVE, timerShowMouseMove);
+				timerShowStop();
 			}
 		}
 		
-		private function timerComplete(e:TimerEvent):void
+		private function timerHideMouseMove(e:MouseEvent):void
 		{
+			if (mouseX >= - 100 && mouseX <= width)
+			{
+				timerHideStop();
+			}
+			else
+			{
+				timerHideStart();
+			}
+		}
+		
+		private function timerShowComplete(e:TimerEvent):void
+		{
+			stage.removeEventListener(MouseEvent.MOUSE_MOVE, timerProcessMouseMove);
+			stage.addEventListener(MouseEvent.MOUSE_MOVE, timerHideMouseMove);
+			timerShowStop();
 			showToolBar();
 		}
 		
-		private function timerStart():void
+		private function timerHideComplete(e:TimerEvent):void
 		{
-			if (timer == null)
-			{
-				timer = new Timer(500, 1);
-				timer.addEventListener(TimerEvent.TIMER_COMPLETE, timerComplete);
-				timer.start();
-			}
+			stage.removeEventListener(MouseEvent.MOUSE_MOVE, timerHideMouseMove);
+			stage.addEventListener(MouseEvent.MOUSE_MOVE, timerShowMouseMove);
+			timerHideStop();
+			hideToolBar();
 		}
 		
 		private function timerReset():void
@@ -144,11 +144,40 @@ package view.toolBar
 			}
 		}
 		
-		private function timerStop():void
+		private function timerShowStart():void
+		{
+			if (timer == null)
+			{
+				timer = new Timer(50, 1);
+				timer.addEventListener(TimerEvent.TIMER_COMPLETE, timerShowComplete);
+				timer.start();
+			}
+		}
+		
+		private function timerShowStop():void
 		{
 			if (timer)
 			{
-				timer.removeEventListener(TimerEvent.TIMER_COMPLETE, timerComplete);
+				timer.removeEventListener(TimerEvent.TIMER_COMPLETE, timerShowComplete);
+				timer.stop();
+				timer = null;
+			}
+		}
+		
+		private function timerHideStart():void
+		{
+			if (timer == null)
+			{
+				timer = new Timer(1000, 1);
+				timer.addEventListener(TimerEvent.TIMER_COMPLETE, timerHideComplete);
+				timer.start();
+			}
+		}
+		private function timerHideStop():void
+		{
+			if (timer)
+			{
+				timer.removeEventListener(TimerEvent.TIMER_COMPLETE, timerHideComplete);
 				timer.stop();
 				timer = null;
 			}
@@ -160,8 +189,9 @@ package view.toolBar
 			{
 				display = true;
 				visible = true;
-				TweenLite.killTweensOf(subContainer, false);
-				TweenLite.to(subContainer, .5, {alpha:1});
+				
+				TweenMax.killTweensOf(subContainer, false);
+				TweenMax.to(subContainer, .5, {alpha:1});
 			}
 		}
 		
@@ -170,8 +200,9 @@ package view.toolBar
 			if( display) 
 			{
 				display = false;
-				TweenLite.killTweensOf(subContainer, false);
-				TweenLite.to(subContainer, .5, {alpha:0, onComplete:function():void{visible = false}});
+				
+				TweenMax.killTweensOf(subContainer, false);
+				TweenMax.to(subContainer, .5, {alpha:0, onComplete:function():void{visible = false}});
 			}
 		}
 		
