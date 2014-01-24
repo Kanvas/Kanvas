@@ -9,7 +9,7 @@ package com.kvs.utils.XMLConfigKit.style
 		function get style():Style;
 		function set style(value:Style):void;
 		
-		function set metaData(value:Object):void;
-		function get metaData():Object;
+		function set mdata(value:Object):void;
+		function get mdata():Object;
 	}
 }

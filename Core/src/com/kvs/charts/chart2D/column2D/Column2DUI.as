@@ -64,7 +64,7 @@ package com.kvs.charts.chart2D.column2D
 			currState.ty = columnHeight;
 			currState.height = - columnHeight;
 				
-			StyleManager.drawRect(this, currState, metaData);
+			StyleManager.drawRect(this, currState, mdata);
 		}
 		
 		/**

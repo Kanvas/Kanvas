@@ -515,7 +515,7 @@ package com.kvs.charts.chart2D.core.axis
 			labelVO = labelVOes[index];
 			labelVO.label = getXLabel(labelVO.value);
 			labelVO.color = metaData.color;
-			labelRender.metaData = labelVO;
+			labelRender.mdata = labelVO;
 			
 			// 如果label换行显示，那么先以单元宽度为�
 			if (labelDisplay == LabelStyle.WRAP)
@@ -570,7 +570,7 @@ package com.kvs.charts.chart2D.core.axis
 							labelVO.label = this.getYLabel(labelVO.value);
 							labelVO.color = this.metaData.color;
 							labelRender.style = this.label;
-							labelRender.metaData = labelVO;
+							labelRender.mdata = labelVO;
 							labelRender.render();
 							
 							labelUI = labelUIs[i] = TextBitmapUtil.getUIBmd(labelRender);
@@ -709,7 +709,7 @@ package com.kvs.charts.chart2D.core.axis
 			if (title && title.text.value)
 			{
 				titleLabel.style = title;
-				titleLabel.metaData = this.metaData;
+				titleLabel.mdata = this.metaData;
 				titleLabel.render();
 				
 				titleLabel.x = size * .5 - titleLabel.width * .5;
@@ -744,7 +744,7 @@ package com.kvs.charts.chart2D.core.axis
 			
 			if (title && title.text.value)
 			{
-				titleLabel.metaData = this.metaData;
+				titleLabel.mdata = this.metaData;
 				titleLabel.style = title;
 				titleLabel.render();
 				
@@ -1274,7 +1274,7 @@ package com.kvs.charts.chart2D.core.axis
 
 		/**
 		 */
-		public function get metaData():Object
+		override public function get metaData():Object
 		{
 			return _metaData;
 		}
@@ -1282,7 +1282,7 @@ package com.kvs.charts.chart2D.core.axis
 		/**
 		 * @private
 		 */
-		public function set metaData(value:Object):void
+		override public function set metaData(value:Object):void
 		{
 			_metaData = value;
 		}

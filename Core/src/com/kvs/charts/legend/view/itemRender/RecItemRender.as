@@ -63,7 +63,7 @@ package com.kvs.charts.legend.view.itemRender
 
 		/**
 		 */
-		public function get metaData():Object
+		public function get mdata():Object
 		{
 			return _metaData;
 		}
@@ -71,7 +71,7 @@ package com.kvs.charts.legend.view.itemRender
 		/**
 		 * @private
 		 */
-		public function set metaData(value:Object):void
+		public function set mdata(value:Object):void
 		{
 			_metaData = value;
 		}
@@ -120,7 +120,7 @@ package com.kvs.charts.legend.view.itemRender
 		public function render():void
 		{
 			this.graphics.clear();
-			StyleManager.drawRect(this, currState, metaData);
+			StyleManager.drawRect(this, currState, mdata);
 		}
 		
 		/**

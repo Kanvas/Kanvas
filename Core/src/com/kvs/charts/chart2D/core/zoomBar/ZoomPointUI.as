@@ -50,7 +50,7 @@ package com.kvs.charts.chart2D.core.zoomBar
 		
 		/**
 		 */		
-		public var metaData:Object;
+		public var mdata:Object;
 		
 		/**
 		 */		

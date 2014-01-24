@@ -66,7 +66,7 @@ package com.kvs.charts.chart2D.column2D
 						//draw column or bar
 						columnItemUI = new Column2DUI(itemDataVO);
 						columnItemUI.states = series.states;
-						columnItemUI.metaData = itemDataVO.metaData;
+						columnItemUI.mdata = itemDataVO.metaData;
 						series.canvas.addChild(columnItemUI);
 						series.columnUIs.push(columnItemUI);
 					}

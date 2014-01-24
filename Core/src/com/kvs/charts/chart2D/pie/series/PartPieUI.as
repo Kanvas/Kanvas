@@ -64,7 +64,7 @@ package com.kvs.charts.chart2D.pie.series
 		public function init():void
 		{
 			valueLabelUI = new LabelUI;
-			valueLabelUI.metaData = this.dataItem.metaData;
+			valueLabelUI.mdata = this.dataItem.metaData;
 			valueLabelUI.style = this.labelStyle;
 			valueLabelUI.render();
 			addChild(valueLabelUI);
