@@ -292,6 +292,8 @@ package model
 		 */
 		public function exportData():XML
 		{
+			CoreFacade.coreMediator.editMode.toUnSelectedMode();
+			
 			var xml:XML = dataXML.copy();
 			
 			//样式ID
