@@ -15,7 +15,7 @@ package view.toolBar
 	import landray.kp.view.Viewer;
 	
 	/**
-	 * 工具栏
+	 * 缩放工具栏
 	 */
 	public final class ZoomToolBar extends Sprite
 	{
@@ -121,49 +121,59 @@ package view.toolBar
 			screenHalf.addEventListener(MouseEvent.CLICK, clickScreenHalf);
 			screenFull.addEventListener(MouseEvent.CLICK, clickScreenFull);
 			
-			stage.addEventListener(MouseEvent.MOUSE_MOVE, timerStartMouseMove);
+			stage.addEventListener(MouseEvent.MOUSE_MOVE, timerShowMouseMove);
 		}
 		
-		private function timerStartMouseMove(e:MouseEvent):void
+		private function timerShowMouseMove(e:MouseEvent):void
 		{
-			if (mouseX　>=　-　100) 
+			if (mouseX　>=　-　100 && mouseX <= width) 
 			{
-				stage.removeEventListener(MouseEvent.MOUSE_MOVE, timerStartMouseMove);
+				stage.removeEventListener(MouseEvent.MOUSE_MOVE, timerShowMouseMove);
 				stage.addEventListener(MouseEvent.MOUSE_MOVE, timerProcessMouseMove);
-				//start timer record
-				timerStart();
+				timerShowStart();
 			} 
 		}
 		
 		private function timerProcessMouseMove(e:MouseEvent):void
 		{
-			if (mouseX >= - 100)
+			if (mouseX >= - 100 && mouseX <= width)
 			{
 				timerReset();
 			}
 			else
 			{
 				stage.removeEventListener(MouseEvent.MOUSE_MOVE, timerProcessMouseMove);
-				stage.addEventListener(MouseEvent.MOUSE_MOVE, timerStartMouseMove);
-				
-				timerStop();
-				hideToolBar();
+				stage.addEventListener(MouseEvent.MOUSE_MOVE, timerShowMouseMove);
+				timerShowStop();
 			}
 		}
 		
-		private function timerComplete(e:TimerEvent):void
+		private function timerHideMouseMove(e:MouseEvent):void
 		{
+			if (mouseX >= - 100 && mouseX <= width)
+			{
+				timerHideStop();
+			}
+			else
+			{
+				timerHideStart();
+			}
+		}
+		
+		private function timerShowComplete(e:TimerEvent):void
+		{
+			stage.removeEventListener(MouseEvent.MOUSE_MOVE, timerProcessMouseMove);
+			stage.addEventListener(MouseEvent.MOUSE_MOVE, timerHideMouseMove);
+			timerShowStop();
 			showToolBar();
 		}
 		
-		private function timerStart():void
+		private function timerHideComplete(e:TimerEvent):void
 		{
-			if (timer == null)
-			{
-				timer = new Timer(500, 1);
-				timer.addEventListener(TimerEvent.TIMER_COMPLETE, timerComplete);
-				timer.start();
-			}
+			stage.removeEventListener(MouseEvent.MOUSE_MOVE, timerHideMouseMove);
+			stage.addEventListener(MouseEvent.MOUSE_MOVE, timerShowMouseMove);
+			timerHideStop();
+			hideToolBar();
 		}
 		
 		private function timerReset():void
@@ -175,11 +185,40 @@ package view.toolBar
 			}
 		}
 		
-		private function timerStop():void
+		private function timerShowStart():void
+		{
+			if (timer == null)
+			{
+				timer = new Timer(50, 1);
+				timer.addEventListener(TimerEvent.TIMER_COMPLETE, timerShowComplete);
+				timer.start();
+			}
+		}
+		
+		private function timerShowStop():void
 		{
 			if (timer)
 			{
-				timer.removeEventListener(TimerEvent.TIMER_COMPLETE, timerComplete);
+				timer.removeEventListener(TimerEvent.TIMER_COMPLETE, timerShowComplete);
+				timer.stop();
+				timer = null;
+			}
+		}
+		
+		private function timerHideStart():void
+		{
+			if (timer == null)
+			{
+				timer = new Timer(1000, 1);
+				timer.addEventListener(TimerEvent.TIMER_COMPLETE, timerHideComplete);
+				timer.start();
+			}
+		}
+		private function timerHideStop():void
+		{
+			if (timer)
+			{
+				timer.removeEventListener(TimerEvent.TIMER_COMPLETE, timerHideComplete);
 				timer.stop();
 				timer = null;
 			}
@@ -190,6 +229,8 @@ package view.toolBar
 			if(!display) 
 			{
 				display = true;
+				visible = true;
+
 				TweenMax.killTweensOf(this, false);
 				TweenMax.to(this, .5, {alpha:1});
 			}
