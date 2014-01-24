@@ -16,6 +16,8 @@ package
 	import flash.net.URLRequestMethod;
 	import flash.utils.ByteArray;
 	
+	import mx.utils.Base64Encoder;
+	
 	import util.img.ImgInsertor;
 	import util.img.PNGDecoder;
 
@@ -198,37 +200,41 @@ package
 			return str;
 		}
 		
-		
 		/**
 		 * 将数据压缩后再进行64编码,XML压缩率可达85%
 		 */		
-		private function getBase64Data():String
+		private function getBase64Data(ifCompress:Boolean = true):String
 		{
 			var byte:ByteArray = new ByteArray();
 			byte.writeUTFBytes(getXMLData());
-			byte.compress();
 			
-			return Base64.encode(byte);
+			if (ifCompress)
+				byte.compress();
+			
+			return Base64.encodeByteArray(byte);
 		}
 		
 		/**
 		 * 将字符串进行Base64编码
 		 */		
-		private function stringToBase64(str:String, ifCompress:Boolean = false):String
+		private function stringToBase64(str:String):String
 		{
 			var byte:ByteArray = new ByteArray();
 			byte.writeUTFBytes(str);
 			byte.compress();
 			
-			return Base64.encode(byte);
+			return Base64.encodeByteArray(byte);
 		}
 			
 		/**
 		 */		
-		private function setBase64Data(value:String):void
+		private function setBase64Data(value:String, isCompress:Boolean = true):void
 		{
-			var newByte:ByteArray = Base64.decode(value);
-			newByte.uncompress();
+			var newByte:ByteArray = Base64.decodeToByteArray(value);
+			
+			if(isCompress)
+				newByte.uncompress();
+			
 			this.setXMLData(newByte.toString());
 		}
 		
@@ -247,7 +253,7 @@ package
 			{
 				var bytes:ByteArray = PNGEncoder.encode(bmd);
 				//bytes.compress();
-				str = Base64.encode(bytes);
+				str = Base64.encodeByteArray(bytes);
 			}
 			
 			return str;

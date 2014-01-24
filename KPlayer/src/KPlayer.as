@@ -1,10 +1,8 @@
 package
 {
 	import flash.display.Sprite;
-	import flash.external.ExternalInterface;
 	import flash.system.Security;
 	
-	import landray.kp.core.KPPresenter;
 	import landray.kp.utils.CoreUtil;
 	import landray.kp.utils.ExternalUtil;
 	
@@ -25,6 +23,9 @@ package
 			//注册初始化函数，容器添加至舞台后调用
 			CoreUtil.initApplication(this, initialize, true);
 		}
+
+	
+	
 		
 		
 		//===========================================================================
@@ -49,8 +50,10 @@ package
 			//添加JS回调函数,通知JS 初始化完毕，可以传递数据。
 			if (ExternalUtil.initCallBack(this))
 				ExternalUtil.kanvasReady();
-		}
 		
+		}
+	
+	
 		private function initDebugger():void
 		{
 			if(!debugger)
