@@ -91,9 +91,9 @@ package view.interact
 								//两直线相交的点
 								var aimPoint:Point = getPointByIntersect(points1, points2);
 								//距离判断
-								var distance:Number = distance(aimPoint, curPoint);
-								trace(distance, areaPosition);
-								if (distance < areaPosition)
+								var dis:Number = distance(aimPoint, curPoint);
+								trace(dis, areaPosition);
+								if (dis < areaPosition)
 								{
 									alignArr[i] = new Point;
 									drawLineInPoints(Point.interpolate(points2[0], points2[1], .5), aimPoint);

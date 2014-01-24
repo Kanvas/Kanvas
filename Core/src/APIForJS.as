@@ -1,6 +1,5 @@
 package 
 {
-	import com.adobe.images.JPGEncoder;
 	import com.adobe.images.PNGEncoder;
 	import com.kvs.utils.Base64;
 	import com.kvs.utils.ExternalUtil;
@@ -9,17 +8,13 @@ package
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.MouseEvent;
-	import flash.external.ExternalInterface;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
 	import flash.utils.ByteArray;
 	
-	import mx.utils.Base64Encoder;
-	
 	import util.img.ImgInsertor;
-	import util.img.PNGDecoder;
 
 	/**
 	 * JS与kanvas核心core之间的API管理

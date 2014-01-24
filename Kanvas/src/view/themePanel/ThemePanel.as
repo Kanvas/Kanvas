@@ -1,25 +1,18 @@
 package view.themePanel
 {
 	import com.kvs.ui.Panel;
-	import com.kvs.ui.Scale9GridSprite;
-	import com.kvs.ui.button.IconBtn;
 	import com.kvs.ui.colorPanel.ColorPanel;
 	import com.kvs.ui.colorPanel.IColorPanelHost;
-	import com.kvs.ui.label.LabelUI;
 	import com.kvs.utils.Map;
 	import com.kvs.utils.XMLConfigKit.StyleManager;
 	import com.kvs.utils.XMLConfigKit.XMLVOMapper;
 	import com.kvs.utils.XMLConfigKit.style.Style;
 	import com.kvs.utils.layout.VerticalLayouter;
 	
-	import control.InteractEvent;
-	
-	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	import flash.filters.DropShadowFilter;
-	import flash.filters.GlowFilter;
-	import flash.geom.Rectangle;
+	
+	import control.InteractEvent;
 	
 	import view.elementSelector.toolBar.StyleBtn;
 	
