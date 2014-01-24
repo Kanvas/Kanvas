@@ -4,16 +4,12 @@ package com.kvs.utils.graphic
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Graphics;
-	import flash.display.Loader;
 	import flash.display.PixelSnapping;
 	import flash.display.Shape;
 	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
-	
-	import mx.graphics.codec.PNGEncoder;
 
 	/**
 	 * 截取显示对象
