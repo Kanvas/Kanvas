@@ -145,7 +145,7 @@ package com.kvs.ui.toolTips
 				
 				updateBgSize();
 				
-				labelUI.metaData = tooltipHolder.metaData;
+				labelUI.mdata = tooltipHolder.metaData;
 				labelUI.render();
 				labelsContainer.addChild(labelUI);
 				

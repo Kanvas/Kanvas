@@ -8,8 +8,6 @@ package landray.kp.utils
 	
 	import landray.kp.core.KPPresenter;
 	import landray.kp.core.kp_internal;
-	
-	import view.toolBar.Debugger;
 
 	public final class ExternalUtil
 	{

@@ -23,7 +23,7 @@ package com.kvs.charts.chart2D.column2D.stack
 		{
 			_horizontalAxis = v;
 			_horizontalAxis.direction = AxisBase.HORIZONTAL_AXIS;
-			_horizontalAxis.metaData = this;
+			_horizontalAxis.mdata = this;
 		}
 		
 		/**

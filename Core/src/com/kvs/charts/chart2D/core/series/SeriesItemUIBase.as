@@ -59,7 +59,7 @@ package com.kvs.charts.chart2D.core.series
 		
 		/**
 		 */
-		public function get metaData():Object
+		public function get mdata():Object
 		{
 			return _metaData;
 		}
@@ -67,7 +67,7 @@ package com.kvs.charts.chart2D.core.series
 		/**
 		 * @private
 		 */
-		public function set metaData(value:Object):void
+		public function set mdata(value:Object):void
 		{
 			_metaData = value;
 		}

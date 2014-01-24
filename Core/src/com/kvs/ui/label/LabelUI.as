@@ -66,7 +66,7 @@ package com.kvs.ui.label
 			preRender();
 			
 			this.visible = labelStyle.enable;
-			StyleManager.setLabelUIText(this, this.metaData);
+			StyleManager.setLabelUIText(this, this.mdata);
 			
 			if (labelStyle.layout == LabelStyle.WRAP)
 			{
@@ -78,7 +78,7 @@ package com.kvs.ui.label
 					textField.fixWidth = maxLabelWidth - labelStyle.paddingLeft - labelStyle.paddingRight;
 				
 				textField.text = text;
-				textField.renderLabel(labelStyle.getTextFormat(metaData));
+				textField.renderLabel(labelStyle.getTextFormat(mdata));
 			}
 			else
 			{
@@ -86,14 +86,14 @@ package com.kvs.ui.label
 				textField.fixWidth = 0;
 				
 				textField.text = text;
-				textField.renderLabel(labelStyle.getTextFormat(metaData));
+				textField.renderLabel(labelStyle.getTextFormat(mdata));
 			}
 			
-			StyleManager.setEffects(textField, labelStyle.text as Text, metaData);
+			StyleManager.setEffects(textField, labelStyle.text as Text, mdata);
 			
 			// 绘制背景
 			this.graphics.clear();
-			StyleManager.setShapeStyle(labelStyle, this.graphics, this.metaData);
+			StyleManager.setShapeStyle(labelStyle, this.graphics, this.mdata);
 			this.graphics.drawRoundRect(0, 0, this.width, this.height, labelStyle.radius, labelStyle.radius);
 			this.graphics.endFill();
 			
@@ -192,12 +192,12 @@ package com.kvs.ui.label
 		 */		
 		private var _metaData:Object;
 
-		public function get metaData():Object
+		public function get mdata():Object
 		{
 			return _metaData;
 		}
 
-		public function set metaData(value:Object):void
+		public function set mdata(value:Object):void
 		{
 			_metaData = value;
 		}

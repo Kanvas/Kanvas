@@ -23,7 +23,7 @@ package
 			//注册初始化函数，容器添加至舞台后调用
 			CoreUtil.initApplication(this, initialize, true);
 		}
-		
+
 		/**
 		 * @private
 		 * 
@@ -37,15 +37,15 @@ package
 			appID = (loaderInfo.parameters.id) ? loaderInfo.parameters.id : "0";
 			//安全沙箱
 			Security.allowDomain("*");
-			
 			//添加JS回调函数,通知JS 初始化完毕，可以传递数据。
 			if (ExternalUtil.initCallBack(this))
 				ExternalUtil.kanvasReady();
 		}
-		
+	
+	
 		private function initDebugger():void
 		{
-			if(!debugger)
+			if(! debugger)
 				addChild(debugger = new Debugger);
 		}
 		

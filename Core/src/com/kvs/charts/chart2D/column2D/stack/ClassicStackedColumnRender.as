@@ -65,7 +65,7 @@ package com.kvs.charts.chart2D.column2D.stack
 							
 							columnItemUI = new StackedColumnUI(itemDataVO);
 							columnItemUI.states = series.states;//样式统一定义
-							columnItemUI.metaData = itemDataVO.metaData;
+							columnItemUI.mdata = itemDataVO.metaData;
 							series.columnUIs.push(columnItemUI);
 							series.canvas.addChild(columnItemUI);
 						}

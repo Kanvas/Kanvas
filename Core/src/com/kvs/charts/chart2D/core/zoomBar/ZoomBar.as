@@ -153,7 +153,7 @@ package com.kvs.charts.chart2D.core.zoomBar
 			rightZoomPoint.setZoomPointRender(style.zoomPoint);
 			addChild(rightZoomPoint);
 			
-			leftZoomPoint.metaData = rightZoomPoint.metaData = style.chart.getFill;
+			leftZoomPoint.mdata = rightZoomPoint.mdata = style.chart.getFill;
 		}
 		
 		/**

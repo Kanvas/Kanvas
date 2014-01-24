@@ -23,7 +23,6 @@ package
 	import util.LayoutUtil;
 	import util.layout.ElementLayoutInfo;
 	import util.layout.LayoutTransformer;
-	import util.textFlow.FlowTextManager;
 	import util.undoRedo.UndoRedoEvent;
 	import util.undoRedo.UndoRedoMannager;
 	

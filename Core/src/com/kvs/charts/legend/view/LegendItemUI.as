@@ -114,7 +114,7 @@ package com.kvs.charts.legend.view
 			canvas.addChild(iconShape);
 			
 			var label:LabelUI = new LabelUI();
-			label.metaData = vo.metaData;
+			label.mdata = vo.metaData;
 			label.style = labelStyle;
 			label.render();
 			label.x = iconShape.width + style.hPadding;

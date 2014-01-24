@@ -63,7 +63,7 @@ package com.kvs.charts.chart2D.line
 			maskUI.graphics.drawRect(locX, this.locY, this.locWidth, this.locHeight);
 			maskUI.graphics.endFill();
 			
-			partUIRender.renderPartUI(canvas, this.currState, this.metaData, this.renderIndex);
+			partUIRender.renderPartUI(canvas, this.currState, this.mdata, this.renderIndex);
 		}
 		
 		/**

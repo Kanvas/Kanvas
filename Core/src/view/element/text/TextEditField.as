@@ -61,6 +61,7 @@ package view.element.text
 		 */		
 		override public function exportData():XML
 		{
+			
 			xmlData = <text/>;
 			xmlData = super.exportData();
 			
