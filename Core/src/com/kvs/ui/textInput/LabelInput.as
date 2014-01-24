@@ -611,12 +611,12 @@ package com.kvs.ui.textInput
 		
 		/**
 		 */		
-		public function set metaData(value:Object):void
+		public function set mdata(value:Object):void
 		{
 			_meta = value;
 		}
 		
-		public function get metaData():Object
+		public function get mdata():Object
 		{
 			return _meta;
 		}

@@ -87,10 +87,10 @@ package view.interact.multiSelect
 			//仅剩一个时，取消临时组合
 			if (control.childElements.length == 1)
 			{
-				var element:ElementBase = control.childElements[0];
+				var el:ElementBase = control.childElements[0];
 				control.clear();
 				control.coreMdt.sendNotification(Command.UN_SELECT_ELEMENT);
-				control.coreMdt.sendNotification(Command.SElECT_ELEMENT, element);
+				control.coreMdt.sendNotification(Command.SElECT_ELEMENT, el);
 			}
 			else
 			{

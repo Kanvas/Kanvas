@@ -854,7 +854,7 @@ package com.kvs.charts.chart2D.encry
 		{
 			_horizontalAxis = v;
 			_horizontalAxis.direction = AxisBase.HORIZONTAL_AXIS;
-			_horizontalAxis.metaData = this;
+			_horizontalAxis.mdata = this;
 			
 			_horizontalAxis.addEventListener(DataResizeEvent.RATE_SERIES_DATA_ITEMS, rateDataItems, false, 0, true);
 			
@@ -876,7 +876,7 @@ package com.kvs.charts.chart2D.encry
 		{
 			_verticalAxis = v;
 			_verticalAxis.direction = AxisBase.VERTICAL_AXIX;
-			_verticalAxis.metaData = this;
+			_verticalAxis.mdata = this;
 		}
 		
 		/**

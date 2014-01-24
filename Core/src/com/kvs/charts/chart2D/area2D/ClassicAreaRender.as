@@ -75,7 +75,7 @@ package com.kvs.charts.chart2D.area2D
 						linePartUI = new PartAreaUI(itemDataVO);
 						linePartUI.partUIRender = this;
 						linePartUI.states = series.states;
-						linePartUI.metaData = itemDataVO.metaData;
+						linePartUI.mdata = itemDataVO.metaData;
 						series.canvas.addChild(linePartUI);
 						series.partUIs.push(linePartUI);
 					}

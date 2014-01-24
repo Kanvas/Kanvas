@@ -29,7 +29,7 @@ package com.kvs.charts.chart2D.bar
 			currState.tx = 0;
 			currState.width = this.columnWidth;
 			
-			StyleManager.drawRect(this, currState, metaData);
+			StyleManager.drawRect(this, currState, mdata);
 		}
 		
 		/**

@@ -310,7 +310,7 @@ package com.kvs.charts.chart2D.core.itemRender
 		{
 			var labelUI:LabelUI  = new LabelUI();
 			labelUI.style = this.valueLabel;
-			labelUI.metaData = this.itemVO.metaData;
+			labelUI.mdata = this.itemVO.metaData;
 			labelUI.render();
 			
 			return BitmapUtil.getBitmap(labelUI);
