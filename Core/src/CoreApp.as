@@ -3,21 +3,15 @@ package
 	import com.kvs.utils.RexUtil;
 	import com.kvs.utils.XMLConfigKit.IApp;
 	import com.kvs.utils.XMLConfigKit.XMLVOLib;
-	import com.kvs.utils.system.OS;
 	
 	import commands.Command;
 	
-	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
-	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import flash.system.Security;
-	import flash.system.System;
 	import flash.utils.ByteArray;
 	
 	import model.ConfigInitor;
@@ -26,17 +20,16 @@ package
 	
 	import util.layout.ElementLayoutInfo;
 	import util.layout.LayoutTransformer;
-	import util.textFlow.FlowTextManager;
 	import util.undoRedo.UndoRedoEvent;
 	import util.undoRedo.UndoRedoMannager;
 	
-	import view.ui.Bubble;
 	import view.editor.text.TextEditor;
 	import view.element.ElementBase;
 	import view.element.imgElement.ImgElement;
 	import view.elementSelector.ElementHover;
 	import view.interact.zoomMove.ZoomMoveControl;
 	import view.ui.BgColorFlasher;
+	import view.ui.Bubble;
 	import view.ui.MainUIBase;
 	import view.ui.ThumbManager;
 

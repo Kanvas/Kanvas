@@ -1,10 +1,8 @@
 package
 {
 	import flash.display.Sprite;
-	import flash.external.ExternalInterface;
 	import flash.system.Security;
 	
-	import landray.kp.core.KPPresenter;
 	import landray.kp.utils.CoreUtil;
 	import landray.kp.utils.ExternalUtil;
 	
@@ -26,13 +24,6 @@ package
 			CoreUtil.initApplication(this, initialize, true);
 		}
 		
-		
-		//===========================================================================
-		// start the app,
-		// call presenter.start(container, path) to start.
-		// container here is this.
-		//===========================================================================
-		
 		/**
 		 * @private
 		 * 
@@ -53,7 +44,7 @@ package
 		
 		private function initDebugger():void
 		{
-			if(!debugger)
+			if(! debugger)
 				addChild(debugger = new Debugger);
 		}
 		

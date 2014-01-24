@@ -267,8 +267,8 @@ package view.editor.text
 			
 			caculateInfoForRoteTransform(textVO, textField.scaleX);
 			
-			this.x = layoutTransformer.elementXToStageX(textVO.x) + r * Math.cos(rad);
-			this.y = layoutTransformer.elementYToStageY(textVO.y) + r * Math.sin(rad);
+			x = layoutTransformer.elementXToStageX(textVO.x) + r * Math.cos(rad);
+			y = layoutTransformer.elementYToStageY(textVO.y) + r * Math.sin(rad);
 		}
 		
 		
