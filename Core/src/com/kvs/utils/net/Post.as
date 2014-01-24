@@ -29,6 +29,7 @@ package com.kvs.utils.net
 		 */	
 		public function Post(url:String, data:Object)
 		{
+			uploader.dataFormat = URLLoaderDataFormat.BINARY;
 			req = new URLRequest(url);
 			req.method = URLRequestMethod.POST;
 			this.data = data;
@@ -51,7 +52,6 @@ package com.kvs.utils.net
 			uploader.addEventListener(Event.COMPLETE, complete);
 			uploader.addEventListener(IOErrorEvent.IO_ERROR, errorHandler);
 			uploader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, securyityHandler);
-			uploader.dataFormat = URLLoaderDataFormat.BINARY;
 			
 			req.data = getMultipart();
 			uploader.load(req);
@@ -121,8 +121,13 @@ package com.kvs.utils.net
 		 */	
 		private function complete(e:Event):void
 		{
+			result = e.target.data;
 			this.dispatchEvent(e);
 		}
+		
+		/**
+		 */		
+		public var result:Object;
 		
 		/**
 		 */	

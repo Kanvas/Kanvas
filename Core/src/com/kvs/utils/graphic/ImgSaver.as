@@ -32,7 +32,7 @@ package com.kvs.utils.graphic
 		{
 			var imageByteArray:ByteArray = PNGEncoder.encode(BitmapUtil.getBitmapData(target));
 			
-			return Base64.encode(imageByteArray);
+			return Base64.encodeByteArray(imageByteArray);
 		}
 		
 		
