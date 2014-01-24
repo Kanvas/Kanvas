@@ -71,7 +71,7 @@ package com.kvs.charts.chart2D.core.zoomBar
 		public function render():void
 		{
 			//以填充色为基准
-			leftZoomPoint.metaData = mdata;
+			leftZoomPoint.mdata = mdata;
 			this.leftZoomPoint.render();
 		}
 		

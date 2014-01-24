@@ -45,7 +45,7 @@ package com.kvs.charts.chart2D.core.zoomBar
 		public function render():void
 		{
 			this.graphics.clear();
-			dataRender.render(this, metaData);
+			dataRender.render(this, mdata);
 		}
 		
 		/**
