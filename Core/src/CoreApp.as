@@ -264,7 +264,8 @@ package
 		public function getImgURLList():String
 		{
 			var temp:Array = [];
-			for each (var imgElement:ImgElement in CoreFacade.coreProxy.imageElements)
+			var imgs:Vector.<ImgElement> = CoreFacade.coreProxy.imageElements;
+			for each (var imgElement:ImgElement in imgs)
 			{
 				temp.push(imgElement.imgVO.url);
 			}

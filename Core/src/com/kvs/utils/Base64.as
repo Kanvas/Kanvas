@@ -10,8 +10,31 @@ package com.kvs.utils
 		private static const _decodeChars:Vector.<int> = InitDecodeChar();  
 		
 		/**
+		 * 对字符串编码
 		 */		
-		public static function encode(data:ByteArray):String  
+		public static function encode(data:String):String
+		{
+			var bytes:ByteArray = new ByteArray();   
+			bytes.writeUTFBytes(data);   
+			
+			// Return encoded ByteArray   
+			return encodeByteArray(bytes); 
+		}
+		
+		/**
+		 * 对编码过的字符串解码
+		 */		
+		public static function decode(data:String):String {   
+			// Decode data to ByteArray   
+			var bytes:ByteArray = decodeToByteArray(data);   
+			
+			// Convert to string and return   
+			return bytes.readUTFBytes(bytes.length);   
+		}  
+		
+		/**
+		 */		
+		public static function encodeByteArray(data:ByteArray):String  
 		{  
 			var out:ByteArray = new ByteArray();  
 			//Presetting the length keep the memory smaller and optimize speed since there is no "grow" needed  
@@ -57,7 +80,7 @@ package com.kvs.utils
 		
 		/**
 		 */		
-		public static function decode(str:String):ByteArray  
+		public static function decodeToByteArray(str:String):ByteArray  
 		{  
 			var c1:int;  
 			var c2:int;  

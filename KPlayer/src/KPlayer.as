@@ -1,10 +1,8 @@
 package
 {
 	import flash.display.Sprite;
-	import flash.external.ExternalInterface;
 	import flash.system.Security;
 	
-	import landray.kp.core.KPPresenter;
 	import landray.kp.utils.CoreUtil;
 	import landray.kp.utils.ExternalUtil;
 	
@@ -26,13 +24,6 @@ package
 			CoreUtil.initApplication(this, initialize, true);
 		}
 		
-		
-		//===========================================================================
-		// start the app,
-		// call presenter.start(container, path) to start.
-		// container here is this.
-		//===========================================================================
-		
 		/**
 		 * @private
 		 * 
@@ -46,6 +37,7 @@ package
 			appID = (loaderInfo.parameters.id) ? loaderInfo.parameters.id : "0";
 			//安全沙箱
 			Security.allowDomain("*");
+			
 			//添加JS回调函数,通知JS 初始化完毕，可以传递数据。
 			if (ExternalUtil.initCallBack(this))
 				ExternalUtil.kanvasReady();

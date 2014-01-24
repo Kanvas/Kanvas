@@ -84,14 +84,17 @@ package landray.kp.utils
 		 * 
 		 * @param value 传入的加密XML String
 		 */
-		private static function setBase64Data(value:String):void
+		private static function setBase64Data(value:String, ifCompress:Boolean = true):void
 		{
 			if (value) 
 			{
 				//传入的参数不为URL
 				//处理外部传入的BASE64压缩数据
-				var newByte:ByteArray = Base64.decode(value);
-				newByte.uncompress();
+				var newByte:ByteArray = Base64.decodeToByteArray(value);
+				
+				if (ifCompress)
+					newByte.uncompress();
+				
 				//kplayer presenter初始化
 				presenter.start(kplayer, kplayer.appID, false, String(newByte.toString()));
 			}

@@ -67,7 +67,7 @@
 			<compiler.debug>false</compiler.debug>
 		</mxmlc>
 		
-		<!--protect keyFilePath="${WORK_SPACE}/secureSWF/key.data" outputPath="${WORK_SPACE}/release/"
+		<protect keyFilePath="${WORK_SPACE}/secureSWF/key.data" outputPath="${WORK_SPACE}/release/"
 			preset="best_size" superCompression="true" removeLinesNumbers="true" slr="true">
 			<fileset dir="${WORK_SPACE}/release" includes="Kanvas.swf"/>
 
@@ -82,7 +82,7 @@
 			
 			<rule filter="model.CoreProxy" rename="true"/>
 			<rule filter="model.CoreProxy.*" 
-				controlFlowObfuscation="${controlFlowObfuscation}" 
+				controlFlowObfuscation="${controlFlowObfuscation}"
 				dynamicCodeWrapping="${dynamicCodeWrapping}"
 				publicOnly="false" rename="true"/>
 			
@@ -101,7 +101,7 @@
 				controlFlowObfuscation="${controlFlowObfuscation}" 
 				dynamicCodeWrapping="${dynamicCodeWrapping}"
 				publicOnly="false" rename="true"/>
-		</protect-->
+		</protect>
 		
 	</target>
 
@@ -122,7 +122,7 @@
 			<compiler.debug>false</compiler.debug>
 		</mxmlc>
 	
-		<!--protect keyFilePath="${WORK_SPACE}/secureSWF/key.data" outputPath="${WORK_SPACE}/release/"
+		<protect keyFilePath="${WORK_SPACE}/secureSWF/key.data" outputPath="${WORK_SPACE}/release/"
 			preset="best_size" superCompression="true" removeLinesNumbers="true" slr="true">
 			<fileset dir="${WORK_SPACE}/release" includes="KPlayer.swf"/>
 
@@ -140,7 +140,7 @@
 				dynamicCodeWrapping="${dynamicCodeWrapping}"
 				publicOnly="false" rename="true"/>
 			
-		</protect-->
+		</protect>
 	</target>
 	
 	<target name="fresh release dir" >
