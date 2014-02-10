@@ -185,7 +185,7 @@ package view.interact.autoGroup
 			{
 				element.rotation = element.vo.rotation + dis;
 				tempRollPoint.setTo(element.vo.x, element.vo.y);
-				var point:Point = PointUtil.rotatePointAround(tempRollPoint, curElement.middleCenter, MathUtil.angleToRadian(dis));
+				var point:Point = PointUtil.rotate(tempRollPoint, curElement.middleCenter, MathUtil.angleToRadian(dis));
 				element.x = point.x;
 				element.y = point.y;
 			}
@@ -201,7 +201,7 @@ package view.interact.autoGroup
 			{
 				element.rotation = element.vo.rotation += dis;
 				tempRollPoint.setTo(element.vo.x, element.vo.y);
-				var point:Point = PointUtil.rotatePointAround(tempRollPoint, curElement.middleCenter, MathUtil.angleToRadian(dis));
+				var point:Point = PointUtil.rotate(tempRollPoint, curElement.middleCenter, MathUtil.angleToRadian(dis));
 				element.x = element.vo.x = point.x;
 				element.y = element.vo.y = point.y;
 			}

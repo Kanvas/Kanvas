@@ -5,18 +5,16 @@ package com.kvs.utils
 	public class PointUtil
 	{
 		/**
-		 * point围绕orgPoint旋转一定弧度之后所活得的点
+		 * point围绕origin旋转一定弧度之后所活得的点
 		 * 
 		 */
-		public static function rotatePointAround(point:Point, origPoint:Point, radian:Number):Point
+		public static function rotate(point:Point, origin:Point, radian:Number):Point
 		{
 			var result:Point = new Point;
-			var vector:Point = point.subtract(origPoint);
+			var vector:Point = point.subtract(origin);
 			var cos:Number = Math.cos(radian);
 			var sin:Number = Math.sin(radian);
-			result.x = vector.x * cos - vector.y * sin + origPoint.x;
-			result.y = vector.x * sin + vector.y * cos + origPoint.y;
-			return result;
+			return new Point(vector.x * cos - vector.y * sin + origin.x, vector.x * sin + vector.y * cos + origin.y);
 		}
 		/**
 		 * point乘以一个数值，会改变该点的坐标

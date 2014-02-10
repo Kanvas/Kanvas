@@ -1,5 +1,6 @@
 package view.ui
 {
+	import com.kvs.utils.RectangleUtil;
 	import com.kvs.utils.graphic.BitmapUtil;
 	
 	import flash.display.BitmapData;
@@ -83,8 +84,17 @@ package view.ui
 		{
 			_boundForAutoZoom = value;
 			
+			__boundDiagonalDistance = RectangleUtil.getDiagonalDistance(bound);
+			
 			this.dispatchEvent(new KVSEvent(KVSEvent.UPATE_BOUND));
 		}
+		
+		public function get boundDiagonalDistance():Number
+		{
+			return  __boundDiagonalDistance;
+		}
+		
+		private var __boundDiagonalDistance:Number;
 		
 		/**
 		 */		

@@ -26,7 +26,7 @@ package landray.kp.maps.simple.elements
 			
 			mouseChildren = false;
 			
-			shape.cacheAsBitmap = true;
+			//shape.cacheAsBitmap = true;
 			
 			if (vo.style) 
 				render();
@@ -93,7 +93,7 @@ package landray.kp.maps.simple.elements
 		
 		public function get related():Boolean
 		{
-			return vo.property.toLocaleLowerCase() == "true"
+			return vo.property.toLocaleLowerCase() == "true";
 		}
 		
 		public function get tips():String

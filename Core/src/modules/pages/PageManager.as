@@ -29,10 +29,10 @@ package modules.pages
 			pageQuene.addEventListener(PageEvent.PAGE_ADDED, defaultHandler);
 			pageQuene.addEventListener(PageEvent.PAGE_DELETED, defaultHandler);
 			pageQuene.addEventListener(PageEvent.UPDATE_PAGES_LAYOUT, defaultHandler);
-			coreMdt.mainUI.addEventListener(MouseEvent.MOUSE_DOWN, mouseDown);
-			coreMdt.mainUI.addEventListener(MouseEvent.MOUSE_WHEEL, mouseWheel);
+			//coreMdt.mainUI.addEventListener(MouseEvent.MOUSE_DOWN, mouseDown);
+			//coreMdt.mainUI.addEventListener(MouseEvent.MOUSE_WHEEL, mouseWheel);
 		}
-		
+		/*
 		private function mouseDown(e:MouseEvent):void
 		{
 			coreMdt.mainUI.stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
@@ -40,7 +40,6 @@ package modules.pages
 		}
 		private function mouseMove(e:MouseEvent):void
 		{
-			resetView();
 			coreMdt.mainUI.stage.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
 			coreMdt.mainUI.stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUp);
 		}
@@ -52,9 +51,8 @@ package modules.pages
 		
 		private function mouseWheel(e:MouseEvent):void
 		{
-			resetView();
 		}
-		
+		*/
 		/**
 		 * 根据画布当前布局获取pageVO
 		 */
@@ -141,12 +139,8 @@ package modules.pages
 		
 		public function viewPage(page:int):void
 		{
-			if (coreMdt.zoomMoveControl.isTweening == false && lastViewPage != page)
-			{
-				lastViewPage = page;
-				var scene:Scene = PageUtil.getSceneFromVO(pages[page], coreMdt.mainUI);
-				coreMdt.zoomMoveControl.zoomRotateMoveTo(scene.scale, scene.rotation, scene.x, scene.y);
-			}
+			var scene:Scene = PageUtil.getSceneFromVO(pages[page], coreMdt.mainUI);
+			coreMdt.zoomMoveControl.zoomRotateMoveTo(scene.scale, scene.rotation, scene.x, scene.y);
 		}
 		
 		public function resetView():void

@@ -3,6 +3,7 @@ package view.interact.zoomMove
 	import com.greensock.TweenMax;
 	import com.greensock.easing.*;
 	import com.kvs.utils.MathUtil;
+	import com.kvs.utils.RectangleUtil;
 	
 	import flash.display.Shape;
 	import flash.display.Sprite;
@@ -56,11 +57,11 @@ package view.interact.zoomMove
 
 		public function flash(time:Number = 0.3, easeFlash:Object = null):void
 		{
-			if (packer) packer.modCanvasPositionEnd();
+			close();
+			
 			if (Math.max(canvasTargetScale / canvas.scaleX, canvas.scaleX / canvasTargetScale) > 1.0005)
 				control.mainUI.curScreenState.disableCanvas();
 			
-			TweenMax.killTweensOf(canvas, false);
 			TweenMax.to(canvas, time, {scaleX: canvasTargetScale, scaleY: canvasTargetScale, x: canvasTargetX, y: canvasTargetY, 
 				ease : easeFlash, 
 				onUpdate : updated,
@@ -79,36 +80,75 @@ package view.interact.zoomMove
 			if (Math.max(canvasTargetScale / canvas.scaleX, canvas.scaleX / canvasTargetScale) > 1.0005)
 				control.mainUI.curScreenState.disableCanvas();
 			
-			
-			if (packer == null) 
+			if(!packer) 
 				packer = new CanvasLayoutPacker(control.mainUI);
 			else
 				TweenMax.killTweensOf(packer, false);
 			
 			canvasTargetRotation = MathUtil.modTargetRotation(packer.rotation, canvasTargetRotation);
 			
+			var canvasMiddleScale:Number = packer.modCanvasPositionStart(canvasTargetX, canvasTargetY, canvasTargetScale, canvasTargetRotation);
 			
-			var scalePlus:Number = Math.abs(MathUtil.log2(canvasTargetScale) - MathUtil.log2(canvas.scaleX));
-			var timeScale:Number = (scalePlus < control.plusScale) ? control.plusScale / speedScale + scalePlus / speedScale : scalePlus / speedScale;
+			var timeScale:Number = getScalePlus(canvasMiddleScale);
 			var timeRotation:Number = Math.abs(canvasTargetRotation - packer.rotation) / speedRotation;
 			var time:Number = Math.min(Math.max(timeScale, timeRotation, control.minTweenTime), control.maxTweenTime);
+			time *= 3;
 			trace("time==============================");
 			trace("scale:", timeScale);
 			trace("rotation:", timeRotation);
 			
+			TweenMax.to(packer, time, {
+				progress:1, 
+				rotation:canvasTargetRotation, 
+				ease:easeFlash, 
+				onUpdate:updated, 
+				onComplete:finishZoom
+			});
+			
 			//缩放差距不大时启用先缩小后放大式镜头缩放
-			if (scalePlus < 1)
+			/*if (isNaN(canvasMiddleScale))
+			{
+				TweenMax.to(packer, time, {
+					progress:1, 
+					scale:MathUtil.log2(canvasTargetScale), 
+					rotation:canvasTargetRotation, 
+					ease:easeFlash, 
+					onUpdate:updated, 
+					onComplete:finishZoom
+				});
+			}
+			else
+			{
+				TweenMax.to(packer, time * .5, {
+					scale:MathUtil.log2(canvasMiddleScale), 
+					ease:Quad.easeIn
+				});
+				TweenMax.to(packer, time * .5, {
+					scale:MathUtil.log2(canvasTargetScale), 
+					delay:time * .5, 
+					ease:Quad.easeOut
+				});
+				TweenMax.to(packer, time, {
+					rotation:canvasTargetRotation, 
+					ease:easeFlash, 
+					onUpdate:updated, 
+					onComplete:finishZoom
+				});
+			}*/
+			
+			
+			/*if (scalePlus < 1)
 			{
 				var canvasMiddleScale:Number = MathUtil.exp2(MathUtil.log2(Math.min(canvasTargetScale, canvas.scaleX)) - control.plusScale);
 				packer.modCanvasPositionStart(canvasTargetX, canvasTargetY, canvasTargetScale, canvasTargetRotation, true, canvasMiddleScale);
 				TweenMax.to(packer, time * .5, {
 					scale:MathUtil.log2(canvasMiddleScale), 
-					ease:Quad.easeOut
+					ease:Linear.easeNone
 				});
 				TweenMax.to(packer, time * .5, {
 					scale:MathUtil.log2(canvasTargetScale), 
 					delay:time * .5, 
-					ease:Quad.easeIn
+					ease:Linear.easeNone
 				});
 				TweenMax.to(packer, time, {
 					rotation:canvasTargetRotation, 
@@ -127,11 +167,20 @@ package view.interact.zoomMove
 					onUpdate:updated, 
 					onComplete:finishZoom
 				});
-			}
+			}*/
 			isFlashing = true;
 		}
 		
-		private var packer:CanvasLayoutPacker;
+		
+		private function getScalePlus(canvasMiddleScale:Number):Number
+		{
+			var log2S:Number = MathUtil.log2(canvas.scaleX);
+			var log2E:Number = MathUtil.log2(canvasTargetScale);
+			var log2M:Number = MathUtil.log2(canvasMiddleScale);
+			return ((isNaN(log2M)) ? Math.abs(log2E - log2S) : (Math.abs(log2E - log2M) + Math.abs(log2M - log2S))) / speedScale;
+		}
+		
+		
 		
 		/**
 		 */		
@@ -158,63 +207,16 @@ package view.interact.zoomMove
 		
 		/**
 		 */		
-		private var _canvasTargetScale:Number = 1;
+		public var canvasTargetScale:Number = 1;
 
 		/**
 		 */
-		public function get canvasTargetScale():Number
-		{
-			return _canvasTargetScale;
-		}
-
-		/**
-		 * @private
-		 */
-		public function set canvasTargetScale(value:Number):void
-		{
-			_canvasTargetScale = value;
-		}
-
+		public var canvasTargetX:Number = 0;
 		
 		/**
 		 */		
-		private var _canvasTargetX:Number = 0;
-
-		/**
-		 */
-		public function get canvasTargetX():Number
-		{
-			return _canvasTargetX;
-		}
-
-		/**
-		 * @private
-		 */
-		public function set canvasTargetX(value:Number):void
-		{
-			_canvasTargetX = value;
-		}
-
+		public var canvasTargetY:Number = 0;
 		
-		/**
-		 */		
-		private var _canvasTargetY:Number = 0;
-
-		/**
-		 */
-		public function get canvasTargetY():Number
-		{
-			return _canvasTargetY;
-		}
-
-		/**
-		 * @private
-		 */
-		public function set canvasTargetY(value:Number):void
-		{
-			_canvasTargetY = value;
-		}
-
 		
 		/**
 		 */		
@@ -236,5 +238,7 @@ package view.interact.zoomMove
 		
 		private var speedScale:Number = 4;
 		private var speedRotation:Number = 90;
+		
+		private var packer:CanvasLayoutPacker;
 	}
 }

@@ -90,7 +90,7 @@ package view.interact.zoomMove
 			if (ifEnable)
 			{
 				flasher.canvasTargetX += xOff;
-				flasher.canvasTargetY += yOff
+				flasher.canvasTargetY += yOff;
 				flasher.flash(0.15);
 			}
 		}

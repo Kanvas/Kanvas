@@ -12,7 +12,6 @@ package view.interact
 	import util.LayoutUtil;
 	
 	import view.element.ElementBase;
-	import view.element.text.TextEditField;
 	import view.ui.Canvas;
 
 	public final class ElementAutoAlignController
@@ -92,13 +91,11 @@ package view.interact
 								var aimPoint:Point = getPointByIntersect(points1, points2);
 								//距离判断
 								var dis:Number = distance(aimPoint, curPoint);
-								trace(dis, areaPosition);
 								if (dis < areaPosition)
 								{
 									alignArr[i] = new Point;
 									drawLineInPoints(Point.interpolate(points2[0], points2[1], .5), aimPoint);
 									//此方向的增量向量
-									trace("found near");
 									alignArr[i].x = tempPoint.x = aimPoint.x - curPoint.x;
 									alignArr[i].y = tempPoint.y = aimPoint.y - curPoint.y;
 									elementsLoopBreak = true;
@@ -117,7 +114,6 @@ package view.interact
 			}//end of for i
 			if (alignArr[0] && alignArr[1])
 			{
-				trace("two all near")
 				tempPoint.x = alignArr[0].x + alignArr[1].x;
 				tempPoint.y = alignArr[0].y + alignArr[1].y;
 			}
@@ -130,9 +126,9 @@ package view.interact
 		 */
 		private function checkPoint(current:ElementBase, point:Point, axis:String = "x"):Point
 		{
-			var area:Number = areaPosition / canvas.scaleX;
 			tempPoint.x = NaN;
 			tempPoint.y = NaN;
+			var area:Number = areaPosition / canvas.scaleX;
 			var elementsLoopBreak:Boolean = false;
 			for each (var element:ElementBase in elements)
 			{
@@ -182,8 +178,8 @@ package view.interact
 		{
 			p1 = LayoutUtil.elementPointToStagePoint(p1.x, p1.y, canvas);
 			p2 = LayoutUtil.elementPointToStagePoint(p2.x, p2.y, canvas);
-			CoreUtil.drawCircle(0xFF0000, p1, 2);
-			CoreUtil.drawCircle(0x0000FF, p2, 2);
+			//CoreUtil.drawCircle(0xFF0000, p1, 2);
+			//CoreUtil.drawCircle(0x0000FF, p2, 2);
 			return Point.distance(p1, p2);
 		}
 		

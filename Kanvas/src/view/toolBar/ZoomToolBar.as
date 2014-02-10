@@ -66,19 +66,19 @@ package view.toolBar
 			zoomAuto.x = zoomIn.x = zoomOut.x = 4;
 			
 			var pathZoomAuto:String = "landray.kp.ui.ZoomAuto";
-			zoomAuto.setIcons(pathZoomAuto, pathZoomAuto, pathZoomAuto);
 			var pathZoomIn  :String = "landray.kp.ui.ZoomIn";
-			zoomIn  .setIcons(pathZoomIn  , pathZoomIn  , pathZoomIn);
 			var pathZoomOut :String = "landray.kp.ui.ZoomOut";
+			zoomAuto.setIcons(pathZoomAuto, pathZoomAuto, pathZoomAuto);
+			zoomIn  .setIcons(pathZoomIn  , pathZoomIn  , pathZoomIn);
 			zoomOut .setIcons(pathZoomOut , pathZoomOut , pathZoomOut);
 			
 			subContainer.addChild(zoomIn  ).y = 36;
 			subContainer.addChild(zoomOut ).y = 68;
 			subContainer.addChild(zoomAuto).y = 4 ;
 			
-			zoomIn  .addEventListener(MouseEvent.CLICK, clickZoomIn  );
-			zoomOut .addEventListener(MouseEvent.CLICK, clickZoomOut );
 			zoomAuto.addEventListener(MouseEvent.CLICK, clickZoomAuto);
+			zoomIn  .addEventListener(MouseEvent.CLICK, clickZoomIn);
+			zoomOut .addEventListener(MouseEvent.CLICK, clickZoomOut);
 			
 			stage.addEventListener(MouseEvent.MOUSE_MOVE, timerShowMouseMove);
 		}

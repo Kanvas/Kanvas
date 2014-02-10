@@ -22,7 +22,7 @@ package modules.pages
 			scene.rotation = MathUtil.modRotation(- pageVO.rotation);
 			scene.rotation = (scene.rotation > 180) ? scene.rotation - 360 : scene.rotation;
 			//position
-			var plus:Point = PointUtil.rotatePointAround(new Point(pageVO.x * scene.scale, pageVO.y * scene.scale), new Point(0, 0), MathUtil.angleToRadian(scene.rotation));
+			var plus:Point = PointUtil.rotate(new Point(pageVO.x * scene.scale, pageVO.y * scene.scale), new Point(0, 0), MathUtil.angleToRadian(scene.rotation));
 			
 			scene.x = (mainUI.bound.left + mainUI.bound.right) * .5 - plus.x;
 			scene.y = (mainUI.bound.top + mainUI.bound.bottom) * .5 - plus.y;
