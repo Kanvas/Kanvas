@@ -49,7 +49,7 @@ package
 	
 		private function initDebugger():void
 		{
-			if(! debugger)
+			if(!debugger)
 				addChild(debugger = new Debugger);
 		}
 		

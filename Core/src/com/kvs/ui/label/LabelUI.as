@@ -72,10 +72,7 @@ package com.kvs.ui.label
 			{
 				textField.ifMutiLine = true;
 				
-				if (maxLabelWidth - labelStyle.paddingLeft - labelStyle.paddingRight < minLabelWidth)
-					textField.fixWidth = minLabelWidth;
-				else
-					textField.fixWidth = maxLabelWidth - labelStyle.paddingLeft - labelStyle.paddingRight;
+				textField.fixWidth = Math.max(minLabelWidth, maxLabelWidth - labelStyle.paddingLeft - labelStyle.paddingRight);
 				
 				textField.text = text;
 				textField.renderLabel(labelStyle.getTextFormat(mdata));
@@ -103,11 +100,11 @@ package com.kvs.ui.label
 		
 		/**
 		 */		
-		public var maxLabelWidth:Number = 0;
+		public var maxLabelWidth:Number = 100;
 		
 		/**
 		 */		
-		private var minLabelWidth:Number = 15;
+		public var minLabelWidth:Number = 15;
 		
 		/**
 		 * 相对于某点的布局, 默认居中

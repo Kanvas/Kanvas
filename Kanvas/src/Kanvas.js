@@ -1,4 +1,4 @@
-(function(){
+(function() {
 	
 	var chartsMap = {};
 	var chartsArray = [];
@@ -434,9 +434,11 @@
 		};
 		
 		//显示鼠标移入时的提示
-		that.showLinkOveredTip = function(value) {
+		that.showLinkOveredTip = function() {
+			var msg = getArgument(arguments[0], "");
+			var w = getArgument(arguments[1], 0);
 			if (this.ifReady) {
-				this.swf.showLinkOveredTip(value);
+				this.swf.showLinkOveredTip(msg, w);
 			}
 		};
 		
@@ -446,12 +448,8 @@
 		};
 		
 		that.unselected = function() {
-			var broadcastEvent = arguments[0];
-			if (broadcastEvent == undefined) 
-				broadcastEvent = true;
-			var swfUnselect = arguments[1];
-			if (swfUnselect == undefined)
-				swfUnselect = false;
+			var broadcastEvent = getArgument(arguments[0], true);
+			var swfUnselect = getArgument(arguments[1], false);
 			if (broadcastEvent) {
 				this.dispatchEvent({type: KANVAS.event.UNSELECTED, target: this});
 			}
@@ -494,6 +492,11 @@
 	//-------------------------------以下是基础函数库可掠过，无需关注----------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------------------------------------------------------------
 	
+	function getArgument(arg, defaultValue) {
+		if (arg == undefined)
+			arg = defaultValue;
+		return arg;
+	};
 	
 	function checkNavigator() {
 		var Sys = {};

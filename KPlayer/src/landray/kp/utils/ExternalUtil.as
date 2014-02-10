@@ -138,9 +138,9 @@ package landray.kp.utils
 		 * @private
 		 * js回调函数，取消元素的选择状态
 		 */
-		private static function showLinkOveredTip(value:String):void
+		private static function showLinkOveredTip(msg:String, w:Number = 0):void
 		{
-			presenter.config.kp_internal::viewer.kp_internal::showLinkOveredTip(value);
+			presenter.config.kp_internal::viewer.kp_internal::showLinkOveredTip(msg, w);
 		}
 		
 		//---------------------------------------------------------------------------

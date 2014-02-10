@@ -12,7 +12,7 @@ package landray.kp.view
 	import landray.kp.core.KPEmbeds;
 	import landray.kp.core.KPProvider;
 	import landray.kp.core.kp_internal;
-	import landray.kp.maps.simple.comman.ToolTipManager;
+	import landray.kp.maps.simple.comman.ElementToolTip;
 	import landray.kp.mediator.MediatorViewer;
 	import landray.kp.utils.CoreUtil;
 	
@@ -78,8 +78,7 @@ package landray.kp.view
 			
 			Bubble.init(stage);
 			
-			toolTip = new ToolTipManager(this);
-			
+			toolTip = new ElementToolTip(this);
 			config.kp_internal::tipsManager = new ToolTipsManager(this);
 			config.kp_internal::tipsManager.setStyleXML(KPEmbeds.instance.styleTips);
 			
@@ -181,14 +180,18 @@ package landray.kp.view
 		kp_internal function unselected():void
 		{
 			if (kp_internal::selector)
-			{
 				kp_internal::selector.visible = false;
-			}
 		}
 		
-		kp_internal function showLinkOveredTip(value:String):void
+		kp_internal function setToolTipMultiline(w:Number):void
 		{
-			toolTip.showToolTip(value);
+			config.kp_internal::tipsManager.getStyle().layout = "wrap";
+			config.kp_internal::tipsManager.maxWidth = w;
+		}
+		
+		kp_internal function showLinkOveredTip(msg:String, w:Number = 0):void
+		{
+			toolTip.showToolTip(msg, w);
 		}
 		
 		kp_internal function setScreenState(state:String):void
@@ -315,7 +318,7 @@ package landray.kp.view
 		/**
 		 * @private
 		 */
-		private var toolTip:ToolTipManager;
+		private var toolTip:ElementToolTip;
 		
 		/**
 		 * @private
