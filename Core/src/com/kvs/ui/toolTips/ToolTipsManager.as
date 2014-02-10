@@ -1,9 +1,9 @@
 package com.kvs.ui.toolTips
 {
-	import com.kvs.utils.XMLConfigKit.XMLVOMapper;
-	import com.kvs.utils.XMLConfigKit.style.LabelStyle;
 	import com.greensock.TweenLite;
 	import com.greensock.TweenMax;
+	import com.kvs.utils.XMLConfigKit.XMLVOMapper;
+	import com.kvs.utils.XMLConfigKit.style.LabelStyle;
 	
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -50,6 +50,21 @@ package com.kvs.ui.toolTips
 		{
 			toolTipUI.style = value;
 			toolTipUI.updateStyle();
+		}
+		
+		public function getStyle():LabelStyle
+		{
+			return toolTipUI.style;
+		}
+		
+		public function get maxWidth():Number
+		{
+			return toolTipUI.maxWidth;
+		}
+		
+		public function set maxWidth(value:Number):void
+		{
+			toolTipUI.maxWidth = value;
 		}
 		
 		/**
@@ -174,6 +189,7 @@ package com.kvs.ui.toolTips
 		private function finishHide():void
 		{
 			isHiding = false;
+			toolTipUI.style.layout = "normal";
 		}
 		
 		/**
@@ -202,7 +218,7 @@ package com.kvs.ui.toolTips
 			if (ifMoving)
 			{
 				toolTipUI.x = container.mouseX + toolTipUI.width / 2 + toolTipUI.style.hMargin;
-				toolTipUI.y = container.mouseY + 30//toolTipUI.height;
+				toolTipUI.y = container.mouseY + 30;//toolTipUI.height
 				
 				adjustTipUILocation();
 			}

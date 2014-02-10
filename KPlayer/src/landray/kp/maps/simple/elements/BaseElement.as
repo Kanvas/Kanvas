@@ -108,6 +108,18 @@ package landray.kp.maps.simple.elements
 		
 		private var __tips:String;
 		
+		public function get tipWidth():Number
+		{
+			return __tipWidth;
+		}
+		
+		public function set tipWidth(value:Number):void
+		{
+			__tipWidth = value;
+		}
+		
+		private var __tipWidth:Number;
+		
 		/**
 		 * 对应的ＶＯ结构体。
 		 */

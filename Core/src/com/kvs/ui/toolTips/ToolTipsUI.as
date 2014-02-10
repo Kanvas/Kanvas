@@ -60,13 +60,23 @@ package com.kvs.ui.toolTips
 			_toolTipsVO = value;
 		}
 		
+		public function get maxWidth():Number
+		{
+			return labelUI.maxLabelWidth;
+		}
+		
+		public function set maxWidth(value:Number):void
+		{
+			labelUI.maxLabelWidth = value;
+		}
+		
 		/**
 		 */		
 		private function init():void
 		{
 			this.mouseChildren = false;
 			this.mouseEnabled = false;
-			label.multiline = true;;
+			label.multiline = true;
 			label.autoSize = "left";
 			
 			addChild(bg);
