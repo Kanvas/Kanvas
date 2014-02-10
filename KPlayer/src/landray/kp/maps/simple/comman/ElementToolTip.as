@@ -51,6 +51,7 @@ package landray.kp.maps.simple.comman
 						{
 							target.kp_internal::setToolTipMultiline(element.tipWidth);
 						}
+						trace("show Handler:", element.tipWidth)
 						showTips();
 					}
 					else
