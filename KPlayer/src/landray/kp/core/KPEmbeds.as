@@ -21,7 +21,7 @@ package landray.kp.core
 										<border thikness='1' alpha='0' color='555555' pixelHinting='true'/>
 										<fill color='e96565' alpha='0.9'/>
 										<format font='雅痞' size='13' color='ffffff'/>
-										<text value='${tips}'>
+										<text value='${tips}' substr='2000'>
 											<effects>
 												<shadow color='0' alpha='0.3' distance='1' blur='1' angle='90'/>
 											</effects>

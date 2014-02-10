@@ -172,6 +172,7 @@ package com.kvs.ui.toolTips
 			else
 			{
 				isHiding = true;
+				toolTipUI.style.layout = "normal";
 				TweenLite.to(toolTipUI, 0.3, {alpha: 0, onComplete:finishHide});
 			}
 		}
@@ -189,7 +190,6 @@ package com.kvs.ui.toolTips
 		private function finishHide():void
 		{
 			isHiding = false;
-			toolTipUI.style.layout = "normal";
 		}
 		
 		/**
