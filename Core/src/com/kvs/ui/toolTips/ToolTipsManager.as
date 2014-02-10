@@ -119,6 +119,12 @@ package com.kvs.ui.toolTips
 			toolTipUI.tooltipHolder = evt.toolTipsHolder;
 			toolTipUI.updateLabel();
 			
+			if (toolTipUI.height <= 30 && toolTipUI.style.layout == "wrap")
+			{
+				toolTipUI.style.layout = "normal";
+				toolTipUI.updateLabel();
+			}
+			
 			isHorizontal = evt.toolTipsHolder.isHorizontal;
 			
 			if (evt.toolTipsHolder.locked && evt.toolTipsHolder.location)// 固定位置
