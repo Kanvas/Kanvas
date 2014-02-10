@@ -153,22 +153,26 @@ package util.layout
 				//需要将移动到的点
 				//progress
 				var sceAC:Point = Point.interpolate(sceAT, sceAF, percent);
-				//sceAC = PointUtil.rotate(sceAC, sceCO, MathUtil.angleToRadian(rotation - startRotation));
+				sceAC = PointUtil.rotate(sceAC, sceCO, MathUtil.angleToRadian(rotation - startRotation));
 				var sceBC:Point = Point.interpolate(sceBT, sceBF, percent);
+				sceBC = PointUtil.rotate(sceBC, sceCO, MathUtil.angleToRadian(rotation - startRotation));
 				//使用AB中点作为CANVAS移动参照
 				var sceOC:Point = Point.interpolate(sceAC, sceBC, .5);
 				var eleOC:Point = Point.interpolate(eleAO, eleBO, .5);
-				sceOC = PointUtil.rotate(sceOC, sceCO, MathUtil.angleToRadian(rotation - startRotation));
+				//sceOC = PointUtil.rotate(sceOC, sceCO, MathUtil.angleToRadian(rotation - startRotation));
 				
 				CoreUtil.drawCircle(0xFF0000, sceAC, 2);
 				CoreUtil.drawCircle(0x0000FF, sceBC, 2);
-				CoreUtil.drawCircle(0x00FF00, LayoutUtil.elementPointToStagePoint(eleOC.x, eleOC.y, canvas), 2);
+				//
 				
 				//get canvas plus
 				PointUtil.multiply(eleOC, canvas.scaleX);
 				eleOC = PointUtil.rotate(eleOC, origin, MathUtil.angleToRadian(rotation));
 				canvas.x = sceOC.x - eleOC.x;
 				canvas.y = sceOC.y - eleOC.y;
+				
+				//CoreUtil.drawCircle(0xFFFF00, LayoutUtil.elementPointToStagePoint(eleAO.x, eleAO.y, canvas), 2);
+				//CoreUtil.drawCircle(0x00FFFF, LayoutUtil.elementPointToStagePoint(eleBO.x, eleBO.y, canvas), 2);
 				/*var curSce:Point = Point.interpolate(sceBT, sceBF, percent);
 				//rotation
 				//curSce = PointUtil.rotate(curSce, sceCO, MathUtil.angleToRadian(canvas.rotation - startRotation));
