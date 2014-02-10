@@ -7,13 +7,14 @@ package landray.kp.maps.simple.comman
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import landray.kp.core.kp_internal;
 	import landray.kp.maps.simple.elements.BaseElement;
 	import landray.kp.utils.ExternalUtil;
 	import landray.kp.view.Viewer;
 
-	public final class ToolTipManager
+	public final class ElementToolTip
 	{
-		public function ToolTipManager($target:Viewer)
+		public function ElementToolTip($target:Viewer)
 		{
 			target = $target;	
 			target.addEventListener(MouseEvent.MOUSE_OVER   , showHandler);
@@ -21,11 +22,16 @@ package landray.kp.maps.simple.comman
 			target.addEventListener(Event.REMOVED_FROM_STAGE, hideHandler);
 		}
 		
-		public function showToolTip(value:String):void
+		public function showToolTip(msg:String, w:Number = 0):void
 		{
 			if (element)
 			{
-				element.tips = value;
+				element.tips = msg;
+				element.tipWidth = w;
+				if (w > 0)
+				{
+					target.kp_internal::setToolTipMultiline(w);
+				}
 				showTips();
 			}
 		}
@@ -36,10 +42,17 @@ package landray.kp.maps.simple.comman
 			{
 				element = BaseElement(e.target);
 				tipsVO.metaData = element;
+				
 				if (element.related)
 				{
 					if (element.tips)
+					{
+						if (element.tipWidth > 0)
+						{
+							target.kp_internal::setToolTipMultiline(element.tipWidth);
+						}
 						showTips();
+					}
 					else
 						ExternalUtil.kanvasLinkOvered(element.vo.id);
 				}
