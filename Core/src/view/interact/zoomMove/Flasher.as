@@ -2,6 +2,7 @@ package view.interact.zoomMove
 {
 	import com.greensock.TweenMax;
 	import com.greensock.easing.*;
+	import com.greensock.easing.Quart
 	import com.kvs.utils.MathUtil;
 	import com.kvs.utils.RectangleUtil;
 	
@@ -92,10 +93,6 @@ package view.interact.zoomMove
 			var timeScale:Number = getScalePlus(canvasMiddleScale);
 			var timeRotation:Number = Math.abs(canvasTargetRotation - packer.rotation) / speedRotation;
 			var time:Number = Math.min(Math.max(timeScale, timeRotation, control.minTweenTime), control.maxTweenTime);
-			time *= 3;
-			trace("time==============================");
-			trace("scale:", timeScale);
-			trace("rotation:", timeRotation);
 			
 			TweenMax.to(packer, time, {
 				progress:1, 
@@ -105,69 +102,6 @@ package view.interact.zoomMove
 				onComplete:finishZoom
 			});
 			
-			//缩放差距不大时启用先缩小后放大式镜头缩放
-			/*if (isNaN(canvasMiddleScale))
-			{
-				TweenMax.to(packer, time, {
-					progress:1, 
-					scale:MathUtil.log2(canvasTargetScale), 
-					rotation:canvasTargetRotation, 
-					ease:easeFlash, 
-					onUpdate:updated, 
-					onComplete:finishZoom
-				});
-			}
-			else
-			{
-				TweenMax.to(packer, time * .5, {
-					scale:MathUtil.log2(canvasMiddleScale), 
-					ease:Quad.easeIn
-				});
-				TweenMax.to(packer, time * .5, {
-					scale:MathUtil.log2(canvasTargetScale), 
-					delay:time * .5, 
-					ease:Quad.easeOut
-				});
-				TweenMax.to(packer, time, {
-					rotation:canvasTargetRotation, 
-					ease:easeFlash, 
-					onUpdate:updated, 
-					onComplete:finishZoom
-				});
-			}*/
-			
-			
-			/*if (scalePlus < 1)
-			{
-				var canvasMiddleScale:Number = MathUtil.exp2(MathUtil.log2(Math.min(canvasTargetScale, canvas.scaleX)) - control.plusScale);
-				packer.modCanvasPositionStart(canvasTargetX, canvasTargetY, canvasTargetScale, canvasTargetRotation, true, canvasMiddleScale);
-				TweenMax.to(packer, time * .5, {
-					scale:MathUtil.log2(canvasMiddleScale), 
-					ease:Linear.easeNone
-				});
-				TweenMax.to(packer, time * .5, {
-					scale:MathUtil.log2(canvasTargetScale), 
-					delay:time * .5, 
-					ease:Linear.easeNone
-				});
-				TweenMax.to(packer, time, {
-					rotation:canvasTargetRotation, 
-					ease:easeFlash, 
-					onUpdate:updated, 
-					onComplete:finishZoom
-				});
-			}
-			else
-			{
-				packer.modCanvasPositionStart(canvasTargetX, canvasTargetY, canvasTargetScale, canvasTargetRotation);
-				TweenMax.to(packer, time, {
-					scale:MathUtil.log2(canvasTargetScale), 
-					rotation:canvasTargetRotation, 
-					ease:easeFlash, 
-					onUpdate:updated, 
-					onComplete:finishZoom
-				});
-			}*/
 			isFlashing = true;
 		}
 		
@@ -236,7 +170,7 @@ package view.interact.zoomMove
 			return control.mainUI.bgImgCanvas;
 		}
 		
-		private var speedScale:Number = 4;
+		private var speedScale:Number = 2;
 		private var speedRotation:Number = 90;
 		
 		private var packer:CanvasLayoutPacker;

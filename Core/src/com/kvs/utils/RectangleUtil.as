@@ -8,17 +8,18 @@ package com.kvs.utils
 		/**
 		 * 矩形绕某点旋转一定角度后所形成的新的占位矩形。
 		 */
-		public static function rotateRectangle(rectangle:Rectangle, origin:Point, rotation:Number):Rectangle
+		public static function rotateRectangle($rectangle:Rectangle, $rotation:Number, $origin:Point = null):Rectangle
 		{
-			var radian:Number = MathUtil.angleToRadian(rotation);
-			var topLeft    :Point = rectangle.topLeft    .clone();
-			var bottomRight:Point = rectangle.bottomRight.clone();
-			var topRight   :Point = new Point(rectangle.right, rectangle.top);
-			var bottomLeft :Point = new Point(rectangle.left , rectangle.bottom);
-			topLeft     = PointUtil.rotate(topLeft    , origin, radian);
-			bottomRight = PointUtil.rotate(bottomRight, origin, radian);
-			topRight    = PointUtil.rotate(topRight   , origin, radian);
-			bottomLeft  = PointUtil.rotate(bottomLeft , origin, radian);
+			if(!$origin) $origin = PointUtil.origin;
+			var radian:Number = MathUtil.angleToRadian($rotation);
+			var topLeft    :Point = $rectangle.topLeft    .clone();
+			var bottomRight:Point = $rectangle.bottomRight.clone();
+			var topRight   :Point = new Point($rectangle.right, $rectangle.top);
+			var bottomLeft :Point = new Point($rectangle.left , $rectangle.bottom);
+			PointUtil.rotate(topLeft    , radian, $origin);
+			PointUtil.rotate(bottomRight, radian, $origin);
+			PointUtil.rotate(topRight   , radian, $origin);
+			PointUtil.rotate(bottomLeft , radian, $origin);
 			var left  :Number = Math.min(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
 			var right :Number = Math.max(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
 			var top   :Number = Math.min(topLeft.y, topRight.y, bottomLeft.y, bottomRight.y);

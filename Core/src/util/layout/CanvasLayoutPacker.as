@@ -59,26 +59,28 @@ package util.layout
 			//point A
 			eleAO = center.clone();
 			eleAO.offset(-startX, -startY);
-			eleAO = PointUtil.rotate(eleAO, origin, MathUtil.angleToRadian(-startRotation));
+			PointUtil.rotate(eleAO, MathUtil.angleToRadian(-startRotation));
 			PointUtil.multiply(eleAO, 1 / startScale);
 			
+			//point a move from with out rotation
 			sceAF = center.clone();
 			
+			//point b move to with out rotation
 			sceAT = eleAO.clone();
 			PointUtil.multiply(sceAT, endScale);
-			sceAT = PointUtil.rotate(sceAT, origin, MathUtil.angleToRadian(endRotation));
+			PointUtil.rotate(sceAT, MathUtil.angleToRadian( endRotation));
 			sceAT.offset(endX, endY);
 			
 			//point B
 			eleBO = center.clone();
 			eleBO.offset(-endX, -endY);
-			eleBO = PointUtil.rotate(eleBO, origin, MathUtil.angleToRadian(-endRotation));
+			PointUtil.rotate(eleBO, MathUtil.angleToRadian(-endRotation));
 			PointUtil.multiply(eleBO, 1 / endScale);
 			
 			//point b move from with out rotation
 			sceBF = eleBO.clone();
 			PointUtil.multiply(sceBF, startScale);
-			sceBF = PointUtil.rotate(sceBF, origin, MathUtil.angleToRadian(startRotation));
+			PointUtil.rotate(sceBF, MathUtil.angleToRadian( startRotation));
 			sceBF.offset(startX, startY);
 			
 			//point b move to with out rotation
@@ -87,23 +89,24 @@ package util.layout
 			//scene center
 			sceCO = center.clone();
 			
-			
 			var distanceUI:Number = mainUI.boundDiagonalDistance;
 			var distanceAB:Number = Point.distance(eleAO, eleBO);
 			centerScale = distanceUI / distanceAB;
 			
 			modInOut = (centerScale < startScale && centerScale < endScale);
 			
-			log2Start  = MathUtil.log2(startScale);
-			log2End    = MathUtil.log2(endScale);
+			log2Start = MathUtil.log2(startScale);
+			log2End   = MathUtil.log2(endScale);
 			
 			if (modInOut)
 			{
 				scaleDis = Math.abs(startScale - centerScale) + Math.abs(centerScale - endScale);
 				log2Middle = MathUtil.log2(centerScale);
 				lenSM = Math.abs(log2Start - log2Middle);
-				lenSE = lenSM + Math.abs(log2Middle - log2End);
+				lenME = Math.abs(log2Middle - log2End)
+				lenSE = lenSM + lenME;
 				proSM = lenSM / lenSE;
+				proME = 1 - proSM;
 			}
 			else
 			{
@@ -111,8 +114,6 @@ package util.layout
 				centerScale = NaN;
 				lenSE = Math.abs(log2Start - log2End);
 			}
-			
-			
 			
 			return centerScale;
 		}
@@ -124,74 +125,44 @@ package util.layout
 		{
 			if (modPositionNeed)
 			{
+				//由于progress有误差，根据重新计算当前distance progress
+				var percent:Number = progress;
 				//get current scale according to progress
 				if (modInOut)
 				{
-					scale = (lenSE * progress < lenSM)
-						? log2Start + (log2Middle - log2Start) * (progress / proSM)
-						: log2Middle + (log2End - log2Middle) * ((progress - proSM) / (1 - proSM));
+					scale = (progress < proSM)
+						? log2Start  - lenSM *  (progress / proSM)
+						: log2Middle + lenME * ((progress - proSM) / proME);
+					percent =  (lastScale > canvas.scaleX)
+						? Math.abs(canvas.scaleX - startScale ) / scaleDis
+						:(Math.abs(canvas.scaleX - centerScale) + Math.abs(centerScale - startScale)) / scaleDis;
 				}
 				else
 				{
 					scale = log2Start + (log2End - log2Start) * progress;
-				}
-				
-				//由于progress有误差，根据重新计算当前distance progress
-				var percent:Number = progress;
-				
-				if (! MathUtil.equals(scaleDis, 0))
-				{
-					percent = (modInOut)
-						? ((lastScale > canvas.scaleX) 
-							? Math.abs( canvas.scaleX - startScale  ) / scaleDis
-							:(Math.abs( canvas.scaleX - centerScale ) + Math.abs( centerScale - startScale )) / scaleDis
-						  )
-						: Math.abs(canvas.scaleX - startScale) / scaleDis;
+					if (! MathUtil.equals(scaleDis, 0))
+						percent = Math.abs(canvas.scaleX - startScale) / scaleDis;
 				}
 				percent = Math.min(Math.max(0, percent), 1);
 				
 				//需要将移动到的点
 				//progress
 				var sceAC:Point = Point.interpolate(sceAT, sceAF, percent);
-				sceAC = PointUtil.rotate(sceAC, sceCO, MathUtil.angleToRadian(rotation - startRotation));
 				var sceBC:Point = Point.interpolate(sceBT, sceBF, percent);
-				sceBC = PointUtil.rotate(sceBC, sceCO, MathUtil.angleToRadian(rotation - startRotation));
+				//rotate
+				PointUtil.rotate(sceAC, MathUtil.angleToRadian(rotation - endRotation  ), sceCO);
+				PointUtil.rotate(sceBC, MathUtil.angleToRadian(rotation - startRotation), sceCO);
 				//使用AB中点作为CANVAS移动参照
 				var sceOC:Point = Point.interpolate(sceAC, sceBC, .5);
 				var eleOC:Point = Point.interpolate(eleAO, eleBO, .5);
-				//sceOC = PointUtil.rotate(sceOC, sceCO, MathUtil.angleToRadian(rotation - startRotation));
-				
-				CoreUtil.drawCircle(0xFF0000, sceAC, 2);
-				CoreUtil.drawCircle(0x0000FF, sceBC, 2);
-				//
-				
 				//get canvas plus
 				PointUtil.multiply(eleOC, canvas.scaleX);
-				eleOC = PointUtil.rotate(eleOC, origin, MathUtil.angleToRadian(rotation));
+				PointUtil.rotate(eleOC, MathUtil.angleToRadian(rotation));
+				//move
 				canvas.x = sceOC.x - eleOC.x;
 				canvas.y = sceOC.y - eleOC.y;
 				
-				//CoreUtil.drawCircle(0xFFFF00, LayoutUtil.elementPointToStagePoint(eleAO.x, eleAO.y, canvas), 2);
-				//CoreUtil.drawCircle(0x00FFFF, LayoutUtil.elementPointToStagePoint(eleBO.x, eleBO.y, canvas), 2);
-				/*var curSce:Point = Point.interpolate(sceBT, sceBF, percent);
-				//rotation
-				//curSce = PointUtil.rotate(curSce, sceCO, MathUtil.angleToRadian(canvas.rotation - startRotation));
-				var curEle:Point = eleBO.clone();
-				//get canvas plus
-				PointUtil.multiply(curEle, canvas.scaleX);
-				curEle = PointUtil.rotate(curEle, origin, MathUtil.angleToRadian(rotation));
-				//move canvas
-				trace("-----------------------");
-				trace("from:", sceBF, "to:", sceBT);
-				trace("curSce:", curSce, "curEle:", curEle)
-				trace(canvas.x, canvas.y)
-				trace("==================================================\n")
-				canvas.x = curSce.x - curEle.x;
-				canvas.y = curSce.y - curEle.y;*/
 				lastScale = canvas.scaleX;
-				
-				//CoreUtil.drawCircle((percent < .5) ? 0xFF00FF : 0x00FF00, LayoutUtil.elementPointToStagePoint(eleAO.x, eleAO.y, canvas), 2);
-				//CoreUtil.drawCircle((percent < .5) ? 0xFF00FF : 0x00FF00, LayoutUtil.elementPointToStagePoint(eleBO.x, eleBO.y, canvas), 2);
 			}
 		}
 		
@@ -244,8 +215,6 @@ package util.layout
 		private var modPositionNeed:Boolean;
 		
 		private var modInOut:Boolean;
-		
-		private var transform:Boolean;
 		
 		private var centerScale:Number;
 		
@@ -316,11 +285,13 @@ package util.layout
 		
 		private var lenSM:Number;
 		
+		private var lenME:Number;
+		
 		private var lenSE:Number;
 		
 		private var proSM:Number;
 		
-		private var origin:Point = new Point;
+		private var proME:Number;
 		
 		private var canvas:Sprite;
 		

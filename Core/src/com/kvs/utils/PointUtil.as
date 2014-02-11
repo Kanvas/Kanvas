@@ -5,16 +5,16 @@ package com.kvs.utils
 	public class PointUtil
 	{
 		/**
-		 * point围绕origin旋转一定弧度之后所活得的点
+		 * point围绕origin旋转一定弧度
 		 * 
 		 */
-		public static function rotate(point:Point, origin:Point, radian:Number):Point
+		public static function rotate($point:Point, $radian:Number, $origin:Point = null):void
 		{
-			var result:Point = new Point;
-			var vector:Point = point.subtract(origin);
-			var cos:Number = Math.cos(radian);
-			var sin:Number = Math.sin(radian);
-			return new Point(vector.x * cos - vector.y * sin + origin.x, vector.x * sin + vector.y * cos + origin.y);
+			if(!$origin) $origin = origin;
+			var vector:Point = $point.subtract($origin);
+			var cos:Number = Math.cos($radian);
+			var sin:Number = Math.sin($radian);
+			$point.setTo(vector.x * cos - vector.y * sin + $origin.x, vector.x * sin + vector.y * cos + $origin.y);
 		}
 		/**
 		 * point乘以一个数值，会改变该点的坐标
@@ -25,13 +25,7 @@ package com.kvs.utils
 			point.x *= scale;
 			point.y *= scale;
 		}
-		/**
-		 * point返回一个负方向的点
-		 * 
-		 */
-		public static function negtive(point:Point):Point
-		{
-			return new Point(-point.x, -point.y);
-		}
+		
+		public static const origin:Point = new Point;
 	}
 }

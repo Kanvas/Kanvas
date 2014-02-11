@@ -14,8 +14,8 @@ package util
 			//缩放
 			PointUtil.multiply(result, canvas.scaleX);
 			//旋转
-			if (ignoreRotation == false)
-				result = PointUtil.rotate(result, new Point(0, 0), MathUtil.angleToRadian(canvas.rotation));
+			if(!ignoreRotation)
+				PointUtil.rotate(result, MathUtil.angleToRadian(canvas.rotation));
 			//平移
 			result.offset(canvas.x, canvas.y);
 			
@@ -28,8 +28,8 @@ package util
 			//平移
 			result.offset(-canvas.x, -canvas.y);
 			//旋转
-			if (ignoreRotation == false)
-				result = PointUtil.rotate(result, new Point(0, 0), MathUtil.angleToRadian(-canvas.rotation));
+			if(!ignoreRotation)
+				PointUtil.rotate(result, MathUtil.angleToRadian(-canvas.rotation));
 			//缩放
 			PointUtil.multiply(result, 1 / canvas.scaleX);
 			
