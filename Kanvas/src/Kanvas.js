@@ -519,7 +519,6 @@
 	
 	//鼠标滚轮监听
 	function registerMouseWheelEvt(target){
-		
 		var navigatorType = checkNavigator();
 		
 		var onMouseWheel = function(){
@@ -527,16 +526,15 @@
 			if (navigatorType == KANVAS.navigatorType.FIREFOX) {
 				evt.preventDefault();
 				evt.stopPropagation();
-				if (navigatorType == KANVAS.navigatorType.FIREFOX) {
-					target.onWebMouseWheel(-evt.detail);
-				} else {
-					target.onWebMouseWheel(evt.detail);
-				}
+				target.onWebMouseWheel(-evt.detail);
 			} else {
 				evt.cancelBubble = true;
 			    evt.returnValue = false;
-			    
-			    target.onWebMouseWheel(evt.wheelDelta);
+				if (navigatorType == KANVAS.navigatorType.IE) {
+					target.onWebMouseWheel(-evt.wheelDelta);
+				} else {
+					target.onWebMouseWheel(evt.wheelDelta);
+				}
 			}
 			return false;
 		};
