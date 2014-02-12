@@ -2,14 +2,9 @@ package util.layout
 {
 	import com.kvs.utils.MathUtil;
 	import com.kvs.utils.PointUtil;
-	import com.kvs.utils.RectangleUtil;
 	
 	import flash.display.Sprite;
 	import flash.geom.Point;
-	import flash.geom.Rectangle;
-	
-	import util.CoreUtil;
-	import util.LayoutUtil;
 	
 	import view.ui.MainUIBase;
 	
@@ -93,9 +88,11 @@ package util.layout
 			var distanceAB:Number = Point.distance(eleAO, eleBO);
 			centerScale = distanceUI / distanceAB;
 			
+			//一个先拉远后拉近的过程
 			modInOut = (centerScale < startScale && centerScale < endScale);
-			
+			//初始scale的对数值
 			log2Start = MathUtil.log2(startScale);
+			//终止scale的对数值
 			log2End   = MathUtil.log2(endScale);
 			
 			if (modInOut)
@@ -190,32 +187,68 @@ package util.layout
 			canvas.scaleX = canvas.scaleY = MathUtil.exp2(value);
 		}
 		
+		/**
+		 * 缓动播放进度，0-1
+		 */
 		public var progress:Number;
 		
 		public var x:Number = 0;
 		
 		public var y:Number = 0;
 		
+		/**
+		 * 起始canvas x
+		 */
 		private var startX:Number;
 		
+		/**
+		 * 起始canvas y
+		 */
 		private var startY:Number;
 		
+		/**
+		 * 起始canvas scale
+		 */
 		private var startScale:Number;
 		
+		/**
+		 * 起始canvas rotation
+		 */
 		private var startRotation:Number;
 		
+		/**
+		 * 终止canvas x
+		 */
 		private var endX:Number;
 		
+		/**
+		 * 终止canvas y
+		 */
 		private var endY:Number;
 		
+		/**
+		 * 终止canvas scale
+		 */
 		private var endScale:Number;
 		
+		/**
+		 * 终止canvas rotation
+		 */
 		private var endRotation:Number;
 		
+		/**
+		 * 判断是否需要修正canvas位置
+		 */
 		private var modPositionNeed:Boolean;
 		
+		/**
+		 * 是否拉远缩进的过程
+		 */
 		private var modInOut:Boolean;
 		
+		/**
+		 * 是拉远缩进的过程时，中间过渡scale
+		 */
 		private var centerScale:Number;
 		
 		//----------------------------------------
@@ -273,24 +306,54 @@ package util.layout
 		//----------------------------------------
 		private var sceCO:Point;
 		
+		/**
+		 * 上一次缓动的scale
+		 */
 		private var lastScale:Number;
 		
+		/**
+		 * 缩放过程的distance
+		 */
 		private var scaleDis:Number;
 		
+		/**
+		 * 初始scale的对数值
+		 */
 		private var log2Start:Number;
 		
+		/**
+		 * 终止scale的对数值
+		 */
 		private var log2End:Number;
 		
+		/**
+		 * 过渡scale的对数值
+		 */
 		private var log2Middle:Number;
 		
+		/**
+		 * 初始scale至过渡scale的长度
+		 */
 		private var lenSM:Number;
 		
+		/**
+		 * 终止scale至过渡scale的长度
+		 */
 		private var lenME:Number;
 		
+		/**
+		 * 初始scale至终止scale的长度
+		 */
 		private var lenSE:Number;
 		
+		/**
+		 * 初始scale至过渡scale的长度百分比
+		 */
 		private var proSM:Number;
 		
+		/**
+		 * 过渡scale至终止scale的长度百分比
+		 */
 		private var proME:Number;
 		
 		private var canvas:Sprite;
