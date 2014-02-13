@@ -79,7 +79,7 @@ package commands
 		 */		
 		private function shapeCreated():void
 		{
-			CoreFacade.coreMediator.autoLayerController.autoLayer(shapeElement, true);
+			CoreFacade.coreMediator.autoLayerController.autoLayer(shapeElement);
 			elementIndex = CoreFacade.getElementIndex(shapeElement);
 			//动画完毕
 			CoreFacade.coreMediator.createNewShapeTweenOver = true;
