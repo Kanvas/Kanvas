@@ -110,7 +110,7 @@ package view.ui
 		public function drawBG(rect:Rectangle):void
 		{
 			interactorBG.graphics.clear();
-			interactorBG.graphics.beginFill(0x666666, 0);
+			interactorBG.graphics.beginFill(0x666666, .1);
 			interactorBG.graphics.drawRect(rect.x, rect.y, rect.width, rect.height);
 			interactorBG.graphics.endFill();
 		}

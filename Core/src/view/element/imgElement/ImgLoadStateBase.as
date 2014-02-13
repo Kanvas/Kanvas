@@ -8,7 +8,7 @@ package view.element.imgElement
 	{
 		public function ImgLoadStateBase(host:ImgElement)
 		{
-			this.host = host;
+			this.element = host;
 		}
 		
 		/**
@@ -36,6 +36,6 @@ package view.element.imgElement
 		
 		/**
 		 */		
-		protected var host:ImgElement;
+		protected var element:ImgElement;
 	}
 }

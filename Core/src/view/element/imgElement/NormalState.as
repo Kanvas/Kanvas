@@ -16,12 +16,12 @@ package view.element.imgElement
 		override public function clone():ElementBase
 		{
 			var imgVO:ImgVO = new ImgVO;
-			imgVO.sourceData = host.imgVO.sourceData;
-			imgVO.url = host.imgVO.url;
-			imgVO.imgID = host.imgVO.imgID;
+			imgVO.sourceData = element.imgVO.sourceData;
+			imgVO.url = element.imgVO.url;
+			imgVO.imgID = element.imgVO.imgID;
 			
-			var element:ImgElement = new ImgElement(host.cloneVO(imgVO) as ImgVO);
-			element.currLoadState = host.normalState;
+			var element:ImgElement = new ImgElement(element.cloneVO(imgVO) as ImgVO);
+			element.currLoadState = element.normalState;
 			
 			element.toNomalState();
 			
@@ -32,11 +32,11 @@ package view.element.imgElement
 		 */		
 		override public function render():void
 		{
-			if (host.imgVO.sourceData)
+			if (element.imgVO.sourceData)
 			{
-				host.graphics.clear();
-				host.shape.visible = true;
-				host.drawBmd();
+				element.graphics.clear();
+				element.shape.visible = true;
+				element.drawBmd();
 			}
 		}
 	}

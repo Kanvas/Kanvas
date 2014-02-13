@@ -82,7 +82,7 @@ package commands
 			
 			//防止图片插入时遮盖到已有内容，需将其放置到已有内容边缘
 			var canvas:Canvas = CoreFacade.coreMediator.canvas;
-			canvas.clearBG();
+			//canvas.clearBG();
 			var bd:Rectangle = canvas.getBounds(canvas);
 			
 			imgVO.x = bd.left + bd.width + imgVO.width * imgVO.scale / 2 + 20 / layoutTransformer.canvasScale;

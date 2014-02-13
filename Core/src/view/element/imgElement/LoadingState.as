@@ -16,8 +16,8 @@ package view.element.imgElement
 		 */		
 		override public function render():void
 		{
-			host.shape.visible = false;
-			host.drawIMGProxy();
+			element.shape.visible = false;
+			element.drawIMGProxy();
 		}
 		
 		/**
@@ -27,7 +27,7 @@ package view.element.imgElement
 			imgLoader.addEventListener(ImgInsertEvent.IMG_LOADED_FROM_SERVER, imgLoaded, false, 0, true);
 			imgLoader.addEventListener(ImgInsertEvent.IMG_LOADED_ERROR, imgLoadError, false, 0, true);
 			
-			imgLoader.loadImg(host.imgVO.url, host.imgVO.imgID, host.imgVO.width, host.imgVO.height);
+			imgLoader.loadImg(element.imgVO.url, element.imgVO.imgID, element.imgVO.width, element.imgVO.height);
 			
 			render();
 		}
@@ -38,32 +38,32 @@ package view.element.imgElement
 			imgLoader.removeEventListener(ImgInsertEvent.IMG_LOADED_ERROR, imgLoadError);
 			imgLoader = null;
 			
-			host.currLoadState = host.normalState;
+			element.currLoadState = element.normalState;
 			
-			host.graphics.clear();
-			host.shape.visible = true;
-			host.shape.graphics.clear();
-			host.shape.graphics.beginFill(0xff0000, 0.3);
-			host.shape.graphics.drawRect( - host.vo.width / 2, - host.vo.height / 2, host.vo.width, host.vo.height);
-			host.shape.graphics.endFill();
+			element.graphics.clear();
+			element.shape.visible = true;
+			element.shape.graphics.clear();
+			element.shape.graphics.beginFill(0xff0000, 0.3);
+			element.shape.graphics.drawRect( - element.vo.width / 2, - element.vo.height / 2, element.vo.width, element.vo.height);
+			element.shape.graphics.endFill();
 			
-			var iconSize:Number = (host.vo.width > host.vo.height) ? host.vo.height * 0.5 : host.vo.width * 0.5;
-			BitmapUtil.drawBitmapDataToShape(new load_error, host.shape, iconSize, iconSize, - iconSize * 0.5, - iconSize * 0.5, true);
+			var iconSize:Number = (element.vo.width > element.vo.height) ? element.vo.height * 0.5 : element.vo.width * 0.5;
+			BitmapUtil.drawBitmapDataToShape(new load_error, element.shape, iconSize, iconSize, - iconSize * 0.5, - iconSize * 0.5, true);
 			
-			host.removeLoading();
+			element.removeLoading();
 		}
 		
 		/**
 		 */		
 		private function imgLoaded(evt:ImgInsertEvent):void
 		{
-			host.imgVO.sourceData = evt.bitmapData;
+			element.imgVO.sourceData = evt.bitmapData;
 			
 			imgLoader.removeEventListener(ImgInsertEvent.IMG_LOADED_TO_LOCAL, imgLoaded);
 			imgLoader.removeEventListener(ImgInsertEvent.IMG_LOADED_ERROR, imgLoadError);
 			imgLoader = null;
 			
-			host.toNomalState();
+			element.toNomalState();
 		}
 		
 		
