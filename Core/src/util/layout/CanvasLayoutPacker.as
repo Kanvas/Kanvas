@@ -6,6 +6,8 @@ package util.layout
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	
+	import util.LayoutUtil;
+	
 	import view.ui.MainUIBase;
 	
 	/**
@@ -53,30 +55,22 @@ package util.layout
 			
 			//point A
 			eleAO = center.clone();
-			eleAO.offset(-startX, -startY);
-			PointUtil.rotate(eleAO, MathUtil.angleToRadian(-startRotation));
-			PointUtil.multiply(eleAO, 1 / startScale);
+			LayoutUtil.convertPointStage2Canvas(eleAO, startX, startY, startScale, startRotation);
 			
 			//point a move from with out rotation
 			sceAF = center.clone();
 			
 			//point b move to with out rotation
 			sceAT = eleAO.clone();
-			PointUtil.multiply(sceAT, endScale);
-			PointUtil.rotate(sceAT, MathUtil.angleToRadian( endRotation));
-			sceAT.offset(endX, endY);
+			LayoutUtil.convertPointCanvas2Stage(sceAT, endX, endY, endScale, endRotation);
 			
 			//point B
 			eleBO = center.clone();
-			eleBO.offset(-endX, -endY);
-			PointUtil.rotate(eleBO, MathUtil.angleToRadian(-endRotation));
-			PointUtil.multiply(eleBO, 1 / endScale);
+			LayoutUtil.convertPointStage2Canvas(eleBO, endX, endY, endScale, endRotation);
 			
 			//point b move from with out rotation
 			sceBF = eleBO.clone();
-			PointUtil.multiply(sceBF, startScale);
-			PointUtil.rotate(sceBF, MathUtil.angleToRadian( startRotation));
-			sceBF.offset(startX, startY);
+			LayoutUtil.convertPointCanvas2Stage(sceBF, startX, startY, startScale, startRotation);
 			
 			//point b move to with out rotation
 			sceBT = center.clone();
@@ -89,7 +83,7 @@ package util.layout
 			centerScale = distanceUI / distanceAB;
 			
 			//一个先拉远后拉近的过程
-			modInOut = (centerScale < startScale && centerScale < endScale);
+			modInOut  = (centerScale < startScale && centerScale < endScale);
 			//初始scale的对数值
 			log2Start = MathUtil.log2(startScale);
 			//终止scale的对数值
@@ -99,7 +93,7 @@ package util.layout
 			{
 				scaleDis = Math.abs(startScale - centerScale) + Math.abs(centerScale - endScale);
 				log2Middle = MathUtil.log2(centerScale);
-				lenSM = Math.abs(log2Start - log2Middle);
+				lenSM = Math.abs(log2Start  - log2Middle);
 				lenME = Math.abs(log2Middle - log2End)
 				lenSE = lenSM + lenME;
 				proSM = lenSM / lenSE;

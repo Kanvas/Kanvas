@@ -19,7 +19,7 @@ package commands
 		override public function execute(notification:INotification):void
 		{
 			sendNotification(Command.UN_SELECT_ELEMENT);
-			
+			trace("DeletePageCMD.excute()")
 			page = notification.getBody() as PageElement;
 			pageVO = page.vo as PageVO;
 			index1 = CoreFacade.getElementIndex(page);

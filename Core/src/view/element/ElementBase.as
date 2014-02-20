@@ -184,6 +184,7 @@ package view.element
 		{
 			hoverEffectShape.graphics.clear();
 			StyleManager.setLineStyle(hoverEffectShape.graphics, hoverStyle.getBorder);
+			trace(hoverStyle.tx, hoverStyle.ty, hoverStyle.width, hoverStyle.height);
 			hoverEffectShape.graphics.drawRect(hoverStyle.tx, hoverStyle.ty, hoverStyle.width, hoverStyle.height);
 			hoverEffectShape.graphics.endFill();
 			
@@ -509,11 +510,8 @@ package view.element
 		{
 			if (visible != value)
 			{
-				if (value)
-				{
-					updateView();
-				}
 				super.visible = value;
+				updateView();
 			}
 		}
 		

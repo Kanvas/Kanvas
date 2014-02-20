@@ -8,7 +8,6 @@ package view.interact
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-	import util.CoreUtil;
 	import util.LayoutUtil;
 	
 	import view.element.ElementBase;
@@ -99,10 +98,11 @@ package view.interact
 		 */		
 		public function updateAfterZoomMove():void
 		{
+			var minLineInteractSizeSquare:Number = minInteractSize * minInteractSize * .25;
 			for each (var element:ElementBase in elements)
 			{
-				var bound:Rectangle = CoreUtil.getRectForStage(element);
-				var stage:Rectangle = CoreUtil.getStageRect();
+				var bound:Rectangle = LayoutUtil.getItemRect (coreMdt.canvas, element);
+				var stage:Rectangle = LayoutUtil.getStageRect(coreMdt.canvas);
 				
 				if (RectangleUtil.rectOverlapping(bound, stage))
 				{
@@ -111,8 +111,8 @@ package view.interact
 					var h:Number = stage.height - 100;
 					if (element is LineElement)
 					{
-						var size:Number = Math.sqrt(bound.width * bound.width + bound.height * bound.height) >> 1;
-						if (size > w || size < minInteractSize)
+						var size:Number = (bound.width * bound.width + bound.height * bound.height) >> 1;
+						if (size > w || size < minLineInteractSizeSquare)
 							element.disable();//过小禁止交互
 						else
 							element.enable();
@@ -130,7 +130,7 @@ package view.interact
 					}
 					else
 					{
-						element.enable();	
+						element.enable();
 					}
 				}
 				else

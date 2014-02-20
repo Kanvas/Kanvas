@@ -544,7 +544,6 @@ package
 		
 		private function updateCanvasPositionEnterFrame(e:Event):void
 		{
-			trace(stage.stageWidth, stage.stageHeight);
 			if (stage.stageWidth != 0 && stage.stageHeight != 0)
 			{
 				updateCanvasPosition();

@@ -12,6 +12,7 @@ package commands
 	import org.puremvc.as3.interfaces.INotification;
 	
 	import util.ElementCreator;
+	import util.LayoutUtil;
 	import util.img.ImgInsertEvent;
 	import util.img.ImgInsertor;
 	import util.img.ImgLib;
@@ -83,7 +84,7 @@ package commands
 			//防止图片插入时遮盖到已有内容，需将其放置到已有内容边缘
 			var canvas:Canvas = CoreFacade.coreMediator.canvas;
 			//canvas.clearBG();
-			var bd:Rectangle = canvas.getBounds(canvas);
+			var bd:Rectangle = LayoutUtil.getContentRect(canvas, false);
 			
 			imgVO.x = bd.left + bd.width + imgVO.width * imgVO.scale / 2 + 20 / layoutTransformer.canvasScale;
 			imgVO.y = bd.top + (bd.height - imgVO.height * imgVO.scale) / 2 + imgVO.height * imgVO.scale / 2;

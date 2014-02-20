@@ -3,9 +3,6 @@ package view.ui
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
-	import flash.utils.Dictionary;
-	
-	import landray.kp.ui.Loading;
 	
 	/**
 	 */	
@@ -15,10 +12,9 @@ package view.ui
 		{
 			super();
 			
-			this.mainUI = $mainUI;
+			mainUI = $mainUI;
 			
-			items = new Vector.<ICanvasLayout>;
-			indexs = new Dictionary;
+			items  = new Vector.<ICanvasLayout>;
 			
 			addChild(interactorBG);
 			//interactorBG.addChild(bgImgContainer = new Sprite);
@@ -33,7 +29,6 @@ package view.ui
 				var item:ICanvasLayout = ICanvasLayout(child);
 				item.updateView();
 				items.push(item);
-				indexs[item] = items.length;
 			}
 			return child;
 		}
@@ -46,7 +41,6 @@ package view.ui
 				var item:ICanvasLayout = ICanvasLayout(child);
 				item.updateView();
 				items.push(item);
-				indexs[item] = items.length;
 			}
 			return child;
 		}
@@ -57,9 +51,9 @@ package view.ui
 			if (child is ICanvasLayout)
 			{
 				var item:ICanvasLayout = ICanvasLayout(child);
-				item.updateView();
-				items.splice(indexs[item], 1);
-				delete indexs[item];
+				//item.updateView();
+				var index:int = items.indexOf(item);
+				if (index > -1) items.splice(index, 1);
 			}
 			return child;
 		}
@@ -70,14 +64,14 @@ package view.ui
 			if (child is ICanvasLayout)
 			{
 				var item:ICanvasLayout = ICanvasLayout(child);
-				item.updateView();
-				items.splice(indexs[item], 1);
-				delete indexs[item];
+				//item.updateView();
+				var index:int = items.indexOf(item);
+				if (index > -1) items.splice(index, 1);
 			}
 			return child;
 		}
 		
-		override public function removeChildren(beginIndex:int=0, endIndex:int=int.MAX_VALUE):void
+		override public function removeChildren(beginIndex:int = 0, endIndex:int = int.MAX_VALUE):void
 		{
 			endIndex = Math.min(numChildren, endIndex);
 			for (var i:int = beginIndex; i < endIndex; i++)
@@ -86,12 +80,32 @@ package view.ui
 				if (child is ICanvasLayout)
 				{
 					var item:ICanvasLayout = ICanvasLayout(child);
-					items.splice(indexs[item], 1);
-					delete indexs[item];
+					var index:int = items.indexOf(item);
+					if (index > -1) items.splice(index, 1);
 				}
 			}
 			super.removeChildren(beginIndex, endIndex);
 		}
+		
+		public function toShotcutState():void
+		{
+			if(!previewState)
+			{
+				previewState = true;
+				for each (var item:ICanvasLayout in items)
+					item.visible = true;
+			}
+		}
+		public function toPreviewState():void
+		{
+			if( previewState)
+			{
+				for each (var item:ICanvasLayout in items)
+					item.updateView();
+			}
+		}
+		
+		private var previewState:Boolean;
 		
 		/**
 		 */		
@@ -110,7 +124,7 @@ package view.ui
 		public function drawBG(rect:Rectangle):void
 		{
 			interactorBG.graphics.clear();
-			interactorBG.graphics.beginFill(0x666666, .1);
+			interactorBG.graphics.beginFill(0x666666, 0);
 			interactorBG.graphics.drawRect(rect.x, rect.y, rect.width, rect.height);
 			interactorBG.graphics.endFill();
 		}
@@ -120,10 +134,10 @@ package view.ui
 		/**
 		 * 画布自动缩放时需要清空背景，保证尺寸位置计算的准确性
 		 */		
-		public function clearBG():void
+		/*public function clearBG():void
 		{
 			interactorBG.graphics.clear();
-		}
+		}*/
 		
 		/*private function drawImageBG(rect:Rectangle):void
 		{
@@ -191,6 +205,23 @@ package view.ui
 		
 		private var __scaleY:Number = 1;
 		
+		public function get scale():Number
+		{
+			return __scale;
+		}
+		
+		public function set scale(value:Number):void
+		{
+			if (__scale!= value) 
+			{
+				__scale = value;
+				for each (var item:ICanvasLayout in items)
+					item.updateView();
+			}
+		}
+		
+		private var __scale:Number = 1;
+		
 		override public function get rotation():Number
 		{
 			return __rotation;
@@ -242,11 +273,15 @@ package view.ui
 		
 		private var __y:Number = 0;
 		
+		public function get elements():Vector.<ICanvasLayout>
+		{
+			return  items.concat();
+		}
+		
 		/**
 		 */		
 		public var interactorBG:Sprite = new Sprite;
 		
 		private var items:Vector.<ICanvasLayout>;
-		private var indexs:Dictionary;
 	}
 }

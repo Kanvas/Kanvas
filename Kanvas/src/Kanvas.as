@@ -34,11 +34,11 @@ package
 		{
 			StageUtil.initApplication(this, init, true);
 			
-			var fonts:Array = Font.enumerateFonts(true);
+			/*var fonts:Array = Font.enumerateFonts(true);
 			for each (var font:Object in fonts)
 			{
 				trace(font.fontName);
-			}
+			}*/
 		}
 		
 		/**

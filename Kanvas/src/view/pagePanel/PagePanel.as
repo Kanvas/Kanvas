@@ -156,7 +156,7 @@ package view.pagePanel
 			pages.splice(pages.indexOf(pageUI), 1);
 			pagesCtn.removeChild(pageUI);
 			
-			trace(pageUI.pageVO.index);
+			//trace(pageUI.pageVO.index);
 			
 			if (pageUI == currentPage)
 			{
@@ -441,6 +441,7 @@ package view.pagePanel
 		 */		
 		private var currentDragPageIndex:int;
 		
+		
 		/**
 		 */		
 		private function pageDragging(evt:PagePanelEvent):void
@@ -504,6 +505,7 @@ package view.pagePanel
 			}
 			
 		}
+
 		
 		/**
 		 * 拖拽页面时，临时更新页面的布局

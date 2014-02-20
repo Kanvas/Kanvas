@@ -72,7 +72,7 @@ package com.kvs.ui.scroll
 			}
 			else
 			{
-				trace(this);
+				//trace(this);
 			}
 		}
 		

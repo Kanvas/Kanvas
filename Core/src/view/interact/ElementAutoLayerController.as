@@ -5,7 +5,7 @@ package view.interact
 	
 	import model.CoreFacade;
 	
-	import util.CoreUtil;
+	import util.LayoutUtil;
 	
 	import view.element.ElementBase;
 	import view.element.GroupElement;
@@ -107,13 +107,17 @@ package view.interact
 			var itemsBefore:Vector.<ElementBase> = items;
 			var itemsAfter :Vector.<ElementBase> = items.concat();
 			var layerBefore:Vector.<int> = new Vector.<int>;
+			var layerAfter :Vector.<int> = new Vector.<int>;
+			
 			for each (var item:ElementBase in itemsBefore)
 				layerBefore.push(item.index);
+				
 			itemsAfter.sort(sortOnElementLayer);
+			
 			var length:int = itemsAfter.length;
-			var layerAfter:Vector.<int> = new Vector.<int>;
 			for (var i:int = 0; i < length; i++)
 				layerAfter[i] = layerBefore[itemsAfter.indexOf(itemsBefore[i])];
+			
 			return layerAfter;
 		}
 		
@@ -157,8 +161,8 @@ package view.interact
 		
 		private function ifInElement(element:ElementBase, hitElement:ElementBase):Boolean
 		{
-			var erect:Rectangle = CoreUtil.getRectForStage(element);
-			var hrect:Rectangle = CoreUtil.getRectForStage(hitElement);
+			var erect:Rectangle = LayoutUtil.getItemRect(coreMdt.canvas, element);
+			var hrect:Rectangle = LayoutUtil.getItemRect(coreMdt.canvas, hitElement);
 			
 			return ((erect.left > hrect.left && erect.right < hrect.right && erect.top > hrect.top && erect.bottom < hrect.bottom) || 
 				(erect.left < hrect.left && erect.right > hrect.right && erect.top < hrect.top && erect.bottom > hrect.bottom));

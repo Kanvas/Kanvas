@@ -70,7 +70,7 @@ package view.interact
 				var rectPaddingBottom:Number = canvasBound.bottom;
 				
 				//element矩形范围判断
-				var rect:Rectangle = CoreUtil.getRectForStage(element);
+				var rect:Rectangle = LayoutUtil.getItemRect(coreMdt.canvas, element);
 				var rectOffsetX:Number = 0;
 				
 				//检测
@@ -141,7 +141,7 @@ package view.interact
 				var x:Number = 0;
 				var y:Number = 0;
 				//缩放前元素相对于stage所占矩形位置
-				var eleBefBound:Rectangle = CoreUtil.getRectForStage(element, false);
+				var eleBefBound:Rectangle = LayoutUtil.getItemRect(coreMdt.canvas, element, true);
 				var plsScale:Number = (eleBefBound.height < 20) ? 20 / eleBefBound.height : 1;
 				var aimScale:Number = coreMdt.layoutTransformer.canvasScale * plsScale;
 				

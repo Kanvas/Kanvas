@@ -7,8 +7,12 @@ package view.interact.zoomMove
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+	import util.CoreUtil;
+	import util.LayoutUtil;
+	
 	import view.ui.Bubble;
 	import view.ui.Canvas;
+	import view.ui.ICanvasLayout;
 	import view.ui.MainUIBase;
 
 	/**
@@ -167,16 +171,11 @@ package view.interact.zoomMove
 			
 			if (canvas.ifHasElements)
 			{
-				canvas.clearBG();// 防止画布背景的干扰
+				canvasBound = LayoutUtil.getContentRect(canvas);
 				
-				canvasInerBound = canvas.getRect(canvas);
-				canvasBound = canvas.getRect(mainUI);
-				var scale:Number;
-				
-				if (canvasInerBound.width / canvasInerBound.height > mainUI.bound.width / mainUI.bound.height)
-					scale = mainUI.bound.width / canvasBound.width;
-				else
-					scale = mainUI.bound.height / canvasBound.height;
+				var scale:Number = (canvasBound.width / canvasBound.height > mainUI.bound.width / mainUI.bound.height)
+					? mainUI.bound.width  / canvasBound.width
+					: mainUI.bound.height / canvasBound.height;
 				
 				//画布保持原比例，不缩放
 				if (originalScale)
@@ -185,10 +184,11 @@ package view.interact.zoomMove
 				}
 				else
 				{
-					if (control.ifAutoZoom == false)
+					if(!control.ifAutoZoom)
 					{
 						//检查canvas实际尺寸是否小于窗口尺寸，如果小于，则显示原始比例
-						if ( ! (canvasInerBound.width < mainUI.bound.width && canvasInerBound.height < mainUI.bound.height) && ! originalScale)
+						if ( ! (canvasInerBound.width  < mainUI.bound.width   && 
+								canvasInerBound.height < mainUI.bound.height) && ! originalScale)
 							flasher.canvasTargetScale *= scale;
 						else
 							flasher.canvasTargetScale = 1;
@@ -199,8 +199,20 @@ package view.interact.zoomMove
 					}
 				}
 				
-				flasher.canvasTargetY = (mainUI.bound.top  - canvasInerBound.top  * flasher.canvasTargetScale) + (mainUI.bound.height - canvasInerBound.height * flasher.canvasTargetScale) * .5;
-				flasher.canvasTargetX = (mainUI.bound.left - canvasInerBound.left * flasher.canvasTargetScale) + (mainUI.bound.width  - canvasInerBound.width  * flasher.canvasTargetScale) * .5;
+				var pls:Number = flasher.canvasTargetScale / canvas.scaleX;
+				
+				canvasBound.width  *= pls;
+				canvasBound.height *= pls;
+				var topLeft:Point = canvasBound.topLeft.clone();
+				LayoutUtil.convertPointStage2Canvas(topLeft, canvas.x, canvas.y, canvas.scaleX, canvas.rotation);
+				LayoutUtil.convertPointCanvas2Stage(topLeft, canvas.x, canvas.y, flasher.canvasTargetScale, canvas.rotation);
+				canvasBound.x = topLeft.x;
+				canvasBound.y = topLeft.y;
+				
+				var canvasCenter:Point = new Point((canvasBound .left + canvasBound .right) * .5, (canvasBound .top + canvasBound .bottom) * .5);
+				var stageCenter :Point = new Point((mainUI.bound.left + mainUI.bound.right) * .5, (mainUI.bound.top + mainUI.bound.bottom) * .5);
+				flasher.canvasTargetX = canvas.x + stageCenter.x - canvasCenter.x;
+				flasher.canvasTargetY = canvas.y + stageCenter.y - canvasCenter.y;
 			}
 			else
 			{

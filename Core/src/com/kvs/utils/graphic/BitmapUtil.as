@@ -128,5 +128,25 @@ package com.kvs.utils.graphic
 			
 			return myBitmapData;
 		}
+		
+		public static function drawBitmapData(source:DisplayObject, 
+											  width:Number, 
+											  height:Number, 
+											  x:Number, 
+											  y:Number, 
+											  scaleX:Number, 
+											  scaleY:Number, 
+											  rotation:Number, 
+											  smooth:Boolean = false):BitmapData
+		{
+			var matrix:Matrix = new Matrix;
+			matrix.scale(scaleX, scaleY);
+			matrix.rotate(rotation);
+			matrix.translate(-x, -y);
+			var rect:Rectangle = new Rectangle(0, 0, width, height);
+			var bmd:BitmapData = new BitmapData(width, height, true, 0xFFFFFFFF);
+			bmd.draw(source, matrix, null, null, rect, smooth);
+			return bmd;
+		}
 	}
 }

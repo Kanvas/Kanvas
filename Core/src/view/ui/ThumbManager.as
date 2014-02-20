@@ -1,15 +1,23 @@
 package view.ui
 {
+	import com.kvs.utils.MathUtil;
+	import com.kvs.utils.graphic.BitmapUtil;
+	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import model.CoreFacade;
 	
+	import modules.pages.PageUtil;
 	import modules.pages.PageVO;
+	import modules.pages.Scene;
+	
+	import util.LayoutUtil;
 	
 	/**
 	 * 
@@ -32,7 +40,7 @@ package view.ui
 		 */		
 		public function getShotCut(width:Number, height:Number):BitmapData
 		{
-			canvas.clearBG();
+			//canvas.clearBG();
 			
 			var w:Number = canvas.width;
 			var h:Number = canvas.height;
@@ -104,9 +112,28 @@ package view.ui
 			return bmd;
 		}
 		
-		public function getThumbByPageVO(w:Number, h:Number):BitmapData
+		public function getThumbByPageVO(pageVO:PageVO, w:Number, h:Number):BitmapData
 		{
-			return null;
+			//scale
+			var vw:Number = w;
+			var vh:Number = h;
+			var pw:Number = pageVO.scale * pageVO.width;
+			var ph:Number = pageVO.scale * pageVO.height;
+			var scale:Number = ((vw / vh) > (pw / ph)) ? vh / ph : vw / pw;
+			var rotation:Number = -pageVO.rotation;
+			var radian  :Number = MathUtil.angleToRadian(rotation);
+			var cos:Number = Math.cos(radian);
+			var sin:Number = Math.sin(radian);
+			//算出pageVO的左上角point
+			var tp:Point = new Point;
+			tp.x = - .5 * pageVO.scale * pageVO.width;
+			tp.y = - .5 * pageVO.scale * pageVO.height;
+			var rx:Number = tp.x * cos - tp.y * sin;
+			var ry:Number = tp.x * sin + tp.y * cos;
+			tp.x = rx + pageVO.x;
+			tp.y = ry + pageVO.y;
+			LayoutUtil.convertPointCanvas2Stage(tp, 0, 0, scale, rotation);
+			return BitmapUtil.drawBitmapData(canvas, w, h, tp.x, tp.y, scale, scale, rotation);
 		}
 		
 		/**

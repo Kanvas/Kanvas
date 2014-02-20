@@ -58,8 +58,8 @@ package util
 		 */
 		public static function elementOutOfInteract(element:ElementBase):Boolean
 		{
-			var bound:Rectangle = getRectForStage(element);
-			var stage:Rectangle = getStageRect();
+			var bound:Rectangle = LayoutUtil.getItemRect (coreMdt.canvas, element);
+			var stage:Rectangle = LayoutUtil.getStageRect(coreMdt.canvas);
 			return (bound.width  > stage.width  || 
 					bound.height > stage.height ||
 					bound.left   > stage.right  || 
@@ -86,69 +86,6 @@ package util
 				result = coreMdt.autoGroupController.hasElement(element);
 			
 			return result;
-		}
-		
-		
-		/**
-		 * 返回一个element的一个矩形
-		 * 
-		 * @param element
-		 * @param elementRotate 是否考虑element的旋转因素
-		 * @param canvasRotate 是否考虑canvas的旋转因素
-		 * @return 
-		 * 
-		 */
-		public static function getRectForStage(element:ElementBase, elementRotate:Boolean = true, canvasRotate:Boolean = true):Rectangle
-		{
-			if (elementRotate)
-			{
-				var topLeft:Point     = element.topLeft;
-				var topRight:Point    = element.topRight;
-				var bottomLeft:Point  = element.bottomLeft;
-				var bottomRight:Point = element.bottomRight;
-				if (canvasRotate)
-				{
-					topLeft     = LayoutUtil.elementPointToStagePoint(topLeft    .x, topLeft    .y, coreMdt.canvas);
-					topRight    = LayoutUtil.elementPointToStagePoint(topRight   .x, topRight   .y, coreMdt.canvas);
-					bottomLeft  = LayoutUtil.elementPointToStagePoint(bottomLeft .x, bottomLeft .y, coreMdt.canvas);
-					bottomRight = LayoutUtil.elementPointToStagePoint(bottomRight.x, bottomRight.y, coreMdt.canvas);
-					var minX:Number = Math.min(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
-					var maxX:Number = Math.max(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
-					var minY:Number = Math.min(topLeft.y, topRight.y, bottomLeft.y, bottomRight.y);
-					var maxY:Number = Math.max(topLeft.y, topRight.y, bottomLeft.y, bottomRight.y);
-				}
-				else
-				{
-					minX = Math.min(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
-					maxX = Math.max(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
-					minY = Math.min(topLeft.y, topRight.y, bottomLeft.y, bottomRight.y);
-					maxY = Math.max(topLeft.y, topRight.y, bottomLeft.y, bottomRight.y);
-					
-					minX = coreMdt.canvas.x + minX * coreMdt.canvas.scaleX;
-					maxX = coreMdt.canvas.x + maxX * coreMdt.canvas.scaleX;
-					minY = coreMdt.canvas.y + minY * coreMdt.canvas.scaleY;
-					maxY = coreMdt.canvas.y + maxY * coreMdt.canvas.scaleY;
-				}
-				
-				var x:Number = minX;
-				var y:Number = minY;
-				var w:Number = maxX - minX;
-				var h:Number = maxY - minY;
-			}
-			else
-			{
-				var point:Point = LayoutUtil.elementPointToStagePoint(element.left, element.top, coreMdt.canvas);
-				x = point.x;
-				w = coreMdt.layoutTransformer.canvasScale * element.scaledWidth;
-				y = point.y;
-				h = coreMdt.layoutTransformer.canvasScale * element.scaledHeight;
-			}
-			return new Rectangle(x, y, w, h);
-		}
-		
-		public static function getStageRect():Rectangle
-		{
-			return (coreMdt.mainUI.stage) ? new Rectangle(0, 0, coreMdt.mainUI.stage.stageWidth, coreMdt.mainUI.stage.stageHeight) : new Rectangle;
 		}
 		
 		private static function get coreMdt():CoreMediator

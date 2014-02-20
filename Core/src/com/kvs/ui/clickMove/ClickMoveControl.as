@@ -34,8 +34,8 @@ package com.kvs.ui.clickMove
 		{
 			ifMoving = false;
 			
-			startX = moveTarget.stage.mouseX;
-			startY = moveTarget.stage.mouseY;
+			mouseDownX = startX = moveTarget.stage.mouseX;
+			mouseDownY = startY = moveTarget.stage.mouseY;
 			
 			moveTarget.stage.addEventListener(MouseEvent.MOUSE_MOVE, moveHandler, false, 0, true);
 			moveTarget.stage.addEventListener(MouseEvent.MOUSE_UP, stopMoveCanvas, false, 0, true);
@@ -46,22 +46,27 @@ package com.kvs.ui.clickMove
 		 */		
 		private function moveHandler(evt:MouseEvent):void
 		{
-			if (ifMoving == false)
+			if(!ifMoving)
 			{
-				ifMoving = true;
-				target.startMove();
+				ifMoving = (Math.pow(moveTarget.stage.mouseX - mouseDownX, 2) + Math.pow(moveTarget.stage.mouseY - mouseDownY, 2) > dragPreventClickDistance * dragPreventClickDistance);
+				if (ifMoving)
+					target.startMove();
 			}
 			
-			var disX:Number = moveTarget.stage.mouseX - startX;
-			var disY:Number = moveTarget.stage.mouseY - startY;
+			if (ifMoving)
+			{
+				var disX:Number = moveTarget.stage.mouseX - startX;
+				var disY:Number = moveTarget.stage.mouseY - startY;
+				
+				target.moveOff(disX, disY);
+				
+				startX = moveTarget.stage.mouseX;
+				startY = moveTarget.stage.mouseY;
+				
+				// 让移动更平滑
+				evt.updateAfterEvent();
+			}
 			
-			target.moveOff(disX, disY);
-			
-			startX = moveTarget.stage.mouseX;
-			startY = moveTarget.stage.mouseY;
-			
-			// 让移动更平滑
-			evt.updateAfterEvent();
 		}
 		
 		/**
@@ -90,12 +95,21 @@ package com.kvs.ui.clickMove
 		private var ifMoving:Boolean = false;
 		
 		/**
+		 * 鼠标拖动影响点击事件的距离
+		 */
+		public var dragPreventClickDistance:Number = 3;
+		
+		/**
 		 */		
 		private var startX:Number = 0;
 		
 		/**
 		 */		
 		private var startY:Number = 0;
+		
+		private var mouseDownX:Number;
+		
+		private var mouseDownY:Number;
 		
 		/**
 		 */		

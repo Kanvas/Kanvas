@@ -4,6 +4,7 @@ package modules.pages
 	import com.kvs.utils.PointUtil;
 	
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	import view.ui.MainUIBase;
 

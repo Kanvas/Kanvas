@@ -16,6 +16,7 @@ package view.interact.multiSelect
 	import model.CoreFacade;
 	
 	import util.CoreUtil;
+	import util.LayoutUtil;
 	
 	import view.element.ElementBase;
 	import view.element.ElementEvent;
@@ -292,8 +293,7 @@ package view.interact.multiSelect
 			var bottom:Number = 0;
 			var right:Number = 0;
 			
-			// 子元素的布局信息；
-			var elementRect:Rectangle;
+			
 			
 			var minIndex:uint = coreMdt.canvas.numChildren - 1;
 			var index:uint;
@@ -305,7 +305,8 @@ package view.interact.multiSelect
 			{
 				minIndex = Math.min(minIndex, index = element.index);
 				
-				elementRect = CoreUtil.getRectForStage(element, true, false);
+				// 子元素的布局信息；
+				var elementRect:Rectangle = LayoutUtil.getItemRect(coreMdt.canvas, element, false, true);
 				
 				leftArr  .push(elementRect.left);
 				rightArr .push(elementRect.right);
