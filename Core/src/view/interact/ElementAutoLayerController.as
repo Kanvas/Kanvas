@@ -111,13 +111,13 @@ package view.interact
 			
 			for each (var item:ElementBase in itemsBefore)
 				layerBefore.push(item.index);
-				
+
 			itemsAfter.sort(sortOnElementLayer);
 			
 			var length:int = itemsAfter.length;
 			for (var i:int = 0; i < length; i++)
 				layerAfter[i] = layerBefore[itemsAfter.indexOf(itemsBefore[i])];
-			
+
 			return layerAfter;
 		}
 		
