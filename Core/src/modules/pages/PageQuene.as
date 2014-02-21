@@ -189,7 +189,7 @@ package modules.pages
 		 */
 		private function registPageVO(pageVO:PageVO, index:int):void
 		{
-			pageVO.pg_internal::index = index;
+			pageVO.index = index;
 			pageVO.pg_internal::parent = this;
 		}
 		
@@ -208,7 +208,7 @@ package modules.pages
 		private function udpatePageIndex(start:int, end:int):void
 		{
 			for (var i:int = start; i < end; i++)
-				pages[i].pg_internal::index = i;
+				pages[i].index = i;
 		}
 		
 		/**

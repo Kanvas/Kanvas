@@ -17,6 +17,11 @@ package model
 	import model.vo.ElementVO;
 	import model.vo.ImgVO;
 	
+	import modules.pages.PageElement;
+	import modules.pages.PageEvent;
+	import modules.pages.PageManager;
+	import modules.pages.PageVO;
+	
 	import org.puremvc.as3.patterns.proxy.Proxy;
 	
 	import util.ElementCreator;
@@ -312,8 +317,21 @@ package model
 				elementsWidthIndex[canvas.getChildIndex(item) - 1] = item;
 			}
 			
+			var pages:Vector.<PageElement> = new Vector.<PageElement>;
+			var pagesNode:XML = <pages/>;
 			for each (item in elementsWidthIndex)
-				mainNode.appendChild(item.exportData());
+			{
+				if (item is PageElement)
+				{
+					pagesNode.appendChild(item.exportData());
+				}
+				else
+				{
+					mainNode.appendChild(item.exportData());
+				}
+			}
+			
+			xml.appendChild(pagesNode);
 			
 			// 背景设置
 			xml.appendChild(bgVO.xml);
@@ -364,6 +382,14 @@ package model
 					element.toGroupState();
 					groupElement.childElements.push(element);
 				}
+			}
+			
+			//页面的初始化
+			for each(item in xml.pages.children())
+			{
+				element = createElement(item);//创建并初始化元素
+				
+				CoreFacade.coreMediator.pageManager.addPageAt(element.vo as PageVO, (element.vo as PageVO).index);
 			}
 			
 			//清空用于临时匹配组合的中专站

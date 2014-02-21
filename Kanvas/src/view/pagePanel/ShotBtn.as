@@ -74,6 +74,8 @@ package view.pagePanel
 			shot_frame_over;
 			shot_frame_down;
 			frameBtn.setIcons('shot_frame_up', 'shot_frame_over', 'shot_frame_down');
+			frameBtn.mouseEnabled = false;
+			
 			frameBtn.addEventListener(MouseEvent.CLICK, frameClick);
 			addChild(frameBtn);
 			
@@ -122,6 +124,7 @@ package view.pagePanel
 			if (isNaN(iconH))
 				iconH = img.height;
 			
+			shotSprite.graphics.clear();
 			shotSprite.x = (currState.width - iconW) / 2;
 			shotSprite.y = (currState.height - iconH) / 2;
 			BitmapUtil.drawBitmapDataToSprite(img.data, shotSprite, iconW, iconH, 0, 0, true);
