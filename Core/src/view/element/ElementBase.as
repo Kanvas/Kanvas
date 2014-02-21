@@ -513,6 +513,12 @@ package view.element
 			if (visible) updateView();
 		}
 		
+		public function get screenshot():Boolean
+		{
+			return _screenshot;
+		}
+		protected var _screenshot:Boolean = true;
+		
 		/**
 		 * 
 		 * 元素的原始尺寸 乘以 缩放比例  = 实际尺寸；

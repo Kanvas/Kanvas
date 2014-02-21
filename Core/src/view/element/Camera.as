@@ -17,7 +17,7 @@ package view.element
 		public function Camera(vo:ElementVO)
 		{
 			super(vo);
-			
+			_screenshot = false;
 			xmlData = <camera/>;
 			mouseChildren = false;
 		}

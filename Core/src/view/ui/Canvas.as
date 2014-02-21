@@ -103,7 +103,10 @@ package view.ui
 				__rotation = $rotation;
 				
 				for each (var item:ICanvasLayout in items)
-					item.visible = true;
+				{
+					item.visible = item.screenshot;
+				}
+					
 			}
 		}
 		public function toPreviewState():void

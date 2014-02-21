@@ -18,7 +18,7 @@ package modules.pages
 		public function PageElement(vo:PageVO)
 		{
 			super(vo);
-			
+			_screenshot = false;
 			vo.addEventListener(PageEvent.DELETE_PAGE_FROM_UI, deletePageHandler);
 		}
 		

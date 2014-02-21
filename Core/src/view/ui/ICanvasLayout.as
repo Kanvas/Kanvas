@@ -41,6 +41,8 @@ package view.ui
 			
 		function get visible():Boolean
 		function set visible(value:Boolean):void
+			
+		function get screenshot():Boolean
 		
 		function updateView():void
 	}
