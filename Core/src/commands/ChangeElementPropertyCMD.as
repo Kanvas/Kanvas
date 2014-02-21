@@ -49,13 +49,13 @@ package commands
 							layer[i] = oldPropertyObj["indexChangeElement"][i].index;
 						newPropertyObj[propertyName] = layer;
 					}
-					else if (propertyName == "x" || propertyName == "y")
+					else if (voPropertyNames.indexOf(propertyName) != -1)
 					{
-						newPropertyObj[propertyName] = element[propertyName];
+						newPropertyObj[propertyName] = element.vo[propertyName];
 					}
 					else
 					{
-						newPropertyObj[propertyName] = element.vo[propertyName];
+						newPropertyObj[propertyName] = element[propertyName];
 					}
 				}
 				
@@ -160,5 +160,7 @@ package commands
 		/**
 		 */		
 		private var selector:ElementSelector;
+		
+		private static const voPropertyNames:Array = ["radius", "arrowWidth", "trailHeight", 'r', 'rAngle', "innerRadius", "width", "height"];
 	}
 }

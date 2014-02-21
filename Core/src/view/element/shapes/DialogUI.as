@@ -2,6 +2,7 @@ package view.element.shapes
 {
 	import com.kvs.utils.ViewUtil;
 	import com.kvs.utils.XMLConfigKit.StyleManager;
+	import com.kvs.utils.XMLConfigKit.style.Style;
 	
 	import flash.display.Sprite;
 	import flash.geom.Point;
@@ -73,15 +74,14 @@ package view.element.shapes
 		
 		/**
 		 */		
-		public function layoutCustomPoint(selector:ElementSelector):void
+		public function layoutCustomPoint(selector:ElementSelector, style:Style):void
 		{
-			var scale:Number = selector.layoutInfo.transformer.canvasScale * vo.scale;
-			selector.customPointControl.x = (- vo.width / 2 + dialogVO.radius) * scale;
-			selector.customPointControl.y = - vo.height / 2 * scale;
+			selector.customPointControl.x = (- vo.width / 2 + dialogVO.radius) * style.scale;
+			selector.customPointControl.y = - vo.height / 2 * style.scale;
 			
 			var rad:Number = dialogVO.rAngle / 180 * Math.PI;
-			dialogPointCt.x = dialogVO.r * Math.cos(rad) * scale;
-			dialogPointCt.y = dialogVO.r * Math.sin(rad) * scale;
+			dialogPointCt.x = dialogVO.r * Math.cos(rad) * style.scale;
+			dialogPointCt.y = dialogVO.r * Math.sin(rad) * style.scale;
 		}
 		
 		/**

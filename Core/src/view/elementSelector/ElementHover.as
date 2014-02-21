@@ -36,13 +36,14 @@ package view.elementSelector
 		{
 			if (element) 
 			{
-				layoutInfo.currentElementUI = this.element;
+				layoutInfo.currentElementUI = element;
 				layoutInfo.update();
 				
-				style.width = (layoutInfo.width + offSet * 2) / element.scale / canvas.scaleX;
-				style.height = getHoverHeight(layoutInfo.height, element);
-				style.tx = - style.width / 2;
+				style.width  = (layoutInfo.width  + offSet * 2) / element.vo.scale / canvas.scaleX;
+				style.height = (layoutInfo.height + offSet * 2) / element.vo.scale / canvas.scaleY;
+				style.tx = - style.width  / 2;
 				style.ty = - style.height / 2;
+				//trace(layoutInfo.width, element.vo.scale, style.width, style.height, style.tx, style.ty);
 				
 				element.renderHoverEffect(style);
 			}

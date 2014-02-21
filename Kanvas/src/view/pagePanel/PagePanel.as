@@ -122,7 +122,7 @@ package view.pagePanel
 		 */		
 		private function _pageAdded(pageVO:PageVO):void
 		{
-			var pageUI:PageUI = new PageUI(pageVO);
+			var pageUI:PageUI = new PageUI(pageVO, core.kvsCore);
 			
 			pageUI.w = scrollProxy.viewWidth;
 			pageUI.h = pageHeight;

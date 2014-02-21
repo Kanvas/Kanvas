@@ -5,26 +5,28 @@ package view.pagePanel
 	import com.kvs.ui.clickMove.IClickMove;
 	import com.kvs.ui.label.LabelUI;
 	
+	import flash.display.Bitmap;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	import flash.filters.DropShadowFilter;
 	import flash.filters.GlowFilter;
 	
 	import modules.pages.PageEvent;
+	import modules.pages.PageUtil;
 	import modules.pages.PageVO;
+	
+	import view.ui.MainUIBase;
 	
 	/**
 	 */	
 	public class PageUI extends IconBtn implements IClickMove
 	{
-		public function PageUI(vo:PageVO)
+		public function PageUI(vo:PageVO, $mainUI:MainUIBase)
 		{
 			super();
 			
-			this.pageVO = vo;
-			pageVO.addEventListener(PageEvent.PAGE_SELECTED, pageSelected);
-			pageVO.addEventListener(PageEvent.UPDATE_THUMB, updateThumb);
+			pageVO = vo;
+			mainUI = $mainUI;
 			
 			addChild(con);
 			con.addChild(label);
@@ -46,6 +48,9 @@ package view.pagePanel
 			this.addEventListener(MouseEvent.ROLL_OUT, rollOut);
 			
 			dragMoveControl = new ClickMoveControl(this, con);
+			
+			pageVO.addEventListener(PageEvent.PAGE_SELECTED, pageSelected);
+			pageVO.addEventListener(PageEvent.UPDATE_THUMB, updateThumb);
 		}
 		
 		/**
@@ -110,7 +115,7 @@ package view.pagePanel
 		 */		
 		private function updateThumb(evt:PageEvent):void
 		{
-			
+			render();
 		}
 		
 		/**
@@ -147,10 +152,18 @@ package view.pagePanel
 		{
 			super.render();
 			
+			pageVO.bitmapData = PageUtil.getThumbByPageVO(pageVO, iconW, iconH, mainUI);
+			
 			drawPageThumb();
 			
+			if (bmp && contains(bmp)) removeChild(bmp);
+			addChild(bmp = new Bitmap(pageVO.bitmapData));
+			bmp.x = leftGutter;
+			bmp.y = (currState.height - iconH) / 2;
+			
+			
 			deleteBtn.x = leftGutter + iconW;
-			deleteBtn.y = (currState.height - iconH) / 2;;
+			deleteBtn.y = (currState.height - iconH) / 2;
 		}
 		
 		/**
@@ -251,6 +264,10 @@ package view.pagePanel
 		
 		/**
 		 */		
-		private var deleteBtn:IconBtn
+		private var deleteBtn:IconBtn;
+		
+		public var mainUI:MainUIBase;
+		
+		private var bmp:Bitmap;
 	}
 }

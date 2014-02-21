@@ -143,6 +143,8 @@ package com.kvs.utils.XMLConfigKit.style
 			_radius = value;
 		}
 		
+		public var scale:Number = 1;
+		
 		/**
 		 */		
 		private var _cover:Cover;

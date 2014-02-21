@@ -53,7 +53,7 @@ package view.elementSelector.lineControl
 			var r:Number = Math.sqrt(xDis * xDis + yDis * yDis);
 			
 			vo.width = r / selector.layoutTransformer.canvasScale / vo.scale * 2;
-			vo.rotation =  selector.getRote(endY, endX, startY, startX);
+			vo.rotation = selector.getRote(endY, endX, startY, startX) + 90;
 			
 			selector.element.render();
 			selector.update();

@@ -1,10 +1,10 @@
 package modules.pages
 {
+	import flash.display.BitmapData;
+	
 	import model.vo.ElementVO;
 	
 	import modules.pages.pg_internal;
-	
-	import spark.supportClasses.INavigator;
 	
 	[Event(name="updateThumb", type="modules.pages.PageEvent")]
 	
@@ -21,8 +21,60 @@ package modules.pages
 			super();
 		}
 		
-		/**
-		 */		
+		override public function set x(value:Number):void
+		{
+			if (x != value)
+			{
+				super.x = value;
+				dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
+			}
+		}
+		
+		override public function set y(value:Number):void
+		{
+			if (y != value)
+			{
+				super.y = value;
+				dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
+			}
+		}
+		
+		override public function set width(value:Number):void
+		{
+			if (width != value)
+			{
+				super.width = value;
+				dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
+			}
+		}
+		
+		override public function set height(value:Number):void
+		{
+			if (height != value)
+			{
+				super.height = value;
+				dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
+			}
+		}
+		
+		override public function set scale(value:Number):void
+		{
+			if (scale != value)
+			{
+				super.scale = value;
+				dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
+			}
+		}
+		
+		override public function set rotation(value:Number):void
+		{
+			if (rotation != value)
+			{
+				super.rotation = value;
+				dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
+			}
+		}
+		
 		public function get parent():PageQuene
 		{
 			return pg_internal::parent;
@@ -43,7 +95,6 @@ package modules.pages
 		}
 		
 		private var _index:int = -1;
-		
-		
+		public var bitmapData:BitmapData;
 	}
 }

@@ -2,6 +2,7 @@ package view.element.shapes
 {
 	import com.kvs.utils.ViewUtil;
 	import com.kvs.utils.XMLConfigKit.StyleManager;
+	import com.kvs.utils.XMLConfigKit.style.Style;
 	
 	import model.vo.ElementVO;
 	import model.vo.StarVO;
@@ -81,12 +82,12 @@ package view.element.shapes
 		
 		/**
 		 */		
-		public function layoutCustomPoint(selector:ElementSelector):void
+		public function layoutCustomPoint(selector:ElementSelector, style:Style):void
 		{
 			var rad:Number = - 0.3 * Math.PI;
 			var scale:Number = selector.layoutInfo.transformer.canvasScale * vo.scale;
-			selector.customPointControl.x = Math.cos(rad) * scale * vo.width / 2 * starVO.innerRadius;
-			selector.customPointControl.y = Math.sin(rad) * scale * vo.height / 2 * starVO.innerRadius;
+			selector.customPointControl.x = Math.cos(rad) * style.scale * vo.width  / 2 * starVO.innerRadius;
+			selector.customPointControl.y = Math.sin(rad) * style.scale * vo.height / 2 * starVO.innerRadius;
 		}
 		
 		

@@ -29,12 +29,16 @@ package util.layout
 		/**
 		 * 重新获取位置尺寸信息
 		 */		
-		public function update():void
+		public function update(useVOProperty:Boolean = true):void
 		{
 			if (currentElementUI)
 			{
-				_width = currentElementUI.scaledWidth * transformer.canvas.scaleX;
-				_height = currentElementUI.scaledHeight * transformer.canvas.scaleY;
+				_width  = ((useVOProperty) ? currentElementUI.scaledWidth  : currentElementUI.tempScaledWidth ) * transformer.canvasScale;
+				_height = ((useVOProperty) ? currentElementUI.scaledHeight : currentElementUI.tempScaledHeight) * transformer.canvasScale;
+				
+				trace(useVOProperty, _width, _height);
+				
+				_scale = ((useVOProperty) ? currentElementUI.vo.scale : currentElementUI.scale) * transformer.canvasScale;
 				
 				//左上角坐标
 				_tx =  - _width / 2;
@@ -134,6 +138,17 @@ package util.layout
 		/**
 		 */		
 		private var _rotation:Number;
+		
+		public function get scale():Number
+		{
+			return _scale;
+		}
+		
+		public function set scale(value:Number):void
+		{
+			_scale = value;
+		}
+		private var _scale:Number = 1;
 		
 		/**
 		 */		

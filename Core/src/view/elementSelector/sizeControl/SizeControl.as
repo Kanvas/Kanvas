@@ -19,8 +19,8 @@ package view.elementSelector.sizeControl
 			this.selector = selector;
 			//上下左右通用尺寸拉伸控制点
 			tp.styleConfig = sizePointStyle;
-			bp.styleConfig = sizePointStyle
-			lp.styleConfig = sizePointStyle
+			bp.styleConfig = sizePointStyle;
+			lp.styleConfig = sizePointStyle;
 			rp.styleConfig = sizePointStyle;
 			
 			tpControl = new TopPointControl(selector, tp);

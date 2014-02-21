@@ -184,7 +184,6 @@ package view.element
 		{
 			hoverEffectShape.graphics.clear();
 			StyleManager.setLineStyle(hoverEffectShape.graphics, hoverStyle.getBorder);
-			trace(hoverStyle.tx, hoverStyle.ty, hoverStyle.width, hoverStyle.height);
 			hoverEffectShape.graphics.drawRect(hoverStyle.tx, hoverStyle.ty, hoverStyle.width, hoverStyle.height);
 			hoverEffectShape.graphics.endFill();
 			
@@ -412,6 +411,8 @@ package view.element
 		
 		private var __scaleY:Number = 1;
 		
+		
+		
 		override public function get x():Number
 		{
 			return __x;
@@ -508,11 +509,8 @@ package view.element
 		
 		override public function set visible(value:Boolean):void
 		{
-			if (visible != value)
-			{
-				super.visible = value;
-				updateView();
-			}
+			super.visible = value;
+			if (visible) updateView();
 		}
 		
 		/**
@@ -522,11 +520,11 @@ package view.element
 		 */		
 		public function get scaledWidth():Number
 		{
-			var w:Number = vo.width * scale;		
+			var w:Number = vo.width * vo.scale;
 			
 			//有些图形，例如临时组合是没有样式的
 			if(vo.style && vo.style.getBorder)
-				w = w + vo.thickness * scale;
+				w = w + vo.thickness * vo.scale;
 				
 			return 	w;
 		}
@@ -535,12 +533,28 @@ package view.element
 		 */		
 		public function get scaledHeight():Number
 		{
-			var h:Number = vo.height * scale;
+			var h:Number = vo.height * vo.scale;
 			
 			if(vo.style && vo.style.getBorder)
-				h = h + vo.thickness * scale;
+				h = h + vo.thickness * vo.scale;
 			
 			return h;		
+		}
+		
+		public function get tempScaledWidth():Number
+		{
+			var w:Number = vo.width * scale;
+			if (vo.style && vo.style.getBorder)
+				w = w + vo.thickness * scale;
+			return w;
+		}
+		
+		public function get tempScaledHeight():Number
+		{
+			var h:Number = vo.height * scale;
+			if(vo.style && vo.style.getBorder)
+				h = h + vo.thickness * scale;
+			return h;
 		}
 		
 		/**
@@ -582,7 +596,6 @@ package view.element
 		 */		
 		public function set scale(value:Number):void
 		{
-			vo.scale = value;
 			this.scaleX = this.scaleY = value;
 		}
 		
@@ -590,7 +603,7 @@ package view.element
 		 */		
 		public function get scale():Number
 		{
-			return vo.scale;
+			return this.scaleX;
 		}
 		
 		/**

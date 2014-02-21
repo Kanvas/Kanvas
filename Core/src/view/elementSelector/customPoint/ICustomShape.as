@@ -1,5 +1,7 @@
 package view.elementSelector.customPoint
 {
+	import com.kvs.utils.XMLConfigKit.style.Style;
+	
 	import view.elementSelector.ElementSelector;
 
 	/**
@@ -19,7 +21,7 @@ package view.elementSelector.customPoint
 		/**
 		 * 更新定位自定义控制点的位置，跟新选择器布局时调用
 		 */		
-		function layoutCustomPoint(selector:ElementSelector):void;
+		function layoutCustomPoint(selector:ElementSelector, style:Style):void;
 		
 		/**
 		 */		

@@ -87,11 +87,21 @@ package view.ui
 			super.removeChildren(beginIndex, endIndex);
 		}
 		
-		public function toShotcutState():void
+		public function toShotcutState($x:Number, $y:Number, $scale:Number, $rotation:Number):void
 		{
 			if(!previewState)
 			{
 				previewState = true;
+				previewX = x;
+				previewY = y;
+				previewScale = scaleX;
+				previewRotation = rotation;
+				
+				__x = $x;
+				__y = $y;
+				__scaleX = __scaleY = $scale;
+				__rotation = $rotation;
+				
 				for each (var item:ICanvasLayout in items)
 					item.visible = true;
 			}
@@ -100,12 +110,22 @@ package view.ui
 		{
 			if( previewState)
 			{
+				previewState = false;
+				__x = previewX;
+				__y = previewY;
+				__scaleX = __scaleY = previewScale;
+				__rotation = previewRotation;
+				
 				for each (var item:ICanvasLayout in items)
-					item.updateView();
+					item.visible = true;
 			}
 		}
 		
 		private var previewState:Boolean;
+		private var previewX:Number;
+		private var previewY:Number;
+		private var previewScale:Number;
+		private var previewRotation:Number;
 		
 		/**
 		 */		

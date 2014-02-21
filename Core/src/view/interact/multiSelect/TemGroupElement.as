@@ -147,7 +147,7 @@ package view.interact.multiSelect
 		 */		
 		public function rest(width:Number, height:Number, x:Number, y:Number):void
 		{
-			scale = 1;
+			vo.scale = 1;
 			
 			vo.x = x;
 			vo.y = y;

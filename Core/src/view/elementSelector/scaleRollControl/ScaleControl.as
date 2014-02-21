@@ -50,7 +50,7 @@ package view.elementSelector.scaleRollControl
 			
 			selector.coreMdt.autoGroupController.scale(selector.element.scale / selector.curScale, selector.element);
 			
-			selector.layoutInfo.update();
+			selector.layoutInfo.update(false);
 			selector.render();
 		}
 		
