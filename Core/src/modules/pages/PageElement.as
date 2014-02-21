@@ -12,16 +12,32 @@ package modules.pages
 	
 	
 	/**
+	 * 页面
 	 */	
 	public final class PageElement extends ElementBase
 	{
 		public function PageElement(vo:PageVO)
 		{
+			xmlData = <page/>
+			
 			super(vo);
 			_screenshot = false;
 			vo.addEventListener(PageEvent.DELETE_PAGE_FROM_UI, deletePageHandler);
 		}
 		
+		/**
+		 */		
+		override public function exportData():XML
+		{
+			super.exportData();
+			
+			xmlData.@index = pageVO.index;
+			
+			return xmlData;
+		}
+		
+		/**
+		 */		
 		override protected function preRender():void
 		{
 			super.preRender();
