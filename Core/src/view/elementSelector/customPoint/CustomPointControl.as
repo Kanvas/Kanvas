@@ -35,7 +35,7 @@ package view.elementSelector.customPoint
 		{
 			if (this.visible)
 			{
-				customShape.layoutCustomPoint(selector);
+				customShape.layoutCustomPoint(selector, style);
 			}
 		}
 		

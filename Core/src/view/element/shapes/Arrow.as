@@ -2,6 +2,7 @@ package view.element.shapes
 {
 	import com.kvs.utils.ViewUtil;
 	import com.kvs.utils.XMLConfigKit.StyleManager;
+	import com.kvs.utils.XMLConfigKit.style.Style;
 	
 	import model.vo.ArrowVO;
 	import model.vo.ShapeVO;
@@ -65,12 +66,10 @@ package view.element.shapes
 		
 		/**
 		 */		
-		public function layoutCustomPoint(selector:ElementSelector):void
+		public function layoutCustomPoint(selector:ElementSelector, style:Style):void
 		{
-			var scale:Number = selector.layoutInfo.transformer.canvasScale * vo.scale;
-			
-			selector.customPointControl.x = (vo.width / 2 - arrowVO.arrowWidth) * scale;
-			selector.customPointControl.y = - arrowVO.trailHeight / 2 * scale;
+			selector.customPointControl.x = (vo.width / 2 - arrowVO.arrowWidth) * style.scale;
+			selector.customPointControl.y = - arrowVO.trailHeight / 2 * style.scale;
 		}
 		
 		
@@ -79,7 +78,7 @@ package view.element.shapes
 			return _propertyNameArray;
 		}
 		
-		private const _propertyNameArray:Array = ["arrowWidth", "trailHeight"]
+		private const _propertyNameArray:Array = ["arrowWidth", "trailHeight"];
 		
 		/**
 		 */		

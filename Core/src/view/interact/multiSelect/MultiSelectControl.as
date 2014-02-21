@@ -321,7 +321,7 @@ package view.interact.multiSelect
 			bottom = Math.max.apply(null, bottomArr);
 			
 			//先重设临时组合的比例和旋转角度
-			temGroupElement.scale = 1;
+			temGroupElement.vo.scale = 1;
 			temGroupElement.vo.rotation = temGroupElement.rotation = 0;
 			
 			//全局布局信息

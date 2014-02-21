@@ -10,9 +10,7 @@ package view.elementSelector
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import flash.display.Sprite;
-	import flash.geom.Point;
 	
-	import util.CoreUtil;
 	import util.layout.ElementLayoutInfo;
 	import util.layout.LayoutTransformer;
 	
@@ -176,17 +174,7 @@ package view.elementSelector
 		 */		
 		public function getRote(endY:Number, endX:Number, startY:Number, startX:Number):Number
 		{
-			var ydis:Number = (endY - startY)
-			var xdis:Number = (endX - startX);
-			
-			var rate:Number = Math.atan2(ydis, xdis);
-			var angle:Number = rate * 180 / Math.PI;
-			
-			angle -= coreMdt.canvas.rotation;
-			
-			angle = MathUtil.modRotation(angle);
-			
-			return angle;
+			return -MathUtil.modRotation(Math.atan2(endX - startX, endY - startY) * 180 / Math.PI - coreMdt.canvas.rotation);
 		}
 		
 		/**
@@ -194,7 +182,7 @@ package view.elementSelector
 		 */		
 		public function get elementWidthForStage():Number
 		{
-			return element.vo.width * element.vo.scale * layoutTransformer.canvasScale
+			return element.vo.width * element.vo.scale * layoutTransformer.canvasScale;
 		}
 		
 		
@@ -259,8 +247,9 @@ package view.elementSelector
 		{
 			style.tx = layoutInfo.tx - offSet;
 			style.ty = layoutInfo.ty - offSet;
-			style.width = layoutInfo.width + offSet * 2;
+			style.width  = layoutInfo.width  + offSet * 2;
 			style.height = layoutInfo.height + offSet * 2;
+			style.scale  = layoutInfo.scale;
 			
 			//CoreUtil.drawCircle(0xFF0000, new Point(style.tx, style.ty), 3);
 			
@@ -282,7 +271,7 @@ package view.elementSelector
 		 */		
 		public function rote():void
 		{
-			this.rotation = element.vo.rotation + layoutInfo.rotation;
+			this.rotation = element.rotation + layoutInfo.rotation;
 			toolBar.rotation = - this.rotation;
 			
 			toolBar.layout(style);

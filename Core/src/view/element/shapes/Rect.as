@@ -2,6 +2,7 @@ package view.element.shapes
 {
 	import com.kvs.utils.ViewUtil;
 	import com.kvs.utils.XMLConfigKit.StyleManager;
+	import com.kvs.utils.XMLConfigKit.style.Style;
 	
 	import model.vo.ShapeVO;
 	
@@ -43,11 +44,10 @@ package view.element.shapes
 		
 		/**
 		 */		
-		public function layoutCustomPoint(selector:ElementSelector):void
+		public function layoutCustomPoint(selector:ElementSelector, style:Style):void
 		{
-			var scale:Number = selector.layoutInfo.transformer.canvasScale * vo.scale;
-			selector.customPointControl.x = (- vo.width / 2 + rectVO.radius) * scale;
-			selector.customPointControl.y = - vo.height / 2 * scale;
+			selector.customPointControl.x =(- vo.width  / 2 + rectVO.radius) * style.scale;
+			selector.customPointControl.y = - vo.height / 2 * style.scale;
 		}
 		
 		/**

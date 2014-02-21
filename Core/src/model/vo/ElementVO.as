@@ -119,13 +119,36 @@ package model.vo
 		 * 元件自身缩放时， 原始尺寸不动，仅调节比例；
 		 * 
 		 * 元件拉伸（横向/纵向）时， 元件比例不变， 仅调节原始尺寸；
-		 */		
-		public var scale:Number = 1;
+		 */	
+		public function get scale():Number
+		{
+			return _scale;
+		}
+		
+		public function set scale(value:Number):void
+		{
+			_scale = value;
+		}
+		
+		private var _scale:Number = 1;
 		
 		/**
 		 * 旋转角度，0~360范围取值
 		 */		
-		public var rotation:Number = 0;
+		public function get rotation():Number
+		{
+			return _rotation;
+		}
+		
+		/**
+		 * @private
+		 */
+		public function set rotation(value:Number):void
+		{
+			_rotation = value;
+		}
+		
+		private var _rotation:Number = 0;
 		
 		
 		

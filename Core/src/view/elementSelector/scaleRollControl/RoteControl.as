@@ -51,7 +51,7 @@ package view.elementSelector.scaleRollControl
 			dis = rote - oldRotation;
 			
 			
-			selector.element.vo.rotation = rote;
+			//selector.element.vo.rotation = rote;
 			selector.element.rotation = rote;
 			selector.rote();
 			
