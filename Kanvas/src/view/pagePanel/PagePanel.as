@@ -615,9 +615,12 @@ package view.pagePanel
 			addPageBtn = new ShotBtn(this);
 			addPageBtn.w = w - gutter * 2 - 4;
 			addPageBtn.h = 100;
-			addPageBtn.iconW = 60;
-			addPageBtn.iconH = 60;
-		    addPageBtn.setIcons('del_up', 'del_over', 'del_down');
+			addPageBtn.iconW = 80;
+			addPageBtn.iconH = 80;
+			
+			shot_up;
+			shot_over;
+		    addPageBtn.setIcons('shot_up', 'shot_up', 'shot_up');
 			this.addChild(addPageBtn);
 			
 			addChild(pagesCtn);
