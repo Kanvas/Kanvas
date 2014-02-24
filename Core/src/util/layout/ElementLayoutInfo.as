@@ -36,13 +36,11 @@ package util.layout
 				_width  = ((useVOProperty) ? currentElementUI.scaledWidth  : currentElementUI.tempScaledWidth ) * transformer.canvasScale;
 				_height = ((useVOProperty) ? currentElementUI.scaledHeight : currentElementUI.tempScaledHeight) * transformer.canvasScale;
 				
-				trace(useVOProperty, _width, _height);
-				
-				_scale = ((useVOProperty) ? currentElementUI.vo.scale : currentElementUI.scale) * transformer.canvasScale;
+				_scale  = ((useVOProperty) ? currentElementUI.vo.scale : currentElementUI.scale) * transformer.canvasScale;
 				
 				//左上角坐标
-				_tx =  - _width / 2;
-				_ty = - _height / 2;
+				_tx = - _width  * .5;
+				_ty = - _height * .5;
 				
 				updateXY();
 				updateRotation();

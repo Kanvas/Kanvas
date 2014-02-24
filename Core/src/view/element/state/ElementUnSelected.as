@@ -71,7 +71,7 @@ package view.element.state
 		{
 			element.mouseChildren = element.mouseEnabled = false;
 			element.clearHoverEffect();
-			
+			element.enable();
 			element.currentState = element.prevState;
 			
 			element.returnFromPrevFun = function():void{

@@ -83,7 +83,18 @@ package view.interact.interactMode
 			mainMediator.currentMode = mainMediator.preMode;
 			prevElements();
 			
-			mainMediator.zoomMoveControl.autoZoom();
+			
+			if (mainMediator.pageManager.numPage > 0)
+			{
+				//进入多页面播放模式
+				mainMediator.pageManager.viewPage(mainMediator.pageManager.currentPage);
+			}
+			else
+			{
+				mainMediator.zoomMoveControl.autoZoom();
+			}
+			
+			//mainMediator.zoomMoveControl.autoZoom();
 		}
 		
 		/**

@@ -755,6 +755,10 @@ package view.element
 			currentState.disable();
 		}
 		
+		public function get enableChangable():Boolean
+		{
+			return ! (currentState is ElementPrevState);
+		}
 		
 		
 		

@@ -124,7 +124,7 @@ package view.interact
 						else
 							element.enable();
 					}
-					else if (bound.width > w || bound.width < minInteractSize || bound.height > h || bound.height < minInteractSize)
+					else if (element.enableChangable && (bound.width > w || bound.width < minInteractSize || bound.height > h || bound.height < minInteractSize))
 					{
 						element.disable();
 					}

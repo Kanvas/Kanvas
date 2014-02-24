@@ -29,30 +29,8 @@ package modules.pages
 			pageQuene.addEventListener(PageEvent.PAGE_ADDED, defaultHandler);
 			pageQuene.addEventListener(PageEvent.PAGE_DELETED, defaultHandler);
 			pageQuene.addEventListener(PageEvent.UPDATE_PAGES_LAYOUT, defaultHandler);
-			//coreMdt.mainUI.addEventListener(MouseEvent.MOUSE_DOWN, mouseDown);
-			//coreMdt.mainUI.addEventListener(MouseEvent.MOUSE_WHEEL, mouseWheel);
-		}
-		/*
-		private function mouseDown(e:MouseEvent):void
-		{
-			coreMdt.mainUI.stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
-			coreMdt.mainUI.stage.addEventListener(MouseEvent.MOUSE_UP, mouseUp);
-		}
-		private function mouseMove(e:MouseEvent):void
-		{
-			coreMdt.mainUI.stage.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
-			coreMdt.mainUI.stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUp);
-		}
-		private function mouseUp(e:MouseEvent):void
-		{
-			coreMdt.mainUI.stage.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
-			coreMdt.mainUI.stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUp);
 		}
 		
-		private function mouseWheel(e:MouseEvent):void
-		{
-		}
-		*/
 		/**
 		 * 根据画布当前布局获取pageVO
 		 */
@@ -78,7 +56,9 @@ package modules.pages
 		 */
 		public function addPage(pageVO:PageVO):PageVO
 		{
-			return pageQuene.addPage(pageVO);
+			pageQuene.addPage(pageVO);
+			__currentPage = pageVO.index;
+			return pageVO;
 		}
 		
 		/**
@@ -86,7 +66,9 @@ package modules.pages
 		 */
 		public function addPageAt(pageVO:PageVO, index:int):PageVO
 		{
-			return pageQuene.addPageAt(pageVO, index);
+			pageQuene.addPageAt(pageVO, index);
+			__currentPage = pageVO.index;
+			return pageVO;
 		}
 		
 		/**
@@ -118,6 +100,7 @@ package modules.pages
 		 */
 		public function removePage(pageVO:PageVO):PageVO
 		{
+			if (currentPage == pageVO.index) __currentPage = 0;
 			return pageQuene.removePage(pageVO);
 		}
 		
@@ -139,21 +122,26 @@ package modules.pages
 		
 		public function viewPage(page:int):void
 		{
+			__currentPage = page;
 			var scene:Scene = PageUtil.getSceneFromVO(pages[page], coreMdt.mainUI);
 			coreMdt.zoomMoveControl.zoomRotateMoveTo(scene.scale, scene.rotation, scene.x, scene.y);
 		}
 		
 		public function resetView():void
 		{
-			lastViewPage = -1;
+			__currentPage = 0;
 		}
-		
-		private var lastViewPage:int = -1;
 		
 		private function defaultHandler(e:PageEvent):void
 		{
 			dispatchEvent(e);
 		}
+		
+		public function get currentPage():int
+		{
+			return __currentPage;
+		}
+		private var __currentPage:int = 0;
 		
 		/**
 		 * 获取总页数
