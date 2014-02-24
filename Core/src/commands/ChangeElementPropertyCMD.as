@@ -161,6 +161,6 @@ package commands
 		 */		
 		private var selector:ElementSelector;
 		
-		private static const voPropertyNames:Array = ["radius", "arrowWidth", "trailHeight", 'r', 'rAngle', "innerRadius", "width", "height"];
+		private static const voPropertyNames:Array = ["radius", "arrowWidth", "trailHeight", 'r', 'rAngle', "innerRadius", "width", "height", "thickness"];
 	}
 }
