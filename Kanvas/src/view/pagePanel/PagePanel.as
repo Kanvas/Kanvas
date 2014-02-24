@@ -21,7 +21,7 @@ package view.pagePanel
 	
 	import modules.pages.PageEvent;
 	import modules.pages.PageManager;
-	import modules.pages.PageVO;
+	import model.vo.PageVO;
 	
 	/**
 	 * 负责页面创建命令发出，页面列表显示，页面顺序调换命令发出

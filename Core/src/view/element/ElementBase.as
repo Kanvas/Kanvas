@@ -445,45 +445,6 @@ package view.element
 		
 		private var __y:Number = 0;
 		
-		public function get measureScaleX():Number
-		{
-			return super.scaleX;
-		}
-		public function set measureScaleX(value:Number):void
-		{
-			super.scaleX = value;
-		}
-		
-		public function get measureScaleY():Number
-		{
-			return super.scaleY;
-		}
-		
-		public function set measureScaleY(value:Number):void
-		{
-			super.scaleY = value;
-		}
-		
-		public function get measureX():Number
-		{
-			return super.x;
-		}
-		
-		public function set measureX(value:Number):void
-		{
-			super.x = value;
-		}
-		
-		public function get measureY():Number
-		{
-			return super.y;
-		}
-		
-		public function set measureY(value:Number):void
-		{
-			super.y = value;
-		}
-		
 		public function updateView():void
 		{
 			if (parent && visible)
@@ -503,9 +464,6 @@ package view.element
 				super.y = tmpX * prtSin + tmpY * prtCos + parent.y;
 			}
 		}
-		
-		private var tmpPoint:Point = new Point;
-		private var oriPoint:Point = new Point;
 		
 		override public function set visible(value:Boolean):void
 		{

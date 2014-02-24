@@ -12,8 +12,8 @@ package model
 	import model.vo.StarVO;
 	import model.vo.TextVO;
 	
-	import modules.pages.PageElement;
-	import modules.pages.PageVO;
+	import view.element.PageElement;
+	import model.vo.PageVO;
 	
 	import org.puremvc.as3.patterns.facade.Facade;
 	

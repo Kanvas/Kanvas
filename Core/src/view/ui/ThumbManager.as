@@ -14,7 +14,7 @@ package view.ui
 	import model.CoreFacade;
 	
 	import modules.pages.PageUtil;
-	import modules.pages.PageVO;
+	import model.vo.PageVO;
 	import modules.pages.Scene;
 	
 	import util.LayoutUtil;

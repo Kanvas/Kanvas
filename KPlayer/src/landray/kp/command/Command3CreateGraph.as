@@ -1,8 +1,8 @@
 package landray.kp.command
 {
 	import landray.kp.core.kp_internal;
-	import landray.kp.maps.mindMap.Mind;
-	import landray.kp.maps.simple.GraphSimple;
+	import landray.kp.maps.mind.Mind;
+	import landray.kp.maps.main.Main;
 	import landray.kp.utils.CoreUtil;
 	import landray.kp.view.Graph;
 
@@ -25,8 +25,8 @@ package landray.kp.command
 		private function registGraphs():void
 		{
 			graphManager.registGraph("basic", landray.kp.view.Graph);
-			graphManager.registGraph("main" , landray.kp.maps.simple.GraphSimple);
-			graphManager.registGraph("mind" , landray.kp.maps.mindMap.Mind);
+			graphManager.registGraph("main" , landray.kp.maps.main.Main);
+			graphManager.registGraph("mind" , landray.kp.maps.mind.Mind);
 		}
 		
 		private function resolveData():void

@@ -1,6 +1,7 @@
 package modules.pages
 {
 	import flash.events.EventDispatcher;
+	import model.vo.PageVO;
 
 	[Event(name="pageAdded", type="modules.pages.PageEvent")]
 	

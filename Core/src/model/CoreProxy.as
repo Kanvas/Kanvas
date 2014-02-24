@@ -17,10 +17,10 @@ package model
 	import model.vo.ElementVO;
 	import model.vo.ImgVO;
 	
-	import modules.pages.PageElement;
+	import view.element.PageElement;
 	import modules.pages.PageEvent;
 	import modules.pages.PageManager;
-	import modules.pages.PageVO;
+	import model.vo.PageVO;
 	
 	import org.puremvc.as3.patterns.proxy.Proxy;
 	

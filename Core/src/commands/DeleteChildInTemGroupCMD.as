@@ -2,8 +2,8 @@ package commands
 {
 	import model.CoreFacade;
 	
-	import modules.pages.PageElement;
-	import modules.pages.PageVO;
+	import view.element.PageElement;
+	import model.vo.PageVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	

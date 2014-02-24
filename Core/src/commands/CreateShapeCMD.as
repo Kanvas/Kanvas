@@ -11,8 +11,8 @@ package commands
 	import model.vo.ElementVO;
 	import model.vo.ShapeVO;
 	
-	import modules.pages.PageElement;
-	import modules.pages.PageVO;
+	import view.element.PageElement;
+	import model.vo.PageVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	

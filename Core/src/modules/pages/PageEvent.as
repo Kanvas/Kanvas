@@ -1,6 +1,7 @@
 package modules.pages
 {
 	import flash.events.Event;
+	import model.vo.PageVO;
 	
 	public final class PageEvent extends Event
 	{

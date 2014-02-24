@@ -12,7 +12,7 @@ package landray.kp.view
 	import landray.kp.core.KPEmbeds;
 	import landray.kp.core.KPProvider;
 	import landray.kp.core.kp_internal;
-	import landray.kp.maps.simple.comman.ElementToolTip;
+	import landray.kp.maps.main.comman.ElementToolTip;
 	import landray.kp.mediator.MediatorViewer;
 	import landray.kp.utils.CoreUtil;
 	

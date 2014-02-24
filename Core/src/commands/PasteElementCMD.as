@@ -3,7 +3,7 @@ package commands
 	import model.CoreFacade;
 	import model.CoreProxy;
 	
-	import modules.pages.PageElement;
+	import view.element.PageElement;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	

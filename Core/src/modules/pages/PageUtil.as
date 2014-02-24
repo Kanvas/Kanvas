@@ -11,6 +11,7 @@ package modules.pages
 	import util.LayoutUtil;
 	
 	import view.ui.MainUIBase;
+	import model.vo.PageVO;
 
 	public final class PageUtil
 	{

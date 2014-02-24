@@ -118,7 +118,7 @@
 			
 			<border styleID='Page'>
 				<style>
-					<border color='#666666' alpha='0.9' thickness='10' caps='square' pixelHinting='false' scaleMode='none'/>
+					<border color='#666666' alpha='1' thickness='20' caps='square' pixelHinting='false' scaleMode='none'/>
 				</style>
 			</border>
 			
@@ -241,7 +241,7 @@
 			
 			<border styleID='Page'>
 				<style>
-					<border color='#666666' alpha='0.9' thickness='10' caps='square' pixelHinting='false' scaleMode='none'/>
+					<border color='#666666' alpha='1' thickness='20' caps='square' pixelHinting='false' scaleMode='none'/>
 				</style>
 			</border>
 			
@@ -364,7 +364,7 @@
 			
 			<border styleID='Page'>
 				<style>
-					<border color='#666666' alpha='0.9' thickness='10' caps='square' pixelHinting='false' scaleMode='none'/>
+					<border color='#666666' alpha='1' thickness='20' caps='square' pixelHinting='false' scaleMode='none'/>
 				</style>
 			</border>
 			
@@ -488,7 +488,7 @@
 			
 			<border styleID='Page'>
 				<style>
-					<border color='#666666' alpha='0.9' thickness='10' caps='square' pixelHinting='false' scaleMode='none'/>
+					<border color='#666666' alpha='1' thickness='20' caps='square' pixelHinting='false' scaleMode='none'/>
 				</style>
 			</border>
 			
@@ -612,7 +612,7 @@
 			
 			<border styleID='Page'>
 				<style>
-					<border color='#666666' alpha='0.9' thickness='10' caps='square' pixelHinting='false' scaleMode='none'/>
+					<border color='#666666' alpha='1' thickness='20' caps='square' pixelHinting='false' scaleMode='none'/>
 				</style>
 			</border>
 			
@@ -737,7 +737,7 @@
 			
 			<border styleID='Page'>
 				<style>
-					<border color='#666666' alpha='0.9' thickness='10' caps='square' pixelHinting='false' scaleMode='none'/>
+					<border color='#666666' alpha='1' thickness='20' caps='square' pixelHinting='false' scaleMode='none'/>
 				</style>
 			</border>
 			

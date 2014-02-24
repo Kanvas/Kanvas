@@ -9,6 +9,7 @@ package modules.pages
 	import model.ElementProxy;
 	
 	import view.interact.CoreMediator;
+	import model.vo.PageVO;
 
 	[Event(name="pageAdded", type="modules.pages.PageEvent")]
 	

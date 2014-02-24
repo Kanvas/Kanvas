@@ -11,7 +11,7 @@ package landray.kp.mediator
 	import landray.kp.controls.Selector;
 	import landray.kp.core.KPConfig;
 	import landray.kp.core.kp_internal;
-	import landray.kp.maps.simple.elements.BaseElement;
+	import landray.kp.maps.main.elements.BaseElement;
 	import landray.kp.utils.CoreUtil;
 	import landray.kp.utils.ExternalUtil;
 	import landray.kp.view.Graph;

@@ -13,7 +13,7 @@ package view.pagePanel
 	
 	import modules.pages.PageEvent;
 	import modules.pages.PageUtil;
-	import modules.pages.PageVO;
+	import model.vo.PageVO;
 	
 	import view.ui.MainUIBase;
 	
