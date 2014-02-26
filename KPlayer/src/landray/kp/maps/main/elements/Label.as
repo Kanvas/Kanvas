@@ -22,7 +22,7 @@ package landray.kp.maps.main.elements
 		 */		
 		override public function render(scale:Number = 1):void
 		{
-			if (rendered == false)
+			if(!rendered)
 			{
 				rendered = true;
 				super.render();
@@ -37,13 +37,8 @@ package landray.kp.maps.main.elements
 				
 				text.x = - text.width  * .5;
 				text.y = - text.height * .5;
-				
-				text.checkTextBm(textVO.scale * scale);
 			}
-			else
-			{
-				text.checkTextBm(textVO.scale * scale);
-			}
+			text.checkTextBm(textVO.scale * scale);
 		}
 		
 		/**

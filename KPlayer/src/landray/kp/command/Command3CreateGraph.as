@@ -1,8 +1,8 @@
 package landray.kp.command
 {
 	import landray.kp.core.kp_internal;
-	import landray.kp.maps.mind.Mind;
 	import landray.kp.maps.main.Main;
+	import landray.kp.maps.mind.Mind;
 	import landray.kp.utils.CoreUtil;
 	import landray.kp.view.Graph;
 
@@ -35,8 +35,6 @@ package landray.kp.command
 			config.kp_internal::graphs = new Vector.<Graph>;
 			while(config.kp_internal::viewer.canvas.numChildren>1) config.kp_internal::viewer.canvas.removeChildAt(1);
 			
-			
-			
 			if (provider.dataXML)
 			{
 				try 
@@ -63,11 +61,13 @@ package landray.kp.command
 					graph.theme = config.kp_internal::theme;
 					graph.dataProvider = xml;
 					config.kp_internal::graphs.push(graph);
-					config.kp_internal::viewer.canvas.addChild(graph);
 				}
 				
+				//resolve page
+				pageManager.dataProvider = provider.dataXML.pages[0].children();
+				
 				//resolve module
-				var list:XMLList = provider.dataXML.module.children();
+				/*var list:XMLList = provider.dataXML.module.children();
 				for each (xml in list) 
 				{
 					reference = graphManager.getGraph(String(xml.name()));
@@ -76,9 +76,9 @@ package landray.kp.command
 						graph = new reference;
 						graph.dataProvider = xml;
 						config.kp_internal::graphs.push(graph);
-						config.kp_internal::viewer.canvas.addChild(graph);
+						//config.kp_internal::viewer.canvas.addChild(graph);
 					}
-				}
+				}*/
 			}
 		}
 	}

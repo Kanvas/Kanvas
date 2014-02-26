@@ -17,23 +17,17 @@ package landray.kp.utils
 	import util.StyleUtil;
 	import util.img.ImgLib;
 
-	/**
-	 */	
 	public class CoreUtil
 	{
 		
-		/**
-		 */		
-		public static function applyStyle(vo:ElementVO, stypeID:String = null):void
+		public static function ifHasText(value:Object):Boolean
 		{
-			StyleUtil.applyStyleToElement(vo, stypeID);
+			return RexUtil.ifHasText(value);
 		}
 		
-		public static function clearLibPart(lib:XMLVOLib = null):void
+		public static function initApplication(container:Sprite, handler:Function, isMain:Boolean = false):void
 		{
-			if(!lib) 
-				lib = XMLVOLib.currentLib;
-			lib.clearPartLib();
+			StageUtil.initApplication(container, handler, isMain);
 		}
 		
 		public static function drawBitmapDataToShape(bmd:BitmapData, ui:Shape, w:Number, h:Number, tx:Number = 0, ty:Number = 0, smooth:Boolean = true, radius:uint = 0):void
@@ -46,14 +40,14 @@ package landray.kp.utils
 			return ClassUtil.getObjectByClassPath(path);
 		}
 		
-		public static function getStyle(key:String, type:String):*
+		public static function applyStyle(vo:ElementVO, stypeID:String = null):void
 		{
-			return XMLVOLib.getXML(key, type);
+			StyleUtil.applyStyleToElement(vo, stypeID);
 		}
 		
-		public static function ifHasText(value:Object):Boolean
+		public static function setColor(value:Object):Object
 		{
-			return RexUtil.ifHasText(value);
+			return StyleManager.setColor(value);
 		}
 		
 		public static function imageLibGetData(value:uint):BitmapData
@@ -66,14 +60,20 @@ package landray.kp.utils
 			return ImgLib.ifHasData(value);
 		}
 		
-		public static function initApplication(container:Sprite, handler:Function, isMain:Boolean = false):void
-		{
-			StageUtil.initApplication(container, handler, isMain);
-		}
-		
 		public static function mapping(obj:*, vo:*, parentVO:ElementVO=null):void
 		{
 			XMLVOMapper.fuck(obj, vo, parentVO);
+		}
+		
+		public static function getStyle(key:String, type:String):*
+		{
+			return (XMLVOLib.currentLib) ? XMLVOLib.getXML(key, type) : null;
+		}
+		
+		public static function clearLibPart(lib:XMLVOLib = null):void
+		{
+			if(!lib) lib = XMLVOLib.currentLib;
+			if( lib) lib.clearPartLib();
 		}
 		
 		public static function registLib(lib:XMLVOLib):void
@@ -81,23 +81,17 @@ package landray.kp.utils
 			XMLVOLib.currentLib = lib;
 		}
 		
-		public static function registLibXMLWhole(key:String, xml:*, type:String, lib:XMLVOLib=null):void
+		public static function registLibXMLWhole(key:String, xml:*, type:String, lib:XMLVOLib = null):void
 		{
-			if(!lib) 
-				lib = XMLVOLib.currentLib;
+			if(!lib) lib = XMLVOLib.currentLib;
 			lib.registWholeXML(key, xml, type);
 		}
 		
-		public static function registLibXMLPart(key:String, xml:*, type:String, lib:XMLVOLib=null):void
+		public static function registLibXMLPart(key:String, xml:*, type:String, lib:XMLVOLib = null):void
 		{
-			if(!lib) 
-				lib = XMLVOLib.currentLib;
-			lib.registerPartXML(key, xml, type);
+			if(!lib) lib = XMLVOLib.currentLib;
+			if( lib) lib.registerPartXML(key, xml, type);
 		}
 		
-		public static function setColor(value:Object):Object
-		{
-			return StyleManager.setColor(value);
-		}
 	}
 }

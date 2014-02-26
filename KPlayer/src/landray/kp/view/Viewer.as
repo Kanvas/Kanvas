@@ -57,6 +57,7 @@ package landray.kp.view
 			//mediator为viewer事件处理交互类
 			mediator    = new MediatorViewer(this);
 			kp_internal::controller  = new ZoomMoveControl(this, mediator);
+			config.kp_internal::controller = kp_internal::controller;
 			
 			templete = provider.styleXML;
 			
@@ -118,8 +119,8 @@ package landray.kp.view
 		 */
 		kp_internal function refresh():void
 		{
-			kp_internal::drawInteractor();
-			kp_internal::drawBackground((background) ? background.color : 0xFFFFFF);
+			//kp_internal::drawInteractor();
+			//kp_internal::drawBackground((background) ? background.color : 0xFFFFFF);
 			if (kp_internal::selector) 
 			{
 				if (kp_internal::selector.visible) 
@@ -147,11 +148,10 @@ package landray.kp.view
 		 */
 		kp_internal function drawInteractor():void
 		{
-			var point:Point = LayoutUtil.stagePointToElementPoint(0, 0, canvas);
-			var x:Number = point.x;
-			var y:Number = point.y;
-			var w:Number = width  / canvas.scaleX;
-			var h:Number = height / canvas.scaleX;
+			var x:Number = 0;
+			var y:Number = 0;
+			var w:Number = width ;
+			var h:Number = height;
 			canvas.drawBG(new Rectangle(x, y, w, h));
 		}
 		
@@ -178,8 +178,11 @@ package landray.kp.view
 		
 		kp_internal function setToolTipMultiline(w:Number):void
 		{
-			config.kp_internal::tipsManager.getStyle().layout = "wrap";
-			config.kp_internal::tipsManager.maxWidth = w;
+			if (w > 0)
+			{
+				config.kp_internal::tipsManager.getStyle().layout = "wrap";
+				config.kp_internal::tipsManager.maxWidth = w;
+			}
 		}
 		
 		kp_internal function showLinkOveredTip(msg:String, w:Number = 0):void
@@ -189,25 +192,61 @@ package landray.kp.view
 		
 		kp_internal function setScreenState(state:String):void
 		{
-			if(isNaN(lastWidth) || isNaN(lastHeight))
+			if (screenState!= state)
 			{
+				screenState = state;
+				if(isNaN(lastWidth) || isNaN(lastHeight))
+				{
+					lastWidth  = stage.stageWidth;
+					lastHeight = stage.stageHeight;
+				}
+				if (stage.displayState!= state)
+					stage.displayState = state;
+				var gutterOld:int = (state == "normal") ? 5 : 30;
+				var gutterNew:int = (state == "normal") ? 30 : 5;
+				var recOld:Rectangle = new Rectangle(gutterOld, gutterOld, lastWidth - gutterOld * 2, lastHeight - gutterOld * 2);
+				var recNew:Rectangle = new Rectangle(gutterNew, gutterNew, stage.stageWidth - gutterNew * 2, stage.stageHeight - gutterNew * 2);
+				if (state == "fullScreen")
+				{
+					fullScreenScale = (recOld.width / recOld.height > recNew.width / recNew.height)
+						? recNew.width  / recOld.width
+						: recNew.height / recOld.height;
+				}
+				else
+				{
+					fullScreenScale = 1 / fullScreenScale;
+				}
+				var canvasScale:Number = canvas.scaleX * fullScreenScale;
+				var sceOld:Point = new Point(lastWidth * .5, lastHeight * .5);
+				var sceNew:Point = new Point(stage.stageWidth * .5, stage.stageHeight * .5);
+				var vector:Point = sceNew.subtract(sceOld);
+				recOld.offset(vector.x, vector.y);
+				canvas.x += vector.x;
+				canvas.y += vector.y;
+				recOld.width  *= fullScreenScale;
+				recOld.height *= fullScreenScale;
+				var tl:Point = new Point(recOld.x, recOld.y);
+				LayoutUtil.convertPointStage2Canvas(tl, canvas.x, canvas.y, canvas.scaleX, canvas.rotation);
+				LayoutUtil.convertPointCanvas2Stage(tl, canvas.x, canvas.y, canvasScale  , canvas.rotation);
+				recOld.x = tl.x;
+				recOld.y = tl.y;
+				var canvasCenter:Point = new Point((recOld.left + recOld.right) * .5, (recOld.top + recOld.bottom) * .5);
+				var stageCenter :Point = new Point((recNew.left + recNew.right) * .5, (recNew.top + recNew.bottom) * .5);
+				var aimX:Number = canvas.x + stageCenter.x - canvasCenter.x;
+				var aimY:Number = canvas.y + stageCenter.y - canvasCenter.y;
+				kp_internal::controller.zoomRotateMoveTo(canvasScale, canvas.rotation, aimX, aimY, null, .5);
+				
 				lastWidth  = stage.stageWidth;
 				lastHeight = stage.stageHeight;
+				
+				synBgImgWidthCanvas();
 			}
-			if (stage.displayState!= state)
-				stage.displayState = state;
-			var x:Number = (lastWidth  * .5 - canvas.x) / canvas.scaleX;
-			var y:Number = (lastHeight * .5 - canvas.y) / canvas.scaleX;
-			lastWidth  = stage.stageWidth;
-			lastHeight = stage.stageHeight;
-			canvas.x = lastWidth  * .5 - x;
-			canvas.y = lastHeight * .5 - y;
-			
-			synBgImgWidthCanvas();
 		}
 		
 		private var lastWidth:Number;
 		private var lastHeight:Number;
+		private var fullScreenScale:Number;
+		private var screenState:String;
 		
 		
 		/**

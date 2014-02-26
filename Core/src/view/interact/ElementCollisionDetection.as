@@ -102,7 +102,7 @@ package view.interact
 			for each (var element:ElementBase in elements)
 			{
 				var bound:Rectangle = LayoutUtil.getItemRect (coreMdt.canvas, element);
-				var stage:Rectangle = LayoutUtil.getStageRect(coreMdt.canvas);
+				var stage:Rectangle = LayoutUtil.getStageRect(coreMdt.canvas.stage);
 				
 				if (RectangleUtil.rectOverlapping(bound, stage))
 				{

@@ -5,12 +5,12 @@ package landray.kp.mediator
 	import flash.events.FullScreenEvent;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
-	import flash.external.ExternalInterface;
 	import flash.geom.Point;
 	
 	import landray.kp.controls.Selector;
 	import landray.kp.core.KPConfig;
 	import landray.kp.core.kp_internal;
+	import landray.kp.manager.ManagerPage;
 	import landray.kp.maps.main.elements.BaseElement;
 	import landray.kp.utils.CoreUtil;
 	import landray.kp.utils.ExternalUtil;
@@ -42,6 +42,8 @@ package landray.kp.mediator
 		{
 			viewer = $viewer;
 			config = KPConfig.instance;
+			
+			page   = ManagerPage.instance;
 			
 			if (viewer.stage) 
 				addedToStage();
@@ -114,7 +116,18 @@ package landray.kp.mediator
 		private function keyDown(e:KeyboardEvent):void
 		{
 			if (e.keyCode == 32) 
+			{
 				viewer.kp_internal::controller.autoZoom();
+				page.reset();
+			}
+			else if (e.keyCode == 37)
+			{
+				page.prev();
+			}
+			else if (e.keyCode == 39)
+			{
+				page.next();
+			}
 		}
 		
 		private function fullScreen(e:FullScreenEvent):void
@@ -269,5 +282,10 @@ package landray.kp.mediator
 		 * @private
 		 */
 		private var point:Point;
+		
+		/**
+		 * @private
+		 */
+		private var page:ManagerPage;
 	}
 }

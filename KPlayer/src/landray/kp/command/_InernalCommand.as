@@ -5,6 +5,7 @@ package landray.kp.command
 	
 	import landray.kp.core.*;
 	import landray.kp.manager.ManagerGraph;
+	import landray.kp.manager.ManagerPage;
 	
 	import view.toolBar.Debugger;
 	
@@ -22,15 +23,16 @@ package landray.kp.command
 			provider  = KPProvider .instance;
 			
 			graphManager = ManagerGraph.instance;
+			pageManager  = ManagerPage .instance;
 		}
 		override protected function executeEnd():void
 		{
-			Debugger.debug(className, "executeEnd");
+			Debugger.debug(className, "executeEnd()");
 			super.executeEnd();
 		}
 		override protected function executeStart():void
 		{
-			Debugger.debug(className, "executeStart");
+			Debugger.debug(className, "executeStart()");
 			super.executeStart();
 		}
 		public var config   :KPConfig;
@@ -38,5 +40,6 @@ package landray.kp.command
 		public var provider :KPProvider;
 		
 		public var graphManager:ManagerGraph;
+		public var pageManager :ManagerPage;
 	}
 }

@@ -149,7 +149,7 @@ package modules.pages
 		 */
 		public function get numPage():int
 		{
-			return pageQuene.numPage;
+			return pageQuene.length;
 		}
 		
 		/**

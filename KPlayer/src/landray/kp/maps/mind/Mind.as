@@ -17,9 +17,8 @@ package landray.kp.maps.mind
 		public function Mind()
 		{
 			super();
-			mouseEnabled = false;
-			addChild(lineLayer = new Sprite);
-			addChild(itemLayer = new Sprite);
+			//addChild(lineLayer = new Sprite);
+			//addChild(itemLayer = new Sprite);
 			lineLayer.mouseEnabled = lineLayer.mouseChildren = false;
 			itemLayer.mouseEnabled = false;
 		}

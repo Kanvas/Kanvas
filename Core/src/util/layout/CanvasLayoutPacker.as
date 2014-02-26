@@ -78,7 +78,7 @@ package util.layout
 			//scene center
 			sceCO = center.clone();
 			
-			var distanceUI:Number = mainUI.boundDiagonalDistance;
+			var distanceUI:Number = mainUI.boundDiagonalDistance * .8;
 			var distanceAB:Number = Point.distance(eleAO, eleBO);
 			centerScale = distanceUI / distanceAB;
 			

@@ -118,7 +118,7 @@ package view.interact.zoomMove
 			flasher.flash(time, ease);
 		}
 		
-		public function zoomRotateMoveTo(scale:Number, rotation:Number, x:Number, y:Number, ease:Object = null):void
+		public function zoomRotateMoveTo(scale:Number, rotation:Number, x:Number, y:Number, ease:Object = null, time:Number = NaN):void
 		{
 			flasher.close();
 			flasher.ready();
@@ -127,7 +127,7 @@ package view.interact.zoomMove
 			flasher.canvasTargetX = x;
 			flasher.canvasTargetY = y;
 			
-			flasher.advancedFlash(ease);
+			flasher.advancedFlash(ease, time);
 		}
 		
 		/**
@@ -187,8 +187,8 @@ package view.interact.zoomMove
 					if(!control.ifAutoZoom)
 					{
 						//检查canvas实际尺寸是否小于窗口尺寸，如果小于，则显示原始比例
-						if ( ! (canvasInerBound.width  < mainUI.bound.width   && 
-								canvasInerBound.height < mainUI.bound.height) && ! originalScale)
+						if ( ! (canvasBound.width  / canvas.scaleX < mainUI.bound.width && 
+								canvasBound.height / canvas.scaleX < mainUI.bound.height))
 							flasher.canvasTargetScale *= scale;
 						else
 							flasher.canvasTargetScale = 1;

@@ -3,6 +3,8 @@ package landray.kp.view
 	import flash.display.Sprite;
 	
 	import landray.kp.core.GRConfig;
+	import landray.kp.core.KPConfig;
+	import landray.kp.core.kp_internal;
 	import landray.kp.utils.CoreUtil;
 	
 	/**
@@ -19,7 +21,7 @@ package landray.kp.view
 	 * graph.theme = theme;
 	 * </listing>
 	 */
-	public class Graph extends Sprite
+	public class Graph
 	{
 		/**
 		 * 构造函数。
@@ -36,7 +38,6 @@ package landray.kp.view
 		 */
 		private function initialize():void
 		{
-			mouseEnabled = false;
 			__config = new configClass(this);
 		}
 		
@@ -179,5 +180,9 @@ package landray.kp.view
 		 */
 		private var __configClass:Class = GRConfig;
 		
+		protected function get viewer():Viewer
+		{
+			return KPConfig.instance.kp_internal::viewer;
+		}
 	}
 }

@@ -9,9 +9,6 @@ package landray.kp.maps.main
 	import landray.kp.view.Graph;
 	
 	import model.vo.ElementVO;
-	import model.vo.TextVO;
-	
-	
 	
 	public final class Main extends Graph
 	{
@@ -28,13 +25,13 @@ package landray.kp.maps.main
 		
 		override public function render(scale:Number = 1):void
 		{
-			if (stage)
+			if (viewer.stage)
 			{
 				var count:int = 0;
 				for each (var element:BaseElement in elements)
 				{
-					var bound:Rectangle = element.getBounds(stage);
-					element.visible = ! (bound.left > stage.stageWidth || bound.right < 0 || bound.bottom < 0 || bound.top > stage.stageHeight);
+					var bound:Rectangle = element.getBounds(viewer.stage);
+					element.visible = ! (bound.left > viewer.stage.stageWidth || bound.right < 0 || bound.bottom < 0 || bound.top > viewer.stage.stageHeight);
 					if (element.visible && element is Label)
 					{
 						count ++;
@@ -49,8 +46,9 @@ package landray.kp.maps.main
 		override public function set dataProvider(value:XML):void
 		{
 			//clear
+			for each (var element:BaseElement in elements)
+				viewer.canvas.removeChild(element);
 			elements.length = 0;
-			while(numChildren) removeChildAt(0);
 			
 			//create vos and elements
 			var list:XMLList = value.children();
@@ -62,12 +60,16 @@ package landray.kp.maps.main
 				try
 				{
 					//这里他妈的有特殊字符的话就导致崩溃了
-					var element:BaseElement = MainUtil.getElementUI(vo);
-					CoreUtil.applyStyle(element.vo);
-					CoreUtil.mapping(xml, vo);
-					element.render();
-					addChild(element);
-					elements.push(element);
+					element = MainUtil.getElementUI(vo);
+					if (element)
+					{
+						CoreUtil.applyStyle(element.vo);
+						CoreUtil.mapping(xml, vo);
+						element.render();
+						viewer.canvas.addChild(element);
+						elements.push(element);
+					}
+					
 				}
 				catch(error:Error) 
 				{

@@ -42,7 +42,7 @@ package view.element
 		public function ElementBase(vo:ElementVO)
 		{
 			this.vo = vo;
-			
+			_screenshot = true;
 			addChild(graphicShape = new Shape);
 			
 			initState();
@@ -475,7 +475,7 @@ package view.element
 		{
 			return _screenshot;
 		}
-		protected var _screenshot:Boolean = true;
+		protected var _screenshot:Boolean;
 		
 		/**
 		 * 

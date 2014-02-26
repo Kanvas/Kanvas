@@ -18,10 +18,9 @@ package view.element
 	{
 		public function PageElement(vo:PageVO)
 		{
+			super(vo);
 			xmlData = <page/>;
 			_screenshot = false;
-			
-			super(vo);
 			vo.addEventListener(PageEvent.DELETE_PAGE_FROM_UI, deletePageHandler);
 		}
 		

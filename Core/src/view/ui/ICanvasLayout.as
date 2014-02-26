@@ -1,6 +1,7 @@
 package view.ui
 {
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 
 	public interface ICanvasLayout
 	{

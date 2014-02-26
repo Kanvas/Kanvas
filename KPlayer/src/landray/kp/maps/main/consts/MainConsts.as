@@ -4,7 +4,7 @@ package landray.kp.maps.main.consts
 	
 	import model.vo.*;
 	
-	public class SimpleConsts
+	public class MainConsts
 	{
 		public static const SHAPE_UI_MAP :XML = 
 			<elements>
@@ -31,23 +31,22 @@ package landray.kp.maps.main.consts
 		public static const SHAPE_UI:Object = 
 		{
 			circle         :landray.kp.maps.main.elements.Circle, 
-			rect           :landray.kp.maps.main.elements.Rect,
-			arrow          :landray.kp.maps.main.elements.Arrow,
-			doubleArrow    :landray.kp.maps.main.elements.DoubleArrow,
-			triangle       :landray.kp.maps.main.elements.Triangle,
-			stepTriangle   :landray.kp.maps.main.elements.StepTriangle,
-			diamond        :landray.kp.maps.main.elements.Diamond,
-			star           :landray.kp.maps.main.elements.Star,
-			line           :landray.kp.maps.main.elements.LineElement,
-			arrowLine      :landray.kp.maps.main.elements.ArrowLine,
-			doubleArrowLine:landray.kp.maps.main.elements.DoubleArrowLine,
-			text           :landray.kp.maps.main.elements.Label,
-			img            :landray.kp.maps.main.elements.Image,
-			hotspot        :landray.kp.maps.main.elements.Hotspot,
-			dialog         :landray.kp.maps.main.elements.Dialog,
-			dashRect       :landray.kp.maps.main.elements.DashRect,
-			camera         :landray.kp.maps.main.elements.Camera,
-			page           :landray.kp.maps.main.elements.Page
+			rect           :landray.kp.maps.main.elements.Rect, 
+			arrow          :landray.kp.maps.main.elements.Arrow, 
+			doubleArrow    :landray.kp.maps.main.elements.DoubleArrow, 
+			triangle       :landray.kp.maps.main.elements.Triangle, 
+			stepTriangle   :landray.kp.maps.main.elements.StepTriangle, 
+			diamond        :landray.kp.maps.main.elements.Diamond, 
+			star           :landray.kp.maps.main.elements.Star, 
+			line           :landray.kp.maps.main.elements.LineElement, 
+			arrowLine      :landray.kp.maps.main.elements.ArrowLine, 
+			doubleArrowLine:landray.kp.maps.main.elements.DoubleArrowLine, 
+			text           :landray.kp.maps.main.elements.Label, 
+			img            :landray.kp.maps.main.elements.Image, 
+			hotspot        :landray.kp.maps.main.elements.Hotspot, 
+			dialog         :landray.kp.maps.main.elements.Dialog, 
+			dashRect       :landray.kp.maps.main.elements.DashRect, 
+			camera         :landray.kp.maps.main.elements.Camera
 		};
 	}
 }

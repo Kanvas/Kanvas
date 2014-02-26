@@ -28,10 +28,7 @@ package landray.kp.maps.main.comman
 			{
 				element.tips = msg;
 				element.tipWidth = w;
-				if (w > 0)
-				{
-					target.kp_internal::setToolTipMultiline(w);
-				}
+				target.kp_internal::setToolTipMultiline(w);
 				showTips();
 			}
 		}
@@ -47,10 +44,7 @@ package landray.kp.maps.main.comman
 				{
 					if (element.tips)
 					{
-						if (element.tipWidth > 0)
-						{
-							target.kp_internal::setToolTipMultiline(element.tipWidth);
-						}
+						target.kp_internal::setToolTipMultiline(element.tipWidth);
 						showTips();
 					}
 					else

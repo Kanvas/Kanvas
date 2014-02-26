@@ -4,6 +4,7 @@ package util
 	import com.kvs.utils.PointUtil;
 	
 	import flash.display.Sprite;
+	import flash.display.Stage;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
@@ -156,10 +157,10 @@ package util
 			var y:Number = 0;
 			var w:Number = 0;
 			var h:Number = 0;
-			var offsetX:Number = (toStage) ? canvas.x : 0;
-			var offsetY:Number = (toStage) ? canvas.y : 0;
-			var offsetScale   :Number = (toStage) ? canvas.scaleX : 1;
-			var offsetRotation:Number = (toStage && ! ignoreCanvasRotate) ? canvas.rotation : 0;
+			var offsetX:Number = (toStage && canvas) ? canvas.x : 0;
+			var offsetY:Number = (toStage && canvas) ? canvas.y : 0;
+			var offsetScale   :Number = (toStage && canvas) ? canvas.scaleX : 1;
+			var offsetRotation:Number = (toStage && canvas && ! ignoreCanvasRotate) ? canvas.rotation : 0;
 			if (ignoreItemRotate)
 			{
 				var point:Point = new Point(item.left, item.top);
@@ -191,9 +192,9 @@ package util
 			return new Rectangle(x, y, w, h);
 		}
 		
-		public static function getStageRect(canvas:Canvas):Rectangle
+		public static function getStageRect(stage:Stage):Rectangle
 		{
-			return (canvas.stage) ? new Rectangle(0, 0, canvas.stage.stageWidth, canvas.stage.stageHeight) : new Rectangle;
+			return (stage) ? new Rectangle(0, 0, stage.stageWidth, stage.stageHeight) : new Rectangle;
 		}
 	}
 }

@@ -59,7 +59,7 @@ package util
 		public static function elementOutOfInteract(element:ElementBase):Boolean
 		{
 			var bound:Rectangle = LayoutUtil.getItemRect (coreMdt.canvas, element);
-			var stage:Rectangle = LayoutUtil.getStageRect(coreMdt.canvas);
+			var stage:Rectangle = LayoutUtil.getStageRect(coreMdt.canvas.stage);
 			return (bound.width  > stage.width  || 
 					bound.height > stage.height ||
 					bound.left   > stage.right  || 

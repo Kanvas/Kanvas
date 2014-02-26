@@ -530,11 +530,7 @@
 			} else {
 				evt.cancelBubble = true;
 			    evt.returnValue = false;
-				if (navigatorType == KANVAS.navigatorType.IE) {
-					target.onWebMouseWheel(-evt.wheelDelta);
-				} else {
-					target.onWebMouseWheel(evt.wheelDelta);
-				}
+				target.onWebMouseWheel(evt.wheelDelta);
 			}
 			return false;
 		};

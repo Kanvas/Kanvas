@@ -77,12 +77,12 @@ package view.interact.zoomMove
 		 * @param ease
 		 * 
 		 */
-		public function zoomRotateMoveTo(scale:Number, rotation:Number, x:Number, y:Number, ease:Object = null):void
+		public function zoomRotateMoveTo(scale:Number, rotation:Number, x:Number, y:Number, ease:Object = null, time:Number = NaN):void
 		{
 			if (ease == null)
 				ease = Cubic.easeInOut;
 			
-			zoomer.zoomRotateMoveTo(scale, rotation, x, y, ease);
+			zoomer.zoomRotateMoveTo(scale, rotation, x, y, ease, time);
 		}
 		
 		/**

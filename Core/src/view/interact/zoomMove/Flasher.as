@@ -2,7 +2,7 @@ package view.interact.zoomMove
 {
 	import com.greensock.TweenMax;
 	import com.greensock.easing.*;
-	import com.greensock.easing.Quart
+	import com.greensock.easing.Quart;
 	import com.kvs.utils.MathUtil;
 	import com.kvs.utils.RectangleUtil;
 	
@@ -71,7 +71,7 @@ package view.interact.zoomMove
 			isFlashing = true;
 		}
 		
-		public function advancedFlash(easeFlash:Object = null):void
+		public function advancedFlash(easeFlash:Object = null, time:Number = NaN):void
 		{
 			if (MathUtil.equals(MathUtil.log2(canvas.scaleX), MathUtil.log2(canvasTargetScale)) && 
 				MathUtil.equals(MathUtil.modRotation(canvas.rotation), MathUtil.modRotation(canvasTargetRotation)) && 
@@ -90,9 +90,12 @@ package view.interact.zoomMove
 			
 			var canvasMiddleScale:Number = packer.modCanvasPositionStart(canvasTargetX, canvasTargetY, canvasTargetScale, canvasTargetRotation);
 			
-			var timeScale:Number = getScalePlus(canvasMiddleScale);
-			var timeRotation:Number = Math.abs(canvasTargetRotation - packer.rotation) / speedRotation;
-			var time:Number = Math.min(Math.max(timeScale, timeRotation, control.minTweenTime), control.maxTweenTime);
+			if (isNaN(time))
+			{
+				var timeScale:Number = getScalePlus(canvasMiddleScale);
+				var timeRotation:Number = Math.abs(canvasTargetRotation - packer.rotation) / speedRotation;
+				time = Math.min(Math.max(timeScale, timeRotation, control.minTweenTime), control.maxTweenTime);
+			}
 			
 			TweenMax.to(packer, time, {
 				progress:1, 

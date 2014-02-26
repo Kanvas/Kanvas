@@ -162,37 +162,6 @@ package view.ui
 			interactorBG.graphics.clear();
 		}*/
 		
-		/*private function drawImageBG(rect:Rectangle):void
-		{
-		bgImgContainer.graphics.clear();
-		bgImgContainer.graphics.beginFill(0x666666, 1);
-		bgImgContainer.graphics.drawRect(rect.x, rect.y, rect.width, rect.height);
-		bgImgContainer.graphics.endFill();
-		}*/
-		
-		/*public function showLoading(rect:Rectangle):void
-		{
-			drawImageBG(rect);
-			
-			if (loading == null)
-			{
-				loading = new Loading;
-				interactorBG.addChild(loading);
-			}
-		}
-		
-		public function hideLoading():void
-		{
-			bgImgContainer.graphics.clear();
-			
-			if (loading)
-			{
-				if (interactorBG.contains(loading))
-					interactorBG.removeChild(loading);
-				loading.stop();
-				loading = null;
-			}
-		}*/
 		
 		override public function get scaleX():Number
 		{

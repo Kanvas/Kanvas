@@ -2,6 +2,7 @@ package landray.kp.maps.main.elements
 {
 	import com.kvs.ui.toolTips.ITipsSender;
 	import com.kvs.utils.MathUtil;
+	import com.kvs.utils.RectangleUtil;
 	import com.kvs.utils.XMLConfigKit.style.Style;
 	
 	import flash.display.Graphics;
@@ -12,6 +13,9 @@ package landray.kp.maps.main.elements
 	
 	import model.vo.ElementVO;
 	
+	import util.LayoutUtil;
+	
+	import view.ui.Canvas;
 	import view.ui.ICanvasLayout;
 	
 	public class BaseElement extends Sprite implements ITipsSender, ICanvasLayout
@@ -233,6 +237,27 @@ package landray.kp.maps.main.elements
 		
 		public function updateView():void
 		{
+			if (stage)
+			{
+				var rect:Rectangle = LayoutUtil.getItemRect (canvas, this);
+				if (rect.width > 1 || rect.height > 1)
+				{
+					var boud:Rectangle = LayoutUtil.getStageRect(stage);
+					if (RectangleUtil.rectOverlapping(rect, boud))
+					{
+						super.visible = true;
+					}
+					else
+					{
+						super.visible = false;
+					}
+				}
+				else 
+				{
+					super.visible = false;
+				}
+				
+			}
 			if (parent && visible)
 			{
 				var prtScale :Number = parent.scaleX;
@@ -249,6 +274,12 @@ package landray.kp.maps.main.elements
 				super.x = tmpX * prtCos - tmpY * prtSin + parent.x;
 				super.y = tmpX * prtSin + tmpY * prtCos + parent.y;
 			}
+		}
+		
+		override public function set visible(value:Boolean):void
+		{
+			super.visible = value;
+			if (visible) updateView();
 		}
 		
 		override public function get rotation():Number
@@ -374,6 +405,11 @@ package landray.kp.maps.main.elements
 		}
 		
 		private var __tipWidth:Number;
+		
+		protected function get canvas():Canvas
+		{
+			return (parent is Canvas) ? parent as Canvas : null;
+		}
 		
 		/**
 		 * 对应的ＶＯ结构体。

@@ -28,7 +28,7 @@ package modules.pages
 		 */
 		public function addPage(pageVO:PageVO):PageVO
 		{
-			registPageVO(pageVO, numPage);
+			registPageVO(pageVO, length);
 			pages.push(pageVO);
 			
 			dispatchEvent(new PageEvent(PageEvent.PAGE_ADDED, pageVO));
@@ -42,20 +42,20 @@ package modules.pages
 		 */
 		public function addPageAt(pageVO:PageVO, index:int):PageVO
 		{
-			if (index >=0 && index <= numPage)
+			if (index >=0 && index <= length)
 			{
 				if (pageVO.parent != this)
 				{
 					registPageVO(pageVO, index);
 					pages.splice(index, 0, pageVO);
-					udpatePageIndex(index, numPage);
+					udpatePageIndex(index, length);
 					
 					dispatchEvent(new PageEvent(PageEvent.PAGE_ADDED, pageVO));
 					dispatchEvent(new PageEvent(PageEvent.UPDATE_PAGES_LAYOUT));
 				}
 				else
 				{
-					if (index < numPage)
+					if (index < length)
 					{
 						setPageIndex(pageVO, index);
 						dispatchEvent(new PageEvent(PageEvent.PAGE_ADDED, pageVO));
@@ -88,7 +88,7 @@ package modules.pages
 		public function getPageAt(index:int):PageVO
 		{
 			var pageVO:PageVO;
-			if (index >=0 && index < numPage)
+			if (index >=0 && index < length)
 				pageVO = pages[index];
 			else
 				throw new RangeError("提供的索引超出范围。", 2006);
@@ -118,7 +118,7 @@ package modules.pages
 				var index:int = pageVO.index;
 				pages.splice(index, 1);
 				removePageVO(pageVO);
-				udpatePageIndex(index, numPage);
+				udpatePageIndex(index, length);
 				
 				dispatchEvent(new PageEvent(PageEvent.PAGE_DELETED, pageVO));
 				dispatchEvent(new PageEvent(PageEvent.UPDATE_PAGES_LAYOUT));
@@ -136,12 +136,12 @@ package modules.pages
 		 */
 		public function removePageAt(index:int):PageVO
 		{
-			if (index >= 0 && index < numPage)
+			if (index >= 0 && index < length)
 			{
 				var pageVO:PageVO = pages[index];
 				removePageVO(pageVO);
 				pages.splice(index, 1);
-				udpatePageIndex(index, numPage);
+				udpatePageIndex(index, length);
 				
 				dispatchEvent(new PageEvent(PageEvent.PAGE_DELETED, pageVO));
 				dispatchEvent(new PageEvent(PageEvent.UPDATE_PAGES_LAYOUT));
@@ -159,7 +159,7 @@ package modules.pages
 		 */
 		public function setPageIndex(pageVO:PageVO, index:int, sendEvent:Boolean = false):void
 		{
-			if (index >= 0 && index < numPage)
+			if (index >= 0 && index < length)
 			{
 				var cur:int = pages.indexOf(pageVO);
 				if (cur != -1)
@@ -215,7 +215,7 @@ package modules.pages
 		/**
 		 * 获取总页数
 		 */
-		public function get numPage():int
+		public function get length():int
 		{
 			return pages.length;
 		}
