@@ -84,10 +84,10 @@ package view.interact.interactMode
 			prevElements();
 			
 			
-			if (mainMediator.pageManager.numPage > 0)
+			if (mainMediator.pageManager.length > 0)
 			{
 				//进入多页面播放模式
-				mainMediator.pageManager.viewPage(mainMediator.pageManager.currentPage);
+				mainMediator.pageManager.index = mainMediator.pageManager.index;
 			}
 			else
 			{

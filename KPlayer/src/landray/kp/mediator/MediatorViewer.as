@@ -115,18 +115,20 @@ package landray.kp.mediator
 		 */
 		private function keyDown(e:KeyboardEvent):void
 		{
-			if (e.keyCode == 32) 
+			switch (e.keyCode)
 			{
-				viewer.kp_internal::controller.autoZoom();
-				page.reset();
-			}
-			else if (e.keyCode == 37)
-			{
-				page.prev();
-			}
-			else if (e.keyCode == 39)
-			{
-				page.next();
+				case 32:
+					viewer.kp_internal::controller.autoZoom();
+					page.reset();
+					break;
+				case 37:
+				case 38:
+					page.prev();
+					break;
+				case 39:
+				case 40:
+					page.next();
+					break;
 			}
 		}
 		

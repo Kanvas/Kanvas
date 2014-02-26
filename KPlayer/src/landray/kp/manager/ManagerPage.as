@@ -66,7 +66,7 @@ package landray.kp.manager
 		}
 		public function set index(value:int):void
 		{
-			if (__index!= value && value >= -1 && value < quene.length)
+			if (value >= -1 && value < quene.length)
 			{
 				__index = value;
 				if (index >= 0)

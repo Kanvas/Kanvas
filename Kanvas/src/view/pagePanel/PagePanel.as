@@ -18,10 +18,12 @@ package view.pagePanel
 	
 	import model.CoreFacade;
 	import model.ElementProxy;
+	import model.vo.PageVO;
 	
 	import modules.pages.PageEvent;
 	import modules.pages.PageManager;
-	import model.vo.PageVO;
+	
+	import view.interact.interactMode.PrevMode;
 	
 	/**
 	 * 负责页面创建命令发出，页面列表显示，页面顺序调换命令发出
@@ -184,7 +186,7 @@ package view.pagePanel
 		public function pageSelected(pageVO:PageVO):void
 		{
 			//通知核心core切换至当前page
-			pageManager.viewPage(pageVO.index);
+			pageManager.index = pageVO.index;
 		}
 		
 		/**
@@ -672,32 +674,22 @@ package view.pagePanel
 		 */		
 		private function keyHandler(evt:KeyboardEvent):void
 		{
-			switch(evt.keyCode)
+			if (!(CoreFacade.coreMediator.currentMode is PrevMode))
 			{
-				case Keyboard.DOWN:
+				switch(evt.keyCode)
 				{
-					nextPage();
-					break;
-				}
-				case Keyboard.RIGHT:
-				{
-					nextPage();
-					break;
-				}
-				case Keyboard.UP:
-				{
-					prevPage();
-					break;
-				}
-				case Keyboard.LEFT:
-				{
-					prevPage();
-					break;
-				}
-					
-				default:
-				{
-					break;
+					case Keyboard.DOWN:
+					case Keyboard.RIGHT:
+					{
+						nextPage();
+						break;
+					}
+					case Keyboard.UP:
+					case Keyboard.LEFT:
+					{
+						prevPage();
+						break;
+					}
 				}
 			}
 		}

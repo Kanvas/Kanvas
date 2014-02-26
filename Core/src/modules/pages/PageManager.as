@@ -45,7 +45,7 @@ package modules.pages
 			proxy.rotation = - coreMdt.canvas.rotation;
 			proxy.width = bound.width ;
 			proxy.height = bound.height;
-			proxy.index = (index > 0 && index < numPage) ? index : numPage;
+			proxy.index = (index > 0 && index < length) ? index : length;
 			proxy.ifSelectedAfterCreate = false;
 			
 			coreMdt.createNewShapeMouseUped = true;
@@ -58,7 +58,7 @@ package modules.pages
 		public function addPage(pageVO:PageVO):PageVO
 		{
 			pageQuene.addPage(pageVO);
-			__currentPage = pageVO.index;
+			__index = pageVO.index;
 			return pageVO;
 		}
 		
@@ -68,7 +68,7 @@ package modules.pages
 		public function addPageAt(pageVO:PageVO, index:int):PageVO
 		{
 			pageQuene.addPageAt(pageVO, index);
-			__currentPage = pageVO.index;
+			__index = pageVO.index;
 			return pageVO;
 		}
 		
@@ -101,7 +101,7 @@ package modules.pages
 		 */
 		public function removePage(pageVO:PageVO):PageVO
 		{
-			if (currentPage == pageVO.index) __currentPage = 0;
+			if (index == pageVO.index) __index = -1;
 			return pageQuene.removePage(pageVO);
 		}
 		
@@ -121,16 +121,19 @@ package modules.pages
 			pageQuene.setPageIndex(pageVO, index, sendEvent);
 		}
 		
-		public function viewPage(page:int):void
+		public function next():void
 		{
-			__currentPage = page;
-			var scene:Scene = PageUtil.getSceneFromVO(pages[page], coreMdt.mainUI);
-			coreMdt.zoomMoveControl.zoomRotateMoveTo(scene.scale, scene.rotation, scene.x, scene.y);
+			index = (index + 1 >= pageQuene.length) ? -1 : index + 1;
 		}
 		
-		public function resetView():void
+		public function prev():void
 		{
-			__currentPage = 0;
+			index = (index - 1 < -1) ? pageQuene.length - 1 : index - 1;
+		}
+		
+		public function reset():void
+		{
+			__index = -1;
 		}
 		
 		private function defaultHandler(e:PageEvent):void
@@ -138,16 +141,35 @@ package modules.pages
 			dispatchEvent(e);
 		}
 		
-		public function get currentPage():int
+		
+		public function get index():int
 		{
-			return __currentPage;
+			return __index;
 		}
-		private var __currentPage:int = 0;
+		public function set index(value:int):void
+		{
+			if (value >= -1 && value < pageQuene.length)
+			{
+				__index = value;
+				if (index >= 0)
+				{
+					var scene:Scene = PageUtil.getSceneFromVO(pageQuene.pages[index], coreMdt.mainUI);
+					coreMdt.zoomMoveControl.zoomRotateMoveTo(scene.scale, scene.rotation, scene.x, scene.y);
+				}
+				else
+				{
+					coreMdt.zoomMoveControl.autoZoom();
+				}
+			}
+			
+		}
+		
+		private var __index:int = -1;
 		
 		/**
 		 * 获取总页数
 		 */
-		public function get numPage():int
+		public function get length():int
 		{
 			return pageQuene.length;
 		}

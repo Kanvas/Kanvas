@@ -6,8 +6,9 @@ package view.interact.keyboard
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
 	
-	import view.ui.Bubble;
 	import view.interact.CoreMediator;
+	import view.interact.interactMode.PrevMode;
+	import view.ui.Bubble;
 	
 	/**
 	 * 全局键盘控制
@@ -142,7 +143,6 @@ package view.interact.keyboard
 						mainUIMediator.redo();
 				
 				case Keyboard.ESCAPE:
-					
 					mainUIMediator.esc();
 					
 					break;
@@ -174,24 +174,39 @@ package view.interact.keyboard
 					break;
 				
 				case Keyboard.UP:
-					mainUIMediator.moveOff(0, (evt.shiftKey) ? -5 : -1);
+					if (mainUIMediator.currentMode is PrevMode)
+						mainUIMediator.pageManager.prev();
+					else
+						mainUIMediator.moveOff(0, (evt.shiftKey) ? -5 : -1);
 					break;
 				
 				case Keyboard.DOWN:
-					mainUIMediator.moveOff(0, (evt.shiftKey) ?  5 :  1);
+					if (mainUIMediator.currentMode is PrevMode)
+						mainUIMediator.pageManager.next();
+					else
+						mainUIMediator.moveOff(0, (evt.shiftKey) ?  5 :  1);
 					break;
 				
 				case Keyboard.LEFT:
-					mainUIMediator.moveOff((evt.shiftKey) ? -5 : - 1, 0);
+					if (mainUIMediator.currentMode is PrevMode)
+						mainUIMediator.pageManager.prev();
+					else
+						mainUIMediator.moveOff((evt.shiftKey) ? -5 : - 1, 0);
 					break;
 				
 				case Keyboard.RIGHT:
-					mainUIMediator.moveOff((evt.shiftKey) ?  5 :  1, 0);
+					if (mainUIMediator.currentMode is PrevMode)
+						mainUIMediator.pageManager.next();
+					else
+						mainUIMediator.moveOff((evt.shiftKey) ?  5 :  1, 0);
 					break;
 				
 				case Keyboard.SPACE:
 					if (!evt.ctrlKey)
+					{
+						mainUIMediator.pageManager.reset();
 						mainUIMediator.autoZoom();
+					}
 					
 					break;
 			}
