@@ -22,9 +22,9 @@ package landray.kp.maps.main.util
 		public static function getElementUI(vo:ElementVO):BaseElement
 		{			
 			var reference:Class = MainConsts.SHAPE_UI[vo.type];
-			var element:BaseElement;
-			element = new reference(vo);
-			return element;
+			if (reference)
+				var element:BaseElement = new reference(vo);
+			return  element;
 		}
 	}
 }

@@ -16,11 +16,10 @@ package model
 	import model.vo.BgVO;
 	import model.vo.ElementVO;
 	import model.vo.ImgVO;
+	import model.vo.PageVO;
 	
-	import view.element.PageElement;
 	import modules.pages.PageEvent;
 	import modules.pages.PageManager;
-	import model.vo.PageVO;
 	
 	import org.puremvc.as3.patterns.proxy.Proxy;
 	
@@ -36,6 +35,7 @@ package model
 	
 	import view.element.ElementBase;
 	import view.element.GroupElement;
+	import view.element.PageElement;
 	import view.element.imgElement.ImgElement;
 	
 	/**
@@ -374,6 +374,7 @@ package model
 			}
 			
 			//匹配组合关系
+			
 			for each(var groupElement:GroupElement in groupElements)
 			{
 				for each(item in groupElement.xmlData.children())
@@ -385,11 +386,19 @@ package model
 			}
 			
 			//页面的初始化
+			var pages:Vector.<PageVO> = new Vector.<PageVO>;
 			for each(item in xml.pages.children())
 			{
 				element = createElement(item);//创建并初始化元素
-				
-				CoreFacade.coreMediator.pageManager.addPageAt(element.vo as PageVO, (element.vo as PageVO).index);
+				pages.push(element.vo as PageVO);
+				//CoreFacade.coreMediator.pageManager.addPageAt(element.vo as PageVO, (element.vo as PageVO).index);
+			}
+			pages.sort(sortOnIndex);
+			var l:int = pages.length;
+			for (var i:int = 0; i < l; i++)
+			{
+				pages[i].index = i;
+				CoreFacade.coreMediator.pageManager.addPageAt(pages[i], pages[i].index);
 			}
 			
 			//清空用于临时匹配组合的中专站
@@ -417,6 +426,16 @@ package model
 			{
 				renderBgImg(ImgLib.getData(bgVO.imgID));
 			}
+		}
+		
+		private function sortOnIndex(a:PageVO, b:PageVO):int
+		{
+			if (a.index < b.index)
+				return -1;
+			else if (a.index == b.index)
+				return 0;
+			else 
+				return 1;
 		}
 		
 		/**
