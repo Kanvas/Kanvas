@@ -8,10 +8,11 @@ package modules.pages
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	
+	import model.vo.PageVO;
+	
 	import util.LayoutUtil;
 	
 	import view.ui.MainUIBase;
-	import model.vo.PageVO;
 
 	public final class PageUtil
 	{
@@ -36,7 +37,7 @@ package modules.pages
 			return scene;
 		}
 		
-		public static function getThumbByPageVO(pageVO:PageVO, w:Number, h:Number, mainUI:MainUIBase):BitmapData
+		public static function getThumbByPageVO(pageVO:PageVO, w:Number, h:Number, mainUI:MainUIBase, color:uint = 0xFFFFFF):BitmapData
 		{
 			//scale
 			var vw:Number = w;
@@ -58,7 +59,7 @@ package modules.pages
 			tp.y = ry + pageVO.y;
 			LayoutUtil.convertPointCanvas2Stage(tp, -(vw - pw * scale) * .5, -(vh - ph * scale) * .5, scale, rotation);
 			mainUI.canvas.toShotcutState(-tp.x, -tp.y, scale, rotation);
-			var bmd:BitmapData = BitmapUtil.drawWithSize(mainUI.canvas, w, h, false);
+			var bmd:BitmapData = BitmapUtil.drawWithSize(mainUI.canvas, w, h, false, color);
 			mainUI.canvas.toPreviewState();
 			return bmd;
 		}

@@ -53,7 +53,7 @@ package view.ui
 				var tp:Point = new Point(canvasRect.x, canvasRect.y);
 				LayoutUtil.convertPointCanvas2Stage(tp, -(vw - cw * scale) * .5, -(vh - ch * scale) * .5, scale, rotation);
 				canvas.toShotcutState(-tp.x, -tp.y, scale, 0);
-				var bmd:BitmapData = BitmapUtil.drawWithSize(canvas, vw, vh, false);
+				var bmd:BitmapData = BitmapUtil.drawWithSize(canvas, vw, vh, false, CoreFacade.coreProxy.bgColor);
 				canvas.toPreviewState();
 			}
 			return bmd;

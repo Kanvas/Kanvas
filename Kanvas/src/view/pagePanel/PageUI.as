@@ -11,9 +11,11 @@ package view.pagePanel
 	import flash.events.MouseEvent;
 	import flash.filters.GlowFilter;
 	
+	import model.CoreFacade;
+	import model.vo.PageVO;
+	
 	import modules.pages.PageEvent;
 	import modules.pages.PageUtil;
-	import model.vo.PageVO;
 	
 	import view.ui.MainUIBase;
 	
@@ -152,7 +154,7 @@ package view.pagePanel
 		{
 			super.render();
 			
-			pageVO.bitmapData = PageUtil.getThumbByPageVO(pageVO, iconW, iconH, mainUI);
+			pageVO.bitmapData = PageUtil.getThumbByPageVO(pageVO, iconW, iconH, mainUI, CoreFacade.coreProxy.bgColor);
 			
 			drawPageThumb();
 			
