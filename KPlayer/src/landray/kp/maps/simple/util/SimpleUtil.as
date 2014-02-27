@@ -13,18 +13,17 @@ package landray.kp.maps.simple.util
 		public static function getElementVO(type:String):ElementVO
 		{
 			var path:String = SimpleConsts.SHAPE_UI_MAP.element.(@type == type).@voClassPath;
-			var element:ElementVO = ElementVO(CoreUtil.getObjByClassPath(path));
-			if (element == null) element = new ShapeVO;
-			element.type = type;
-			return element;
+			var vo:ElementVO = ElementVO(CoreUtil.getObjByClassPath(path));
+			if (vo) vo.type = type;
+			return  vo;
 		}
 		
 		public static function getElementUI(vo:ElementVO):BaseElement
 		{			
 			var reference:Class = SimpleConsts.SHAPE_UI[vo.type];
-			var element:BaseElement;
-			element = (reference == null) ? new Circle(vo as ShapeVO) : new reference(vo);
-			return element;
+			if (reference)
+				var element:BaseElement = new reference(vo);
+			return  element;
 		}
 	}
 }

@@ -57,23 +57,19 @@ package landray.kp.maps.simple
 			for each (var xml:XML in list) 
 			{
 				var vo:ElementVO = SimpleUtil.getElementVO(String(xml.@type));
-				CoreUtil.mapping(xml, vo);
-				
-				try
+				if (vo)
 				{
-					//这里他妈的有特殊字符的话就导致崩溃了
-					var element:BaseElement = SimpleUtil.getElementUI(vo);
-					CoreUtil.applyStyle(element.vo);
 					CoreUtil.mapping(xml, vo);
-					element.render();
-					addChild(element);
-					elements.push(element);
-				} 
-				catch(error:Error) 
-				{
-					trace('fuck you');
+					var element:BaseElement = SimpleUtil.getElementUI(vo);
+					if (element)
+					{
+						CoreUtil.applyStyle(element.vo);
+						CoreUtil.mapping(xml, vo);
+						element.render();
+						addChild(element);
+						elements.push(element);
+					}
 				}
-				
 			}
 		}
 		
