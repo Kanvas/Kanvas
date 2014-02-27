@@ -5,16 +5,19 @@ package view.element
 	
 	import flash.display.Shape;
 	
+	import model.vo.PageVO;
+	
+	import modules.pages.PageEvent;
+	
 	import view.elementSelector.ElementSelector;
 	import view.elementSelector.toolBar.ToolBarController;
-	import model.vo.PageVO;
-	import modules.pages.PageEvent;
+	import view.interact.autoGroup.IAutoGroupElement;
 	
 	
 	/**
 	 * 页面
 	 */	
-	public final class PageElement extends ElementBase
+	public final class PageElement extends ElementBase implements IAutoGroupElement
 	{
 		public function PageElement(vo:PageVO)
 		{
@@ -158,9 +161,9 @@ package view.element
 		 */		
 		override public function clone():ElementBase
 		{
-			var pageVO:PageVO = new PageVO;
-			
-			return new PageElement(cloneVO(pageVO) as PageVO);
+			var newVO:PageVO = new PageVO;
+			newVO.index = pageVO.index + 1;
+			return new PageElement(cloneVO(newVO) as PageVO);
 		}
 		
 		override public function showToolBar(toolbar:ToolBarController):void

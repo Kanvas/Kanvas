@@ -1,6 +1,7 @@
 package commands
 {
 	import model.CoreFacade;
+	import model.vo.PageVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	
@@ -8,6 +9,7 @@ package commands
 	
 	import view.element.ElementBase;
 	import view.element.GroupElement;
+	import view.element.PageElement;
 
 	/**
 	 */	
@@ -54,8 +56,12 @@ package commands
 			//此时的智能组合囊括了所有子元素
 			groupElements = CoreFacade.coreMediator.autoGroupController._elements.concat();
 			length = groupElements.length;
-			for each (var newElement:ElementBase in groupElements)
-				CoreFacade.addElement(newElement);
+			for (var i:int = 0; i < length; i++)
+			{
+				CoreFacade.addElement(groupElements[i]);
+				if (groupElements[i] is PageElement)
+					CoreFacade.coreMediator.pageManager.addPage(groupElements[i].vo as PageVO);
+			}
 			
 			sendNotification(Command.SElECT_ELEMENT, newGroup);
 			UndoRedoMannager.register(this);
@@ -66,7 +72,11 @@ package commands
 			sendNotification(Command.UN_SELECT_ELEMENT);
 			
 			for (var i:int = length - 1; i >= 0; i--)
+			{
 				CoreFacade.removeElement(groupElements[i]);
+				if (groupElements[i] is PageElement)
+					CoreFacade.coreMediator.pageManager.removePage(groupElements[i].vo as PageVO);
+			}
 			
 			CoreFacade.removeElement(newGroup);
 		}
@@ -76,7 +86,14 @@ package commands
 			CoreFacade.addElement(newGroup);
 			
 			for (var i:int = 0; i < length; i++)
+			{
 				CoreFacade.addElement(groupElements[i]);
+				if (groupElements[i] is PageElement)
+				{
+					var pageVO:PageVO = groupElements[i].vo as PageVO;
+					CoreFacade.coreMediator.pageManager.addPageAt(pageVO, pageVO.index);
+				}
+			}
 			
 			sendNotification(Command.SElECT_ELEMENT, newGroup);
 		}

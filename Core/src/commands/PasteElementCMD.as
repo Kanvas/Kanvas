@@ -2,8 +2,7 @@ package commands
 {
 	import model.CoreFacade;
 	import model.CoreProxy;
-	
-	import view.element.PageElement;
+	import model.vo.PageVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	
@@ -11,6 +10,7 @@ package commands
 	
 	import view.element.Camera;
 	import view.element.ElementBase;
+	import view.element.PageElement;
 	import view.element.imgElement.ImgElement;
 	
 	/**
@@ -51,6 +51,8 @@ package commands
 			var yOff:Number = newElement.vo.y - pastElement.vo.y;
 			
 			(newElement is Camera) ? CoreFacade.addElementAt(newElement, 1) : CoreFacade.addElement(newElement);
+			if (newElement is PageElement)
+				CoreFacade.coreMediator.pageManager.addPage(newElement.vo as PageVO);
 			elementIndex = newElement.index;
 			
 			
@@ -61,6 +63,11 @@ package commands
 				CoreFacade.coreMediator.autoGroupController.pastElements(xOff, yOff);
 				groupElements = CoreFacade.coreMediator.autoGroupController.elements.concat();
 				length = groupElements.length;
+				for (var i:int = 0; i < length; i++)
+				{
+					if (groupElements[i] is PageElement)
+						CoreFacade.coreMediator.pageManager.addPage(groupElements[i].vo as PageVO);
+				}
 			}
 			
 			sendNotification(Command.SElECT_ELEMENT, newElement);
@@ -77,20 +84,34 @@ package commands
 				{
 					elementIndexArray[i] = groupElements[i].index;
 					CoreFacade.removeElement(groupElements[i]);
+					if (groupElements[i] is PageElement)
+						CoreFacade.coreMediator.pageManager.removePage(groupElements[i].vo as PageVO);
 				}
 			}
 			
 			CoreFacade.removeElement(newElement);
+			if (newElement is PageElement)
+				CoreFacade.coreMediator.pageManager.removePage(newElement.vo as PageVO);
 		}
 		
 		override public function redoHandler():void
 		{
 			CoreFacade.addElementAt(newElement, elementIndex);
+			if (newElement is PageElement)
+			{
+				var pageVO:PageVO = newElement.vo as PageVO;
+				CoreFacade.coreMediator.pageManager.addPageAt(pageVO, pageVO.index);
+			}
 			if (autoGroupEnabled)
 			{
 				for (var i:int = 0; i < length; i++)
 				{
 					CoreFacade.addElementAt(groupElements[i], elementIndexArray[i]);
+					if (groupElements[i] is PageElement)
+					{
+						pageVO = groupElements[i].vo as PageVO;
+						CoreFacade.coreMediator.pageManager.addPageAt(pageVO, pageVO.index);
+					}
 				}
 			}
 		}

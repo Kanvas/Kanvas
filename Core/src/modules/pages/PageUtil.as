@@ -58,7 +58,7 @@ package modules.pages
 			tp.y = ry + pageVO.y;
 			LayoutUtil.convertPointCanvas2Stage(tp, -(vw - pw * scale) * .5, -(vh - ph * scale) * .5, scale, rotation);
 			mainUI.canvas.toShotcutState(-tp.x, -tp.y, scale, rotation);
-			var bmd:BitmapData = BitmapUtil.drawWithSize(mainUI.canvas, w, h);
+			var bmd:BitmapData = BitmapUtil.drawWithSize(mainUI.canvas, w, h, false);
 			mainUI.canvas.toPreviewState();
 			return bmd;
 		}

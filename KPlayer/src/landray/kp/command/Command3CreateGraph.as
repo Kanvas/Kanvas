@@ -64,7 +64,11 @@ package landray.kp.command
 				}
 				
 				//resolve page
-				pageManager.dataProvider = provider.dataXML.pages[0].children();
+				try
+				{
+					pageManager.dataProvider = provider.dataXML.pages[0].children();
+				}
+				catch (e:Error) {}
 				
 				//resolve module
 				/*var list:XMLList = provider.dataXML.module.children();

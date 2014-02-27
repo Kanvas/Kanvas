@@ -46,7 +46,7 @@ package view.interact.autoGroup
 		{
 			_elements.length = 0;
 			
-			elementsCopied.sort(compare);
+			elementsCopied.sort(sortOnIndex);
 			
 			for each (var element:ElementBase in this.elementsCopied)
 			{
@@ -62,7 +62,7 @@ package view.interact.autoGroup
 			}
 		}
 		
-		private function compare(a:ElementBase, b:ElementBase):int
+		private function sortOnIndex(a:ElementBase, b:ElementBase):int
 		{
 			if (a.index < b.index)
 			{
@@ -144,7 +144,7 @@ package view.interact.autoGroup
 			
 			for each(var element:ElementBase in _elements)
 			{
-				element.scaleX = element.scaleY = element.scale * scaleRad;
+				element.scaleX = element.scaleY = element.vo.scale * scaleRad;
 				
 				xDis = element.vo.x - curElement.x;
 				yDis = element.vo.y - curElement.y;
@@ -166,7 +166,7 @@ package view.interact.autoGroup
 			
 			for each(var element:ElementBase in _elements)
 			{
-				element.vo.scale = element.scale * scaleRad;
+				element.vo.scale = element.vo.scale * scaleRad;
 				
 				xDis = element.vo.x - curElement.x;
 				yDis = element.vo.y - curElement.y;
@@ -180,7 +180,6 @@ package view.interact.autoGroup
 		public function roll(dis:Number, curElement:ElementBase):void
 		{
 			if (enabled == false) return;
-			//dis += coreMdt.canvas.rotation;
 			for each(var element:ElementBase in _elements)
 			{
 				element.rotation = element.vo.rotation + dis;
@@ -196,7 +195,6 @@ package view.interact.autoGroup
 		public function rollTo(dis:Number, curElement:ElementBase):void
 		{
 			if (enabled == false) return;
-			//dis += coreMdt.canvas.rotation;
 			for each(var element:ElementBase in _elements)
 			{
 				element.rotation = element.vo.rotation += dis;

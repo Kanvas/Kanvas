@@ -11,8 +11,9 @@ package view.element
 	
 	import view.elementSelector.ElementSelector;
 	import view.elementSelector.toolBar.ToolBarController;
+	import view.interact.autoGroup.IAutoGroupElement;
 	
-	public final class Camera extends ElementBase
+	public final class Camera extends ElementBase implements IAutoGroupElement
 	{
 		public function Camera(vo:ElementVO)
 		{

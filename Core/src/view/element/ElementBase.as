@@ -713,6 +713,9 @@ package view.element
 			currentState.disable();
 		}
 		
+		/**
+		 * 预览模式下元素不可disable
+		 */
 		public function get enableChangable():Boolean
 		{
 			return ! (currentState is ElementPrevState);

@@ -28,7 +28,7 @@ package com.kvs.utils
 		}
 		
 		/**
-		 * 判断两矩形是否重叠。
+		 * 判断两矩形是否相交。
 		 */
 		public static function rectOverlapping(rect1:Rectangle, rect2:Rectangle):Boolean
 		{
@@ -44,6 +44,21 @@ package com.kvs.utils
 		public static function getDiagonalDistance(rectangle:Rectangle):Number
 		{
 			return Point.distance(rectangle.topLeft, rectangle.bottomRight);
+		}
+		
+		/**
+		 * 检测source矩形是否在target矩形范围内。
+		 * @param source
+		 * @param target
+		 * @return 
+		 * 
+		 */
+		public static function rectWithin(source:Rectangle, target:Rectangle):Boolean
+		{
+			return (source.left   >= target.left   && 
+					source.right  <= target.right  && 
+					source.top    >= target.top    && 
+					source.bottom <= target.bottom);
 		}
 	}
 }
