@@ -123,6 +123,7 @@ package landray.kp.mediator
 			{
 				viewer.kp_internal::toolBar.kp_internal::resetScreenButtons();
 				viewer.kp_internal::setScreenState(StageDisplayState.NORMAL);
+				
 			}
 			
 		}

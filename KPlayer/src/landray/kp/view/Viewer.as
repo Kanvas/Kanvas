@@ -196,25 +196,34 @@ package landray.kp.view
 		
 		kp_internal function setScreenState(state:String):void
 		{
-			if(isNaN(lastWidth) || isNaN(lastHeight))
+			if (screenState!= state)
 			{
+				screenState = state;
+				if(isNaN(lastWidth) || isNaN(lastHeight))
+				{
+					lastWidth  = stage.stageWidth;
+					lastHeight = stage.stageHeight;
+				}
+				if (stage.displayState!= state)
+					stage.displayState = state;
+				var sceOld:Point = new Point(lastWidth * .5, lastHeight * .5);
+				var sceNew:Point = new Point(stage.stageWidth * .5, stage.stageHeight * .5);
+				var vector:Point = sceNew.subtract(sceOld);
+				canvas.x += vector.x;
+				canvas.y += vector.y;
+				
+				synBgImgWidthCanvas();
+				kp_internal::controller.autoZoom();
+				
 				lastWidth  = stage.stageWidth;
 				lastHeight = stage.stageHeight;
 			}
-			if (stage.displayState!= state)
-				stage.displayState = state;
-			var x:Number = (lastWidth  * .5 - canvas.x) / canvas.scaleX;
-			var y:Number = (lastHeight * .5 - canvas.y) / canvas.scaleX;
-			lastWidth  = stage.stageWidth;
-			lastHeight = stage.stageHeight;
-			canvas.x = lastWidth  * .5 - x;
-			canvas.y = lastHeight * .5 - y;
 			
-			synBgImgWidthCanvas();
 		}
 		
 		private var lastWidth:Number;
 		private var lastHeight:Number;
+		private var screenState:String = "normal";
 		
 		
 		/**
