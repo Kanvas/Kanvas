@@ -69,9 +69,9 @@ package view.element.state
 		 */		
 		override public function toPrevState():void
 		{
-			element.mouseChildren = element.mouseEnabled = false;
-			element.clearHoverEffect();
 			element.enable();
+			element.clearHoverEffect();
+			element.mouseChildren = element.mouseEnabled = false;
 			element.currentState = element.prevState;
 			
 			element.returnFromPrevFun = function():void{
