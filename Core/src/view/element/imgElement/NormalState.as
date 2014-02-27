@@ -20,12 +20,12 @@ package view.element.imgElement
 			imgVO.url = element.imgVO.url;
 			imgVO.imgID = element.imgVO.imgID;
 			
-			var element:ImgElement = new ImgElement(element.cloneVO(imgVO) as ImgVO);
-			element.currLoadState = element.normalState;
+			var newElement:ImgElement = new ImgElement(element.cloneVO(imgVO) as ImgVO);
+			newElement.currLoadState = element.normalState;
 			
-			element.toNomalState();
+			newElement.toNomalState();
 			
-			return element;
+			return newElement;
 		}
 		
 		/**
