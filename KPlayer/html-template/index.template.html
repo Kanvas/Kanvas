@@ -15,15 +15,15 @@
         	
             var kvs = new KPlayer({id: 'demo', width: '100%', height: '100%'});
             
-            var testData = "eNq9lctu1DAUhvc8ReQFOxLfL2UCKkJIldoNArGsMrGnsZpJRomn7bDnIiGQ2LBhxTOwQarE09BWvAV25paBUQUqkJWPfeyc7/c5x4PjrDrJ2nu3omhQmEybJjoxTWvrKgUkhiBq3aw0ew9T8KywzoAo6VzHtZ6WZmlktgoDP7Tjo8jqFCAQTZp6Yho3SwGI3GxiUuAXF+c9+ckO51fTsgTRWQo497/127BiMQPRqdWuSIGQEkSFsUeF8y5QgKipXea6QL1/Xpd1sx7tVdqcdWabZ6XpApo2ZQoK5yY7SYIUjhGXMYuRkjsSSpiY40nSztokcy7Li7GpXDAPvXkYAIOx69yBH8a6vj82rqh1quvTqqwzfTsbT+6O9J5OESUScmSYznJNDB3pIc1hTqmCQyMMBpHHDrxooaVXLbdN7tUMwuG+cK6ZmqV4c58N/UY2KLYS8JFdCEgk6QSkBPcElHitn0Tb5RNYjlB+jYbhl7vlpMj8fKx8bIXNjyvTtv5O/JGZttO227JEa0zuOjCyLSPC6m8hMQxjyRlDCkEqiGTzDIE4xkRxSDGW0ueNWtEqtKYVG7R36AqXDUWu8D/BpTfC5YLEhCNJGeSMEIrm90lpTJEUnCqCMeM92t7dhukeLWL/A5fdCNcjxYhB6QsHYoSFmuMKGWNGOINQKgWZWOEi2OsFYoMXyX+YzL065duA/6BGFe+am9+MqOhVKSJqjYYI216nSmid/U0yZ87mF4m2du6wvIHVmwhYD2o9W2DxORSD68ZD10SYbwfihA4zcQ2RHR1Mnd23lVm2xVFd+QMv3r67/PDq6vzl9/P33t8+N/McCAGm4Orjl4sXny8/vf729Q1YoCZhqXu3kuXDNRgeLQMZdd8vgfie/fTxfhBk0b3n2g2S5fP5A3C6NXg=";
+            var testData = "PGthbnZhcz4KICA8aGVhZGVyIHZlcnNpb249IjMuMCIgc3R5bGVJRD0iV2hpdGUiLz4KICA8bW9kdWxlLz4KICA8bWFpbj4KICAgIDx0ZXh0IGlkPSIxIiBwcm9wZXJ0eT0iIiB0eXBlPSJ0ZXh0IiBzdHlsZVR5cGU9InRleHQiIHN0eWxlSUQ9IkJvZHkiIHg9Ii01MCIgeT0iLTY2LjUiIHdpZHRoPSIyNTIiIGhlaWdodD0iMzAiIHJvdGF0aW9uPSIzNTEiIGNvbG9yPSIwIiBjb2xvckluZGV4PSIwIiBzY2FsZT0iMS42MzAzMjExMTEzMzIxNjM0IiBpZk11dGlMaW5lPSJmYWxzZSIgZm9udD0i5Y2O5paH57uG6buRIiBzaXplPSIzMCI+CiAgICAgIDx0ZXh0PjwhW0NEQVRBW3J0eWVydHdlcnR3ZXLoibLnibldXT48L3RleHQ+CiAgICA8L3RleHQ+CiAgPC9tYWluPgogIDxiZyBjb2xvcj0iZmZmZmZmIiBjb2xvckluZGV4PSIwIiBpbWdVUkw9IiIgaW1nSUQ9IjAiLz4KPC9rYW52YXM+";
 			
 			var server = "assets/kvs.xml";
 			//var server = "assets/treeContent.xml";
 			
 			kvs.onReady(function(){
 				//kvs.setStartOriginalScale(true);
-				kvs.loadDataFromServer(server);
-				//kvs.setBase64Data(testData);
+				//kvs.loadDataFromServer(server);
+				kvs.setBase64Data(testData, false);
 			});
 			
 			kvs.onUnselected(function(){
