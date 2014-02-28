@@ -158,8 +158,8 @@ package view.pagePanel
 			
 			drawPageThumb();
 			
-			if (bmp && contains(bmp)) removeChild(bmp);
-			addChild(bmp = new Bitmap(pageVO.bitmapData));
+			if (bmp && con.contains(bmp)) con.removeChild(bmp);
+			con.addChild(bmp = new Bitmap(pageVO.bitmapData));
 			bmp.x = leftGutter;
 			bmp.y = (currState.height - iconH) / 2;
 			
