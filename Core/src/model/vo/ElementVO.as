@@ -80,7 +80,7 @@ package model.vo
 		 */
 		public function get height():Number
 		{
-			return Math.ceil(_height);
+			return _height;
 		}
 		
 		/**
@@ -99,7 +99,7 @@ package model.vo
 		 */
 		public function get width():Number
 		{
-			return Math.ceil(_width);
+			return _width;
 		}
 		
 		/**

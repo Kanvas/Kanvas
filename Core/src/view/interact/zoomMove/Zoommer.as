@@ -171,43 +171,23 @@ package view.interact.zoomMove
 			
 			if (canvas.ifHasElements)
 			{
-				canvasBound = LayoutUtil.getContentRect(canvas);
+				canvasBound = LayoutUtil.getContentRect(canvas, false);
 				
 				var scale:Number = (canvasBound.width / canvasBound.height > mainUI.bound.width / mainUI.bound.height)
 					? mainUI.bound.width  / canvasBound.width
 					: mainUI.bound.height / canvasBound.height;
 				
+				flasher.canvasTargetRotation = 0;
+				
 				//画布保持原比例，不缩放
-				if (originalScale)
-				{
-					flasher.canvasTargetScale = 1;
-				}
-				else
-				{
-					if(!control.ifAutoZoom)
-					{
-						//检查canvas实际尺寸是否小于窗口尺寸，如果小于，则显示原始比例
-						if ( ! (canvasBound.width  / canvas.scaleX < mainUI.bound.width && 
-								canvasBound.height / canvas.scaleX < mainUI.bound.height))
-							flasher.canvasTargetScale *= scale;
-						else
-							flasher.canvasTargetScale = 1;
-					}
-					else
-					{
-						flasher.canvasTargetScale *= scale;
-					}
-				}
+				flasher.canvasTargetScale = (originalScale || (!control.ifAutoZoom && !(canvasBound.width < mainUI.bound.width && canvasBound.height < mainUI.bound.height))) ? 1 : scale;
 				
-				var pls:Number = flasher.canvasTargetScale / canvas.scaleX;
-				
-				canvasBound.width  *= pls;
-				canvasBound.height *= pls;
-				var topLeft:Point = canvasBound.topLeft.clone();
-				LayoutUtil.convertPointStage2Canvas(topLeft, canvas.x, canvas.y, canvas.scaleX, canvas.rotation);
-				LayoutUtil.convertPointCanvas2Stage(topLeft, canvas.x, canvas.y, flasher.canvasTargetScale, canvas.rotation);
-				canvasBound.x = topLeft.x;
-				canvasBound.y = topLeft.y;
+				canvasBound.width  *= scale;
+				canvasBound.height *= scale;
+				var tl:Point = canvasBound.topLeft.clone();
+				LayoutUtil.convertPointCanvas2Stage(tl, canvas.x, canvas.y, flasher.canvasTargetScale, flasher.canvasTargetRotation);
+				canvasBound.x = tl.x;
+				canvasBound.y = tl.y;
 				
 				var canvasCenter:Point = new Point((canvasBound .left + canvasBound .right) * .5, (canvasBound .top + canvasBound .bottom) * .5);
 				var stageCenter :Point = new Point((mainUI.bound.left + mainUI.bound.right) * .5, (mainUI.bound.top + mainUI.bound.bottom) * .5);
@@ -221,7 +201,7 @@ package view.interact.zoomMove
 				flasher.canvasTargetY = mainUI.stage.stageHeight / 2;
 			}
 			
-			flasher.flash(0.8, Cubic.easeInOut);
+			flasher.advancedFlash();
 		}
 		
 		/**

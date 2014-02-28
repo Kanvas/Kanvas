@@ -5,23 +5,16 @@ package view.interact.multiSelect
 	
 	import commands.Command;
 	
-	import consts.ConstsTip;
-	
-	import flash.display.DisplayObject;
 	import flash.display.Shape;
-	import flash.display.Sprite;
-	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import model.CoreFacade;
 	
-	import util.CoreUtil;
 	import util.LayoutUtil;
 	
 	import view.element.ElementBase;
 	import view.element.ElementEvent;
 	import view.interact.CoreMediator;
-	import view.ui.Bubble;
 
 	/**
 	 * 多选与临时组合控制器
@@ -221,11 +214,8 @@ package view.interact.multiSelect
 				for each (var element:ElementBase in childElements)
 					element.toMultiSelectedState();
 				
-					
-				
-				
-				coreMdt.sendNotification(Command.SElECT_ELEMENT, temGroupElement);
 				updateSelecterLayout();
+				coreMdt.sendNotification(Command.SElECT_ELEMENT, temGroupElement);
 			}
 			else
 			{
@@ -325,18 +315,17 @@ package view.interact.multiSelect
 			temGroupElement.vo.rotation = temGroupElement.rotation = 0;
 			
 			//全局布局信息
-			temGroupElement.vo.width  = (right - left) * coreMdt.layoutTransformer.compensateScale;
-			temGroupElement.vo.height = (bottom - top) * coreMdt.layoutTransformer.compensateScale;
+			temGroupElement.vo.width  = (right - left) / coreMdt.canvas.scaleX;
+			temGroupElement.vo.height = (bottom - top) / coreMdt.canvas.scaleX;
 			
-			temGroupElement.vo.x = (.5 * (left + right) - coreMdt.canvas.x) * coreMdt.layoutTransformer.compensateScale;
-			temGroupElement.vo.y = (.5 * (top + bottom) - coreMdt.canvas.y) * coreMdt.layoutTransformer.compensateScale;
+			temGroupElement.vo.x = (.5 * (left + right) - coreMdt.canvas.x) / coreMdt.canvas.scaleX;
+			temGroupElement.vo.y = (.5 * (top + bottom) - coreMdt.canvas.y) / coreMdt.canvas.scaleX;
 			
 			//刷新UI
 			temGroupElement.render();
-			coreMdt.selector.show(temGroupElement);
+			//coreMdt.selector.show(temGroupElement);
 			
-			if (coreMdt.autofitController)
-				coreMdt.autofitController.autofitElementPosition(temGroupElement);
+			//coreMdt.autofitController.autofitElementPosition(temGroupElement);
 			
 			//确保临时组合位于子元件的最下层
 			if (temGroupElement.parent == null)
