@@ -920,11 +920,9 @@ package view.element
 		 */
 		public function drawBG():void
 		{
-			var w:Number = Math.max(vo.width, 10);
-			var h:Number = Math.max(vo.height, 10);
 			bg.graphics.clear();
 			bg.graphics.beginFill(0x000000, 0);
-			bg.graphics.drawRect(- vo.width / 2, - vo.height / 2, w, h);
+			bg.graphics.drawRect(- vo.width / 2, - vo.height / 2, vo.width, vo.height);
 			bg.graphics.endFill();
 		}
 		

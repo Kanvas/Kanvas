@@ -31,17 +31,20 @@ package com.kvs.ui.label
 				scale *= - 1;
 			try
 			{
-				var r:Number = textBMD.width / (scale * textCanvas.width);
-				
-				//截图有最大尺寸限制，最大宽高乘积为 imgMaxSize
-				var max:Number = scale * textCanvas.width * scale * textCanvas.height * scaleMultiple * scaleMultiple;
-				
-				if (host.visible && max < imgMaxSize && (textBMD.width < textCanvas.width * scale || r > bmMaxScaleMultiple))
+				if (textBMD)
 				{
-					renderTextBMD(shape, textCanvas, scale, tx, ty, (max < minSmoothSize) ? true : false);
+					var r:Number = textBMD.width / (scale * textCanvas.width);
+					
+					//截图有最大尺寸限制，最大宽高乘积为 imgMaxSize
+					var max:Number = scale * textCanvas.width * scale * textCanvas.height * scaleMultiple * scaleMultiple;
+					
+					if (host.visible && max < imgMaxSize && (textBMD.width < textCanvas.width * scale || r > bmMaxScaleMultiple))
+					{
+						renderTextBMD(shape, textCanvas, scale, tx, ty, (max < minSmoothSize) ? true : false);
+					}
+					
+					checkVisible(shape, textCanvas, scale, tx, ty);
 				}
-				
-				checkVisible(shape, textCanvas, scale, tx, ty);
 			} 
 			catch(error:Error) 
 			{

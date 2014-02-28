@@ -73,6 +73,7 @@ package view.interact.zoomMove
 		
 		public function advancedFlash(easeFlash:Object = null, time:Number = NaN):void
 		{
+			
 			if (MathUtil.equals(MathUtil.log2(canvas.scaleX), MathUtil.log2(canvasTargetScale)) && 
 				MathUtil.equals(MathUtil.modRotation(canvas.rotation), MathUtil.modRotation(canvasTargetRotation)) && 
 				MathUtil.equals(canvas.x, canvasTargetX) && 
@@ -80,6 +81,9 @@ package view.interact.zoomMove
 				return;
 			if (Math.max(canvasTargetScale / canvas.scaleX, canvas.scaleX / canvasTargetScale) > 1.0005)
 				control.mainUI.curScreenState.disableCanvas();
+			
+			if(!easeFlash)
+				easeFlash = Cubic.easeInOut;
 			
 			if(!packer) 
 				packer = new CanvasLayoutPacker(control.mainUI);

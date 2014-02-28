@@ -307,6 +307,7 @@ package view.interact.multiSelect
 				
 				// 子元素的布局信息；
 				var elementRect:Rectangle = LayoutUtil.getItemRect(coreMdt.canvas, element, false, true);
+				CoreUtil.drawRect(0xFF0000, elementRect);
 				
 				leftArr  .push(elementRect.left);
 				rightArr .push(elementRect.right);
@@ -325,11 +326,11 @@ package view.interact.multiSelect
 			temGroupElement.vo.rotation = temGroupElement.rotation = 0;
 			
 			//全局布局信息
-			temGroupElement.vo.width  = (right - left) * coreMdt.layoutTransformer.compensateScale;
-			temGroupElement.vo.height = (bottom - top) * coreMdt.layoutTransformer.compensateScale;
+			temGroupElement.vo.width  = (right - left) / coreMdt.canvas.scaleX;
+			temGroupElement.vo.height = (bottom - top) / coreMdt.canvas.scaleX;
 			
-			temGroupElement.vo.x = (.5 * (left + right) - coreMdt.canvas.x) * coreMdt.layoutTransformer.compensateScale;
-			temGroupElement.vo.y = (.5 * (top + bottom) - coreMdt.canvas.y) * coreMdt.layoutTransformer.compensateScale;
+			temGroupElement.vo.x = (.5 * (left + right) - coreMdt.canvas.x) / coreMdt.canvas.scaleX;
+			temGroupElement.vo.y = (.5 * (top + bottom) - coreMdt.canvas.y) / coreMdt.canvas.scaleX;
 			
 			//刷新UI
 			temGroupElement.render();

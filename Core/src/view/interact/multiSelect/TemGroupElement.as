@@ -168,10 +168,10 @@ package view.interact.multiSelect
 			graphics.clear();
 			
 			// 中心点为注册点
-			vo.style.tx = - vo.width / 2;
+			vo.style.tx = - vo.width  / 2;
 			vo.style.ty = - vo.height / 2;
 			
-			vo.style.width = vo.width;
+			vo.style.width  = vo.width;
 			vo.style.height = vo.height;
 			
 			StyleManager.drawRect(this, vo.style, vo);

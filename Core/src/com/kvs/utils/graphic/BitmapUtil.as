@@ -109,7 +109,9 @@ package com.kvs.utils.graphic
 		public static function getBitmapData(target:DisplayObject, ifSmooth:Boolean = false, scale:Number = 1):BitmapData
 		{
 			var rect:Rectangle = target.getBounds(target);
-			var myBitmapData:BitmapData = new BitmapData(target.width * scale, target.height * scale, true, 0xFFFFFF);
+			var w:int = Math.max(1, target.width  * scale);
+			var h:int = Math.max(1, target.height * scale);
+			var myBitmapData:BitmapData = new BitmapData(w, h, true, 0xFFFFFF);
 			
 			var mat:Matrix = new Matrix;
 			mat.createBox(scale, scale, 0, - rect.left, - rect.top);
