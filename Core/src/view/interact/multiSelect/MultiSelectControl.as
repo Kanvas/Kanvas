@@ -5,23 +5,16 @@ package view.interact.multiSelect
 	
 	import commands.Command;
 	
-	import consts.ConstsTip;
-	
-	import flash.display.DisplayObject;
 	import flash.display.Shape;
-	import flash.display.Sprite;
-	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import model.CoreFacade;
 	
-	import util.CoreUtil;
 	import util.LayoutUtil;
 	
 	import view.element.ElementBase;
 	import view.element.ElementEvent;
 	import view.interact.CoreMediator;
-	import view.ui.Bubble;
 
 	/**
 	 * 多选与临时组合控制器
@@ -221,11 +214,8 @@ package view.interact.multiSelect
 				for each (var element:ElementBase in childElements)
 					element.toMultiSelectedState();
 				
-					
-				
-				
-				coreMdt.sendNotification(Command.SElECT_ELEMENT, temGroupElement);
 				updateSelecterLayout();
+				coreMdt.sendNotification(Command.SElECT_ELEMENT, temGroupElement);
 			}
 			else
 			{
@@ -307,7 +297,6 @@ package view.interact.multiSelect
 				
 				// 子元素的布局信息；
 				var elementRect:Rectangle = LayoutUtil.getItemRect(coreMdt.canvas, element, false, true);
-				CoreUtil.drawRect(0xFF0000, elementRect);
 				
 				leftArr  .push(elementRect.left);
 				rightArr .push(elementRect.right);
@@ -334,10 +323,9 @@ package view.interact.multiSelect
 			
 			//刷新UI
 			temGroupElement.render();
-			coreMdt.selector.show(temGroupElement);
+			//coreMdt.selector.show(temGroupElement);
 			
-			if (coreMdt.autofitController)
-				coreMdt.autofitController.autofitElementPosition(temGroupElement);
+			//coreMdt.autofitController.autofitElementPosition(temGroupElement);
 			
 			//确保临时组合位于子元件的最下层
 			if (temGroupElement.parent == null)
