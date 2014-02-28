@@ -391,7 +391,6 @@ package model
 			{
 				element = createElement(item);//创建并初始化元素
 				pages.push(element.vo as PageVO);
-				//CoreFacade.coreMediator.pageManager.addPageAt(element.vo as PageVO, (element.vo as PageVO).index);
 			}
 			pages.sort(sortOnIndex);
 			var l:int = pages.length;

@@ -91,7 +91,7 @@ package landray.kp.view
 		private function updateLayout():void
 		{
 			//绘制背景与交互背景
-			kp_internal::drawBackground();
+			kp_internal::drawBackground((background) ? uint(background.color) : 0xFFFFFF);
 			kp_internal::drawInteractor();
 			//指定自适应矩形范围
 			var gutter:uint = (stage && stage.displayState == StageDisplayState.FULL_SCREEN) ? 5 : 30;
@@ -119,14 +119,11 @@ package landray.kp.view
 		 */
 		kp_internal function refresh():void
 		{
-			//kp_internal::drawInteractor();
-			//kp_internal::drawBackground((background) ? background.color : 0xFFFFFF);
 			if (kp_internal::selector) 
 			{
 				if (kp_internal::selector.visible) 
 					kp_internal::selector.render();
 			}
-			
 		}
 		
 		/**
@@ -194,14 +191,14 @@ package landray.kp.view
 		{
 			if (screenState!= state)
 			{
-				screenState = state;
+				trace("set state:", state)
 				if(isNaN(lastWidth) || isNaN(lastHeight))
 				{
 					lastWidth  = stage.stageWidth;
 					lastHeight = stage.stageHeight;
 				}
-				if (stage.displayState!= state)
-					stage.displayState = state;
+				screenState = state;
+				stage.displayState = state;
 				var gutterOld:int = (state == "normal") ? 5 : 30;
 				var gutterNew:int = (state == "normal") ? 30 : 5;
 				var recOld:Rectangle = new Rectangle(gutterOld, gutterOld, lastWidth - gutterOld * 2, lastHeight - gutterOld * 2);
@@ -236,17 +233,17 @@ package landray.kp.view
 				var aimY:Number = canvas.y + stageCenter.y - canvasCenter.y;
 				kp_internal::controller.zoomRotateMoveTo(canvasScale, canvas.rotation, aimX, aimY, null, .5);
 				
+				synBgImgWidthCanvas();
+				
 				lastWidth  = stage.stageWidth;
 				lastHeight = stage.stageHeight;
-				
-				synBgImgWidthCanvas();
 			}
 		}
 		
 		private var lastWidth:Number;
 		private var lastHeight:Number;
 		private var fullScreenScale:Number;
-		private var screenState:String;
+		private var screenState:String = "normal";
 		
 		
 		/**
