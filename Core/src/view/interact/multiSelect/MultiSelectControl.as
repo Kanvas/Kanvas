@@ -220,11 +220,8 @@ package view.interact.multiSelect
 				for each (var element:ElementBase in childElements)
 					element.toMultiSelectedState();
 				
-					
-				
-				
-				coreMdt.sendNotification(Command.SElECT_ELEMENT, temGroupElement);
 				updateSelecterLayout();
+				coreMdt.sendNotification(Command.SElECT_ELEMENT, temGroupElement);
 			}
 			else
 			{
@@ -355,10 +352,10 @@ package view.interact.multiSelect
 			*/
 			//刷新UI
 			temGroupElement.render();
-			coreMdt.selector.show(temGroupElement);
+			/*coreMdt.selector.show(temGroupElement);
 			
 			if (coreMdt.autofitController)
-				coreMdt.autofitController.autofitElementPosition(temGroupElement);
+				coreMdt.autofitController.autofitElementPosition(temGroupElement);*/
 			
 			//确保临时组合位于子元件的最下层
 			if (temGroupElement.parent == null)
