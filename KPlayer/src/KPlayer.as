@@ -6,7 +6,7 @@ package
 	import landray.kp.utils.CoreUtil;
 	import landray.kp.utils.ExternalUtil;
 	
-	import view.toolBar.Debugger;
+	import landray.kp.components.Debugger;
 	
 	/**
 	 * KPlayer主容器类

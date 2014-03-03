@@ -1,4 +1,4 @@
-package view.toolBar
+package landray.kp.components
 {
 	import flash.text.TextField;
 	import flash.text.TextFormat;
@@ -23,7 +23,7 @@ package view.toolBar
 		}
 		public function debug(...args):void
 		{
-			appendText(args.toString()+"\n");
+			appendText(args+"\n");
 		}
 	}
 }

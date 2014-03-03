@@ -8,7 +8,7 @@ package landray.kp.mediator
 	import flash.external.ExternalInterface;
 	import flash.geom.Point;
 	
-	import landray.kp.controls.Selector;
+	import landray.kp.components.Selector;
 	import landray.kp.core.KPConfig;
 	import landray.kp.core.kp_internal;
 	import landray.kp.maps.simple.elements.BaseElement;

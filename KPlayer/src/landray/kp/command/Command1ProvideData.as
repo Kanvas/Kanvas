@@ -6,7 +6,7 @@ package landray.kp.command
 	
 	import landray.kp.model.*;
 	
-	import view.toolBar.Debugger;
+	import landray.kp.components.Debugger;
 	
 	public final class Command1ProvideData extends _InernalCommand
 	{

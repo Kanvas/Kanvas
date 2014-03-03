@@ -7,7 +7,7 @@ package landray.kp.view
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-	import landray.kp.controls.Selector;
+	import landray.kp.components.Selector;
 	import landray.kp.core.KPConfig;
 	import landray.kp.core.KPEmbeds;
 	import landray.kp.core.KPProvider;
@@ -21,7 +21,7 @@ package landray.kp.view
 	import util.layout.LayoutTransformer;
 	
 	import view.interact.zoomMove.ZoomMoveControl;
-	import view.toolBar.ZoomToolBar;
+	import landray.kp.components.ZoomToolBar;
 	import view.ui.Bubble;
 	import view.ui.MainUIBase;
 

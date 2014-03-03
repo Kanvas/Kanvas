@@ -13,7 +13,7 @@ package landray.kp.maps.simple.elements
 	import util.img.ImgInsertEvent;
 	import util.img.ImgInsertor;
 	
-	import view.toolBar.Debugger;
+	import landray.kp.components.Debugger;
 	
 	/**
 	 * 

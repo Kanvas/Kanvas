@@ -1,4 +1,4 @@
-package landray.kp.controls
+package landray.kp.components
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;

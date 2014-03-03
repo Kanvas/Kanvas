@@ -10,7 +10,7 @@ package landray.kp.core
 	
 	import model.vo.BgVO;
 	
-	import view.toolBar.Debugger;
+	import landray.kp.components.Debugger;
 	
 	public final class KPConfig
 	{
