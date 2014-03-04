@@ -302,7 +302,7 @@ package landray.kp.mediator
 			var thisHeight:Number = viewer.stage.stageHeight;
 			var recOld:Rectangle = new Rectangle(5, 5, lastWidth - 10, lastHeight - 50);
 			var recNew:Rectangle = new Rectangle(5, 5, thisWidth - 10, thisHeight - 50);
-			if (screenFull)
+			if (value == "fullScreen")
 			{
 				screenScale = (recOld.width / recOld.height > recNew.width / recNew.height)
 					? recNew.width  / recOld.width
