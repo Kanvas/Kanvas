@@ -1,4 +1,4 @@
-package view.toolBar
+package landray.kp.components
 {
 	import flash.text.TextField;
 	import flash.text.TextFormat;

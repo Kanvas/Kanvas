@@ -2,11 +2,14 @@ package landray.kp.maps.main.comman
 {
 	import com.kvs.ui.toolTips.ToolTipHolder;
 	import com.kvs.ui.toolTips.ToolTipsEvent;
+	import com.kvs.ui.toolTips.ToolTipsManager;
 	import com.kvs.utils.RexUtil;
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import landray.kp.core.KPConfig;
+	import landray.kp.core.KPEmbeds;
 	import landray.kp.core.kp_internal;
 	import landray.kp.maps.main.elements.BaseElement;
 	import landray.kp.utils.ExternalUtil;
@@ -14,12 +17,26 @@ package landray.kp.maps.main.comman
 
 	public final class ElementToolTip
 	{
-		public function ElementToolTip($target:Viewer)
+		public function ElementToolTip()
 		{
-			target = $target;	
-			target.addEventListener(MouseEvent.MOUSE_OVER   , showHandler);
-			target.addEventListener(MouseEvent.MOUSE_OUT    , hideHandler);
-			target.addEventListener(Event.REMOVED_FROM_STAGE, hideHandler);
+			initialize();
+		}
+		
+		private function initialize():void
+		{
+			config = KPConfig.instance;
+			embeds = KPEmbeds.instance;
+			
+			viewer = config.kp_internal::viewer;
+			
+			viewer.addEventListener(MouseEvent.MOUSE_OVER   , showHandler);
+			viewer.addEventListener(MouseEvent.MOUSE_OUT    , hideHandler);
+			viewer.addEventListener(Event.REMOVED_FROM_STAGE, hideHandler);
+			
+			tipsVO      = new ToolTipHolder;
+			tipsManager = new ToolTipsManager(viewer);
+			
+			tipsManager.setStyleXML(embeds.styleTips);
 		}
 		
 		public function showToolTip(msg:String, w:Number = 0):void
@@ -28,7 +45,7 @@ package landray.kp.maps.main.comman
 			{
 				element.tips = msg;
 				element.tipWidth = w;
-				target.kp_internal::setToolTipMultiline(w);
+				setMultiLine(w);
 				showTips();
 			}
 		}
@@ -44,7 +61,7 @@ package landray.kp.maps.main.comman
 				{
 					if (element.tips)
 					{
-						target.kp_internal::setToolTipMultiline(element.tipWidth);
+						setMultiLine(element.tipWidth);
 						showTips();
 					}
 					else
@@ -58,6 +75,14 @@ package landray.kp.maps.main.comman
 			hideTips();
 		}
 		
+		private function setMultiLine(w:Number):void
+		{
+			if (w > 0)
+			{
+				tipsManager.getStyle().layout = "wrap";
+				tipsManager.maxWidth = w;
+			}
+		}
 		
 		private function showTips():void
 		{
@@ -101,12 +126,18 @@ package landray.kp.maps.main.comman
 		private var __enabled:Boolean = true;
 		
 		
-		private var target:Viewer;
+		private var viewer:Viewer;
 		
 		private var element:BaseElement;
 		
-		private var tipsVO:ToolTipHolder = new ToolTipHolder;
+		private var tipsVO:ToolTipHolder;
 		
-		private var showing:Boolean = false;
+		private var showing:Boolean;
+		
+		private var tipsManager:ToolTipsManager;
+		
+		private var config:KPConfig;
+		
+		private var embeds:KPEmbeds;
 	}
 }

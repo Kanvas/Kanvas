@@ -240,23 +240,15 @@ package landray.kp.maps.main.elements
 			if (stage)
 			{
 				var rect:Rectangle = LayoutUtil.getItemRect (canvas, this);
-				if (rect.width > 1 || rect.height > 1)
-				{
-					var boud:Rectangle = LayoutUtil.getStageRect(stage);
-					if (RectangleUtil.rectOverlapping(rect, boud))
-					{
-						super.visible = true;
-					}
-					else
-					{
-						super.visible = false;
-					}
-				}
-				else 
+				if (rect.width < 1 || rect.height < 1)
 				{
 					super.visible = false;
 				}
-				
+				else 
+				{
+					var boud:Rectangle = LayoutUtil.getStageRect(stage);
+					super.visible = RectangleUtil.rectOverlapping(rect, boud);
+				}
 			}
 			if (parent && visible)
 			{

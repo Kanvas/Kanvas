@@ -32,7 +32,7 @@ package landray.kp.command
 		private function resolveData():void
 		{
 			//clear
-			config.kp_internal::graphs = new Vector.<Graph>;
+			config.kp_internal::graphs.length = 0;
 			while(config.kp_internal::viewer.canvas.numChildren>1) config.kp_internal::viewer.canvas.removeChildAt(1);
 			
 			if (provider.dataXML)
@@ -40,28 +40,31 @@ package landray.kp.command
 				try 
 				{
 					config.kp_internal::theme = provider.dataXML.header[0].@styleID;
+					config.kp_internal::viewer.theme = config.kp_internal::theme;
 				} 
 				catch (e:Error) {}
 				try 
 				{
 					CoreUtil.mapping(provider.dataXML.bg[0], config.kp_internal::bgVO);
-					config.kp_internal::viewer.background = config.kp_internal::bgVO;
+					config.kp_internal::viewer = config.kp_internal::bgVO;
 				} 
 				catch (e:Error) {}
 				
-				config.kp_internal::viewer.theme = config.kp_internal::theme;
-				
 				//resolve main
-				var xml:XML = provider.dataXML.main[0];
-				if (xml && xml.children()&&xml.children().length()) 
+				try 
 				{
-					var reference:Class = graphManager.getGraph(String(xml.name()));
-					var graph:Graph = new reference;
-					graph.templete = provider.styleXML;
-					graph.theme = config.kp_internal::theme;
-					graph.dataProvider = xml;
-					config.kp_internal::graphs.push(graph);
-				}
+					var xml:XML = provider.dataXML.main[0];
+					if (xml && xml.children()&&xml.children().length()) 
+					{
+						var reference:Class = graphManager.getGraph(String(xml.name()));
+						var graph:Graph = new reference;
+						graph.templete = provider.styleXML;
+						graph.theme = config.kp_internal::theme;
+						graph.dataProvider = xml;
+						config.kp_internal::graphs.push(graph);
+					}
+				} 
+				catch (e:Error) {}
 				
 				//resolve page
 				try

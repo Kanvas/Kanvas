@@ -3,10 +3,17 @@ package landray.kp.command
 	import flash.events.Event;
 	import flash.text.TextFormat;
 	
+	import landray.kp.components.Selector;
+	import landray.kp.components.ZoomToolBar;
 	import landray.kp.core.kp_internal;
+	import landray.kp.manager.ManagerPage;
+	import landray.kp.maps.main.comman.ElementToolTip;
+	import landray.kp.mediator.MediatorViewer;
 	import landray.kp.view.Viewer;
 	
 	import util.textFlow.FlowTextManager;
+	
+	import view.interact.zoomMove.ZoomMoveControl;
 	
 	/**
 	 */	
@@ -23,8 +30,6 @@ package landray.kp.command
 			initTemplete();
 			//init views
 			initViews();
-			
-			
 		}
 		
 		private function initTemplete():void
@@ -38,20 +43,26 @@ package landray.kp.command
 			//加载字体
 			FlowTextManager.loadFont("FontLib.swf");
 			
-			if(!config.kp_internal::viewer) 
-			{
-				config.kp_internal::viewer = new Viewer;
-				
-				config.kp_internal::viewer.addEventListener("initialize", function(e:Event):void
-				{
-					executeEnd();
-				}, false, 0, true);
-				config.kp_internal::container.addChildAt(config.kp_internal::viewer, 0);
-				
-			}
+			config.kp_internal::viewer      = new Viewer;
 			
+			
+			config.kp_internal::viewer.addEventListener("initialize", function(e:Event):void
+			{
+				initItems();
+				executeEnd();
+			}, false, 0, true);
+			config.kp_internal::container.addChildAt(config.kp_internal::viewer, 0);
 		}
 		
+		private function initItems():void
+		{
+			config.kp_internal::mediator    = new MediatorViewer;
+			config.kp_internal::controller  = new ZoomMoveControl(config.kp_internal::viewer, config.kp_internal::mediator);
+			config.kp_internal::selector    = new Selector;
+			config.kp_internal::zoomToolBar = new ZoomToolBar;
+			config.kp_internal::toolTip     = new ElementToolTip;
+			config.kp_internal::pageManager = new ManagerPage;
+		}
 		
 	}
 }

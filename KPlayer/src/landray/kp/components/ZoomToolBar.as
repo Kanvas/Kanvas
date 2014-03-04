@@ -1,4 +1,4 @@
-package view.toolBar
+package landray.kp.components
 {	
 	import com.greensock.TweenMax;
 	import com.kvs.ui.button.IconBtn;
@@ -10,24 +10,25 @@ package view.toolBar
 	import flash.utils.Timer;
 	
 	import landray.kp.core.kp_internal;
-	import landray.kp.ui.*;
+	import landray.kp.ui.ScreenFull;ScreenFull;
+	import landray.kp.ui.ScreenHalf;ScreenHalf;
+	import landray.kp.ui.ZoomAuto  ;ZoomAuto;
+	import landray.kp.ui.ZoomIn    ;ZoomIn;
+	import landray.kp.ui.ZoomOut   ;ZoomOut;
 	import landray.kp.utils.CoreUtil;
 	import landray.kp.view.Viewer;
+	import landray.kp.core.KPConfig;
+	import view.interact.zoomMove.ZoomMoveControl;
 	
 	/**
 	 * 缩放工具栏
 	 */
 	public final class ZoomToolBar extends Sprite
 	{
-		public function ZoomToolBar($viewer:Viewer)
+		public function ZoomToolBar()
 		{
 			super();
-			
-			controller = $viewer;
-			
 			CoreUtil.initApplication(this, initialize);
-			
-			
 		}
 		
 		kp_internal function resetScreenButtons():void
@@ -43,6 +44,7 @@ package view.toolBar
 		 */
 		private function initialize():void
 		{
+			config = KPConfig.instance;
 			with (graphics) 
 			{
 				beginFill(0x474946);
@@ -54,58 +56,54 @@ package view.toolBar
 			
 			visible = false;
 			
+			screenFull = new IconBtn;
+			screenHalf = new IconBtn;
 			zoomAuto   = new IconBtn;
 			zoomIn     = new IconBtn;
 			zoomOut    = new IconBtn;
-			screenHalf = new IconBtn;
-			screenFull = new IconBtn;
 			
+			screenFull.styleXML = btnStyleXML;
+			screenHalf.styleXML = btnStyleXML;
 			zoomAuto  .styleXML = btnStyleXML;
 			zoomIn    .styleXML = btnStyleXML;
 			zoomOut   .styleXML = btnStyleXML;
-			screenHalf.styleXML = btnStyleXML;
-			screenFull.styleXML = btnStyleXML;
 			
+			screenFull.tips = "全屏";
+			screenHalf.tips = "退出全屏";
 			zoomAuto  .tips = "自适应";
 			zoomIn    .tips = "放大";
 			zoomOut   .tips = "缩小";
-			screenHalf.tips = "退出全屏";
-			screenFull.tips = "全屏";
 			
-			zoomAuto.w = zoomAuto.h = 28;
-			zoomIn.w = zoomIn.h = 28;
-			zoomOut.w = zoomOut.h = 28;
-			screenHalf.w = screenHalf.h = 28;
 			screenFull.w = screenFull.h = 28;
+			screenHalf.w = screenHalf.h = 28;
+			zoomAuto  .w = zoomAuto  .h = 28;
+			zoomIn    .w = zoomIn    .h = 28;
+			zoomOut   .w = zoomOut   .h = 28;
 			
-			zoomAuto.iconW = 12;
-			zoomAuto.iconH = 11;
-			zoomIn.iconW = 12;
-			zoomIn.iconH = 12;
-			zoomOut.iconW = 12;
-			zoomOut.iconH = 12;
 			screenFull.iconW = 18;
 			screenFull.iconH = 16;
 			screenHalf.iconW = 18;
 			screenHalf.iconH = 16;
+			zoomAuto  .iconW = 12;
+			zoomAuto  .iconH = 11;
+			zoomIn    .iconW = 12;
+			zoomIn    .iconH = 12;
+			zoomOut   .iconW = 12;
+			zoomOut   .iconH = 12;
 			
 			zoomIn.x = zoomOut.x = zoomAuto.x = screenFull.x = screenHalf.x = 4;
 			
-			ZoomAuto;
-			var pathZoomAuto:String = "landray.kp.ui.ZoomAuto";
-			zoomAuto.setIcons(pathZoomAuto, pathZoomAuto, pathZoomAuto);
-			ZoomIn;
-			var pathZoomIn:String = "landray.kp.ui.ZoomIn";
-			zoomIn.setIcons(pathZoomIn, pathZoomIn, pathZoomIn);
-			ZoomOut;
-			var pathZoomOut:String = "landray.kp.ui.ZoomOut";
-			zoomOut.setIcons(pathZoomOut, pathZoomOut, pathZoomOut);
-			ScreenHalf;
-			var pathScreenHalf:String = "landray.kp.ui.ScreenHalf";
-			screenHalf.setIcons(pathScreenHalf, pathScreenHalf, pathScreenHalf);
-			ScreenFull;
 			var pathScreenFull:String = "landray.kp.ui.ScreenFull";
+			var pathScreenHalf:String = "landray.kp.ui.ScreenHalf";
+			var pathZoomAuto  :String = "landray.kp.ui.ZoomAuto";
+			var pathZoomIn    :String = "landray.kp.ui.ZoomIn";
+			var pathZoomOut   :String = "landray.kp.ui.ZoomOut";
+			
 			screenFull.setIcons(pathScreenFull, pathScreenFull, pathScreenFull);
+			screenHalf.setIcons(pathScreenHalf, pathScreenHalf, pathScreenHalf);
+			zoomAuto  .setIcons(pathZoomAuto  , pathZoomAuto  , pathZoomAuto);
+			zoomIn    .setIcons(pathZoomIn    , pathZoomIn    , pathZoomIn);
+			zoomOut   .setIcons(pathZoomOut   , pathZoomOut   , pathZoomOut);
 			
 			addChild(zoomAuto  ).y = 4 ;
 			addChild(zoomIn    ).y = 36;
@@ -115,11 +113,11 @@ package view.toolBar
 			
 			screenHalf.visible = false;
 			
+			screenFull.addEventListener(MouseEvent.CLICK, clickScreenFull);
+			screenHalf.addEventListener(MouseEvent.CLICK, clickScreenHalf);
 			zoomIn    .addEventListener(MouseEvent.CLICK, clickZoomIn    );
 			zoomOut   .addEventListener(MouseEvent.CLICK, clickZoomOut   );
 			zoomAuto  .addEventListener(MouseEvent.CLICK, clickZoomAuto  );
-			screenHalf.addEventListener(MouseEvent.CLICK, clickScreenHalf);
-			screenFull.addEventListener(MouseEvent.CLICK, clickScreenFull);
 			
 			stage.addEventListener(MouseEvent.MOUSE_MOVE, timerShowMouseMove);
 		}
@@ -151,13 +149,9 @@ package view.toolBar
 		private function timerHideMouseMove(e:MouseEvent):void
 		{
 			if (mouseX >= - 100 && mouseX <= width)
-			{
 				timerHideStop();
-			}
 			else
-			{
 				timerHideStart();
-			}
 		}
 		
 		private function timerShowComplete(e:TimerEvent):void
@@ -251,7 +245,7 @@ package view.toolBar
 		 */
 		private function clickZoomIn(e:MouseEvent):void
 		{
-			controller.kp_internal::controller.zoomIn(true);
+			controller.zoomIn(true);
 		}
 		
 		/**
@@ -259,7 +253,7 @@ package view.toolBar
 		 */
 		private function clickZoomOut(e:MouseEvent):void
 		{
-			controller.kp_internal::controller.zoomOut(true);
+			controller.zoomOut(true);
 		}
 		
 		/**
@@ -267,7 +261,7 @@ package view.toolBar
 		 */
 		private function clickZoomAuto(e:MouseEvent):void
 		{
-			controller.kp_internal::controller.autoZoom();
+			controller.autoZoom();
 		}
 		
 		/**
@@ -276,7 +270,7 @@ package view.toolBar
 		private function clickScreenHalf(e:MouseEvent):void
 		{
 			screenHalf.visible = ! (screenFull.visible = true);
-			controller.kp_internal::setScreenState(StageDisplayState.NORMAL);
+			viewer.screenState = StageDisplayState.NORMAL;
 		}
 		
 		/**
@@ -285,7 +279,7 @@ package view.toolBar
 		private function clickScreenFull(e:MouseEvent):void
 		{
 			screenHalf.visible = ! (screenFull.visible = false);
-			controller.kp_internal::setScreenState(StageDisplayState.FULL_SCREEN);
+			viewer.screenState = StageDisplayState.FULL_SCREEN;
 		}
 		
 		/**
@@ -295,6 +289,16 @@ package view.toolBar
 		{
 			super.alpha = value;
 			visible = (alpha) ? true : false;
+		}
+		
+		private function get viewer():Viewer
+		{
+			return config.kp_internal::viewer;
+		}
+		
+		private function get controller():ZoomMoveControl
+		{
+			return config.kp_internal::controller;
 		}
 		
 		/**
@@ -322,10 +326,7 @@ package view.toolBar
 		 */
 		private var screenHalf:IconBtn;
 		
-		/**
-		 * @private
-		 */
-		private var controller:Viewer;
+		private var config:KPConfig;
 		
 		/**
 		 * @private

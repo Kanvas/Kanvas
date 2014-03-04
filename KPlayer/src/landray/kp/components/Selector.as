@@ -1,49 +1,58 @@
-package landray.kp.controls
+package landray.kp.components
 {
-	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+	import landray.kp.core.KPConfig;
 	import landray.kp.core.kp_internal;
+	import landray.kp.maps.main.elements.BaseElement;
 	import landray.kp.view.Viewer;
+	
+	import util.LayoutUtil;
 	
 	/**
 	 * 选择框
 	 */
 	public final class Selector extends Sprite
 	{
-		public function Selector($viewer:Viewer)
+		public function Selector()
 		{
 			super();
-			viewer = $viewer;
-			
+			initialize();
+		}
+		
+		private function initialize():void
+		{
+			config = KPConfig.instance;
 			visible = false;
 		}
 		
-		public function render($rect:Rectangle=null):void
+		public function render($element:BaseElement = null, $rect:Rectangle=null):void
 		{
-			if ($rect) 
-				rect = $rect;
-			if (element) 
+			element = $element;
+			
+			visible = Boolean(element);
+			if (visible)
 			{
+				graphics.clear();
+				
+				rect = element.getRectangleForViewer();
 				var temp:Rectangle = rect.clone();
 				temp.x      *= viewer.canvas.scaleX;
 				temp.y      *= viewer.canvas.scaleX;
 				temp.width  *= viewer.canvas.scaleX;
 				temp.height *= viewer.canvas.scaleX;
 				
-				var point:Point = viewer.kp_internal::convertElementCoordsToViewer(element.x, element.y);
+				drawRect(temp, 5);
+				
+				var point:Point = LayoutUtil.elementPointToStagePoint(element.x, element.y, viewer.canvas);
+				
 				x = point.x;
 				y = point.y;
-				rotation = element.rotation;
-			} 
-			else 
-			{
-				temp = new Rectangle(0, 0, 100, 100);
+				
+				rotation = element.rotation + viewer.canvas.rotation;
 			}
-			graphics.clear();
-			drawRect(temp, 5);
 		}
 		
 		/**
@@ -62,20 +71,22 @@ package landray.kp.controls
 			graphics.drawRect(x, y, w, h);
 		}
 		
+		private function get viewer():Viewer
+		{
+			return config.kp_internal::viewer;
+		}
+		
 		/**
 		 * @private
 		 */
-		public var element:DisplayObject;
+		private var element:BaseElement;
 		
 		/**
 		 * @private
 		 */
 		private var padding:Number = 5;
 		
-		/**
-		 * @private
-		 */
-		private var viewer:Viewer;
+		private var config:KPConfig;
 		
 		private var rect:Rectangle;
 	}
