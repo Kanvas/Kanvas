@@ -123,18 +123,15 @@ package view.ui
 		 */		
 		public function synBgImgWidthCanvas():void
 		{
-			var cDisX:Number = canvas.x - canvas.stage.stageWidth / 2;
+			var cDisX:Number = canvas.x - canvas.stage.stageWidth  / 2;
 			var cDisY:Number = canvas.y - canvas.stage.stageHeight / 2;
 			var s:Number = Math.pow(canvas.scaleX, 0.5);
 			
 			bgImgCanvas.scaleX = bgImgCanvas.scaleY = s;
 			
-			var p:Number = s / canvas.scaleX / 4;
+			var p:Number = Math.min(1, s / canvas.scaleX / 4);
 			
-			if(p > 1)
-				p = 1;
-			
-			bgImgCanvas.x = canvas.stage.stageWidth / 2 + cDisX * p;
+			bgImgCanvas.x = canvas.stage.stageWidth  / 2 + cDisX * p;
 			bgImgCanvas.y = canvas.stage.stageHeight / 2 + cDisY * p;
 		}
 		

@@ -7,7 +7,8 @@ package landray.kp.core
 	
 	import landray.kp.components.Debugger;
 	import landray.kp.components.Selector;
-	import landray.kp.components.ZoomToolBar;
+	import landray.kp.components.ToolBarSlide;
+	import landray.kp.components.ToolBarZoom;
 	import landray.kp.manager.ManagerPage;
 	import landray.kp.maps.main.comman.ElementToolTip;
 	import landray.kp.mediator.MediatorViewer;
@@ -57,7 +58,8 @@ package landray.kp.core
 		kp_internal var mediator   :MediatorViewer;
 		kp_internal var controller :ZoomMoveControl;
 		kp_internal var selector   :Selector;
-		kp_internal var zoomToolBar:ZoomToolBar;
+		kp_internal var toolBarZoom:ToolBarZoom;
+		kp_internal var toolBarSlid:ToolBarSlide;
 		kp_internal var toolTip    :ElementToolTip;
 		kp_internal var pageManager:ManagerPage;
 		kp_internal var debugger   :Debugger;

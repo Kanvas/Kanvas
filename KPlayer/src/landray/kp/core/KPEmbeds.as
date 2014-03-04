@@ -46,5 +46,21 @@ package landray.kp.core
 					<img/>
 				</down>
 			</states>;
+		
+		public var styleNav:XML = 
+			<states>
+				<normal radius='0'>
+					<fill color='#686A66,#575654' angle="90"/>
+					<img/>
+				</normal>
+				<hover radius='0'>
+					<fill color='#57524F,#4B4643' angle="90"/>
+					<img/>
+				</hover>
+				<down radius='0'>
+					<fill color='#2D2C2A,#262626' angle="90"/>
+					<img/>
+				</down>
+			</states>;
 	}
 }

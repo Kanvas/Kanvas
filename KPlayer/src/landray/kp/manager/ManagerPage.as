@@ -83,6 +83,11 @@ package landray.kp.manager
 		}
 		
 		private var __index:int = -1;
+		
+		public function get length():int
+		{
+			return quene.length;
+		}
 			
 		public function set dataProvider(value:Object):void
 		{

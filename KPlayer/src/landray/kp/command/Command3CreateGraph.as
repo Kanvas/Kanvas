@@ -70,6 +70,7 @@ package landray.kp.command
 				try
 				{
 					pageManager.dataProvider = provider.dataXML.pages[0].children();
+					config.kp_internal::toolBarSlid.visible = (pageManager.length > 0);
 				}
 				catch (e:Error) {}
 				

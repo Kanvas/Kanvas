@@ -4,7 +4,8 @@ package landray.kp.command
 	import flash.text.TextFormat;
 	
 	import landray.kp.components.Selector;
-	import landray.kp.components.ZoomToolBar;
+	import landray.kp.components.ToolBarSlide;
+	import landray.kp.components.ToolBarZoom;
 	import landray.kp.core.kp_internal;
 	import landray.kp.manager.ManagerPage;
 	import landray.kp.maps.main.comman.ElementToolTip;
@@ -47,7 +48,8 @@ package landray.kp.command
 			config.kp_internal::mediator    = new MediatorViewer;
 			config.kp_internal::controller  = new ZoomMoveControl(config.kp_internal::viewer, config.kp_internal::mediator);
 			config.kp_internal::selector    = new Selector;
-			config.kp_internal::zoomToolBar = new ZoomToolBar;
+			config.kp_internal::toolBarZoom = new ToolBarZoom;
+			config.kp_internal::toolBarSlid = new ToolBarSlide;
 			config.kp_internal::toolTip     = new ElementToolTip;
 			config.kp_internal::pageManager = ManagerPage.instance;
 			

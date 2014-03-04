@@ -3,7 +3,8 @@ package landray.kp.view
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 	
-	import landray.kp.components.ZoomToolBar;
+	import landray.kp.components.ToolBarSlide;
+	import landray.kp.components.ToolBarZoom;
 	import landray.kp.core.KPConfig;
 	import landray.kp.core.KPProvider;
 	import landray.kp.core.kp_internal;
@@ -52,11 +53,11 @@ package landray.kp.view
 			addChild(bgImgCanvas);
 			//添加画布
 			addChild(canvas);
-			
 			//添加selector选择框
 			addChild(config.kp_internal::selector);
 			//添加按钮工具条
 			addChild(toolBarZoom);
+			addChild(toolBarSlid);
 			
 			//更新布局
 			updateLayout();
@@ -77,11 +78,11 @@ package landray.kp.view
 				//交互背景
 				canvas.drawBG(new Rectangle(0, 0, width, height));
 				//指定自适应矩形范围
-				bound = new Rectangle(5, 5, width - 10, height - 10 - 36);
+				bound = new Rectangle(5, 5, width - 10, height - 50);
 				
 				//移动toolBar至右侧
-				toolBarZoom.x = width  - toolBarZoom.width   -  5;
-				toolBarZoom.y =(height - toolBarZoom.height) * .5;
+				toolBarZoom.updateLayout();
+				toolBarSlid.updateLayout();
 			}
 		}
 		
@@ -210,9 +211,14 @@ package landray.kp.view
 			return config.kp_internal::mediator;
 		}
 		
-		private function get toolBarZoom():ZoomToolBar
+		private function get toolBarZoom():ToolBarZoom
 		{
-			return config.kp_internal::zoomToolBar;
+			return config.kp_internal::toolBarZoom;
+		}
+		
+		private function get toolBarSlid():ToolBarSlide
+		{
+			return config.kp_internal::toolBarSlid;
 		}
 		
 		/**

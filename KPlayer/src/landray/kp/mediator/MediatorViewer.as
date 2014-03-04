@@ -75,9 +75,9 @@ package landray.kp.mediator
 		
 		private function resizeStage():void
 		{
-			if (settingScreenState)
+			if (screenFull)
 			{
-				settingScreenState = false;
+				screenFull = false;
 			}
 			else
 			{
@@ -172,7 +172,7 @@ package landray.kp.mediator
 		{
 			if (e.fullScreen == false)
 			{
-				config.kp_internal::zoomToolBar.kp_internal::resetScreenButtons();
+				config.kp_internal::toolBarSlid.kp_internal::resetScreenButtons();
 				viewer.screenState = StageDisplayState.NORMAL;
 			}
 		}
@@ -291,7 +291,7 @@ package landray.kp.mediator
 		
 		kp_internal function setScreenState(value:String):void
 		{
-			settingScreenState = true;
+			screenFull = (value == "fullScreen");
 			if(isNaN(lastWidth) || isNaN(lastHeight))
 			{
 				lastWidth  = viewer.stage.stageWidth;
@@ -300,25 +300,25 @@ package landray.kp.mediator
 			viewer.stage.displayState = value;
 			var thisWidth :Number = viewer.stage.stageWidth;
 			var thisHeight:Number = viewer.stage.stageHeight;
-			var recOld:Rectangle = new Rectangle(5, 5, lastWidth - 10, lastHeight - 10 - 36);
-			var recNew:Rectangle = new Rectangle(5, 5, thisWidth - 10, thisHeight - 10 - 36);
-			if (value == "fullScreen")
+			var recOld:Rectangle = new Rectangle(5, 5, lastWidth - 10, lastHeight - 50);
+			var recNew:Rectangle = new Rectangle(5, 5, thisWidth - 10, thisHeight - 50);
+			if (screenFull)
 			{
-				fullScreenScale = (recOld.width / recOld.height > recNew.width / recNew.height)
+				screenScale = (recOld.width / recOld.height > recNew.width / recNew.height)
 					? recNew.width  / recOld.width
 					: recNew.height / recOld.height;
 			}
 			else
 			{
-				fullScreenScale = 1 / fullScreenScale;
+				screenScale = 1 / screenScale;
 			}
-			var canvasToScale:Number = canvas.scaleX * fullScreenScale;
+			var canvasToScale:Number = canvas.scaleX * screenScale;
 			var vector:Point = new Point((thisWidth - lastWidth) * .5, (thisHeight - lastHeight) * .5);
 			canvas.x += vector.x;
 			canvas.y += vector.y;
 			recOld.offset(vector.x, vector.y);
-			recOld.width  *= fullScreenScale;
-			recOld.height *= fullScreenScale;
+			recOld.width  *= screenScale;
+			recOld.height *= screenScale;
 			var tl:Point = new Point(recOld.x, recOld.y);
 			LayoutUtil.convertPointStage2Canvas(tl, canvas.x, canvas.y, canvas.scaleX, canvas.rotation);
 			LayoutUtil.convertPointCanvas2Stage(tl, canvas.x, canvas.y, canvasToScale, canvas.rotation);
@@ -393,8 +393,8 @@ package landray.kp.mediator
 		
 		private var lastHeight:Number;
 		
-		private var fullScreenScale:Number;
+		private var screenScale:Number;
 		
-		private var settingScreenState:Boolean;
+		private var screenFull:Boolean;
 	}
 }
