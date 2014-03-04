@@ -15,6 +15,7 @@ package landray.kp.command
 		override public function execute():void
 		{
 			executeStart();
+			config.kp_internal::viewer.kp_internal::centerAdaptive();
 			config.kp_internal::controller.autoZoom(config.originalScale);
 			executeEnd();
 		}

@@ -19,6 +19,7 @@ package landray.kp.components
 	import landray.kp.view.Viewer;
 	import landray.kp.core.KPConfig;
 	import view.interact.zoomMove.ZoomMoveControl;
+	import landray.kp.core.KPEmbeds;
 	
 	/**
 	 * 缩放工具栏
@@ -34,9 +35,7 @@ package landray.kp.components
 		kp_internal function resetScreenButtons():void
 		{
 			if (screenHalf && screenFull)
-			{
 				screenHalf.visible = ! (screenFull.visible = true);
-			}
 		}
 		
 		/**
@@ -45,6 +44,7 @@ package landray.kp.components
 		private function initialize():void
 		{
 			config = KPConfig.instance;
+			embeds = KPEmbeds.instance;
 			with (graphics) 
 			{
 				beginFill(0x474946);
@@ -54,19 +54,17 @@ package landray.kp.components
 			
 			alpha = 0;
 			
-			visible = false;
-			
 			screenFull = new IconBtn;
 			screenHalf = new IconBtn;
 			zoomAuto   = new IconBtn;
 			zoomIn     = new IconBtn;
 			zoomOut    = new IconBtn;
 			
-			screenFull.styleXML = btnStyleXML;
-			screenHalf.styleXML = btnStyleXML;
-			zoomAuto  .styleXML = btnStyleXML;
-			zoomIn    .styleXML = btnStyleXML;
-			zoomOut   .styleXML = btnStyleXML;
+			screenFull.styleXML = embeds.styleBtn;
+			screenHalf.styleXML = embeds.styleBtn;
+			zoomAuto  .styleXML = embeds.styleBtn;
+			zoomIn    .styleXML = embeds.styleBtn;
+			zoomOut   .styleXML = embeds.styleBtn;
 			
 			screenFull.tips = "全屏";
 			screenHalf.tips = "退出全屏";
@@ -80,18 +78,11 @@ package landray.kp.components
 			zoomIn    .w = zoomIn    .h = 28;
 			zoomOut   .w = zoomOut   .h = 28;
 			
-			screenFull.iconW = 18;
-			screenFull.iconH = 16;
-			screenHalf.iconW = 18;
-			screenHalf.iconH = 16;
-			zoomAuto  .iconW = 12;
-			zoomAuto  .iconH = 11;
-			zoomIn    .iconW = 12;
-			zoomIn    .iconH = 12;
-			zoomOut   .iconW = 12;
-			zoomOut   .iconH = 12;
+			screenFull.iconW = screenHalf.iconW = 18;
+			screenFull.iconH = screenHalf.iconH = 16;
 			
-			zoomIn.x = zoomOut.x = zoomAuto.x = screenFull.x = screenHalf.x = 4;
+			zoomAuto.iconW = zoomIn.iconW = zoomOut.iconW = 12;
+			zoomAuto.iconH = zoomIn.iconH = zoomOut.iconH = 12;
 			
 			var pathScreenFull:String = "landray.kp.ui.ScreenFull";
 			var pathScreenHalf:String = "landray.kp.ui.ScreenHalf";
@@ -105,19 +96,21 @@ package landray.kp.components
 			zoomIn    .setIcons(pathZoomIn    , pathZoomIn    , pathZoomIn);
 			zoomOut   .setIcons(pathZoomOut   , pathZoomOut   , pathZoomOut);
 			
-			addChild(zoomAuto  ).y = 4 ;
+			addChild(screenFull).y = 100;
+			addChild(screenHalf).y = 100;
+			addChild(zoomAuto  ).y = 4;
 			addChild(zoomIn    ).y = 36;
 			addChild(zoomOut   ).y = 68;
-			addChild(screenHalf).y = 100;
-			addChild(screenFull).y = 100;
 			
-			screenHalf.visible = false;
+			zoomIn.x = zoomOut.x = zoomAuto.x = screenFull.x = screenHalf.x = 4;
+			
+			screenHalf.visible = visible = false;
 			
 			screenFull.addEventListener(MouseEvent.CLICK, clickScreenFull);
 			screenHalf.addEventListener(MouseEvent.CLICK, clickScreenHalf);
-			zoomIn    .addEventListener(MouseEvent.CLICK, clickZoomIn    );
-			zoomOut   .addEventListener(MouseEvent.CLICK, clickZoomOut   );
-			zoomAuto  .addEventListener(MouseEvent.CLICK, clickZoomAuto  );
+			zoomIn    .addEventListener(MouseEvent.CLICK, clickZoomIn);
+			zoomOut   .addEventListener(MouseEvent.CLICK, clickZoomOut);
+			zoomAuto  .addEventListener(MouseEvent.CLICK, clickZoomAuto);
 			
 			stage.addEventListener(MouseEvent.MOUSE_MOVE, timerShowMouseMove);
 		}
@@ -222,9 +215,7 @@ package landray.kp.components
 		{
 			if(!display) 
 			{
-				display = true;
-				visible = true;
-
+				display = visible = true;
 				TweenMax.killTweensOf(this, false);
 				TweenMax.to(this, .5, {alpha:1});
 			}
@@ -269,7 +260,7 @@ package landray.kp.components
 		 */
 		private function clickScreenHalf(e:MouseEvent):void
 		{
-			screenHalf.visible = ! (screenFull.visible = true);
+			screenHalf.visible = !(screenFull.visible = true);
 			viewer.screenState = StageDisplayState.NORMAL;
 		}
 		
@@ -278,7 +269,7 @@ package landray.kp.components
 		 */
 		private function clickScreenFull(e:MouseEvent):void
 		{
-			screenHalf.visible = ! (screenFull.visible = false);
+			screenHalf.visible = !(screenFull.visible = false);
 			viewer.screenState = StageDisplayState.FULL_SCREEN;
 		}
 		
@@ -326,31 +317,24 @@ package landray.kp.components
 		 */
 		private var screenHalf:IconBtn;
 		
-		private var config:KPConfig;
+		/**
+		 * @private
+		 */
+		private var timer:Timer;
 		
 		/**
 		 * @private
 		 */
 		private var display:Boolean;
 		
-		private var timer:Timer;
+		/**
+		 * @private
+		 */
+		private var config:KPConfig;
 		
-		private var btnStyleXML:XML = 
-			<states>
-				<normal radius='0'>
-					<fill color='#686A66,#575654' angle="90"/>
-					<img/>
-				</normal>
-				<hover radius='0'>
-					<border color='#2D2C2A' alpha='1' thikness='1'/>
-					<fill color='#57524F,#4B4643' angle="90"/>
-					<img/>
-				</hover>
-				<down radius='0'>
-					<border color='#2D2C2A' alpha='1' thikness='1'/>
-					<fill color='#2D2C2A,#262626' angle="90"/>
-					<img/>
-				</down>
-			</states>;
+		/**
+		 * @private
+		 */
+		private var embeds:KPEmbeds;
 	}
 }

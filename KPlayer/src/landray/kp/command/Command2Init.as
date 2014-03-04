@@ -44,25 +44,18 @@ package landray.kp.command
 			FlowTextManager.loadFont("FontLib.swf");
 			
 			config.kp_internal::viewer      = new Viewer;
-			
-			
-			config.kp_internal::viewer.addEventListener("initialize", function(e:Event):void
-			{
-				initItems();
-				executeEnd();
-			}, false, 0, true);
-			config.kp_internal::container.addChildAt(config.kp_internal::viewer, 0);
-		}
-		
-		private function initItems():void
-		{
 			config.kp_internal::mediator    = new MediatorViewer;
 			config.kp_internal::controller  = new ZoomMoveControl(config.kp_internal::viewer, config.kp_internal::mediator);
 			config.kp_internal::selector    = new Selector;
 			config.kp_internal::zoomToolBar = new ZoomToolBar;
 			config.kp_internal::toolTip     = new ElementToolTip;
-			config.kp_internal::pageManager = new ManagerPage;
+			config.kp_internal::pageManager = ManagerPage.instance;
+			
+			config.kp_internal::viewer.addEventListener("initialize", function(e:Event):void
+			{
+				executeEnd();
+			}, false, 0, true);
+			config.kp_internal::container.addChildAt(config.kp_internal::viewer, 0);
 		}
-		
 	}
 }

@@ -70,20 +70,24 @@ package landray.kp.view
 		 */
 		private function updateLayout():void
 		{
-			//绘制背景与交互背景
-			kp_internal::drawBackground((background) ? uint(background.color) : 0xFFFFFF);
-			//交互背景
-			canvas.drawBG(new Rectangle(0, 0, width, height));
-			//指定自适应矩形范围
-			bound = new Rectangle(5, 5, width - 10, height - 10 - 36);
-			
-			//移动toolBar至右侧
-			toolBarZoom.x =  width  - toolBarZoom.width   -  5;
-			toolBarZoom.y = (height - toolBarZoom.height) * .5;
+			if (width > 0 && height > 0)
+			{
+				//绘制背景与交互背景
+				kp_internal::drawBackground((background) ? uint(background.color) : 0xFFFFFF);
+				//交互背景
+				canvas.drawBG(new Rectangle(0, 0, width, height));
+				//指定自适应矩形范围
+				bound = new Rectangle(5, 5, width - 10, height - 10 - 36);
+				
+				//移动toolBar至右侧
+				toolBarZoom.x = width  - toolBarZoom.width   -  5;
+				toolBarZoom.y =(height - toolBarZoom.height) * .5;
+			}
 		}
 		
 		/**
 		 * @private
+		 * 重绘背景颜色
 		 */
 		kp_internal function drawBackground(color:uint=0xFFFFFF):void
 		{
@@ -94,6 +98,15 @@ package landray.kp.view
 				drawRect(0, 0, width, height);
 				endFill();
 			}
+		}
+		
+		/**
+		 * @private
+		 * canvas画布居中自适应
+		 */
+		kp_internal function centerAdaptive():void
+		{
+			mediator.kp_internal::centerAdaptive();
 		}
 		
 		public function set screenState(value:String):void
@@ -116,8 +129,23 @@ package landray.kp.view
 		
 		public function set background(bgVO:BgVO):void
 		{
-			kp_internal::drawBackground(CoreUtil.getColor(bgVO));
-			mediator.kp_internal::setBackground(bgVO);
+			if (bgVO)
+			{
+				if (bgVO.color == null)
+					bgVO.color = CoreUtil.getColor(bgVO);
+				
+				kp_internal::drawBackground(uint(background.color));
+				mediator.kp_internal::setBackground(bgVO);
+			}
+		}
+		
+		/**
+		 * 设定模板，
+		 * 
+		 */
+		public function set templete(value:XML):void
+		{
+			mediator.kp_internal::setTemplete(value);
 		}
 		
 		/**

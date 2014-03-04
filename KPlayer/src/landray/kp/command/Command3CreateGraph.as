@@ -46,7 +46,7 @@ package landray.kp.command
 				try 
 				{
 					CoreUtil.mapping(provider.dataXML.bg[0], config.kp_internal::bgVO);
-					config.kp_internal::viewer = config.kp_internal::bgVO;
+					config.kp_internal::viewer.background = config.kp_internal::bgVO;
 				} 
 				catch (e:Error) {}
 				

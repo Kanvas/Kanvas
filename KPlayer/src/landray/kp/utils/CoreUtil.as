@@ -48,7 +48,9 @@ package landray.kp.utils
 		
 		public static function getColor(value:BgVO):uint
 		{
-			return uint((value.color) ? value.color : CoreUtil.setColor(XML(getStyle('bg', 'colors')).children()[value.colorIndex].toString()));
+			return uint((value.color) 
+				? value.color 
+				: setColor(XML(getStyle('bg', 'colors')).children()[value.colorIndex].toString()));
 		}
 		
 		public static function setColor(value:Object):Object
