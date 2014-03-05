@@ -27,6 +27,7 @@ package landray.kp.components
 		
 		public function updateLayout():void
 		{
+			visible = (pageManager.length > 0);
 			if (visible)
 			{
 				//background

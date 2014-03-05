@@ -70,23 +70,26 @@ package landray.kp.command
 				try
 				{
 					pageManager.dataProvider = provider.dataXML.pages[0].children();
-					config.kp_internal::toolBarSlid.visible = (pageManager.length > 0);
 				}
 				catch (e:Error) {}
-				
 				//resolve module
-				/*var list:XMLList = provider.dataXML.module.children();
-				for each (xml in list) 
+				try
 				{
-					reference = graphManager.getGraph(String(xml.name()));
-					if (reference) 
+					var list:XMLList = provider.dataXML.module.children();
+					for each (xml in list) 
 					{
-						graph = new reference;
-						graph.dataProvider = xml;
-						config.kp_internal::graphs.push(graph);
-						//config.kp_internal::viewer.canvas.addChild(graph);
+						reference = graphManager.getGraph(String(xml.name()));
+						if (reference) 
+						{
+							graph = new reference;
+							graph.dataProvider = xml;
+							config.kp_internal::graphs.push(graph);
+							//config.kp_internal::viewer.canvas.addChild(graph);
+						}
 					}
-				}*/
+				}
+				catch (e:Error) {}
+				config.kp_internal::viewer.updateLayout();
 			}
 		}
 	}

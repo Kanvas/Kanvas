@@ -67,9 +67,9 @@ package landray.kp.view
 		}
 		
 		/**
-		 * @private
+		 * 
 		 */
-		private function updateLayout():void
+		public function updateLayout():void
 		{
 			if (width > 0 && height > 0)
 			{
@@ -77,12 +77,12 @@ package landray.kp.view
 				kp_internal::drawBackground((background) ? uint(background.color) : 0xFFFFFF);
 				//交互背景
 				canvas.drawBG(new Rectangle(0, 0, width, height));
-				//指定自适应矩形范围
-				bound = new Rectangle(5, 5, width - 10, height - 50);
 				
 				//移动toolBar至右侧
 				toolBarZoom.updateLayout();
 				toolBarSlid.updateLayout();
+				//指定自适应矩形范围
+				bound = new Rectangle(5, 5, width - 10, height - ((toolBarSlid.visible) ? 50 : 10));
 			}
 		}
 		

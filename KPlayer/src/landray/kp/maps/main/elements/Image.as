@@ -17,7 +17,7 @@ package landray.kp.maps.main.elements
 	/**
 	 * 
 	 */	
-	public final class Image extends BaseElement
+	public final class Image extends Element
 	{
 		public function Image($vo:ElementVO)
 		{

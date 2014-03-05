@@ -6,10 +6,12 @@ package landray.kp.components
 	
 	import landray.kp.core.KPConfig;
 	import landray.kp.core.kp_internal;
-	import landray.kp.maps.main.elements.BaseElement;
+	import landray.kp.maps.main.elements.Element;
 	import landray.kp.view.Viewer;
 	
 	import util.LayoutUtil;
+	
+	import view.ui.Canvas;
 	
 	/**
 	 * 选择框
@@ -28,30 +30,27 @@ package landray.kp.components
 			visible = false;
 		}
 		
-		public function render($element:BaseElement = null, $rect:Rectangle=null):void
+		public function render($element:Element = null):void
 		{
-			element = $element;
-			
-			visible = Boolean(element);
+			if ($element)
+			{
+				element = $element;
+				visible = true;
+			}
 			if (visible)
 			{
-				graphics.clear();
-				
-				rect = element.getRectangleForViewer();
-				var temp:Rectangle = rect.clone();
-				temp.x      *= viewer.canvas.scaleX;
-				temp.y      *= viewer.canvas.scaleX;
-				temp.width  *= viewer.canvas.scaleX;
-				temp.height *= viewer.canvas.scaleX;
-				
-				drawRect(temp, 5);
-				
-				var point:Point = LayoutUtil.elementPointToStagePoint(element.x, element.y, viewer.canvas);
-				
+				var rect:Rectangle = LayoutUtil.getItemRect(canvas, element, true, true, false);
+				var point:Point = LayoutUtil.elementPointToStagePoint(element.x, element.y, canvas);
+				rect.width  *= canvas.scaleX;
+				rect.height *= canvas.scaleX;
 				x = point.x;
 				y = point.y;
+				rect.x = -.5 * rect.width;
+				rect.y = -.5 * rect.height;
 				
-				rotation = element.rotation + viewer.canvas.rotation;
+				drawRect(rect, 5);
+				
+				rotation = element.rotation + canvas.rotation;
 			}
 		}
 		
@@ -65,21 +64,22 @@ package landray.kp.components
 			var w:Number = rect.width  + padding * 2;
 			var h:Number = rect.height + padding * 2;
 			
+			graphics.clear();
 			graphics.lineStyle(3, 0x00AFFF);
 			graphics.drawRect(x, y, w, h);
 			graphics.lineStyle(1, 0xEEEEEE);
 			graphics.drawRect(x, y, w, h);
 		}
 		
-		private function get viewer():Viewer
+		private function get canvas():Canvas
 		{
-			return config.kp_internal::viewer;
+			return config.kp_internal::viewer.canvas;
 		}
 		
 		/**
 		 * @private
 		 */
-		private var element:BaseElement;
+		private var element:Element;
 		
 		/**
 		 * @private
@@ -87,7 +87,5 @@ package landray.kp.components
 		private var padding:Number = 5;
 		
 		private var config:KPConfig;
-		
-		private var rect:Rectangle;
 	}
 }

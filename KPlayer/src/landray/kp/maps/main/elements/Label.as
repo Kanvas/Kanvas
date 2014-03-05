@@ -8,7 +8,7 @@ package landray.kp.maps.main.elements
 	/**
 	 * 
 	 */	
-	public final class Label extends BaseElement
+	public final class Label extends Element
 	{
 		public function Label($vo:ElementVO)
 		{

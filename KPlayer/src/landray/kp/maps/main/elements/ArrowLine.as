@@ -5,7 +5,7 @@ package landray.kp.maps.main.elements
 	/**
 	 * 单箭头线条
 	 */	
-	public class ArrowLine extends LineElement
+	public class ArrowLine extends Line
 	{
 		public function ArrowLine($vo:LineVO)
 		{

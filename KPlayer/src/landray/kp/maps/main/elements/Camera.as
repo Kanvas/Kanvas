@@ -2,7 +2,7 @@ package landray.kp.maps.main.elements
 {
 	import model.vo.ElementVO;
 	
-	public final class Camera extends BaseElement
+	public final class Camera extends Element
 	{
 		public function Camera($vo:ElementVO)
 		{

@@ -8,7 +8,7 @@ package landray.kp.maps.main.elements
 	/**
 	 * 热点图
 	 */	
-	public final class Hotspot extends BaseElement 
+	public final class Hotspot extends Element 
 	{
 		public function Hotspot($vo:HotspotVO)
 		{

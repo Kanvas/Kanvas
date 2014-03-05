@@ -11,7 +11,7 @@ package landray.kp.maps.main.comman
 	import landray.kp.core.KPConfig;
 	import landray.kp.core.KPEmbeds;
 	import landray.kp.core.kp_internal;
-	import landray.kp.maps.main.elements.BaseElement;
+	import landray.kp.maps.main.elements.Element;
 	import landray.kp.utils.ExternalUtil;
 	import landray.kp.view.Viewer;
 
@@ -52,9 +52,9 @@ package landray.kp.maps.main.comman
 		
 		private function showHandler(e:MouseEvent):void
 		{
-			if (e.target is BaseElement)
+			if (e.target is Element)
 			{
-				element = BaseElement(e.target);
+				element = Element(e.target);
 				tipsVO.metaData = element;
 				
 				if (element.related)
@@ -128,7 +128,7 @@ package landray.kp.maps.main.comman
 		
 		private var viewer:Viewer;
 		
-		private var element:BaseElement;
+		private var element:Element;
 		
 		private var tipsVO:ToolTipHolder;
 		

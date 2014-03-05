@@ -18,9 +18,9 @@ package landray.kp.maps.main.elements
 	import view.ui.Canvas;
 	import view.ui.ICanvasLayout;
 	
-	public class BaseElement extends Sprite implements ITipsSender, ICanvasLayout
+	public class Element extends Sprite implements ITipsSender, ICanvasLayout
 	{
-		public function BaseElement($vo:ElementVO)
+		public function Element($vo:ElementVO)
 		{
 			super();
 			vo = $vo;
@@ -61,30 +61,6 @@ package landray.kp.maps.main.elements
 		override public function get graphics():Graphics
 		{
 			return shape.graphics;
-		}
-		
-		/**
-		 * 获取在画布所占的矩形范围（不考虑旋转）。
-		 */
-		public function getRectangleForViewer():Rectangle
-		{
-			if(!vo.style) 
-			{
-				vo.style        = new Style;
-				vo.style.tx     = - vo.width  * .5;
-				vo.style.ty     = - vo.height * .5;
-				vo.style.width  =   vo.width;
-				vo.style.height =   vo.height;
-			}
-			
-			var rect:Rectangle = new Rectangle;
-			
-			rect.x      = vo.scale * vo.style.tx;
-			rect.y      = vo.scale * vo.style.ty;
-			rect.width  = vo.scale * vo.style.width;
-			rect.height = vo.scale * vo.style.height;
-			
-			return rect;
 		}
 		
 		/**
@@ -239,7 +215,7 @@ package landray.kp.maps.main.elements
 		{
 			if (stage)
 			{
-				var rect:Rectangle = LayoutUtil.getItemRect (canvas, this);
+				var rect:Rectangle = LayoutUtil.getItemRect(canvas, this);
 				if (rect.width < 1 || rect.height < 1)
 				{
 					super.visible = false;
@@ -398,7 +374,7 @@ package landray.kp.maps.main.elements
 		
 		private var __tipWidth:Number;
 		
-		protected function get canvas():Canvas
+		private function get canvas():Canvas
 		{
 			return (parent is Canvas) ? parent as Canvas : null;
 		}

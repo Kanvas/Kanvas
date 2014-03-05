@@ -16,7 +16,7 @@ package landray.kp.mediator
 	import landray.kp.core.KPProvider;
 	import landray.kp.core.kp_internal;
 	import landray.kp.manager.ManagerPage;
-	import landray.kp.maps.main.elements.BaseElement;
+	import landray.kp.maps.main.elements.Element;
 	import landray.kp.utils.*;
 	import landray.kp.view.*;
 	
@@ -92,8 +92,7 @@ package landray.kp.mediator
 		
 		public function updateAfterZoomMove():void
 		{
-			if (selector.visible) 
-				selector.render();
+			selector.render();
 			for each (var graph:Graph in config.kp_internal::graphs)
 				graph.render(viewer.canvas.scaleX);
 			viewer.synBgImgWidthCanvas();
@@ -195,7 +194,7 @@ package landray.kp.mediator
 		{
 			try 
 			{
-				var element:BaseElement = BaseElement(e.target);
+				var element:Element = Element(e.target);
 				if (element) 
 				{
 					if (element.related) 
