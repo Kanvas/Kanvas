@@ -17,6 +17,7 @@ package landray.kp.components
 	import landray.kp.core.KPConfig;
 	import view.interact.zoomMove.ZoomMoveControl;
 	import landray.kp.core.KPEmbeds;
+	import landray.kp.manager.ManagerPage;
 	
 	/**
 	 * 缩放工具栏
@@ -216,6 +217,7 @@ package landray.kp.components
 		private function clickZoomAuto(e:MouseEvent):void
 		{
 			controller.autoZoom();
+			pageManager.reset();
 		}
 		
 		/**
@@ -251,6 +253,11 @@ package landray.kp.components
 		private function get controller():ZoomMoveControl
 		{
 			return config.kp_internal::controller;
+		}
+		
+		private function get pageManager():ManagerPage
+		{
+			return config.kp_internal::pageManager;
 		}
 		
 		/**
