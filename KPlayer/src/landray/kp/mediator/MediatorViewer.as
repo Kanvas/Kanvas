@@ -1,27 +1,33 @@
 package landray.kp.mediator
 {
+	import com.kvs.utils.Map;
+	import com.kvs.utils.XMLConfigKit.XMLVOLib;
+	
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.events.FullScreenEvent;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
-	import landray.kp.controls.Selector;
+	import landray.kp.components.Selector;
 	import landray.kp.core.KPConfig;
+	import landray.kp.core.KPProvider;
 	import landray.kp.core.kp_internal;
 	import landray.kp.manager.ManagerPage;
-	import landray.kp.maps.main.elements.BaseElement;
-	import landray.kp.utils.CoreUtil;
-	import landray.kp.utils.ExternalUtil;
-	import landray.kp.view.Graph;
-	import landray.kp.view.Viewer;
+	import landray.kp.maps.main.elements.Element;
+	import landray.kp.utils.*;
+	import landray.kp.view.*;
 	
 	import model.vo.BgVO;
 	
+	import util.LayoutUtil;
 	import util.img.ImgInsertEvent;
 	import util.img.ImgInsertor;
 	
+	import view.interact.zoomMove.ZoomMoveControl;
+	import view.ui.Canvas;
 	import view.ui.IMainUIMediator;
 	
 	/**
@@ -30,42 +36,75 @@ package landray.kp.mediator
 	 */
 	public final class MediatorViewer implements IMainUIMediator
 	{
-		public function MediatorViewer($viewer:Viewer)
+		public function MediatorViewer()
 		{
-			initialize($viewer);
+			initialize();
 		}
 		
 		/**
 		 * @private
 		 */
-		private function initialize($viewer:Viewer):void
+		private function initialize():void
 		{
-			viewer = $viewer;
-			config = KPConfig.instance;
+			config   = KPConfig  .instance;
+			provider = KPProvider.instance;
 			
-			page   = ManagerPage.instance;
+			kp_internal::setTemplete(provider.styleXML);
 			
 			if (viewer.stage) 
 				addedToStage();
 			else 
 				viewer.addEventListener(Event.ADDED_TO_STAGE, addedToStage, false, 0, true);
-			
-			viewer.stage.addEventListener(Event.RESIZE, resize);
-			
-			viewer.stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
-			
-			viewer.stage.addEventListener(FullScreenEvent.FULL_SCREEN, fullScreen);
-			viewer.stage.addEventListener(MouseEvent.MOUSE_WHEEL, mouseWheel, false, 0, true);
-			
-			viewer.addEventListener(MouseEvent.CLICK     , click);
-			
-			viewer.stage.focus = viewer;
 		}
 		
-		private function refresh():void
+		private function initializeStage():void
 		{
+			lastWidth  = viewer.stage.stageWidth;
+			lastHeight = viewer.stage.stageHeight;
+			viewer.width  = lastWidth;
+			viewer.height = lastHeight;
+			viewer.addEventListener(MouseEvent.CLICK, click);
+			viewer.stage.addEventListener(Event.RESIZE, resize);
+			viewer.stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
+			viewer.stage.addEventListener(FullScreenEvent.FULL_SCREEN, fullScreen);
+			viewer.stage.addEventListener(MouseEvent.MOUSE_WHEEL, mouseWheel, false, 0, true);
+			viewer.stage.focus = viewer;
+			
+			viewer.dispatchEvent(new Event("initialize"));
+		}
+		
+		private function resizeStage():void
+		{
+			if (screenFull)
+			{
+				screenFull = false;
+			}
+			else
+			{
+				var thisWidth :Number = viewer.stage.stageWidth;
+				var thisHeight:Number = viewer.stage.stageHeight;
+				canvas.x += (thisWidth  - lastWidth ) * .5;
+				canvas.y += (thisHeight - lastHeight) * .5;
+				lastWidth  = thisWidth;
+				lastHeight = thisHeight;
+			}
+		}
+		
+		public function updateAfterZoomMove():void
+		{
+			selector.render();
 			for each (var graph:Graph in config.kp_internal::graphs)
 				graph.render(viewer.canvas.scaleX);
+			viewer.synBgImgWidthCanvas();
+		}
+		
+		public function bgClicked():void
+		{
+			if (selector.visible)
+			{
+				selector.visible = false;
+				ExternalUtil.kanvasUnselected();
+			}
 		}
 		
 		/**
@@ -75,9 +114,8 @@ package landray.kp.mediator
 		{
 			if (viewer.stage.stageWidth && viewer.stage.stageHeight)
 			{
-				//Debugger.debug("added:"+viewer.stage.stageWidth, viewer.stage.stageHeight);
-				viewer.width  = viewer.stage.stageWidth;
-				viewer.height = viewer.stage.stageHeight;
+				viewer.removeEventListener(Event.ADDED_TO_STAGE, addedToStage, false);
+				initializeStage();
 			}
 			else 
 			{
@@ -89,11 +127,8 @@ package landray.kp.mediator
 		{
 			if (viewer.stage.stageWidth && viewer.stage.stageHeight)
 			{
-				//Debugger.debug("addedResize:", viewer.stage.stageWidth, viewer.stage.stageHeight);
 				viewer.stage.removeEventListener(Event.RESIZE, addedToStageResize);
-				viewer.width  = viewer.stage.stageWidth;
-				viewer.height = viewer.stage.stageHeight;
-				viewer.dispatchEvent(new Event("initialize"));
+				initializeStage();
 			}
 		}
 		
@@ -104,9 +139,9 @@ package landray.kp.mediator
 		{
 			if (viewer.stage.stageWidth && viewer.stage.stageHeight)
 			{
-				//Debugger.debug("resize:", viewer.stage.stageWidth, viewer.stage.stageHeight);
 				viewer.width  = viewer.stage.stageWidth;
 				viewer.height = viewer.stage.stageHeight;
+				resizeStage();
 			}
 		}
 		
@@ -118,16 +153,16 @@ package landray.kp.mediator
 			switch (e.keyCode)
 			{
 				case 32:
-					viewer.kp_internal::controller.autoZoom();
-					page.reset();
+					controller.autoZoom();
+					pageManager.reset();
 					break;
 				case 37:
 				case 38:
-					page.prev();
+					pageManager.prev();
 					break;
 				case 39:
 				case 40:
-					page.next();
+					pageManager.next();
 					break;
 			}
 		}
@@ -136,10 +171,9 @@ package landray.kp.mediator
 		{
 			if (e.fullScreen == false)
 			{
-				viewer.kp_internal::toolBar.kp_internal::resetScreenButtons();
-				viewer.kp_internal::setScreenState(StageDisplayState.NORMAL);
+				config.kp_internal::toolBarSlid.kp_internal::resetScreenButtons();
+				viewer.screenState = StageDisplayState.NORMAL;
 			}
-			
 		}
 		
 		/**
@@ -148,9 +182,9 @@ package landray.kp.mediator
 		private function mouseWheel(e:MouseEvent):void
 		{
 			if (e.delta > 0)
-				viewer.kp_internal::controller.zoomIn();
+				controller.zoomIn();
 			else if (e.delta < 0)
-				viewer.kp_internal::controller.zoomOut();
+				controller.zoomOut();
 		}
 		
 		/**
@@ -158,24 +192,22 @@ package landray.kp.mediator
 		 */
 		private function click(e:MouseEvent):void
 		{
-			var selector:Selector = viewer.kp_internal::selector;
 			try 
 			{
-				var element:BaseElement = BaseElement(e.target);
+				var element:Element = Element(e.target);
 				if (element) 
 				{
-					if (element.vo.property.toLocaleLowerCase() == "true") 
+					if (element.related) 
 					{
-						if (element.vo.type!="hotspot") 
+						var visible:Boolean = (element.vo.type!= "hotspot");
+						if (visible) 
 						{
-							selector.element = element;
-							var visible:Boolean = true;
-							selector.render(element.getRectangleForViewer());
+							selector.render(element);
 						}
 						ExternalUtil.kanvasLinkClicked(element.vo.id);
 					}
 				}
-				viewer.kp_internal::selector.visible = visible;
+				selector.visible = visible;
 			} 
 			catch(o:Error) { }
 		}
@@ -186,6 +218,21 @@ package landray.kp.mediator
 		private function loaded(e:ImgInsertEvent):void
 		{
 			viewer.drawBGImg(e.bitmapData);
+		}
+		
+		/**
+		 * @private
+		 */
+		kp_internal function centerAdaptive():void
+		{
+			canvas.rotation = 0;
+			canvas.scaleX = canvas.scaleY = 1;
+			var bound:Rectangle = LayoutUtil.getContentRect(canvas);
+			var stage:Rectangle = viewer.bound;
+			var cenC:Point = new Point((bound.left + bound.right) * .5, (bound.top + bound.bottom) * .5);
+			var cenS:Point = new Point((stage.left + stage.right) * .5, (stage.top + stage.bottom) * .5);
+			canvas.x = cenS.x - cenC.x;
+			canvas.y = cenS.y - cenC.y;
 		}
 		
 		/**
@@ -210,18 +257,17 @@ package landray.kp.mediator
 		 */
 		kp_internal function setTemplete(value:XML):void
 		{
-			CoreUtil.registLib(config.kp_internal::lib);
+			CoreUtil.registLib(lib);
 			
 			var templetes:XML = XML(value.child("template").toXMLString());
 			for each(var item:XML in templetes.children())
 				CoreUtil.registLibXMLWhole(item.@id, item, item.name().toString());
-				
-			config.kp_internal::themes.clear();
 			
-			var themes:XML = XML(value.child('themes').toXMLString());
-			for each(item in themes.children()) 
-				config.kp_internal::themes.put(item.name().toString(), item);
+			themes.clear();
 			
+			var themesXML:XML = XML(value.child('themes').toXMLString());
+			for each(item in themesXML.children()) 
+				themes.put(item.name().toString(), item);
 		}
 		
 		/**
@@ -229,65 +275,125 @@ package landray.kp.mediator
 		 */
 		kp_internal function setTheme(value:String):void
 		{
-			if (config.kp_internal::themes.containsKey(value)) 
+			if (themes.containsKey(value)) 
 			{
-				CoreUtil.registLib(config.kp_internal::lib);
+				CoreUtil.registLib(lib);
 				CoreUtil.clearLibPart();
 				
-				var style:XML = config.kp_internal::themes.getValue(value) as XML;
-				for each (var item:XML in style.children()) 
+				var theme:XML = themes.getValue(value) as XML;
+				for each (var item:XML in theme.children()) 
 					CoreUtil.registLibXMLPart(item.@styleID, item, item.name().toString());
 				
-				var xml:XML   = CoreUtil.getStyle('bg', 'colors') as XML;
-				if (xml)
-				{
-					var index:int  = viewer.background.colorIndex;
-					var color:uint = uint(CoreUtil.setColor(xml.children()[index].toString()));
-					viewer.background.color = color;
-					viewer.kp_internal::drawBackground(color);
-				}
+				viewer.kp_internal::drawBackground(CoreUtil.getColor(background));
 			}
 		}
 		
-		public function updateAfterZoomMove():void
+		kp_internal function setScreenState(value:String):void
 		{
-			viewer.kp_internal::refresh();
-			refresh();
-		}
-		
-		public function bgClicked():void
-		{
-			if (viewer.kp_internal::selector.visible)
+			screenFull = (value == "fullScreen");
+			if(isNaN(lastWidth) || isNaN(lastHeight))
 			{
-				viewer.kp_internal::selector.visible = false;
-				ExternalUtil.kanvasUnselected();
+				lastWidth  = viewer.stage.stageWidth;
+				lastHeight = viewer.stage.stageHeight;
 			}
+			viewer.stage.displayState = value;
+			var thisWidth :Number = viewer.stage.stageWidth;
+			var thisHeight:Number = viewer.stage.stageHeight;
+			var recOld:Rectangle = new Rectangle(5, 5, lastWidth - 10, lastHeight - 50);
+			var recNew:Rectangle = new Rectangle(5, 5, thisWidth - 10, thisHeight - 50);
+			if (value == "fullScreen")
+			{
+				screenScale = (recOld.width / recOld.height > recNew.width / recNew.height)
+					? recNew.width  / recOld.width
+					: recNew.height / recOld.height;
+			}
+			else
+			{
+				screenScale = 1 / screenScale;
+			}
+			var canvasToScale:Number = canvas.scaleX * screenScale;
+			var vector:Point = new Point((thisWidth - lastWidth) * .5, (thisHeight - lastHeight) * .5);
+			canvas.x += vector.x;
+			canvas.y += vector.y;
+			recOld.offset(vector.x, vector.y);
+			recOld.width  *= screenScale;
+			recOld.height *= screenScale;
+			var tl:Point = new Point(recOld.x, recOld.y);
+			LayoutUtil.convertPointStage2Canvas(tl, canvas.x, canvas.y, canvas.scaleX, canvas.rotation);
+			LayoutUtil.convertPointCanvas2Stage(tl, canvas.x, canvas.y, canvasToScale, canvas.rotation);
+			recOld.x = tl.x;
+			recOld.y = tl.y;
+			var canvasCenter:Point = new Point((recOld.left + recOld.right) * .5, (recOld.top + recOld.bottom) * .5);
+			var stageCenter :Point = new Point((recNew.left + recNew.right) * .5, (recNew.top + recNew.bottom) * .5);
+			var aimX:Number = canvas.x + stageCenter.x - canvasCenter.x;
+			var aimY:Number = canvas.y + stageCenter.y - canvasCenter.y;
+			controller.zoomRotateMoveTo(canvasToScale, canvas.rotation, aimX, aimY, null, 1);
+			
+			viewer.synBgImgWidthCanvas();
+			
+			lastWidth  = thisWidth;
+			lastHeight = thisHeight;
 		}
 		
-		/**
-		 * @private
-		 */
-		private var viewer:Viewer;
+		
+		private function get background():BgVO
+		{
+			return config.kp_internal::bgVO;
+		}
+		
+		private function get viewer():Viewer
+		{
+			return config.kp_internal::viewer;
+		}
+		
+		private function get canvas():Canvas
+		{
+			return config.kp_internal::viewer.canvas;
+		}
+		
+		private function get controller():ZoomMoveControl
+		{
+			return config.kp_internal::controller;
+		}
+		
+		private function get selector():Selector
+		{
+			return config.kp_internal::selector;
+		}
+		
+		private function get pageManager():ManagerPage
+		{
+			return config.kp_internal::pageManager;
+		}
+		
+		private function get lib():XMLVOLib
+		{
+			return config.kp_internal::lib;
+		}
+		
+		private function get themes():Map
+		{
+			return config.kp_internal::themes;
+		}
 		
 		/**
 		 * @private
 		 */
 		private var config:KPConfig;
 		
+		private var provider:KPProvider;
 		
 		/**
 		 * @private
 		 */
 		private var loader:ImgInsertor;
 		
-		/**
-		 * @private
-		 */
-		private var point:Point;
+		private var lastWidth:Number;
 		
-		/**
-		 * @private
-		 */
-		private var page:ManagerPage;
+		private var lastHeight:Number;
+		
+		private var screenScale:Number;
+		
+		private var screenFull:Boolean;
 	}
 }

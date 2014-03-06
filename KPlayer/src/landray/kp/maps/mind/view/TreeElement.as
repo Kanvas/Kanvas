@@ -15,9 +15,9 @@ package landray.kp.maps.mind.view
 	
 	public class TreeElement extends Sprite
 	{
-		public function TreeElement(_vo:TreeElementVO)
+		public function TreeElement($vo:TreeElementVO)
 		{
-			this.vo = _vo;
+			this.vo = $vo;
 			addChild(richText = new RichText(vo.richText));
 			
 			if (vo.children.length > 0)
@@ -102,9 +102,7 @@ package landray.kp.maps.mind.view
 			{
 				child[i].parent.addChild(child[i]);
 				if (child[i].expanded)
-				{
 					showChild(child[i].childs);
-				}
 			}
 		}
 		
@@ -130,7 +128,7 @@ package landray.kp.maps.mind.view
 				//布局红色提示
 				if (hotSopt)
 				{
-					hotSopt.x = - .5 * hotSopt.width + halfW * ((vo.hDirection == "right" || vo.level == 1) ? -1 : 1);
+					hotSopt.x = - .5 * hotSopt.width  + halfW * ((vo.hDirection == "right" || vo.level == 1) ? -1 : 1);
 					hotSopt.y = - .5 * hotSopt.height - halfH;
 				}
 				

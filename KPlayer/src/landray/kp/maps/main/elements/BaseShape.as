@@ -5,7 +5,7 @@ package landray.kp.maps.main.elements
 	/**
 	 * 图形基类
 	 */
-	public class BaseShape extends BaseElement
+	public class BaseShape extends Element
 	{
 		/**
 		 * 

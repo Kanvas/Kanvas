@@ -1,11 +1,10 @@
 package landray.kp.maps.mind
 {
-	import flash.display.Sprite;
-	
 	import landray.kp.maps.mind.core.mm_internal;
 	import landray.kp.maps.mind.event.MindToolEvent;
 	import landray.kp.maps.mind.model.TreeElementVO;
 	import landray.kp.maps.mind.utils.MindMapUtil;
+	import landray.kp.maps.mind.view.Layer;
 	import landray.kp.maps.mind.view.TreeElement;
 	import landray.kp.view.Graph;
 	
@@ -17,8 +16,8 @@ package landray.kp.maps.mind
 		public function Mind()
 		{
 			super();
-			//addChild(lineLayer = new Sprite);
-			//addChild(itemLayer = new Sprite);
+			viewer.canvas.addChild(lineLayer = new Layer);
+			viewer.canvas.addChild(itemLayer = new Layer);
 			lineLayer.mouseEnabled = lineLayer.mouseChildren = false;
 			itemLayer.mouseEnabled = false;
 		}
@@ -169,10 +168,9 @@ package landray.kp.maps.mind
 				{
 					item.vo.line.startX = MindMapUtil.getElementLineStartX(item.father);
 					item.vo.line.startY = MindMapUtil.getElementLineStartY(item.father);
-					item.vo.line.endX = MindMapUtil.getElementLineEndX(item);
-					item.vo.line.endY = MindMapUtil.getElementLineEndY(item);
+					item.vo.line.endX   = MindMapUtil.getElementLineEndX  (item);
+					item.vo.line.endY   = MindMapUtil.getElementLineEndY  (item);
 					MindMapUtil.renderLine(lineLayer.graphics, item.vo.line);
-					
 					layoutLines(item.childs);
 				}
 			}
@@ -183,9 +181,9 @@ package landray.kp.maps.mind
 		 **/
 		private var allChild:Array=new Array();
 		
-		private var lineLayer:Sprite;
+		private var lineLayer:Layer;
 		
-		private var itemLayer:Sprite;
+		private var itemLayer:Layer;
 		
 		private var mindData:MindData = new MindData();
 	}

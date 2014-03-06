@@ -6,6 +6,7 @@ package landray.kp.utils
 	import flash.external.ExternalInterface;
 	import flash.utils.ByteArray;
 	
+	import landray.kp.core.KPConfig;
 	import landray.kp.core.KPPresenter;
 	import landray.kp.core.kp_internal;
 
@@ -113,7 +114,7 @@ package landray.kp.utils
 		 */
 		private static function horizontalMove(value:Number):void
 		{
-			presenter.config.kp_internal::viewer.kp_internal::horizontalMove(value);
+			config.kp_internal::controller.zoomMoveOff(1, value, 0);
 		}
 		
 		/**
@@ -122,7 +123,7 @@ package landray.kp.utils
 		 */
 		private static function unselected():void
 		{
-			presenter.config.kp_internal::viewer.kp_internal::unselected();
+			config.kp_internal::mediator.bgClicked();
 		}
 		
 		/**
@@ -131,7 +132,7 @@ package landray.kp.utils
 		 */
 		private static function setStartOriginalScale(scale:Boolean):void
 		{
-			presenter.config.originalScale = scale;
+			config.originalScale = scale;
 		}
 		
 		/**
@@ -140,7 +141,8 @@ package landray.kp.utils
 		 */
 		private static function showLinkOveredTip(msg:String, w:Number = 0):void
 		{
-			presenter.config.kp_internal::viewer.kp_internal::showLinkOveredTip(msg, w);
+			config.kp_internal::toolTip.showToolTip(msg, w);
+			//config.kp_internal::viewer.kp_internal::showLinkOveredTip(msg, w);
 		}
 		
 		//---------------------------------------------------------------------------
@@ -184,5 +186,6 @@ package landray.kp.utils
 		private static var kplayer:KPlayer;
 		
 		private static const presenter:KPPresenter = KPPresenter.instance;
+		private static const config:KPConfig = KPConfig.instance;
 	}
 }

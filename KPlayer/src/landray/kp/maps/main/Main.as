@@ -2,7 +2,7 @@ package landray.kp.maps.main
 {
 	import flash.geom.Rectangle;
 	
-	import landray.kp.maps.main.elements.BaseElement;
+	import landray.kp.maps.main.elements.Element;
 	import landray.kp.maps.main.elements.Label;
 	import landray.kp.maps.main.util.MainUtil;
 	import landray.kp.utils.CoreUtil;
@@ -20,7 +20,7 @@ package landray.kp.maps.main
 		
 		private function initialize():void
 		{
-			elements = new Vector.<BaseElement>;
+			elements = new Vector.<Element>;
 		}
 		
 		override public function render(scale:Number = 1):void
@@ -28,7 +28,7 @@ package landray.kp.maps.main
 			if (viewer.stage)
 			{
 				var count:int = 0;
-				for each (var element:BaseElement in elements)
+				for each (var element:Element in elements)
 				{
 					var bound:Rectangle = element.getBounds(viewer.stage);
 					element.visible = ! (bound.left > viewer.stage.stageWidth || bound.right < 0 || bound.bottom < 0 || bound.top > viewer.stage.stageHeight);
@@ -46,7 +46,7 @@ package landray.kp.maps.main
 		override public function set dataProvider(value:XML):void
 		{
 			//clear
-			for each (var element:BaseElement in elements)
+			for each (var element:Element in elements)
 				viewer.canvas.removeChild(element);
 			elements.length = 0;
 			
@@ -79,7 +79,7 @@ package landray.kp.maps.main
 			}
 		}
 		
-		private var elements:Vector.<BaseElement>;
+		private var elements:Vector.<Element>;
 		
 	}
 }

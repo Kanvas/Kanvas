@@ -7,7 +7,7 @@ package landray.kp.command
 	import landray.kp.manager.ManagerGraph;
 	import landray.kp.manager.ManagerPage;
 	
-	import view.toolBar.Debugger;
+	import landray.kp.components.Debugger;
 	
 	internal class _InernalCommand extends Command
 	{
@@ -27,12 +27,12 @@ package landray.kp.command
 		}
 		override protected function executeEnd():void
 		{
-			Debugger.debug(className, "executeEnd()");
+			Debugger.debug(className + ".executeEnd()");
 			super.executeEnd();
 		}
 		override protected function executeStart():void
 		{
-			Debugger.debug(className, "executeStart()");
+			Debugger.debug(className + ".executeStart()");
 			super.executeStart();
 		}
 		public var config   :KPConfig;

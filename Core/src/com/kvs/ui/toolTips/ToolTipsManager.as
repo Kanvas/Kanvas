@@ -98,6 +98,8 @@ package com.kvs.ui.toolTips
 		{
 			evt.stopPropagation();
 			
+			container.addChild(toolTipUI);
+			
 			if (isHiding)
 			{
 				TweenLite.killTweensOf(toolTipUI, true);

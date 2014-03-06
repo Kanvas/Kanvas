@@ -31,17 +31,20 @@ package landray.kp.manager
 		
 		public function next():void
 		{
-			index = (index + 1 >= quene.length) ? -1 : index + 1;
+			if (length > 0)
+				index = (index + 1 >= quene.length) ? -1 : index + 1;
 		}
 		
 		public function prev():void
 		{
-			index = (index - 1 < -1) ? quene.length - 1 : index - 1;
+			if (length > 0)
+				index = (index - 1 < -1) ? quene.length - 1 : index - 1;
 		}
 		
 		public function reset():void
 		{
-			__index = -1;
+			if (length > 0)
+				__index = -1;
 		}
 		
 		private function initialize():void
@@ -83,6 +86,11 @@ package landray.kp.manager
 		}
 		
 		private var __index:int = -1;
+		
+		public function get length():int
+		{
+			return quene.length;
+		}
 			
 		public function set dataProvider(value:Object):void
 		{

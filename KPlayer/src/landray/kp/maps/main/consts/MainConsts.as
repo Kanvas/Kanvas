@@ -38,7 +38,7 @@ package landray.kp.maps.main.consts
 			stepTriangle   :landray.kp.maps.main.elements.StepTriangle, 
 			diamond        :landray.kp.maps.main.elements.Diamond, 
 			star           :landray.kp.maps.main.elements.Star, 
-			line           :landray.kp.maps.main.elements.LineElement, 
+			line           :landray.kp.maps.main.elements.Line, 
 			arrowLine      :landray.kp.maps.main.elements.ArrowLine, 
 			doubleArrowLine:landray.kp.maps.main.elements.DoubleArrowLine, 
 			text           :landray.kp.maps.main.elements.Label, 

@@ -7,7 +7,7 @@ package landray.kp.maps.main.elements
 	/**
 	 * 星形
 	 */	
-	public class Star extends BaseElement
+	public class Star extends Element
 	{
 		public function Star(vo:StarVO)
 		{

@@ -1,7 +1,7 @@
 package landray.kp.maps.main.util
 {
 	import landray.kp.maps.main.consts.MainConsts;
-	import landray.kp.maps.main.elements.BaseElement;
+	import landray.kp.maps.main.elements.Element;
 	import landray.kp.maps.main.elements.Circle;
 	import landray.kp.utils.CoreUtil;
 	
@@ -19,11 +19,11 @@ package landray.kp.maps.main.util
 			return element;
 		}
 		
-		public static function getElementUI(vo:ElementVO):BaseElement
+		public static function getElementUI(vo:ElementVO):Element
 		{			
 			var reference:Class = MainConsts.SHAPE_UI[vo.type];
 			if (reference)
-				var element:BaseElement = new reference(vo);
+				var element:Element = new reference(vo);
 			return  element;
 		}
 	}
