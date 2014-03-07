@@ -50,6 +50,9 @@ package
 			//设置图片上传服务
 			ExternalUtil.addCallback('setImgUploadServer', setImgUploadServer);
 			
+			//设置图片主域名地址
+			ExternalUtil.addCallback('setImgDomainServer', setImgDomainServer);
+			
 			//获取图片URL列表
 			ExternalUtil.addCallback('getImgURLList', getImgURLList);
 			
@@ -114,10 +117,13 @@ package
 		 */		
 		private function setImgUploadServer(url:String):void
 		{
-			ImgInsertor.IMG_SERVER_URL = url;
+			ImgInsertor.IMG_UPLOAD_URL = url;
 		}
 		
-		
+		private function setImgDomainServer(url:String):void
+		{
+			ImgInsertor.IMG_DOMAIN_URL = url;
+		}
 		
 		
 		

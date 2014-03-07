@@ -9,7 +9,7 @@ package landray.kp.maps.simple
 	import landray.kp.view.Graph;
 	
 	import model.vo.ElementVO;
-	import model.vo.TextVO;
+	import model.vo.ImgVO;
 	
 	
 	
@@ -60,6 +60,8 @@ package landray.kp.maps.simple
 				if (vo)
 				{
 					CoreUtil.mapping(xml, vo);
+					if (vo is ImgVO)
+						SimpleUtil.completeImgVO(vo as ImgVO);
 					var element:BaseElement = SimpleUtil.getElementUI(vo);
 					if (element)
 					{
