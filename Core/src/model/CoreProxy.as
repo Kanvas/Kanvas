@@ -220,6 +220,8 @@ package model
 			
 			var bmd:BitmapData = CoreFacade.coreMediator.mainUI.thumbManager.getShotCut(ConfigInitor.THUMB_WIDTH, ConfigInitor.THUMB_HEIGHT);
 			
+			var pageBytes:ByteArray = CoreFacade.coreMediator.mainUI.thumbManager.getPageBytes();
+			
 			if (bmd)
 			{
 				//缩略图
@@ -229,6 +231,19 @@ package model
 				imgDataBytes = PNGEncoder.encode(bmd);
 				fileData.writeBytes(imgDataBytes, fileData.position, imgDataBytes.bytesAvailable);
 				
+				zipOut.putNextEntry(ze);
+				zipOut.write(fileData);
+				zipOut.closeEntry();
+			}
+			
+			var jpgs:Vector.<ByteArray> = CoreFacade.coreMediator.mainUI.thumbManager.resolvePageData(pageBytes);
+			
+			for (var i:int = 0; i < jpgs.length; i++)
+			{
+				fileData.clear();
+				fileData.writeBytes(jpgs[i], fileData.position, jpgs[i].bytesAvailable);
+				
+				ze = new ZipEntry("pages/" + i + ".jpg");
 				zipOut.putNextEntry(ze);
 				zipOut.write(fileData);
 				zipOut.closeEntry();
