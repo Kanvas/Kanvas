@@ -113,6 +113,12 @@ package modules.pages
 			return pageQuene.removePageAt(index);
 		}
 		
+		public function removeAllPages():void
+		{
+			pageQuene.removeAllPages();
+			__index = -1;
+		}
+		
 		/**
 		 * 设定某页的顺序
 		 */

@@ -18,6 +18,7 @@ package landray.kp.utils
 			
 			if (ExternalInterface.available)
 			{
+				ExternalInterface.addCallback("setImgDomainServer"   , setImgDomainServer);
 				//传入一个URL，然后通过URL获取数据
 				ExternalInterface.addCallback("loadDataFromServer"   , loadDataFromServer);
 				//传入一个XML String数据
@@ -42,6 +43,11 @@ package landray.kp.utils
 		// JS回调函数
 		// 提供外层网页容器调用
 		//---------------------------------------------------------------------------
+		
+		private static function setImgDomainServer(value:String):void
+		{
+			presenter.config.kp_internal::domain = value;
+		}
 		
 		/**
 		 * @private

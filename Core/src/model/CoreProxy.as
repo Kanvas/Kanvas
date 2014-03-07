@@ -197,6 +197,7 @@ package model
 		//
 		//------------------------------------------
 		
+		
 		/**
 		 * 将所有资源打包
 		 */		
@@ -238,15 +239,18 @@ package model
 			
 			var jpgs:Vector.<ByteArray> = CoreFacade.coreMediator.mainUI.thumbManager.resolvePageData(pageBytes);
 			
-			for (var i:int = 0; i < jpgs.length; i++)
+			if (jpgs)
 			{
-				fileData.clear();
-				fileData.writeBytes(jpgs[i], fileData.position, jpgs[i].bytesAvailable);
-				
-				ze = new ZipEntry("pages/" + i + ".jpg");
-				zipOut.putNextEntry(ze);
-				zipOut.write(fileData);
-				zipOut.closeEntry();
+				for (var i:int = 0; i < jpgs.length; i++)
+				{
+					fileData.clear();
+					fileData.writeBytes(jpgs[i], fileData.position, jpgs[i].bytesAvailable);
+					
+					ze = new ZipEntry("pages/" + i + ".jpg");
+					zipOut.putNextEntry(ze);
+					zipOut.write(fileData);
+					zipOut.closeEntry();
+				}
 			}
 			
 			// 添加图片资源数据
@@ -374,13 +378,14 @@ package model
 			CoreFacade.coreMediator.mainUI.themeUpdated(xml.header.@styleID);
 			CoreFacade.coreMediator.mainUI.bgColorsUpdated(bgColorsXML);
 			
+			CoreFacade.clear();
+			
 			//先创建所有元素，再匹配组合关系
 			var groupElements:Array = [];
-			var element:ElementBase;
 			var item:XML;
 			for each(item in xml.main.children())
 			{
-				element = createElement(item);//创建并初始化元素
+				var element:ElementBase = createElement(item);//创建并初始化元素
 				if (element is GroupElement)
 				{
 					element.xmlData = item;
@@ -472,7 +477,12 @@ package model
 			ElementCreator.setID(vo.id);
 			
 			if (vo is ImgVO)
+			{
+				var imgVO:ImgVO = vo as ImgVO;
+				if (imgVO.url.indexOf("http:") != 0)
+					imgVO.url = ImgInsertor.IMG_DOMAIN_URL + imgVO.url;
 				ImgLib.setID((vo as ImgVO).imgID); 
+			}
 			
 			var element:ElementBase = ElementCreator.getElementUI(vo);
 			

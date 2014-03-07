@@ -323,9 +323,6 @@ package view.interact.multiSelect
 			
 			//刷新UI
 			temGroupElement.render();
-			//coreMdt.selector.show(temGroupElement);
-			
-			//coreMdt.autofitController.autofitElementPosition(temGroupElement);
 			
 			//确保临时组合位于子元件的最下层
 			if (temGroupElement.parent == null)

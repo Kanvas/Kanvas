@@ -34,8 +34,6 @@ package landray.kp.maps.main.elements
 			
 			mouseChildren = false;
 			
-			//shape.cacheAsBitmap = true;
-			
 			if (vo.style) 
 				render();
 		}

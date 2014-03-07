@@ -23,7 +23,7 @@ package landray.kp.components
 		}
 		public function debug(...args):void
 		{
-			appendText(args.toString()+"\n");
+			appendText(args+"\n");
 		}
 	}
 }

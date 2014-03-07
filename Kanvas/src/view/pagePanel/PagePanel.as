@@ -153,30 +153,39 @@ package view.pagePanel
 		 */		
 		public function pagedDeleted(evt:PageEvent):void
 		{
-			var pageUI:PageUI = findPageUIByVO(evt.pageVO);
-			
-			pages.splice(pages.indexOf(pageUI), 1);
-			pagesCtn.removeChild(pageUI);
-			
-			//trace(pageUI.pageVO.index);
-			
-			if (pageUI == currentPage)
+			if (evt.pageVO)
 			{
-				currentPage.selected = false;
-				currentPage = null;
+				var pageUI:PageUI = findPageUIByVO(evt.pageVO);
+				
+				pages.splice(pages.indexOf(pageUI), 1);
+				pagesCtn.removeChild(pageUI);
+				
+				//trace(pageUI.pageVO.index);
+				
+				if (pageUI == currentPage)
+				{
+					currentPage.selected = false;
+					currentPage = null;
+				}
+				
+				
+				return;
+				
+				if (pages.length)
+				{
+					pageUI = getPageByIndex(pageUI.pageVO.index);
+					
+					setCurrentPage(pageUI);
+					
+					//scrollProxy.update();
+					udpateScrollForCurrPage();
+				}
 			}
-			
-			
-			return;
-			
-			if (pages.length)
+			else
 			{
-				pageUI = getPageByIndex(pageUI.pageVO.index);
-				
-				setCurrentPage(pageUI);
-				
-				//scrollProxy.update();
-				udpateScrollForCurrPage();
+				while (pagesCtn.numChildren) pagesCtn.removeChildAt(0);
+				pages.length = 0;
+				currentPage = null;
 			}
 		}
 		

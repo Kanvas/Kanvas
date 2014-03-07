@@ -239,11 +239,16 @@
 		// 此方法在Kanvas完成整个初始化后被创建
 		that.ready = function() {
 			
-		    this.ifReady = true;
+			this.ifReady = true;
 		    
-		    if (this.imgServerChanged){
-		    	this.setImgUploadServer(this.imgServer);
-		    	this.imgServerChanged = false;
+		    if (this.imgUploadChanged){
+				this.setImgUploadServer(this.imgUpload);
+				this.imgUploadChanged = false;
+		    };
+		    
+		    if (this.imgDomainChanged) {
+		    	this.setImgDomainServer(this.imgDomain);
+		    	this.imgDomainChanged = false;
 		    };
 		    
 			this.dispatchEvent({type: KANVAS.event.READY, target: this});
@@ -264,10 +269,21 @@
 			if (this.ifReady){
 				this.swf.setImgUploadServer(url);
 			}else{
-				this.imgServerChanged = true;
+				this.imgUploadChanged = true;
 			}
 			
-			this.imgServer = url;
+			this.imgUpload = url;
+			return this;
+		};
+		
+		that.setImgDomainServer = function(url) {
+			if (this.ifReady){
+				this.swf.setImgDomainServer(url);
+			}else{
+				this.imgDomainChanged = true;
+			}
+			
+			this.imgDomain = url;
 			return this;
 		};
 		
@@ -389,6 +405,11 @@
 		that.ready = function(){
 		    this.ifReady = true;
 		    
+		    if (this.imgDomainChanged) {
+		    	this.setImgDomainServer(this.imgDomain);
+		    	this.imgDomainChanged = false;
+		    };
+		    
 			this.dispatchEvent({type: KANVAS.event.READY, target: this});
 		};
 		
@@ -424,6 +445,17 @@
 			if (this.ifReady){
 				this.swf.loadDataFromServer(url);
 			}
+		};
+		
+		that.setImgDomainServer = function(url) {
+			if (this.ifReady) {
+				this.swf.setImgDomainServer(url);
+			}else{
+				this.imgDomainChanged = true;
+			}
+			
+			this.imgDomain = url;
+			return this;
 		};
 		
 		//横向平移一段距离，负数为向左，正数为向右
