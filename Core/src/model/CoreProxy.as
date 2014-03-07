@@ -413,7 +413,12 @@ package model
 			ElementCreator.setID(vo.id);
 			
 			if (vo is ImgVO)
+			{
+				var imgVO:ImgVO = vo as ImgVO;
+				if (imgVO.url.indexOf("http:") != 0)
+					imgVO.url = ImgInsertor.IMG_DOMAIN_URL + imgVO.url;
 				ImgLib.setID((vo as ImgVO).imgID); 
+			}
 			
 			var element:ElementBase = ElementCreator.getElementUI(vo);
 			

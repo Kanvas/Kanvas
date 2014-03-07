@@ -6,11 +6,10 @@ package landray.kp.core
 	
 	import flash.display.DisplayObjectContainer;
 	
+	import landray.kp.components.Debugger;
 	import landray.kp.view.*;
 	
 	import model.vo.BgVO;
-	
-	import landray.kp.components.Debugger;
 	
 	public final class KPConfig
 	{
@@ -57,5 +56,6 @@ package landray.kp.core
 		kp_internal var lib        :XMLVOLib;
 		kp_internal var theme      :String;
 		kp_internal var bgVO       :BgVO;
+		kp_internal var domain     :String;
 	}
 }

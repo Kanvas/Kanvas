@@ -1,11 +1,14 @@
 package landray.kp.maps.simple.util
 {
+	import landray.kp.core.KPConfig;
+	import landray.kp.core.kp_internal;
 	import landray.kp.maps.simple.consts.SimpleConsts;
 	import landray.kp.maps.simple.elements.BaseElement;
 	import landray.kp.maps.simple.elements.Circle;
 	import landray.kp.utils.CoreUtil;
 	
 	import model.vo.ElementVO;
+	import model.vo.ImgVO;
 	import model.vo.ShapeVO;
 	
 	public class SimpleUtil
@@ -25,5 +28,13 @@ package landray.kp.maps.simple.util
 				var element:BaseElement = new reference(vo);
 			return  element;
 		}
+		
+		public static function completeImgVO(vo:ImgVO):void
+		{
+			if (vo.url.indexOf("http:") != 0)
+				vo.url = config.kp_internal::domain + vo.url;
+		}
+		
+		private static var config:KPConfig = KPConfig.instance;
 	}
 }

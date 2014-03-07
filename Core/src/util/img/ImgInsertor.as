@@ -280,13 +280,13 @@ package util.img
 		private function sendImgDataToServer():void
 		{
 			//服务地址没有配置时，直接显示图片
-			if (IMG_SERVER_URL == null)
+			if (IMG_UPLOAD_URL == null)
 			{
 				imgOK();
 			}
 			else
 			{
-				var req:URLRequest = new URLRequest(IMG_SERVER_URL);
+				var req:URLRequest = new URLRequest(IMG_UPLOAD_URL);
 				req.method = URLRequestMethod.POST;
 				req.contentType = "application/octet-stream";  
 				req.data = PNGEncoder.encode(bitmapData);//已png编码格式的图片发送至服务端
@@ -356,7 +356,9 @@ package util.img
 		/**
 		 * 图片上传服务
 		 */		
-		public static var IMG_SERVER_URL:String = null;
+		public static var IMG_UPLOAD_URL:String = null;
+		
+		public static var IMG_DOMAIN_URL:String = "";
 		
 		/**
 		 */		
