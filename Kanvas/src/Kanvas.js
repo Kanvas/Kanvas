@@ -277,7 +277,7 @@
 		};
 		
 		that.setImgDomainServer = function(url) {
-			if (this.ifReady){
+			if (this.ifReady) {
 				this.swf.setImgDomainServer(url);
 			}else{
 				this.imgDomainChanged = true;
@@ -288,9 +288,11 @@
 		};
 		
 		//获取页面图片数据
-		that.getPageImgData = function(url){
-			if (this.ifReady){
-				return this.swf.getPageImgData(url);
+		that.getPageImgData = function(url) {
+			if (this.ifReady) {
+				var pageW = getArgument(arguments[1], 960);
+				var pageH = getArgument(arguments[2], 540);
+				return this.swf.getPageImgData(url, pageW, pageH);
 			}
 		};
 		
