@@ -31,7 +31,7 @@ package landray.kp.core
 		 */		
 		private function initialize():void
 		{
-			config = KPConfig.instance;
+			config   = KPConfig  .instance;
 			provider = KPProvider.instance;
 		}
 		

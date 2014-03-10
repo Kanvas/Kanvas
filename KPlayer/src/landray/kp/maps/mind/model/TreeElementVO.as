@@ -144,7 +144,7 @@ package landray.kp.maps.mind.model
 		/**
 		 * 按钮距离
 		 */
-		public var btnGap:uint = 10;
+		public var btnGap:uint = 3;
 		
 		/**
 		 * 原距离

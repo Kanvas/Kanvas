@@ -22,8 +22,14 @@
 			
 			kvs.onReady(function(){
 				//kvs.setStartOriginalScale(true);
+
 				//kvs.loadDataFromServer(server);
 				kvs.setBase64Data(testData, false);
+
+				kvs.setImgDomainServer("http://xxx/");
+				//kvs.loadDataFromServer(server);
+			
+
 			});
 			
 			kvs.onUnselected(function(){
@@ -52,8 +58,8 @@
         </script>
     </head>
     <body>
-    	<input type="button" value="横向平移" onclick="horizontalMove()"/>
-    	<input type="button" value="取消选择" onclick="unselected()"/>
+    	<!--<input type="button" value="横向平移" onclick="horizontalMove()"/>
+    	<input type="button" value="取消选择" onclick="unselected()"/>-->
         <div id="demo"></div>
     </body>
 </html>

@@ -8,44 +8,35 @@ package model
 	import model.vo.GroupVO;
 	import model.vo.ImgVO;
 	import model.vo.LineVO;
+	import model.vo.PageVO;
 	import model.vo.ShapeVO;
 	import model.vo.StarVO;
 	import model.vo.TextVO;
-	
-	import view.element.PageElement;
-	import model.vo.PageVO;
 	
 	import org.puremvc.as3.patterns.facade.Facade;
 	
 	import util.ElementCreator;
 	
 	import view.MediatorNames;
-	import view.element.Camera;
-	import view.element.ElementBase;
-	import view.element.GroupElement;
+	import view.element.*;
 	import view.element.imgElement.ImgElement;
-	import view.element.shapes.Arrow;
-	import view.element.shapes.ArrowLine;
-	import view.element.shapes.Circle;
-	import view.element.shapes.DashRect;
-	import view.element.shapes.DialogUI;
-	import view.element.shapes.Diamond;
-	import view.element.shapes.DoubleArrow;
-	import view.element.shapes.DoubleArrowLine;
-	import view.element.shapes.HotspotElement;
-	import view.element.shapes.LineElement;
-	import view.element.shapes.Rect;
-	import view.element.shapes.Star;
-	import view.element.shapes.StepTriangle;
-	import view.element.shapes.Triangle;
+	import view.element.shapes.*;
 	import view.element.text.TextEditField;
 	import view.interact.CoreMediator;
+	import view.ui.Canvas;
 	
 	/**
 	 * 核心MVC控制器
 	 */
 	public class CoreFacade extends Facade
 	{
+		public static function clear():void
+		{
+			var canvas:Canvas = instance._coreMediator.canvas;
+			while (canvas.numChildren > 1) canvas.removeChildAt(1);
+			instance._coreProxy.elements.length = 0;
+			instance._coreMediator.pageManager.removeAllPages();
+		}
 		/**
 		 */		
 		public static function addElement(element:ElementBase):void

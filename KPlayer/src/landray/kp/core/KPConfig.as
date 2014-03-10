@@ -17,7 +17,7 @@ package landray.kp.core
 	import model.vo.BgVO;
 	
 	import view.interact.zoomMove.ZoomMoveControl;
-	
+
 	public final class KPConfig
 	{
 		public  static const instance:KPConfig = new KPConfig;
@@ -69,5 +69,6 @@ package landray.kp.core
 		kp_internal var lib        :XMLVOLib;
 		kp_internal var theme      :String;
 		kp_internal var bgVO       :BgVO;
+		kp_internal var domain     :String;
 	}
 }

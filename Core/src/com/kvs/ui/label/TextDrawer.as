@@ -28,7 +28,7 @@ package com.kvs.ui.label
 		public function checkTextBm(shape:Graphics, textCanvas:Sprite, scale:Number = 1, tx:Number = 0, ty:Number = 0):void
 		{
 			if (scale < 0)
-				scale *= - 1;
+				scale = -scale;
 			try
 			{
 				if (textBMD)
@@ -49,7 +49,7 @@ package com.kvs.ui.label
 			catch(error:Error) 
 			{
 				trace(error.getStackTrace())
-			}
+			} 
 			
 		}
 		

@@ -147,7 +147,7 @@ package view.toolBar
 		
 		/**
 		 */		
-		public function setCustomButton(value:XML):void
+		public function setCustomButton(value:XML, js:Boolean = true):void
 		{
 			if (value)
 			{
@@ -162,6 +162,7 @@ package view.toolBar
 					var button:CustomLabelBtn = new CustomLabelBtn;
 					button.text = list[i].@label;
 					button.tips = list[i].@tip;
+					button.js = js;
 					
 					if (list[i].@callBack && list[i].@callBack != "" && list[i].@callBack != " ")
 						button.callBack.push(list[i].@callBack);
@@ -193,7 +194,21 @@ package view.toolBar
 		
 		private function customButtonClick(evt:MouseEvent):void
 		{
-			ExternalInterface.call.apply(null, evt.currentTarget.callBack);
+			if (evt.currentTarget.js)
+			{
+				ExternalInterface.call.apply(null, evt.currentTarget.callBack);
+			}
+			else
+			{
+				try
+				{
+					ToolBarCustomFunc[evt.currentTarget.callBack]();
+				}
+				catch (e:Error)
+				{
+					trace(e.getStackTrace());
+				}
+			}
 		}
 		
 		/**

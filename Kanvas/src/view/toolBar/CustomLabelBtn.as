@@ -10,5 +10,6 @@ package view.toolBar
 		}
 		
 		public var callBack:Array = [];
+		public var js:Boolean = true;
 	}
 }

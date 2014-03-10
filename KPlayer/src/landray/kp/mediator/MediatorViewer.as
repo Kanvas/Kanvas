@@ -171,6 +171,7 @@ package landray.kp.mediator
 		{
 			if (e.fullScreen == false)
 			{
+
 				config.kp_internal::toolBarSlid.kp_internal::resetScreenButtons();
 				viewer.screenState = StageDisplayState.NORMAL;
 			}

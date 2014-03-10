@@ -154,6 +154,14 @@ package modules.pages
 			return null;
 		}
 		
+		public function removeAllPages():void
+		{
+			pages.length = 0;
+			dispatchEvent(new PageEvent(PageEvent.PAGE_DELETED));
+			dispatchEvent(new PageEvent(PageEvent.UPDATE_PAGES_LAYOUT));
+		}
+		
+		
 		/**
 		 * 设定某页的顺序
 		 */

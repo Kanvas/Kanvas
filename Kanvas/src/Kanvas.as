@@ -33,17 +33,11 @@ package
 		public function Kanvas()
 		{
 			StageUtil.initApplication(this, init, true);
-			
-			/*var fonts:Array = Font.enumerateFonts(true);
-			for each (var font:Object in fonts)
-			{
-				trace(font.fontName);
-			}*/
 		}
 		
 		/**
 		 */		
-		private function init():void
+		protected function init():void
 		{
 			this.resetLib();
 			
@@ -75,9 +69,7 @@ package
 			kvsCore.startInit();
 			
 			if (kvsCore.controller)
-			{
 				zoomToolBar.controller = kvsCore.controller;
-			}
 			
 			//自定义按钮
 			if (kvsCore.customButtonData)
