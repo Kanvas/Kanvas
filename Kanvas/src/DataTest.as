@@ -28,7 +28,7 @@ package
 		
 		/**
 		 */		
-		private function importData(evt:MouseEvent):void
+		public function importData(evt:MouseEvent = null):void
 		{
 			file.addEventListener(Event.SELECT, onFileSelected);
 			file.browse([new FileFilter("kvs", "*.kvs;*.zip;")]);
@@ -63,7 +63,7 @@ package
 		
 		/**
 		 */		
-		private function exportData(evt:MouseEvent):void
+		public function exportData(evt:MouseEvent = null):void
 		{
 			var data:ByteArray = core.exportZipData();
 			

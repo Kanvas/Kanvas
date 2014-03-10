@@ -53,6 +53,9 @@ package
 			//设置图片主域名地址
 			ExternalUtil.addCallback('setImgDomainServer', setImgDomainServer);
 			
+			//获取页面数据
+			ExternalUtil.addCallback("getPageImgData", getPageImgData);
+			
 			//获取图片URL列表
 			ExternalUtil.addCallback('getImgURLList', getImgURLList);
 			
@@ -141,6 +144,25 @@ package
 		//
 		//----------------------------------------------------
 		
+		
+		private function getPageImgData(url:String):void
+		{
+			var loader:URLLoader = new URLLoader;
+			loader.dataFormat = URLLoaderDataFormat.BINARY;
+			loader.addEventListener(Event.COMPLETE, uploadPageData);
+			loader.addEventListener(IOErrorEvent.IO_ERROR, uploadPageData);
+			var request:URLRequest = new URLRequest(url);
+			request.method = URLRequestMethod.POST;
+			request.data = core.thumbManager.getPageBytes();
+			loader.load(request);
+		}
+		
+		private function uploadPageData(e:Event):void
+		{
+			e.target.removeEventListener(Event.COMPLETE, uploadPageData);
+			e.target.removeEventListener(IOErrorEvent.IO_ERROR, uploadPageData);
+			trace(e.type)
+		}
 		
 		/**
 		 * 上传至服务器端的图片不会随着客户端的删除操作而删除，而是保存数据时

@@ -13,6 +13,8 @@ package
 	import flash.filesystem.FileStream;
 	import flash.utils.ByteArray;
 	
+	import view.toolBar.ToolBarCustomFunc;
+	
 	/**
 	 * 
 	 */	
@@ -26,6 +28,8 @@ package
 		override protected function init():void
 		{
 			super.init();
+			ToolBarCustomFunc.importData = dataTest.importData;
+			ToolBarCustomFunc.exportData = dataTest.exportData;
 			kvsCore.customButtonJS = false;
 			kvsCore.customButtonData = customButtonData;
 			registFileRef();

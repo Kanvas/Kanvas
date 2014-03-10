@@ -73,7 +73,7 @@ package
 			
 			//自定义按钮
 			if (kvsCore.customButtonData)
-				toolBar.setCustomButton(kvsCore.customButtonData);
+				toolBar.setCustomButton(kvsCore.customButtonData, kvsCore.customButtonJS);
 			else
 				kvsCore.addEventListener(KVSEvent.SET_CUSTOM_DATA, setCustomData, false, 0, true);
 			
@@ -84,7 +84,7 @@ package
 		
 		private function setCustomData(evt:KVSEvent):void
 		{
-			toolBar.setCustomButton(kvsCore.customButtonData);
+			toolBar.setCustomButton(kvsCore.customButtonData, kvsCore.customButtonJS);
 		}
 		
 		/**
@@ -98,7 +98,7 @@ package
 		
 		/**
 		 */		
-		private var dataTest:DataTest;
+		protected var dataTest:DataTest;
 		
 		/**
 		 */		

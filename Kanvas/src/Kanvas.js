@@ -287,6 +287,13 @@
 			return this;
 		};
 		
+		//获取页面图片数据
+		that.getPageImgData = function(url){
+			if (this.ifReady){
+				return this.swf.getPageImgData(url);
+			}
+		};
+		
 		//获取图片URL列表，经Base64编码
 		that.getImgURLList = function(){
 			if (this.ifReady){
