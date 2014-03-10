@@ -69,7 +69,7 @@ package
 			
 			try
 			{
-				file.save(data, 'kvs.zip');
+				file.save(data, 'kvs.kvs');
 			} 
 			catch(error:Error) 
 			{

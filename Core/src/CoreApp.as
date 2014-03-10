@@ -735,5 +735,7 @@ package
 		private var _customButtonData:XML;
 		
 		public var customButtonJS:Boolean = true;
+		
+		public var isAIR:Boolean;
 	}
 }

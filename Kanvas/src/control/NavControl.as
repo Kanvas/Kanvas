@@ -85,7 +85,7 @@ package control
 		 */		
 		public function toPreview():void
 		{
-			app.stage.displayState = StageDisplayState.FULL_SCREEN;
+			app.stage.displayState = (app.kvsCore.isAIR) ? StageDisplayState.FULL_SCREEN_INTERACTIVE : StageDisplayState.FULL_SCREEN;
 			app.updateKvsContenBound();
 			app.kvsCore.toPreview();
 			

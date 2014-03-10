@@ -221,7 +221,7 @@ package model
 			
 			var bmd:BitmapData = CoreFacade.coreMediator.mainUI.thumbManager.getShotCut(ConfigInitor.THUMB_WIDTH, ConfigInitor.THUMB_HEIGHT);
 			
-			var pageBytes:ByteArray = CoreFacade.coreMediator.mainUI.thumbManager.getPageBytes();
+			
 			
 			if (bmd)
 			{
@@ -237,19 +237,23 @@ package model
 				zipOut.closeEntry();
 			}
 			
-			var jpgs:Vector.<ByteArray> = CoreFacade.coreMediator.mainUI.thumbManager.resolvePageData(pageBytes);
-			
-			if (jpgs)
+			if(!CoreFacade.coreMediator.mainUI.isAIR)
 			{
-				for (var i:int = 0; i < jpgs.length; i++)
+				var pageBytes:ByteArray = CoreFacade.coreMediator.mainUI.thumbManager.getPageBytes();
+				var jpgs:Vector.<ByteArray> = CoreFacade.coreMediator.mainUI.thumbManager.resolvePageData(pageBytes);
+				
+				if (jpgs)
 				{
-					fileData.clear();
-					fileData.writeBytes(jpgs[i], fileData.position, jpgs[i].bytesAvailable);
-					
-					ze = new ZipEntry("pages/" + i + ".jpg");
-					zipOut.putNextEntry(ze);
-					zipOut.write(fileData);
-					zipOut.closeEntry();
+					for (var i:int = 0; i < jpgs.length; i++)
+					{
+						fileData.clear();
+						fileData.writeBytes(jpgs[i], fileData.position, jpgs[i].bytesAvailable);
+						
+						ze = new ZipEntry("pages/" + i + ".jpg");
+						zipOut.putNextEntry(ze);
+						zipOut.write(fileData);
+						zipOut.closeEntry();
+					}
 				}
 			}
 			
