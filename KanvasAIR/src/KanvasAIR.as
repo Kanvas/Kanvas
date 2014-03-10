@@ -30,6 +30,7 @@ package
 			super.init();
 			ToolBarCustomFunc.importData = dataTest.importData;
 			ToolBarCustomFunc.exportData = dataTest.exportData;
+			kvsCore.isAIR = true;
 			kvsCore.customButtonJS = false;
 			kvsCore.customButtonData = customButtonData;
 			registFileRef();
