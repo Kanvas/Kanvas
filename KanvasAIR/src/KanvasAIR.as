@@ -16,9 +16,9 @@ package
 	/**
 	 * 
 	 */	
-	public class KanvasAIR4 extends Kanvas
+	public class KanvasAIR extends Kanvas
 	{
-		public function KanvasAIR4()
+		public function KanvasAIR()
 		{
 			super();
 		}
@@ -35,7 +35,7 @@ package
 		{
 			addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER, onDragIn);
 			addEventListener(NativeDragEvent.NATIVE_DRAG_DROP, onDragDrop);
-			NativeApplication.nativeApplication.addEventListener( InvokeEvent.INVOKE, onInvoke ); 
+			NativeApplication.nativeApplication.addEventListener(InvokeEvent.INVOKE, onInvoke); 
 			var t:Boolean = NativeApplication.nativeApplication.isSetAsDefaultApplication("kvs");
 			if (!t) NativeApplication.nativeApplication.setAsDefaultApplication("kvs");
 		}
