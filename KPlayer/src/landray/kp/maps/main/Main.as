@@ -9,6 +9,7 @@ package landray.kp.maps.main
 	import landray.kp.view.Graph;
 	
 	import model.vo.ElementVO;
+	import model.vo.ImgVO;
 	
 	public final class Main extends Graph
 	{
@@ -63,8 +64,11 @@ package landray.kp.maps.main
 					element = MainUtil.getElementUI(vo);
 					if (element)
 					{
+						
 						CoreUtil.applyStyle(element.vo);
 						CoreUtil.mapping(xml, vo);
+						if (vo is ImgVO)
+							MainUtil.completeImgVO(vo as ImgVO);
 						element.render();
 						viewer.canvas.addChild(element);
 						elements.push(element);
