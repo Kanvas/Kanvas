@@ -59,6 +59,10 @@ package view.ui
 				var bmd:BitmapData = BitmapUtil.drawWithSize(canvas, vw, vh, false, CoreFacade.coreProxy.bgColor);
 				canvas.toPreviewState();
 			}
+			else
+			{
+				bmd = new BitmapData(w, h, false, CoreFacade.coreProxy.bgColor);
+			}
 			return bmd;
 		}
 		
