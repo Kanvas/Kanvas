@@ -201,7 +201,7 @@ package model
 		/**
 		 * 将所有资源打包
 		 */		
-		public function exportZipData():ByteArray
+		public function exportZipData(pageW:Number = 960, pageH:Number = 540):ByteArray
 		{
 			var zipOut:ZipOutput = new ZipOutput();
 			
@@ -239,7 +239,7 @@ package model
 			
 			if(!CoreFacade.coreMediator.mainUI.isAIR)
 			{
-				var pageBytes:ByteArray = CoreFacade.coreMediator.mainUI.thumbManager.getPageBytes();
+				var pageBytes:ByteArray = CoreFacade.coreMediator.mainUI.thumbManager.getPageBytes(pageW, pageH);
 				var jpgs:Vector.<ByteArray> = CoreFacade.coreMediator.mainUI.thumbManager.resolvePageData(pageBytes);
 				
 				if (jpgs)

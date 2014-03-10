@@ -145,7 +145,7 @@ package
 		//----------------------------------------------------
 		
 		
-		private function getPageImgData(url:String):void
+		private function getPageImgData(url:String, pageW:Number = 960, pageH:Number = 540):void
 		{
 			var loader:URLLoader = new URLLoader;
 			loader.dataFormat = URLLoaderDataFormat.BINARY;
@@ -153,7 +153,7 @@ package
 			loader.addEventListener(IOErrorEvent.IO_ERROR, uploadPageData);
 			var request:URLRequest = new URLRequest(url);
 			request.method = URLRequestMethod.POST;
-			request.data = core.thumbManager.getPageBytes();
+			request.data = core.thumbManager.getPageBytes(pageW, pageH);
 			loader.load(request);
 		}
 		
