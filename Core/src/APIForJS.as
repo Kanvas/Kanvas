@@ -161,7 +161,6 @@ package
 		{
 			e.target.removeEventListener(Event.COMPLETE, uploadPageData);
 			e.target.removeEventListener(IOErrorEvent.IO_ERROR, uploadPageData);
-			trace(e.type)
 		}
 		
 		/**

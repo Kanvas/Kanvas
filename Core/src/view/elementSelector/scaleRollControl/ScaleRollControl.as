@@ -39,6 +39,11 @@ package view.elementSelector.scaleRollControl
 			rollPoint.setIcons("roll_up", "roll_over", "roll_down");
 			addChild(rollPoint);
 			roteControl = new RoteControl(selector, rollPoint);
+			
+			fitPoint.iconW = fitPoint.iconH = ConfigInitor.ICON_SIZE_FOR_SCALE_AND_ROLL;
+			rollPoint.setIcons("roll_up", "roll_over", "roll_down");
+			addChild(fitPoint);
+			fitControl = new FitControl(selector, fitPoint);
 		}
 		
 		/**
@@ -66,6 +71,11 @@ package view.elementSelector.scaleRollControl
 		private var roteControl:RoteControl;
 		
 		/**
+		 * 自适应页面控制
+		 */	
+		private var fitControl:FitControl;
+		
+		/**
 		 *  左下方控制点, 控制旋转
 		 */		
 		public var rollPoint:IconBtn = new IconBtn;
@@ -74,6 +84,11 @@ package view.elementSelector.scaleRollControl
 		 * 右下方控制点 ， 控制比例缩放
 		 */		
 		public var scalePoint:IconBtn = new IconBtn;
+		
+		/**
+		 * 自适应页面控制点
+		 */	
+		public var fitPoint:IconBtn = new IconBtn;
 		
 		/**
 		 */		
