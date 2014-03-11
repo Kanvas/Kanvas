@@ -194,7 +194,8 @@ package
 			// 给画布流内容留一定的边距
 			var gutter:uint;
 			
-			if (stage.displayState == StageDisplayState.FULL_SCREEN)
+			if (stage.displayState == StageDisplayState.FULL_SCREEN || 
+				stage.displayState == StageDisplayState.FULL_SCREEN_INTERACTIVE)
 			{
 				gutter = 5;
 				kvsCore.bound = new Rectangle(gutter, gutter, stage.stageWidth - gutter * 2, stage.stageHeight - gutter * 2);

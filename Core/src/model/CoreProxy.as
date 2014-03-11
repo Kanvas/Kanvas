@@ -198,6 +198,17 @@ package model
 		//------------------------------------------
 		
 		
+		public function exportBytData(pageW:Number = 960, pageH:Number = 540):ByteArray
+		{
+			
+			return null;
+		}
+		
+		public function importBytData(bytes:ByteArray):void
+		{
+			
+		}
+		
 		/**
 		 * 将所有资源打包
 		 */		
