@@ -112,7 +112,7 @@ package control
 			}
 			
 			TweenLite.to(app.toolBar, 0.5, {y: - app.toolBar.h});
-			TweenLite.to(app.pagePanel, 0.5, {x: - app.pagePanel.w});
+			TweenLite.to(app.pagePanel, 0.5, {x: - app.pagePanel.w - 5});
 		}
 		
 		/**
