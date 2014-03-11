@@ -10,6 +10,7 @@ package util.img
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
+	import flash.events.SecurityErrorEvent;
 	import flash.geom.Rectangle;
 	import flash.net.FileFilter;
 	import flash.net.FileReference;
@@ -35,6 +36,7 @@ package util.img
 			imgUpLoader.dataFormat = URLLoaderDataFormat.BINARY;
 			imgUpLoader.addEventListener(IOErrorEvent.IO_ERROR, imgUploadError);
 			imgUpLoader.addEventListener(Event.COMPLETE, imgUploadHandler);
+			imgUpLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, imgUploadSecurityError);
 			
 			imageByteLoader.dataFormat = URLLoaderDataFormat.BINARY;
 			imageByteLoader.addEventListener(Event.COMPLETE, imgByteLoaeded);
@@ -323,10 +325,18 @@ package util.img
 			imgOK();
 		}
 		
+		private function imgUploadSecurityError(e:SecurityErrorEvent):void
+		{
+			imgOK();
+		}
+		
 		/**
 		 */		
 		private function imgOK():void
 		{
+			imgUpLoader.removeEventListener(IOErrorEvent.IO_ERROR, imgUploadError);
+			imgUpLoader.removeEventListener(Event.COMPLETE, imgUploadHandler);
+			imgUpLoader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, imgUploadSecurityError);
 			ImgLib.register(imgID.toString(), bitmapData);
 			
 			var imgURL:String;
