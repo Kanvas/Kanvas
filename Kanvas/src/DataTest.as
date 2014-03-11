@@ -69,7 +69,7 @@ package
 			
 			try
 			{
-				file.save(data, 'kvs.kvs');
+				file.save(data, '新建文档.kvs');
 			} 
 			catch(error:Error) 
 			{
