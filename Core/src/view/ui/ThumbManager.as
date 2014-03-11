@@ -81,11 +81,14 @@ package view.ui
 					if (m == 0)
 					{
 						var shape:Shape = new Shape;
+						shape.graphics.beginFill(0);
+						shape.graphics.drawRect(0, 0, w + 10, (h +　5) * Math.min(l - i, 10) + 5);
+						shape.graphics.endFill();
 						shapes.push(shape);
 					}
 					var page:PageVO = manager.pages[i];
 					var bmd:BitmapData = PageUtil.getThumbByPageVO(page, w, h, core);
-					BitmapUtil.drawBitmapDataToShape(bmd, shape, w, h, 0, h * m);
+					BitmapUtil.drawBitmapDataToShape(bmd, shape, w, h, 5, (h + 5) * m + 5);
 				}
 				l = shapes.length;
 				var offset:int = 4;
