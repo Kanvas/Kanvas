@@ -1,12 +1,11 @@
 package landray.kp.command
 {
 	import cn.vision.pattern.Command;
-	import cn.vision.utils.LogUtil;
 	
 	import landray.kp.core.*;
 	import landray.kp.manager.ManagerGraph;
 	
-	import landray.kp.components.Debugger;
+	import view.ui.Debugger;
 	
 	internal class _InernalCommand extends Command
 	{

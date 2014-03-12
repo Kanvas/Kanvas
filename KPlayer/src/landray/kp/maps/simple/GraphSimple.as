@@ -60,8 +60,6 @@ package landray.kp.maps.simple
 				if (vo)
 				{
 					CoreUtil.mapping(xml, vo);
-					if (vo is ImgVO)
-						SimpleUtil.completeImgVO(vo as ImgVO);
 					var element:BaseElement = SimpleUtil.getElementUI(vo);
 					if (element)
 					{

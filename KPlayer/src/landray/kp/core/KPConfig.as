@@ -6,10 +6,11 @@ package landray.kp.core
 	
 	import flash.display.DisplayObjectContainer;
 	
-	import landray.kp.components.Debugger;
 	import landray.kp.view.*;
 	
 	import model.vo.BgVO;
+	
+	import view.ui.Debugger;
 	
 	public final class KPConfig
 	{
@@ -48,7 +49,6 @@ package landray.kp.core
 		
 		kp_internal var container  :DisplayObjectContainer;
 		kp_internal var viewer     :Viewer;
-		kp_internal var debugger   :Debugger;
 		kp_internal var tipsManager:ToolTipsManager;
 		kp_internal var graphs     :Vector.<Graph>;
 		kp_internal var templete   :XML;

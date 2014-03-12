@@ -21,6 +21,7 @@ package
 	import view.themePanel.ThemePanel;
 	import view.toolBar.ToolBar;
 	import view.toolBar.ZoomToolBar;
+	import view.ui.Debugger;
 	
 	/**
 	 */	
@@ -36,6 +37,8 @@ package
 		private function init():void
 		{
 			this.resetLib();
+			
+			//addChild(new Debugger);
 			
 			kvsCore.externalUI = uiContainer;
 			addChild(kvsCore);

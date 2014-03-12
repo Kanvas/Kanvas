@@ -29,12 +29,6 @@ package landray.kp.maps.simple.util
 			return  element;
 		}
 		
-		public static function completeImgVO(vo:ImgVO):void
-		{
-			if (vo.url.indexOf("http:") != 0)
-				vo.url = config.kp_internal::domain + vo.url;
-		}
-		
 		private static var config:KPConfig = KPConfig.instance;
 	}
 }

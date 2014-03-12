@@ -6,7 +6,7 @@ package landray.kp.command
 	
 	import landray.kp.model.*;
 	
-	import landray.kp.components.Debugger;
+	import view.ui.Debugger;
 	
 	public final class Command1ProvideData extends _InernalCommand
 	{
@@ -34,7 +34,6 @@ package landray.kp.command
 			{
 				try
 				{
-					Debugger.debug("setXMLData:\n", data);
 					provider.dataXML = new XML(data);
 				}
 				catch (e:Error)
