@@ -104,6 +104,9 @@ package util.img
 				temW = w;
 				temH = h;
 				
+				if (url.indexOf("http") != 0)
+					url = IMG_DOMAIN_URL + url;
+				
 				var req:URLRequest = new URLRequest(url);
 				req.method = URLRequestMethod.GET;
 				req.contentType = "application/octet-stream";  

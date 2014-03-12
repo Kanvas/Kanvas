@@ -9,6 +9,8 @@ package landray.kp.utils
 	import landray.kp.core.KPConfig;
 	import landray.kp.core.KPPresenter;
 	import landray.kp.core.kp_internal;
+	
+	import util.img.ImgInsertor;
 
 	public final class ExternalUtil
 	{
@@ -46,7 +48,7 @@ package landray.kp.utils
 		
 		private static function setImgDomainServer(value:String):void
 		{
-			presenter.config.kp_internal::domain = value;
+			ImgInsertor.IMG_DOMAIN_URL = value;
 		}
 		
 		/**

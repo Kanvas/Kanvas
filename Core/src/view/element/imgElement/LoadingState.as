@@ -27,11 +27,7 @@ package view.element.imgElement
 			imgLoader.addEventListener(ImgInsertEvent.IMG_LOADED_FROM_SERVER, imgLoaded, false, 0, true);
 			imgLoader.addEventListener(ImgInsertEvent.IMG_LOADED_ERROR, imgLoadError, false, 0, true);
 			
-			var url:String = element.imgVO.url;
-			if (url.indexOf("http:") != 0)
-				url = ImgInsertor.IMG_DOMAIN_URL + url;
-			
-			imgLoader.loadImg(url, element.imgVO.imgID, element.imgVO.width, element.imgVO.height);
+			imgLoader.loadImg(element.imgVO.url, element.imgVO.imgID, element.imgVO.width, element.imgVO.height);
 			
 			render();
 		}
