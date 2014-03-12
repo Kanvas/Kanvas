@@ -587,6 +587,12 @@ package view.element
 			return (parent) ? parent.getChildIndex(this) : -1;
 		}
 		
+		public function get isPage():Boolean
+		{
+			return _isPage;
+		}
+		protected var _isPage:Boolean;
+		
 		override public function get graphics():Graphics
 		{
 			return graphicShape.graphics;

@@ -56,7 +56,7 @@ package view.ui
 				var tp:Point = new Point(rect.x, rect.y);
 				LayoutUtil.convertPointCanvas2Stage(tp, -(vw - cw * scale) * .5, -(vh - ch * scale) * .5, scale, rotation);
 				canvas.toShotcutState(-tp.x, -tp.y, scale, 0);
-				var bmd:BitmapData = BitmapUtil.drawWithSize(canvas, vw, vh, false, CoreFacade.coreProxy.bgColor);
+				var bmd:BitmapData = BitmapUtil.drawWithSize(canvas, vw, vh, true, CoreFacade.coreProxy.bgColor);
 				canvas.toPreviewState();
 			}
 			else
@@ -75,20 +75,21 @@ package view.ui
 				var header:String = "";
 				var shapes:Vector.<Shape> = new Vector.<Shape>;
 				var l:int = manager.length;
+				var gutter:int = 10;
 				for (var i:int = 0; i < l; i++)
 				{
 					var m:int = i % 10;
 					if (m == 0)
 					{
 						var shape:Shape = new Shape;
-						shape.graphics.beginFill(0);
-						shape.graphics.drawRect(0, 0, w + 10, (h +　5) * Math.min(l - i, 10) + 5);
+						shape.graphics.beginFill(0x555555);
+						shape.graphics.drawRect(0, 0, w + gutter * 2, (h +　gutter) * Math.min(l - i, gutter * 2) + gutter);
 						shape.graphics.endFill();
 						shapes.push(shape);
 					}
 					var page:PageVO = manager.pages[i];
-					var bmd:BitmapData = PageUtil.getThumbByPageVO(page, w, h, core);
-					BitmapUtil.drawBitmapDataToShape(bmd, shape, w, h, 5, (h + 5) * m + 5);
+					var bmd:BitmapData = PageUtil.getThumbByPageVO(page, w * 1.5, h * 1.5, core, CoreFacade.coreProxy.bgColor);
+					BitmapUtil.drawBitmapDataToShape(bmd, shape, w, h, gutter, (h + gutter) * m + gutter, true);
 				}
 				l = shapes.length;
 				var offset:int = 4;

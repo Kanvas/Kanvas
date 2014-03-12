@@ -105,6 +105,8 @@ package view.ui
 				for each (var item:ICanvasLayout in items)
 				{
 					item.visible = item.screenshot;
+					if (item is IText)
+						IText(item).forceRender();
 				}
 					
 			}

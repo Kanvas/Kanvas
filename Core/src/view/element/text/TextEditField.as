@@ -26,13 +26,14 @@ package view.element.text
 	import view.element.state.IEditShapeState;
 	import view.elementSelector.toolBar.ToolBarController;
 	import view.interact.autoGroup.IAutoGroupElement;
+	import view.ui.IText;
 	
 	
 	
 	/**
 	 * 文本框， 有三种状态， 非选择状态(usualState), 选择状态(selectedState)， 编辑状态(editState)
 	 */
-	public class TextEditField extends ElementBase implements IEditElement, ITextFlowLabel, IAutoGroupElement
+	public class TextEditField extends ElementBase implements IEditElement, ITextFlowLabel, IAutoGroupElement, IText
 	{
 		
 		/**
@@ -42,7 +43,7 @@ package view.element.text
 			super(vo);
 			
 			textDrawer = new TextDrawer(this);
-			xmlData = <text/>
+			xmlData = <text/>;
 		}
 		
 		/**
@@ -201,6 +202,12 @@ package view.element.text
 			
 			textDrawer.renderTextBMD(shape.graphics, textCanvas, textVO.scale * this.parent.scaleX);
 			textDrawer.checkVisible(shape.graphics, textCanvas, textVO.scale * this.parent.scaleX);
+		}
+		
+		public function forceRender():void
+		{
+			if (visible)
+				textDrawer.renderTextBMD(shape.graphics, textCanvas, textVO.scale * parent.scaleX);
 		}
 		
 		/**

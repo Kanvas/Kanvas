@@ -31,6 +31,14 @@ package view.elementSelector.scaleRollControl
 			addChild(scalePoint);
 			scaleControl = new ScaleControl(selector, scalePoint);
 			
+			roll_up;
+			roll_over;
+			roll_down;
+			fitPoint.iconW = fitPoint.iconH = ConfigInitor.ICON_SIZE_FOR_SCALE_AND_ROLL;
+			fitPoint.setIcons("roll_up", "roll_over", "roll_down");
+			addChild(fitPoint);
+			fitControl = new FitControl(selector, fitPoint);
+			
 			// 旋转控制
 			roll_up;
 			roll_over;
@@ -39,11 +47,6 @@ package view.elementSelector.scaleRollControl
 			rollPoint.setIcons("roll_up", "roll_over", "roll_down");
 			addChild(rollPoint);
 			roteControl = new RoteControl(selector, rollPoint);
-			
-			fitPoint.iconW = fitPoint.iconH = ConfigInitor.ICON_SIZE_FOR_SCALE_AND_ROLL;
-			rollPoint.setIcons("roll_up", "roll_over", "roll_down");
-			addChild(fitPoint);
-			fitControl = new FitControl(selector, fitPoint);
 		}
 		
 		/**
@@ -53,10 +56,12 @@ package view.elementSelector.scaleRollControl
 			if (visible)
 			{
 				rollPoint.x = style.tx;
-				rollPoint.y = style.height / 2;
 				
-				scalePoint.x = style.width / 2;
-				scalePoint.y = style.height / 2;
+				scalePoint.x = style.width * .5;
+				
+				fitPoint.x = Math.min(-ConfigInitor.ICON_SIZE_FOR_SCALE_AND_ROLL, style.tx + ConfigInitor.ICON_SIZE_FOR_SCALE_AND_ROLL * 2);
+				rollPoint.y = scalePoint.y = fitPoint.y = style.height * .5;
+				fitPoint.visible = selector.element.isPage;
 			}
 		}
 		

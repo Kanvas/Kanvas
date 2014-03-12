@@ -24,6 +24,7 @@ package view.element
 			super(vo);
 			xmlData = <page/>;
 			_screenshot = false;
+			_isPage = true;
 			vo.addEventListener(PageEvent.DELETE_PAGE_FROM_UI, deletePageHandler);
 		}
 		
