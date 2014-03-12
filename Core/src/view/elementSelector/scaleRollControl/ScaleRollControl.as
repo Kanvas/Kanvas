@@ -59,7 +59,7 @@ package view.elementSelector.scaleRollControl
 				
 				scalePoint.x = style.width * .5;
 				
-				fitPoint.x = Math.min(-ConfigInitor.ICON_SIZE_FOR_SCALE_AND_ROLL, style.tx + ConfigInitor.ICON_SIZE_FOR_SCALE_AND_ROLL * 2);
+				fitPoint.x = Math.max(style.tx, Math.min(-ConfigInitor.ICON_SIZE_FOR_SCALE_AND_ROLL, style.tx + ConfigInitor.ICON_SIZE_FOR_SCALE_AND_ROLL + 5));
 				rollPoint.y = scalePoint.y = fitPoint.y = style.height * .5;
 				fitPoint.visible = selector.element.isPage;
 			}

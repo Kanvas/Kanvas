@@ -5,6 +5,11 @@ package view.elementSelector.scaleRollControl
 	
 	import flash.display.Sprite;
 	
+	import model.vo.PageVO;
+	
+	import modules.pages.PageUtil;
+	import modules.pages.Scene;
+	
 	import view.elementSelector.ElementSelector;
 	
 	public final class FitControl implements IClickMove
@@ -18,7 +23,8 @@ package view.elementSelector.scaleRollControl
 		
 		public function clicked():void
 		{
-			/////
+			var scene:Scene = PageUtil.getSceneFromVO(selector.element.vo as PageVO, selector.coreMdt.mainUI);
+			selector.coreMdt.zoomMoveControl.zoomRotateMoveTo(scene.scale, scene.rotation, scene.x, scene.y);
 		}
 		
 		public function moveOff(xOff:Number, yOff:Number):void
