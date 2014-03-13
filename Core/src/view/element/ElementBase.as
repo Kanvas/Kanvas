@@ -4,6 +4,7 @@ package view.element
 	import com.kvs.ui.clickMove.IClickMove;
 	import com.kvs.utils.MathUtil;
 	import com.kvs.utils.PointUtil;
+	import com.kvs.utils.RectangleUtil;
 	import com.kvs.utils.StageUtil;
 	import com.kvs.utils.ViewUtil;
 	import com.kvs.utils.XMLConfigKit.StyleManager;
@@ -14,15 +15,18 @@ package view.element
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	import model.vo.ElementVO;
 	
 	import util.ElementCreator;
+	import util.LayoutUtil;
 	import util.StyleUtil;
 	
 	import view.element.state.*;
 	import view.elementSelector.ElementSelector;
 	import view.elementSelector.toolBar.ToolBarController;
+	import view.ui.Canvas;
 	import view.ui.ICanvasLayout;
 	
 	/**
@@ -32,13 +36,6 @@ package view.element
 	 */
 	public class ElementBase extends Sprite implements IClickMove, ICanvasLayout
 	{
-		/**
-		 * 数据
-		 */
-		public var vo:ElementVO;
-		
-		/**
-		 */		
 		public function ElementBase(vo:ElementVO)
 		{
 			this.vo = vo;
@@ -143,7 +140,7 @@ package view.element
 		}
 		
 		
-			
+		
 		
 		
 		
@@ -445,8 +442,21 @@ package view.element
 		
 		private var __y:Number = 0;
 		
-		public function updateView():void
+		public function updateView(check:Boolean = true):void
 		{
+			if (check && stage)
+			{
+				var rect:Rectangle = LayoutUtil.getItemRect(parent as Canvas, this);
+				if (rect.width < 1 || rect.height < 1)
+				{
+					super.visible = false;
+				}
+				else 
+				{
+					var boud:Rectangle = LayoutUtil.getStageRect(stage);
+					super.visible = RectangleUtil.rectOverlapping(rect, boud);
+				}
+			}
 			if (parent && visible)
 			{
 				var prtScale :Number = parent.scaleX;
@@ -464,6 +474,32 @@ package view.element
 				super.y = tmpX * prtSin + tmpY * prtCos + parent.y;
 			}
 		}
+		
+		public function toPreview():void
+		{
+			alpha   = previewAlpha;
+			visible = previewVisible;
+		}
+		
+		public function toShotcut(renderable:Boolean = false):void
+		{
+			previewAlpha   = alpha;
+			previewVisible = visible;
+			if (renderable)
+			{
+				alpha   = 1;
+				super.visible = screenshot;
+				updateView(false);
+			}
+			else
+			{
+				previewVisible = visible;
+				super.visible = false;
+			}
+		}
+		
+		private var previewAlpha  :Number;
+		private var previewVisible:Boolean;
 		
 		override public function set visible(value:Boolean):void
 		{
@@ -489,7 +525,7 @@ package view.element
 			//有些图形，例如临时组合是没有样式的
 			if(vo.style && vo.style.getBorder)
 				w = w + vo.thickness * vo.scale;
-				
+			
 			return 	w;
 		}
 		
@@ -607,11 +643,11 @@ package view.element
 		
 		/*override public function set mouseEnabled(enabled:Boolean):void
 		{
-			if (enabled == false)
-			{
-				trace(".............")
-			}
-			super.mouseEnabled = enabled;
+		if (enabled == false)
+		{
+		trace(".............")
+		}
+		super.mouseEnabled = enabled;
 		}*/
 		
 		
@@ -962,11 +998,7 @@ package view.element
 		
 		/**
 		 */		
-		public function moveOff(xOff:Number, yOff:Number):void
-		{
-			//这里不移动，元素是否移动决定于当前的选择模式
-			//多选模式下不移动，这时候是在框选
-		}
+		public function moveOff(xOff:Number, yOff:Number):void { }
 		
 		/**
 		 */		
@@ -994,6 +1026,11 @@ package view.element
 		 * 由每个状态负责向回切换，把向回切换的方法保存下来即可
 		 */		
 		public var returnFromPrevFun:Function; 
+		
+		/**
+		 * 数据
+		 */
+		public var vo:ElementVO;
 		
 		protected var graphicShape:Shape;
 	}

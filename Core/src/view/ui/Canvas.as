@@ -1,8 +1,12 @@
 package view.ui
 {
+	import com.kvs.utils.RectangleUtil;
+	
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
+	
+	import util.LayoutUtil;
 	
 	/**
 	 */	
@@ -87,7 +91,7 @@ package view.ui
 			super.removeChildren(beginIndex, endIndex);
 		}
 		
-		public function toShotcutState($x:Number, $y:Number, $scale:Number, $rotation:Number):void
+		public function toShotcutState($x:Number, $y:Number, $scale:Number, $rotation:Number, page:Rectangle = null):void
 		{
 			if(!previewState)
 			{
@@ -104,11 +108,19 @@ package view.ui
 				
 				for each (var item:ICanvasLayout in items)
 				{
-					item.visible = item.screenshot;
-					if (item is IText)
-						IText(item).forceRender();
+					var renderable:Boolean = false;
+					if (page)
+					{
+						var rect:Rectangle = LayoutUtil.getItemRect(this, item);
+						if (rect.width > 1 && rect.height > 1)
+							renderable = RectangleUtil.rectOverlapping(page, rect);
+					}
+					else
+					{
+						renderable = true;
+					}
+					item.toShotcut(renderable);
 				}
-					
 			}
 		}
 		public function toPreviewState():void
@@ -122,7 +134,7 @@ package view.ui
 				__rotation = previewRotation;
 				
 				for each (var item:ICanvasLayout in items)
-					item.visible = true;
+					item.toPreview();
 			}
 		}
 		

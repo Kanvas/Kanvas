@@ -20,9 +20,9 @@ package landray.kp.maps.mind.view
 			super();
 		}
 		
-		public function updateView():void
+		public function updateView(check:Boolean = true):void
 		{
-			if (stage)
+			if (check && stage)
 			{
 				var rect:Rectangle = LayoutUtil.getItemRect(canvas, this);
 				if (rect.width < 1 || rect.height < 1)
@@ -51,6 +51,15 @@ package landray.kp.maps.mind.view
 				super.x = tmpX * prtCos - tmpY * prtSin + parent.x;
 				super.y = tmpX * prtSin + tmpY * prtCos + parent.y;
 			}
+		}
+		
+		public function toShotcut(renderable:Boolean = false):void
+		{
+			
+		}
+		public function toPreview():void
+		{
+			
 		}
 		
 		public function get scaledWidth():Number

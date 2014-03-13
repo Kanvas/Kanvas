@@ -26,8 +26,12 @@ package view.ui
 		function get visible():Boolean
 		function set visible(value:Boolean):void
 			
+		function set alpha(value:Number):void
+			
 		function get screenshot():Boolean
 		
-		function updateView():void
+		function updateView(check:Boolean = true):void
+		function toShotcut(renderable:Boolean = false):void
+		function toPreview():void
 	}
 }

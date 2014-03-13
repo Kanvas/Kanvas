@@ -171,6 +171,9 @@ package view.interact.zoomMove
 			
 			if (canvas.ifHasElements)
 			{
+				/*var rect:Rectangle = LayoutUtil.getItemRect(canvas, canvas.getChildAt(1) as ICanvasLayout, false, true, false);
+				CoreUtil.drawRect(0xFF0000, rect);
+				return;*/
 				canvasBound = LayoutUtil.getContentRect(canvas, false);
 				
 				var scale:Number = (canvasBound.width / canvasBound.height > mainUI.bound.width / mainUI.bound.height)

@@ -60,8 +60,7 @@ package com.kvs.ui.label
 		{
 			shape.clear();
 			
-			if (scale < 0)
-				scale *= - 1;
+			scale = Math.abs(scale);
 			
 			try
 			{

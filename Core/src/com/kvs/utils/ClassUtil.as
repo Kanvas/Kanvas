@@ -28,7 +28,7 @@ package com.kvs.utils
 			}
 			catch (e:Error)
 			{
-				trace("GET CLASS WRONG: " + path);
+				//trace("GET CLASS WRONG: " + path);
 			}
 			
 			return result;

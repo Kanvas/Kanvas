@@ -291,7 +291,7 @@
 		that.getPageImgData = function(url) {
 			if (this.ifReady) {
 				var pageW = getArgument(arguments[1], 960);
-				var pageH = getArgument(arguments[2], 540);
+				var pageH = getArgument(arguments[2], 720);
 				return this.swf.getPageImgData(url, pageW, pageH);
 			}
 		};

@@ -56,11 +56,6 @@ package landray.kp.maps.main.elements
 			graphics.clear();
 		}
 		
-		override public function get graphics():Graphics
-		{
-			return shape.graphics;
-		}
-		
 		/**
 		 * 更新布局范围。
 		 */
@@ -71,6 +66,16 @@ package landray.kp.maps.main.elements
 			
 			rotation = vo.rotation;
 			scaleX = scaleY = vo.scale;
+		}
+		
+		public function toShotcut(renderable:Boolean = false):void
+		{
+			
+		}
+		
+		public function toPreview():void
+		{
+			
 		}
 		
 		public function get related():Boolean
@@ -209,9 +214,9 @@ package landray.kp.maps.main.elements
 			return false;
 		}
 		
-		public function updateView():void
+		public function updateView(check:Boolean = true):void
 		{
-			if (stage)
+			if (check && stage)
 			{
 				var rect:Rectangle = LayoutUtil.getItemRect(canvas, this);
 				if (rect.width < 1 || rect.height < 1)
@@ -371,6 +376,11 @@ package landray.kp.maps.main.elements
 		}
 		
 		private var __tipWidth:Number;
+		
+		override public function get graphics():Graphics
+		{
+			return shape.graphics;
+		}
 		
 		private function get canvas():Canvas
 		{

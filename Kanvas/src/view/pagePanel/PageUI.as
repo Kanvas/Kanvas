@@ -115,9 +115,16 @@ package view.pagePanel
 		
 		/**
 		 */		
-		private function updateThumb(evt:PageEvent):void
+		private function updateThumb(evt:PageEvent = null):void
 		{
-			render();
+			pageVO.bitmapData = PageUtil.getThumbByPageVO(pageVO, 960, 720, mainUI, CoreFacade.coreProxy.bgColor);
+			if (bmp && con.contains(bmp)) con.removeChild(bmp);
+			con.addChild(bmp = new Bitmap(pageVO.bitmapData));
+			bmp.x = leftGutter;
+			bmp.y = (currState.height - iconH) / 2;
+			bmp.width  = 90;
+			bmp.height = 67.5;
+			bmp.smoothing = true;
 		}
 		
 		/**
@@ -154,14 +161,13 @@ package view.pagePanel
 		{
 			super.render();
 			
-			pageVO.bitmapData = PageUtil.getThumbByPageVO(pageVO, iconW, iconH, mainUI, CoreFacade.coreProxy.bgColor);
-			
 			drawPageThumb();
 			
-			if (bmp && con.contains(bmp)) con.removeChild(bmp);
-			con.addChild(bmp = new Bitmap(pageVO.bitmapData));
-			bmp.x = leftGutter;
-			bmp.y = (currState.height - iconH) / 2;
+			if(!pageVO.bitmapData)
+				updateThumb();
+			
+			
+			
 			
 			
 			deleteBtn.x = leftGutter + iconW;

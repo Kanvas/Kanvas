@@ -110,24 +110,16 @@ package view.element
 				var w:Number = 20;
 				
 				//left
-				graphics.moveTo(left, top);
-				graphics.lineTo(left + w, top);
-				
-				graphics.moveTo(left, bottom);
+				graphics.moveTo(left + w, top);
+				graphics.lineTo(left, top);
+				graphics.lineTo(left, bottom);
 				graphics.lineTo(left + w, bottom);
 				
-				graphics.moveTo(left, top);
-				graphics.lineTo(left, bottom);
-				
 				//right
-				graphics.moveTo(right, top);
-				graphics.lineTo(right - w, top);
-				
-				graphics.moveTo(right, bottom);
-				graphics.lineTo(right - w, bottom);
-				
-				graphics.moveTo(right, top);
+				graphics.moveTo(right - w, top);
+				graphics.lineTo(right, top);
 				graphics.lineTo(right, bottom);
+				graphics.lineTo(right - w, bottom);
 				
 				maskShape.x = vo.style.tx;
 				maskShape.y = vo.style.ty;

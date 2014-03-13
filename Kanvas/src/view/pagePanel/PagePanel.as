@@ -130,7 +130,7 @@ package view.pagePanel
 			pageUI.h = pageHeight;
 			
 			pageUI.iconW = 90;
-			pageUI.iconH = 70;
+			pageUI.iconH = 67.5;
 			
 			pageUI.styleXML = pageStyleXML;
 			

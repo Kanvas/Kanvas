@@ -145,7 +145,7 @@ package
 		//----------------------------------------------------
 		
 		
-		private function getPageImgData(url:String, pageW:Number = 960, pageH:Number = 540):void
+		private function getPageImgData(url:String, pageW:Number = 960, pageH:Number = 720):void
 		{
 			var loader:URLLoader = new URLLoader;
 			loader.dataFormat = URLLoaderDataFormat.BINARY;

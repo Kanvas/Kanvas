@@ -264,7 +264,7 @@ package view.interact.multiSelect
 				item.toMultiSelectedState();
 				curElement.toMultiSelectedState();
 				
-				
+				updateSelecterLayout();
 				
 				coreMdt.sendNotification(Command.SElECT_ELEMENT, temGroupElement);
 			}

@@ -66,7 +66,7 @@ package view.ui
 			return bmd;
 		}
 		
-		public function getPageBytes(w:Number = 960, h:Number = 540):ByteArray
+		public function getPageBytes(w:Number = 960, h:Number = 720):ByteArray
 		{
 			var manager:PageManager = CoreFacade.coreMediator.pageManager;
 			if (manager.length)

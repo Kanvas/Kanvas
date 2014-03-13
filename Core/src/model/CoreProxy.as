@@ -212,7 +212,7 @@ package model
 		/**
 		 * 将所有资源打包
 		 */		
-		public function exportZipData(pageW:Number = 960, pageH:Number = 540):ByteArray
+		public function exportZipData(pageW:Number = 960, pageH:Number = 720):ByteArray
 		{
 			var zipOut:ZipOutput = new ZipOutput();
 			
