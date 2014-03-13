@@ -251,6 +251,8 @@ package view.interact.multiSelect
 			{
 				item.toMultiSelectedState();
 				childElements = item.addToTemGroup(childElements);
+				updateSelecterLayout();
+				
 			}
 			else// 刚开始创建临时组合
 			{
@@ -269,7 +271,7 @@ package view.interact.multiSelect
 				coreMdt.sendNotification(Command.SElECT_ELEMENT, temGroupElement);
 			}
 			
-			updateSelecterLayout();
+			
 		}
 		
 		/**
@@ -285,7 +287,7 @@ package view.interact.multiSelect
 			
 			
 			
-			var minIndex:uint = coreMdt.canvas.numChildren - 1;
+			//var minIndex:uint = coreMdt.canvas.numChildren - 1;
 			var index:uint;
 			var leftArr:Array = [];
 			var rightArr:Array = [];
@@ -293,7 +295,7 @@ package view.interact.multiSelect
 			var bottomArr:Array = [];
 			for each(var element:ElementBase in this.childElements)
 			{
-				minIndex = Math.min(minIndex, index = element.index);
+				//minIndex = Math.min(minIndex, index = element.index);
 				
 				// 子元素的布局信息；
 				var elementRect:Rectangle = LayoutUtil.getItemRect(coreMdt.canvas, element, false, true);
@@ -325,13 +327,16 @@ package view.interact.multiSelect
 			temGroupElement.render();
 			
 			//确保临时组合位于子元件的最下层
-			if (temGroupElement.parent == null)
+			coreMdt.canvas.addChildAt(temGroupElement, 1);
+			/*if (temGroupElement.parent == null)
 				coreMdt.canvas.addChildAt(temGroupElement, index);
 			else if (minIndex < temGroupElement.index)
-				coreMdt.canvas.addChildAt(temGroupElement, index);
+				coreMdt.canvas.addChildAt(temGroupElement, index);*/
 			
 			//设定临时组合的内容
 			autoTemGroup();
+			
+			coreMdt.selector.update();
 		}
 		
 		
