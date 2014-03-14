@@ -92,9 +92,11 @@ package view.ui
 					}
 					var page:PageVO = manager.pages[i];
 					
-					var bmd:BitmapData = page.bitmapData;
-					if (bmd)
+					var bmd:BitmapData = PageUtil.getThumbByPageVO(page, w, h, core, CoreFacade.coreProxy.bgColor);
+					/*if (bmd)
 						BitmapUtil.drawBitmapDataToShape(bmd, shape, w, h, gutter, (h + gutter) * m + gutter, true);
+					else
+						bmd = page.bitmapData = PageUtil.getThumbByPageVO(page, w, h, core, CoreFacade.coreProxy.bgColor);*/
 				}
 				l = shapes.length;
 				var offset:int = 4;
