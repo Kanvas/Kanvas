@@ -84,6 +84,10 @@ package util
 			//检测element是否在智能组合内
 			else if (element is IAutoGroupElement)
 				result = coreMdt.autoGroupController.hasElement(element);
+			else
+			{
+				
+			}
 			
 			return result;
 		}

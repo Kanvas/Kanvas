@@ -132,6 +132,11 @@ package view.element.shapes
 			bg.graphics.endFill();
 		}
 		
+		override public function get scaledWidth():Number
+		{
+			return super.scaledWidth * .5;
+		}
+		
 		override public function get topLeft():Point
 		{
 			tlPoint.x = 0;

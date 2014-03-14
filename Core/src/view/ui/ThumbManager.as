@@ -57,7 +57,7 @@ package view.ui
 				var tp:Point = new Point(rect.x, rect.y);
 				LayoutUtil.convertPointCanvas2Stage(tp, -(vw - cw * scale) * .5, -(vh - ch * scale) * .5, scale, rotation);
 				canvas.toShotcutState(-tp.x, -tp.y, scale, 0);
-				var bmd:BitmapData = BitmapUtil.drawWithSize(canvas, vw, vh, true, CoreFacade.coreProxy.bgColor);
+				var bmd:BitmapData = BitmapUtil.drawWithSize(canvas, vw, vh, false, CoreFacade.coreProxy.bgColor);
 				canvas.toPreviewState();
 			}
 			else
@@ -93,10 +93,12 @@ package view.ui
 					var page:PageVO = manager.pages[i];
 					
 					var bmd:BitmapData = PageUtil.getThumbByPageVO(page, w, h, core, CoreFacade.coreProxy.bgColor);
+					
 					/*if (bmd)
-						BitmapUtil.drawBitmapDataToShape(bmd, shape, w, h, gutter, (h + gutter) * m + gutter, true);
+						
 					else
 						bmd = page.bitmapData = PageUtil.getThumbByPageVO(page, w, h, core, CoreFacade.coreProxy.bgColor);*/
+					BitmapUtil.drawBitmapDataToShape(bmd, shape, w, h, gutter, (h + gutter) * m + gutter, true);
 				}
 				l = shapes.length;
 				var offset:int = 4;
