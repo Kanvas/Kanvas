@@ -1,6 +1,7 @@
 package view.ui
 {
 	import com.adobe.images.JPGEncoder;
+	import com.adobe.images.PNGEncoder;
 	import com.kvs.utils.MathUtil;
 	import com.kvs.utils.graphic.BitmapUtil;
 	
@@ -82,22 +83,25 @@ package view.ui
 					if (m == 0)
 					{
 						var shape:Shape = new Shape;
+						var sw:Number = w + gutter * 2;
+						var sh:Number = (h +　gutter) * Math.min(l - i, 10) + gutter;
 						shape.graphics.beginFill(0x555555);
-						shape.graphics.drawRect(0, 0, w + gutter * 2, (h +　gutter) * Math.min(l - i, gutter * 2) + gutter);
+						shape.graphics.drawRect(0, 0, sw, sh);
 						shape.graphics.endFill();
 						shapes.push(shape);
 					}
 					var page:PageVO = manager.pages[i];
-					var bmd:BitmapData = PageUtil.getThumbByPageVO(page, w * 1.5, h * 1.5, core, CoreFacade.coreProxy.bgColor);
-					BitmapUtil.drawBitmapDataToShape(bmd, shape, w, h, gutter, (h + gutter) * m + gutter, true);
+					
+					var bmd:BitmapData = page.bitmapData;
+					if (bmd)
+						BitmapUtil.drawBitmapDataToShape(bmd, shape, w, h, gutter, (h + gutter) * m + gutter, true);
 				}
 				l = shapes.length;
 				var offset:int = 4;
 				for (i = 0; i < l; i++)
 				{
 					bmd = BitmapUtil.getBitmapData(shapes[i]);
-					var jpg:JPGEncoder = new JPGEncoder(80);
-					var dat:ByteArray  = jpg.encode(bmd);
+					var dat:ByteArray  = PNGEncoder.encode(bmd);
 					bytes.position = offset;
 					bytes.writeBytes(dat, 0, dat.length);
 					var s:int = offset;

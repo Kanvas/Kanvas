@@ -5,6 +5,7 @@ package
 	import com.kvs.utils.PerformaceTest;
 	import com.kvs.utils.StageUtil;
 	import com.kvs.utils.XMLConfigKit.App;
+	import com.kvs.utils.graphic.BitmapUtil;
 	
 	import control.InteractEvent;
 	import control.NavControl;
@@ -40,6 +41,8 @@ package
 		protected function init():void
 		{
 			this.resetLib();
+			
+			var size:int = BitmapUtil.maxBitmapSize;
 			
 			kvsCore.externalUI = uiContainer;
 			kvsCore.addEventListener(KVSEvent.READY, kvsReadyHandler);

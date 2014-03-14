@@ -70,7 +70,7 @@ package com.kvs.ui.label
 			}
 			catch (e:Error)
 			{
-				trace(e.getStackTrace())
+				trace(e)
 			}
 		}
 

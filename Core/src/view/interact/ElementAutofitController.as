@@ -93,7 +93,6 @@ package view.interact
 				
 				if (x != 0 || y != 0)
 					coreMdt.zoomMoveControl.zoomMoveOff(1, -x, -y, time);
-				trace (x, y);
 				return true;
 			}
 			return false;

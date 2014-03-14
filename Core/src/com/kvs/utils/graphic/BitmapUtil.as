@@ -109,12 +109,34 @@ package com.kvs.utils.graphic
 		public static function getBitmapData(target:DisplayObject, ifSmooth:Boolean = false, scale:Number = 1):BitmapData
 		{
 			var rect:Rectangle = target.getBounds(target);
-
-			var myBitmapData:BitmapData = new BitmapData(Math.max(1, target.width * scale), Math.max(1, target.height * scale), true, 0xFFFFFF);
+			var ow:Number = Math.max(1, target.width  * scale);
+			var oh:Number = Math.max(1, target.height * scale);
+			var nw:Number = ow;
+			var nh:Number = oh;
+			var p:Number = ow * oh;
+			var s:Number = 1;
+			if (p > maxBitmapSize)
+			{
+				s = Math.pow((maxBitmapSize * maxBitmapSize) / (p * p), .5);
+				nw = ow * s;
+				nh = oh * s;
+			}
 			
-			var mat:Matrix = new Matrix;
-			mat.createBox(scale, scale, 0, - rect.left, - rect.top);
-			myBitmapData.draw(target, mat, null, null, null, ifSmooth);
+			try
+			{
+				var myBitmapData:BitmapData = new BitmapData(nw, nh, true, 0xFFFFFF);
+				var mat:Matrix = new Matrix;
+				mat.createBox(scale * s, scale * s, 0, - rect.left, - rect.top);
+				myBitmapData.draw(target, mat, null, null, null, ifSmooth);
+			}
+			catch (e:Error)
+			{
+				trace(e);
+				trace(ow, oh);
+				trace(nw, nh);
+				trace(maxBitmapSize, p, s, nw * nh < maxBitmapSize);
+			}
+			
 			
 			return myBitmapData;
 		}
@@ -129,5 +151,33 @@ package com.kvs.utils.graphic
 			
 			return myBitmapData;
 		}
+		
+		public static function get maxBitmapSize():int
+		{
+			if (_maxBitmapSize == 0)
+			{
+				var f:int = 1;
+				var c:int = 0;
+				try
+				{
+					while (true)
+					{
+						if (c++ > 2)
+						{
+							f*= 2;
+							c = 0;
+						}
+						var bmd:BitmapData = new BitmapData(f, f, true, 0xFFFFFF);
+					}
+				}
+				catch (e:Error)
+				{
+					f /= 4;
+					_maxBitmapSize = f * f;
+				}
+			}
+			return _maxBitmapSize;
+		}
+		private static var _maxBitmapSize:int = 0;
 	}
 }

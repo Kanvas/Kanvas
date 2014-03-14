@@ -49,6 +49,18 @@ package view.element.text
 		 */		
 		private var textDrawer:TextDrawer;
 		
+		override public function toShotcut(renderable:Boolean = false):void
+		{
+			super.toShotcut(renderable);
+			textDrawer.renderTextBMD(graphics, textCanvas, textVO.scale * parent.scaleX);
+		}
+		
+		override public function toPreview():void
+		{
+			super.toPreview();
+			textDrawer.renderTextBMD(graphics, textCanvas, textVO.scale * parent.scaleX);
+		}
+		
 		/**
 		 */			
 		override public function showToolBar(toolbar:ToolBarController):void
