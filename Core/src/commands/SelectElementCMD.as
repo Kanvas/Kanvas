@@ -33,6 +33,8 @@ package commands
 			coreMdt.currentElement = notification.getBody() as ElementBase;
 			coreMdt.currentElement.toSelectedState();
 			
+			//trace("SelectElementCMD.excute() index:"+coreMdt.currentElement.index)
+			
 			coreMdt.toSelectedMode();
 			
 			//防止键盘移动元件时智能组合实效，默认点击元件才会启用智能组合

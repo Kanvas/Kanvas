@@ -12,7 +12,7 @@ package view.element
 	/**
 	 * 组合
 	 */	
-	public class GroupElement extends ElementBase 
+	public class GroupElement extends ElementBase implements IAutoGroupElement
 	{
 		public function GroupElement(vo:GroupVO)
 		{
@@ -23,7 +23,7 @@ package view.element
 		 */		
 		override public function exportData():XML
 		{
-			xmlData = <group/>
+			xmlData = <group/>;
 			xmlData = super.exportData();
 			
 			var element:ElementBase;

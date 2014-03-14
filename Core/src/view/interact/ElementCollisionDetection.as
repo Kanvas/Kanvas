@@ -174,11 +174,11 @@ package view.interact
 		
 		/**
 		 */		
-		private var minInteractSize:uint = 15;
+		private var minInteractSize:uint = 5;
 		
 		/**
 		 */		
-		private var minVisibleSize:uint = 5;
+		private var minVisibleSize:uint = 1;
 		
 		/**
 		 */		

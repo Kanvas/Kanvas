@@ -51,8 +51,9 @@ package view.element.shapes
 			if (control == dialogPointCt)
 			{
 				var angle:Number = selector.currentRote;
-				
-				dialogVO.rAngle = angle - dialogVO.rotation; 
+				angle += 90;
+				//trace(angle, dialogVO.rotation, selector.coreMdt.canvas.rotation);
+				dialogVO.rAngle = angle - dialogVO.rotation - 2 * selector.coreMdt.canvas.rotation; 
 				dialogVO.r = selector.curRDis / scale;
 			}
 			else//圆角控制

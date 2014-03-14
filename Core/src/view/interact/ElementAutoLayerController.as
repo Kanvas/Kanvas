@@ -42,6 +42,8 @@ package view.interact
 					//当前元素放入层级比较队列
 					_indexChangeElement.push(current);
 					_indexChangeElement.sort(sortOnElementIndex);
+					/*for each (element in _indexChangeElement)
+						trace(element, element.index);*/
 					layer = new Vector.<int>;
 					for each (element in _indexChangeElement)
 						layer.push(element.index);
@@ -49,7 +51,7 @@ package view.interact
 					var length:int = layer.length;
 					//获得一个重新比较后的顺序数组order
 					var order:Vector.<int> = getOrderBySize(_indexChangeElement);
-					
+					//trace(order);
 					//重新排列元素
 					swapElements(_indexChangeElement, order);
 				}
@@ -133,16 +135,23 @@ package view.interact
 		
 		private function sortOnElementLayer(a:ElementBase, b:ElementBase):int
 		{
-			var aw:Number = (a is LineElement) ? a.scaledWidth * .5 : a.scaledHeight;
+			var aw:Number = (a is LineElement) ? a.scaledWidth * .5 : a.scaledWidth;
 			var bw:Number = (b is LineElement) ? b.scaledWidth * .5 : b.scaledWidth;
 			var ah:Number = a.scaledHeight;
 			var bh:Number = b.scaledHeight;
-			if (aw > bw && ah > bh)
-				return -1;
-			else if (aw < bw && ah < bh)
-				return 1;
-			else 
+			if (ifInElement(a, b))
+			{
+				if (aw > bw && ah > bh)
+					return -1;
+				else if (aw < bw && ah < bh)
+					return 1;
+				else 
+					return 0;
+			}
+			else
+			{
 				return 0;
+			}
 		}
 		
 		private function checkAutoLayerAvailable(current:ElementBase, element:ElementBase):Boolean
