@@ -36,7 +36,7 @@ package landray.kp.command
 		private function initViews():void
 		{
 			//加载字体
-			//FlowTextManager.loadFont("FontLib.swf");
+			FlowTextManager.loadFont("FontLib.swf");
 			
 			if(!config.kp_internal::viewer) 
 			{

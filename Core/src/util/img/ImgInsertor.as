@@ -1,7 +1,6 @@
 package util.img
 {
 	import com.adobe.images.PNGEncoder;
-	import com.kvs.utils.graphic.BitmapUtil;
 	import com.kvs.utils.system.OS;
 	
 	import flash.display.Bitmap;
@@ -10,7 +9,6 @@ package util.img
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
-	import flash.events.ProgressEvent;
 	import flash.geom.Rectangle;
 	import flash.net.FileFilter;
 	import flash.net.FileReference;
@@ -18,12 +16,7 @@ package util.img
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
-	import flash.net.URLVariables;
 	import flash.utils.ByteArray;
-	
-	import mx.events.Request;
-	
-	import view.ui.Debugger;
 
 	/**
 	 * 图片插入器, 负责从客户端选取图片，并上传至指定服务器
@@ -63,7 +56,7 @@ package util.img
 		 */		
 		private function ioErrorHandler(evt:IOErrorEvent):void
 		{
-			trace('error');
+			trace('ImgInsertor.ioErrorHandler()');
 		}
 		
 		/**
@@ -110,7 +103,6 @@ package util.img
 				
 				if (url.indexOf("http") != 0)
 					url = IMG_DOMAIN_URL + url;
-				Debugger.debug(url);
 				var req:URLRequest = new URLRequest(url);
 				req.method = URLRequestMethod.GET;
 				req.contentType = "application/octet-stream";  

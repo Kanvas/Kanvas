@@ -25,7 +25,7 @@ package com.kvs.ui.label
 		/**
 		 * 检测截图是否满足要求
 		 */		
-		public function checkTextBm(shape:Graphics, textCanvas:Sprite, scale:Number = 1, tx:Number = 0, ty:Number = 0):void
+		public function checkTextBm(shape:Graphics, textCanvas:Sprite, scale:Number = 1, tx:Number = 0, ty:Number = 0, w:Number = 1, h:Number = 1):void
 		{
 			if (scale < 0)
 				scale = -scale;
@@ -40,10 +40,10 @@ package com.kvs.ui.label
 					
 					if (host.visible && max < imgMaxSize && (textBMD.width < textCanvas.width * scale || r > bmMaxScaleMultiple))
 					{
-						renderTextBMD(shape, textCanvas, scale, tx, ty, (max < minSmoothSize) ? true : false);
+						renderTextBMD(shape, textCanvas, scale, tx, ty, w, h, (max < minSmoothSize) ? true : false);
 					}
 					
-					checkVisible(shape, textCanvas, scale, tx, ty);
+					checkVisible(shape, textCanvas, scale, tx, ty, w, h);
 				}
 				
 			} 
@@ -57,7 +57,7 @@ package com.kvs.ui.label
 		/**
 		 * 将textCanvas上的文本转换为bitmapdata并绘制
 		 */		
-		public function renderTextBMD(shape:Graphics, textCanvas:Sprite, scale:Number = 1, tx:Number = 0, ty:Number = 0, smooth:Boolean = false):void
+		public function renderTextBMD(shape:Graphics, textCanvas:Sprite, scale:Number = 1, tx:Number = 0, ty:Number = 0, w:Number = 1, h:Number = 1, smooth:Boolean = false):void
 		{
 			shape.clear();
 			
@@ -68,8 +68,8 @@ package com.kvs.ui.label
 			{
 				textBMD = BitmapUtil.getBitmapData(textCanvas, false, scale * scaleMultiple);
 				
-				BitmapUtil.drawBitmapDataToGraphics(textBMD ,shape, textCanvas.width, textCanvas.height, 
-					- textCanvas.width / 2 + tx,  - textCanvas.height / 2 + ty, false);
+				BitmapUtil.drawBitmapDataToGraphics(textBMD ,shape, w, h, 
+					- w * .5 + tx,  - h * .5 + ty, false);
 			} 
 			catch(error:Error) 
 			{
@@ -85,7 +85,7 @@ package com.kvs.ui.label
 		 * 
 		 * 文字太小时，隐藏文字；
 		 */		
-		public function checkVisible(shape:Graphics, textCanvas:Sprite, scale:Number = 1, tx:Number = 0, ty:Number = 0):void
+		public function checkVisible(shape:Graphics, textCanvas:Sprite, scale:Number = 1, tx:Number = 0, ty:Number = 0, w:Number = 1, h:Number = 1):void
 		{
 			if (scale < 0)
 				scale *= - 1;
@@ -103,8 +103,8 @@ package com.kvs.ui.label
 			{
 				if (textCanvas.visible)
 				{
-					BitmapUtil.drawBitmapDataToGraphics(textBMD ,shape, textCanvas.width, textCanvas.height, 
-						- textCanvas.width / 2 + tx,  - textCanvas.height / 2 + ty, false);
+					BitmapUtil.drawBitmapDataToGraphics(textBMD ,shape, w, h, 
+						- w / 2 + tx,  - h / 2 + ty, false);
 				}
 				
 				textCanvas.visible = false;

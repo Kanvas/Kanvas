@@ -6,6 +6,7 @@ package view.element.text
 	
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
+	import flash.geom.Rectangle;
 	import flash.text.engine.CFFHinting;
 	
 	import flashx.textLayout.container.TextContainerManager;
@@ -61,17 +62,14 @@ package view.element.text
 		 */		
 		override public function exportData():XML
 		{
-			
 			xmlData = <text/>;
 			xmlData = super.exportData();
 			
 			xmlData.@ifMutiLine = textVO.ifMutiLine;
-			//xmlData.@text = textVO.text;
 			
 			//防止文本有特殊字符
-			var text:String = '<text><![CDATA[' + textVO.text + ']]></text>';
-			xmlData.appendChild(XML(text));
-			
+			if (textVO.text && textVO.text != "")
+				xmlData.appendChild(XML('<text><![CDATA[' + textVO.text + ']]></text>'));
 			
 			xmlData.@font = (textVO.label.format as TextFormatStyle).font;
 			xmlData.@size = textVO.size;
@@ -198,9 +196,9 @@ package view.element.text
 			
 			FlowTextManager.renderTextVOLabel(this, textVO);
 			renderAfterLabelRender();
-			
-			textDrawer.renderTextBMD(shape.graphics, textCanvas, textVO.scale * this.parent.scaleX);
-			textDrawer.checkVisible(shape.graphics, textCanvas, textVO.scale * this.parent.scaleX);
+			var bound:Rectangle = textManager.getContentBounds();
+			textDrawer.renderTextBMD(graphics, textCanvas, textVO.scale * this.parent.scaleX, 0, 0, bound.width, bound.height);
+			textDrawer.checkVisible(graphics, textCanvas, textVO.scale * this.parent.scaleX, 0, 0, bound.width, bound.height);
 		}
 		
 		/**
@@ -208,7 +206,10 @@ package view.element.text
 		 */		
 		public function checkTextBm(canvasScale:Number):void
 		{
-			textDrawer.checkTextBm(shape.graphics, textCanvas, textVO.scale * canvasScale);
+			var w:Number = textManager.compositionWidth;
+			var h:Number = textManager.compositionHeight;
+			var bound:Rectangle = textManager.getContentBounds();
+			textDrawer.checkTextBm(graphics, textCanvas, textVO.scale * canvasScale, 0, 0, bound.width, bound.height);
 		}
 		
 		/**
@@ -235,8 +236,9 @@ package view.element.text
 			textVO.height = textManager.compositionHeight;
 			
 			renderAfterLabelRender();
-			textDrawer.renderTextBMD(shape.graphics, textCanvas, textVO.scale * this.parent.scaleX);
-			textDrawer.checkVisible(shape.graphics, textCanvas, textVO.scale * this.parent.scaleX);
+			var bound:Rectangle = textManager.getContentBounds();
+			textDrawer.renderTextBMD(shape.graphics, textCanvas, textVO.scale * this.parent.scaleX, 0, 0, bound.width, bound.height);
+			textDrawer.checkVisible(shape.graphics, textCanvas, textVO.scale * this.parent.scaleX, 0, 0, bound.width, bound.height);
 		}
 		
 		/**
@@ -351,7 +353,7 @@ package view.element.text
 		{
 			textManager.setText("");
 			textManager.updateContainer();
-			this.shape.graphics.clear();
+			graphics.clear();
 		}
 		
 		/**
