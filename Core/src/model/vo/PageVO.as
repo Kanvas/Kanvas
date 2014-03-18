@@ -1,11 +1,11 @@
 package model.vo
 {
 	import flash.display.BitmapData;
+	import flash.events.Event;
 	
-	
-	import modules.pages.pg_internal;
 	import modules.pages.PageEvent;
 	import modules.pages.PageQuene;
+	import modules.pages.pg_internal;
 	
 	[Event(name="updateThumb", type="modules.pages.PageEvent")]
 	
@@ -76,6 +76,11 @@ package model.vo
 			}
 		}
 		
+		override public function dispatchEvent(event:Event):Boolean
+		{
+			return (dispatchable) ? super.dispatchEvent(event) : dispatchable;
+		}
+		
 		public function get parent():PageQuene
 		{
 			return pg_internal::parent;
@@ -94,6 +99,21 @@ package model.vo
 		{
 			return _index;
 		}
+		
+		public function get dispatchable():Boolean
+		{
+			return __dispatchable;
+		}
+		public function set dispatchable(value:Boolean):void
+		{
+			if (__dispatchable!= value)
+			{
+				__dispatchable = value;
+				if (dispatchable)
+					super.dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
+			}
+		}
+		public var __dispatchable:Boolean = true;
 		
 		private var _index:int = -1;
 		public var bitmapData:BitmapData;

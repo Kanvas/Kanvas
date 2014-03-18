@@ -117,11 +117,13 @@ package view.pagePanel
 		 */		
 		private function updateThumb(evt:PageEvent = null):void
 		{
-			pageVO.bitmapData = PageUtil.getThumbByPageVO(pageVO, iconW, iconH, mainUI, CoreFacade.coreProxy.bgColor);
+			pageVO.bitmapData = PageUtil.getThumbByPageVO(pageVO, 960, 720, mainUI, CoreFacade.coreProxy.bgColor);
 			if (bmp && con.contains(bmp)) con.removeChild(bmp);
 			con.addChild(bmp = new Bitmap(pageVO.bitmapData));
 			bmp.x = leftGutter;
 			bmp.y = (currState.height - iconH) / 2;
+			bmp.width  = 90;
+			bmp.height = 67.5;
 			bmp.smoothing = true;
 		}
 		

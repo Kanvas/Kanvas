@@ -7,6 +7,7 @@ package view.interact.autoGroup
 	
 	import model.CoreFacade;
 	import model.CoreProxy;
+	import model.vo.PageVO;
 	
 	import util.StyleUtil;
 	
@@ -126,10 +127,17 @@ package view.interact.autoGroup
 			
 			for each(var element:ElementBase in _elements)
 			{
+				var page:Boolean = (element.vo is PageVO);
+				if (page)
+					PageVO(element.vo).dispatchable = false;
+				
 				point.x = element.vo.x + xOff;
 				point.y = element.vo.y + yOff;
 				
 				element.moveTo(point);
+				
+				if (page)
+					PageVO(element.vo).dispatchable = true;
 			}
 		}
 		
@@ -151,7 +159,6 @@ package view.interact.autoGroup
 				
 				element.x = curElement.x + xDis * scaleRad;
 				element.y = curElement.y + yDis * scaleRad;
-				
 			}
 		}
 		
@@ -166,12 +173,19 @@ package view.interact.autoGroup
 			
 			for each(var element:ElementBase in _elements)
 			{
+				var page:Boolean = (element.vo is PageVO);
+				if (page)
+					PageVO(element.vo).dispatchable = false;
+				
 				element.vo.scale = element.vo.scale * scaleRad;
 				
 				xDis = element.vo.x - curElement.x;
 				yDis = element.vo.y - curElement.y;
 				
 				element.moveTo(new Point(curElement.x + xDis * scaleRad, curElement.y + yDis * scaleRad));
+				
+				if (page)
+					PageVO(element.vo).dispatchable = true;
 			}
 		}
 		
@@ -197,11 +211,18 @@ package view.interact.autoGroup
 			if (enabled == false) return;
 			for each(var element:ElementBase in _elements)
 			{
+				var page:Boolean = (element.vo is PageVO);
+				if (page)
+					PageVO(element.vo).dispatchable = false;
+				
 				element.rotation = element.vo.rotation += dis;
 				tempRollPoint.setTo(element.vo.x, element.vo.y);
 				PointUtil.rotate(tempRollPoint, MathUtil.angleToRadian(dis), curElement.middleCenter);
 				element.x = element.vo.x = tempRollPoint.x;
 				element.y = element.vo.y = tempRollPoint.y;
+				
+				if (page)
+					PageVO(element.vo).dispatchable = true;
 			}
 		}
 		

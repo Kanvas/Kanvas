@@ -3,6 +3,7 @@ package commands
 	import com.kvs.utils.XMLConfigKit.XMLVOMapper;
 	
 	import model.CoreFacade;
+	import model.vo.PageVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	
@@ -85,6 +86,10 @@ package commands
 		{
 			var ifNeedRender:Boolean = true;
 			
+			var page:Boolean = (element.vo is PageVO);
+			if (page)
+				PageVO(element.vo).dispatchable = false;
+			
 			for (var propertyName:String in obj) 
 			{
 				try
@@ -97,7 +102,9 @@ package commands
 					else
 					{
 						if (element.vo.hasOwnProperty(propertyName))
+						{
 							element.vo[propertyName] = obj[propertyName];
+						}
 					}
 				}
 				catch (e:Error)
@@ -105,31 +112,31 @@ package commands
 					trace(e.getStackTrace());
 				}
 			}
+			
+			if (page)
+				PageVO(element.vo).dispatchable = true;
 		
-			if (element.autoGroupChangable)
+			if (element.autoGroupChangable && autoGroupEnabled)
 			{
-				if (autoGroupEnabled)
+				CoreFacade.coreMediator.autoGroupController.resetElements(groupElements);
+				
+				var newObj:Object = obj;
+				var oldObj:Object = (obj == newPropertyObj) ? oldPropertyObj : newPropertyObj;
+				
+				if (obj["x"] != undefined && obj["y"] != undefined)
 				{
-					CoreFacade.coreMediator.autoGroupController.resetElements(groupElements);
-					
-					var newObj:Object = obj;
-					var oldObj:Object = (obj == newPropertyObj) ? oldPropertyObj : newPropertyObj;
-					
-					if (obj["x"] != undefined && obj["y"] != undefined)
-					{
-						CoreFacade.coreMediator.autoGroupController.moveTo(newObj.x - oldObj.x, newObj.y - oldObj.y);
-						ifNeedRender = false;
-					}
-					if (obj["rotation"] != undefined)
-					{
-						CoreFacade.coreMediator.autoGroupController.rollTo(newObj.rotation - oldObj.rotation, element);
-						ifNeedRender = false;
-					}
-					if (obj["scale"] != undefined)
-					{
-						CoreFacade.coreMediator.autoGroupController.scaleTo(newObj.scale / oldObj.scale, element);
-						ifNeedRender = false;
-					}
+					CoreFacade.coreMediator.autoGroupController.moveTo(newObj.x - oldObj.x, newObj.y - oldObj.y);
+					ifNeedRender = false;
+				}
+				if (obj["rotation"] != undefined)
+				{
+					CoreFacade.coreMediator.autoGroupController.rollTo(newObj.rotation - oldObj.rotation, element);
+					ifNeedRender = false;
+				}
+				if (obj["scale"] != undefined)
+				{
+					CoreFacade.coreMediator.autoGroupController.scaleTo(newObj.scale / oldObj.scale, element);
+					ifNeedRender = false;
 				}
 			}
 			

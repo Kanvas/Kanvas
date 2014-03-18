@@ -52,14 +52,21 @@ package view.element.text
 		
 		override public function toShotcut(renderable:Boolean = false):void
 		{
+			
 			super.toShotcut(renderable);
-			textDrawer.renderTextBMD(graphics, textCanvas, textVO.scale * parent.scaleX);
+			if (renderable)
+			{
+				trace("TextEditField.toShotcut("+renderable+")");
+				var bound:Rectangle = textManager.getContentBounds();
+				textDrawer.renderTextBMD(graphics, textCanvas, textVO.scale * parent.scaleX, 0, 0, bound.width, bound.height);
+			}
 		}
 		
 		override public function toPreview():void
 		{
 			super.toPreview();
-			textDrawer.renderTextBMD(graphics, textCanvas, textVO.scale * parent.scaleX);
+			var bound:Rectangle = textManager.getContentBounds();
+			textDrawer.renderTextBMD(graphics, textCanvas, textVO.scale * parent.scaleX, 0, 0, bound.width, bound.height);
 		}
 		
 		/**
@@ -208,8 +215,8 @@ package view.element.text
 			FlowTextManager.renderTextVOLabel(this, textVO);
 			renderAfterLabelRender();
 			var bound:Rectangle = textManager.getContentBounds();
-			textDrawer.renderTextBMD(graphics, textCanvas, textVO.scale * this.parent.scaleX, 0, 0, bound.width, bound.height);
-			textDrawer.checkVisible(graphics, textCanvas, textVO.scale * this.parent.scaleX, 0, 0, bound.width, bound.height);
+			textDrawer.renderTextBMD(graphics, textCanvas, textVO.scale * parent.scaleX, 0, 0, bound.width, bound.height);
+			textDrawer.checkVisible(graphics, textCanvas, textVO.scale * parent.scaleX, 0, 0, bound.width, bound.height);
 		}
 		
 		/**
@@ -248,8 +255,8 @@ package view.element.text
 			
 			renderAfterLabelRender();
 			var bound:Rectangle = textManager.getContentBounds();
-			textDrawer.renderTextBMD(shape.graphics, textCanvas, textVO.scale * this.parent.scaleX, 0, 0, bound.width, bound.height);
-			textDrawer.checkVisible(shape.graphics, textCanvas, textVO.scale * this.parent.scaleX, 0, 0, bound.width, bound.height);
+			textDrawer.renderTextBMD(graphics, textCanvas, textVO.scale * parent.scaleX, 0, 0, bound.width, bound.height);
+			textDrawer.checkVisible(graphics, textCanvas, textVO.scale * parent.scaleX, 0, 0, bound.width, bound.height);
 		}
 		
 		/**

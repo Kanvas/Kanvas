@@ -95,6 +95,7 @@ package view.ui
 		{
 			if(!previewState)
 			{
+				trace("Canvas.toShotcutState()")
 				previewState = true;
 				previewX = x;
 				previewY = y;
