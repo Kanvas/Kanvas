@@ -4,6 +4,7 @@ package commands
 	import com.greensock.TweenLite;
 	
 	import flash.display.Sprite;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import model.CoreFacade;
@@ -78,16 +79,18 @@ package commands
 			
 			if (maxSize > MAX_SIZE)
 				imgScale = MAX_SIZE / maxSize;
-				
-			imgVO.scale = layoutTransformer.compensateScale * imgScale;
 			
-			//防止图片插入时遮盖到已有内容，需将其放置到已有内容边缘
 			var canvas:Canvas = CoreFacade.coreMediator.canvas;
-			//canvas.clearBG();
-			var bd:Rectangle = LayoutUtil.getContentRect(canvas, false);
 			
-			imgVO.x = bd.left + bd.width + imgVO.width * imgVO.scale / 2 + 20 / layoutTransformer.canvasScale;
-			imgVO.y = bd.top + (bd.height - imgVO.height * imgVO.scale) / 2 + imgVO.height * imgVO.scale / 2;
+			imgVO.scale = layoutTransformer.compensateScale * imgScale;
+			imgVO.rotation = -canvas.rotation;
+			var x:Number = canvas.stage.stageWidth / 2;
+			var y:Number = canvas.stage.stageHeight / 2;
+			var p:Point = LayoutUtil.stagePointToElementPoint(x, y, canvas);
+			imgVO.x = p.x;
+			imgVO.y = p.y;
+			//imgVO.x = bd.left + bd.width + imgVO.width * imgVO.scale / 2 + 20 / layoutTransformer.canvasScale;
+			//imgVO.y = bd.top + (bd.height - imgVO.height * imgVO.scale) / 2 + imgVO.height * imgVO.scale / 2;
 			
 			imgElement = new ImgElement(imgVO);
 			CoreFacade.addElement(imgElement);

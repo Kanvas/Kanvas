@@ -22,7 +22,7 @@ package view.element.imgElement
 	/**
 	 * 图片
 	 */
-	public class ImgElement extends ElementBase implements IAutoGroupElement
+	public class ImgElement extends ElementBase
 	{
 		public function ImgElement(vo:ImgVO)
 		{
