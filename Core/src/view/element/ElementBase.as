@@ -224,7 +224,10 @@ package view.element
 		protected var hoverEffectShape:Shape = new Shape;
 		
 		
-		
+		/**
+		 * 一个属性，指定拖动该元素时是否影响智能组合拖动
+		 */
+		public var autoGroupChangable:Boolean = true;
 		
 		
 		

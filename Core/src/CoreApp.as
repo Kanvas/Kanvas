@@ -19,6 +19,7 @@ package
 	import model.ConfigInitor;
 	import model.CoreFacade;
 	import model.ElementProxy;
+	import model.vo.ElementVO;
 	
 	import util.LayoutUtil;
 	import util.layout.ElementLayoutInfo;
@@ -459,9 +460,18 @@ package
 			
 			configInitor = new ConfigInitor(this);
 			
+			//testImage();
+			
 			// 加载嵌入子体
 			//FlowTextManager.loadFont("./FontLib.swf");
 		}
+		
+		/*private function testImage():void
+		{
+			var vo:ElementVO = new ElementVO;
+			var image:TestImgElement = new TestImgElement(vo);
+			CoreFacade.addElement(image);
+		}*/
 		
 		/**
 		 */		

@@ -89,8 +89,6 @@ package commands
 			var p:Point = LayoutUtil.stagePointToElementPoint(x, y, canvas);
 			imgVO.x = p.x;
 			imgVO.y = p.y;
-			//imgVO.x = bd.left + bd.width + imgVO.width * imgVO.scale / 2 + 20 / layoutTransformer.canvasScale;
-			//imgVO.y = bd.top + (bd.height - imgVO.height * imgVO.scale) / 2 + imgVO.height * imgVO.scale / 2;
 			
 			imgElement = new ImgElement(imgVO);
 			CoreFacade.addElement(imgElement);

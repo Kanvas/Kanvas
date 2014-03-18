@@ -87,8 +87,11 @@ package view.interact
 			selector.x = selectorPoint.x;
 			selector.y = selectorPoint.y;
 			
-			coreMdt.autoGroupController.moveElement(curMovingElement.x - curMovingElement.vo.x, 
-													curMovingElement.y - curMovingElement.vo.y);
+			if (curMovingElement.autoGroupChangable)
+			{
+				coreMdt.autoGroupController.moveElement(curMovingElement.x - curMovingElement.vo.x, 
+														curMovingElement.y - curMovingElement.vo.y);
+			}
 		}
 		
 		/**

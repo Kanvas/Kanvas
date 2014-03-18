@@ -106,31 +106,33 @@ package commands
 				}
 			}
 		
-
-			if (autoGroupEnabled)
+			if (element.autoGroupChangable)
 			{
-				CoreFacade.coreMediator.autoGroupController.resetElements(groupElements);
-				
-				var newObj:Object = obj;
-				var oldObj:Object = (obj == newPropertyObj) ? oldPropertyObj : newPropertyObj;
-				
-				if (obj["x"] != undefined && obj["y"] != undefined)
+				if (autoGroupEnabled)
 				{
-					CoreFacade.coreMediator.autoGroupController.moveTo(newObj.x - oldObj.x, newObj.y - oldObj.y);
-					ifNeedRender = false;
+					CoreFacade.coreMediator.autoGroupController.resetElements(groupElements);
+					
+					var newObj:Object = obj;
+					var oldObj:Object = (obj == newPropertyObj) ? oldPropertyObj : newPropertyObj;
+					
+					if (obj["x"] != undefined && obj["y"] != undefined)
+					{
+						CoreFacade.coreMediator.autoGroupController.moveTo(newObj.x - oldObj.x, newObj.y - oldObj.y);
+						ifNeedRender = false;
+					}
+					if (obj["rotation"] != undefined)
+					{
+						CoreFacade.coreMediator.autoGroupController.rollTo(newObj.rotation - oldObj.rotation, element);
+						ifNeedRender = false;
+					}
+					if (obj["scale"] != undefined)
+					{
+						CoreFacade.coreMediator.autoGroupController.scaleTo(newObj.scale / oldObj.scale, element);
+						ifNeedRender = false;
+					}
 				}
-				if (obj["rotation"] != undefined)
-				{
-					CoreFacade.coreMediator.autoGroupController.rollTo(newObj.rotation - oldObj.rotation, element);
-					ifNeedRender = false;
-				}
-				if (obj["scale"] != undefined)
-				{
-					CoreFacade.coreMediator.autoGroupController.scaleTo(newObj.scale / oldObj.scale, element);
-					ifNeedRender = false;
-				}
-				
 			}
+			
 			
 			//element.clearHoverEffect();
 			if (render || ifNeedRender)
