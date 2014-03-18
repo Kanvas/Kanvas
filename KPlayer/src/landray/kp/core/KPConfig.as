@@ -1,11 +1,11 @@
 package landray.kp.core
 {
+	import com.kvs.ui.toolTips.ToolTipsManager;
 	import com.kvs.utils.Map;
 	import com.kvs.utils.XMLConfigKit.XMLVOLib;
 	
 	import flash.display.DisplayObjectContainer;
 	
-	import landray.kp.components.Debugger;
 	import landray.kp.components.Selector;
 	import landray.kp.components.ToolBarSlide;
 	import landray.kp.components.ToolBarZoom;
@@ -17,7 +17,8 @@ package landray.kp.core
 	import model.vo.BgVO;
 	
 	import view.interact.zoomMove.ZoomMoveControl;
-
+	import view.ui.Debugger;
+	
 	public final class KPConfig
 	{
 		public  static const instance:KPConfig = new KPConfig;
@@ -64,6 +65,7 @@ package landray.kp.core
 		kp_internal var pageManager:ManagerPage;
 		kp_internal var debugger   :Debugger;
 		
+		kp_internal var tipsManager:ToolTipsManager;
 		kp_internal var graphs     :Vector.<Graph>;
 		kp_internal var themes     :Map;
 		kp_internal var lib        :XMLVOLib;

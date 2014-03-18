@@ -25,6 +25,7 @@ package
 	import view.themePanel.ThemePanel;
 	import view.toolBar.ToolBar;
 	import view.toolBar.ZoomToolBar;
+	import view.ui.Debugger;
 	
 	/**
 	 * 

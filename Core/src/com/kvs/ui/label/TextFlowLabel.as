@@ -1,6 +1,7 @@
 package com.kvs.ui.label
 {
 	import flash.display.Sprite;
+	import flash.geom.Rectangle;
 	import flash.text.TextFormat;
 	import flash.text.engine.CFFHinting;
 	import flash.text.engine.FontLookup;
@@ -33,7 +34,7 @@ package com.kvs.ui.label
 			_textLayoutFormat = new TextLayoutFormat;
 			_textLayoutFormat.cffHinting = CFFHinting.NONE;
 			_textLayoutFormat.textAlign = TextAlign.LEFT;
-			_textLayoutFormat.fontLookup = FontLookup.DEVICE;
+			_textLayoutFormat.fontLookup = FontLookup.EMBEDDED_CFF;
 			
 			_textManager.hostFormat = _textLayoutFormat;
 		}
@@ -59,8 +60,9 @@ package com.kvs.ui.label
 			
 			if (ifTextBitmap)
 			{
-				textDrawer.renderTextBMD(this.graphics, textCanvas, 1, textCanvas.width / 2, textCanvas.height / 2);
-				textDrawer.checkVisible(this.graphics, textCanvas, 1, textCanvas.width / 2, textCanvas.height / 2);
+				var bound:Rectangle = textManager.getContentBounds();
+				textDrawer.renderTextBMD(this.graphics, textCanvas, 1, bound.width * .5, bound.height * .5, bound.width, bound.height);
+				textDrawer.checkVisible(this.graphics, textCanvas, 1, bound.width * .5, bound.height * .5, bound.width, bound.height);
 			}
 		}
 		
@@ -71,7 +73,12 @@ package com.kvs.ui.label
 			globleScale = scale;
 			
 			if (ifTextBitmap)
-				textDrawer.checkTextBm(graphics, textCanvas, globleScale, textCanvas.width / 2, textCanvas.height / 2);
+			{
+				var w:Number = textManager.compositionWidth;
+				var h:Number = textManager.compositionHeight;
+				var bound:Rectangle = textManager.getContentBounds();
+				textDrawer.checkTextBm(graphics, textCanvas, globleScale, bound.width * .5, bound.height * .5, bound.width, bound.height);
+			}
 		}
 		
 		/**
@@ -170,9 +177,10 @@ package com.kvs.ui.label
 		{
 			if (ifTextBitmap)
 			{
+				var bound:Rectangle = textManager.getContentBounds();
 				//todo
-				textDrawer.renderTextBMD(this.graphics, textCanvas, globleScale, textCanvas.width / 2, textCanvas.height / 2);
-				textDrawer.checkVisible(this.graphics, textCanvas, globleScale, textCanvas.width / 2, textCanvas.height / 2);
+				textDrawer.renderTextBMD(this.graphics, textCanvas, globleScale, bound.width * .5, bound.height * .5, bound.width, bound.height);
+				textDrawer.checkVisible(this.graphics, textCanvas, globleScale, bound.width * .5, bound.height * .5, bound.width, bound.height);
 			}
 				
 		}

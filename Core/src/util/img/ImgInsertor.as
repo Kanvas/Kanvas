@@ -9,7 +9,6 @@ package util.img
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
-	import flash.events.ProgressEvent;
 	import flash.events.SecurityErrorEvent;
 	import flash.geom.Rectangle;
 	import flash.net.FileFilter;
@@ -59,7 +58,7 @@ package util.img
 		 */		
 		private function ioErrorHandler(evt:IOErrorEvent):void
 		{
-			trace('error');
+			trace('ImgInsertor.ioErrorHandler()');
 		}
 		
 		/**
@@ -106,7 +105,6 @@ package util.img
 				
 				if (url.indexOf("http") != 0)
 					url = IMG_DOMAIN_URL + url;
-				
 				var req:URLRequest = new URLRequest(url);
 				req.method = URLRequestMethod.GET;
 				req.contentType = "application/octet-stream";  
