@@ -187,7 +187,7 @@ package view.editor.text
 			
 				addStyleBtn(textStyleBtn);
 				
-				if (textStyleBtn.id == 'SubTitle')
+				if (textStyleBtn.id == 'Body')
 					setStyle(textStyleBtn.textVO);
 			}
 			
