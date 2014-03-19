@@ -106,7 +106,7 @@ package commands
 					{
 						if (element.vo.hasOwnProperty(propertyName))
 						{
-							if (!thumb && pageVOUpdateThumbProperties.indexOf(propertyName) != -1) thumb = true;
+							if (page && !thumb && pageVOUpdateThumbProperties.indexOf(propertyName) != -1) thumb = true;
 							element.vo[propertyName] = obj[propertyName];
 						}
 					}
@@ -118,9 +118,12 @@ package commands
 			}
 			
 			if (page)
+			{
 				PageVO(element.vo).thumbUpdatable = true;
-			if (thumb)
-				PageUtil.notifyPageVOUpdateThumb(PageVO(element.vo));
+				if (thumb)
+					PageUtil.notifyPageVOUpdateThumb(PageVO(element.vo));
+			}
+			
 		
 			if (element.autoGroupChangable && autoGroupEnabled)
 			{

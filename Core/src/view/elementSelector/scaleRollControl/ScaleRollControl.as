@@ -31,13 +31,6 @@ package view.elementSelector.scaleRollControl
 			addChild(scalePoint);
 			scaleControl = new ScaleControl(selector, scalePoint);
 			
-			roll_up;
-			roll_over;
-			roll_down;
-			fitPoint.iconW = fitPoint.iconH = ConfigInitor.ICON_SIZE_FOR_SCALE_AND_ROLL;
-			fitPoint.setIcons("roll_up", "roll_over", "roll_down");
-			addChild(fitPoint);
-			fitControl = new FitControl(selector, fitPoint);
 			
 			// 旋转控制
 			roll_up;
@@ -74,11 +67,6 @@ package view.elementSelector.scaleRollControl
 		 * 控制旋转 
 		 */		
 		private var roteControl:RoteControl;
-		
-		/**
-		 * 自适应页面控制
-		 */	
-		private var fitControl:FitControl;
 		
 		/**
 		 *  左下方控制点, 控制旋转

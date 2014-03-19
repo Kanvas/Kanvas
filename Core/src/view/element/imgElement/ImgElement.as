@@ -43,20 +43,29 @@ package view.element.imgElement
 		override public function updateView(check:Boolean=true):void
 		{
 			super.updateView(check);
-			if (super.width > minSize && super.height > minSize)
+			checkBmdRender();
+		}
+		
+		private function checkBmdRender():void
+		{
+			if (rendered)
 			{
-				if (lastWidth<= minSize || lastHeight<= minSize) 
-					renderBmdNeeded = true;
+				if (super.width > minSize && super.height > minSize)
+				{
+					if (lastWidth<= minSize || lastHeight<= minSize) 
+						renderBmdNeeded = true;
+				}
+				else
+				{
+					if (lastWidth > minSize && lastHeight > minSize) 
+						renderBmdNeeded = true;
+				}
+				lastWidth  = super.width;
+				lastHeight = super.height;
+				if (renderBmdNeeded)
+					drawBmd();
 			}
-			else
-			{
-				if (lastWidth > minSize && lastHeight > minSize) 
-					renderBmdNeeded = true;
-			}
-			lastWidth  = super.width;
-			lastHeight = super.height;
-			if (renderBmdNeeded)
-				render();
+			
 		}
 		
 		private var renderBmdNeeded:Boolean;
@@ -64,7 +73,17 @@ package view.element.imgElement
 		private var lastHeight:Number;
 		private var minSize:Number = 20;
 		
+		override public function set scaleX(value:Number):void
+		{
+			super.scaleX = value;
+			checkBmdRender();
+		}
 		
+		override public function set scaleY(value:Number):void
+		{
+			super.scaleY = value;
+			checkBmdRender();
+		}
 		
 		
 		
@@ -139,6 +158,7 @@ package view.element.imgElement
 		 */
 		override public function render():void
 		{
+			rendered = true;
 			trace("ImgElement.render()")
 			super.render();
 			renderBmdNeeded = false;
@@ -157,6 +177,8 @@ package view.element.imgElement
 				currLoadState.loadingImg();
 			}
 		}
+		
+		private var rendered:Boolean;
 		
 		/**
 		 */		
