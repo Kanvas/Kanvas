@@ -1,12 +1,10 @@
 package view.ui
 {
-	import com.kvs.utils.PerformaceTest;
 	import com.kvs.utils.RectangleUtil;
 	
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
-	import flash.utils.Dictionary;
 	
 	import util.LayoutUtil;
 	
@@ -57,7 +55,6 @@ package view.ui
 			if (child is ICanvasLayout)
 			{
 				var item:ICanvasLayout = ICanvasLayout(child);
-				//item.updateView();
 				var index:int = items.indexOf(item);
 				if (index > -1) items.splice(index, 1);
 			}
@@ -70,7 +67,6 @@ package view.ui
 			if (child is ICanvasLayout)
 			{
 				var item:ICanvasLayout = ICanvasLayout(child);
-				//item.updateView();
 				var index:int = items.indexOf(item);
 				if (index > -1) items.splice(index, 1);
 			}
@@ -98,7 +94,7 @@ package view.ui
 			
 			if(!previewState)
 			{
-				PerformaceTest.start("Canvas.toShotcutState()");
+				//PerformaceTest.start("Canvas.toShotcutState()");
 				previewState = true;
 				previewX = x;
 				previewY = y;
@@ -128,14 +124,14 @@ package view.ui
 					vector.push(item);
 					item.toShotcut(renderable);
 				}
-				PerformaceTest.end("Canvas.toShotcutState()");
+				//PerformaceTest.end("Canvas.toShotcutState()");
 			}
 		}
 		public function toPreviewState():void
 		{
 			if( previewState)
 			{
-				PerformaceTest.start("Canvas.toPreviewState()");
+				//PerformaceTest.start("Canvas.toPreviewState()");
 				previewState = false;
 				__x = previewX;
 				__y = previewY;
@@ -150,7 +146,7 @@ package view.ui
 				previewItems.length = 0;
 				visibleItems.length = 0;
 				
-				PerformaceTest.end("Canvas.toPreviewState()");
+				//PerformaceTest.end("Canvas.toPreviewState()");
 			}
 		}
 		

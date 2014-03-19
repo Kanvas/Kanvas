@@ -182,7 +182,7 @@ package view.elementSelector
 		 */		
 		public function get elementWidthForStage():Number
 		{
-			return element.vo.width * element.vo.scale * layoutTransformer.canvasScale;
+			return element.vo.width * element.scale * layoutTransformer.canvasScale;
 		}
 		
 		

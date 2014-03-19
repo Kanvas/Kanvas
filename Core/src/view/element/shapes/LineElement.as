@@ -68,11 +68,11 @@ package view.element.shapes
 		 */		
 		override public function showHoverEffect():void
 		{
-			var dis:Number = (hoverStyle.width - vo.width) / 2;
+			var dis:Number = (hoverStyle.width - vo.width) * .5;
 			
 			hoverEffectShape.graphics.clear();
 			StyleManager.setLineStyle(hoverEffectShape.graphics, hoverStyle.getBorder);
-			hoverEffectShape.graphics.drawRect(hoverStyle.tx + hoverStyle.width / 2 - dis, hoverStyle.ty, hoverStyle.width / 2 + dis, hoverStyle.height);
+			hoverEffectShape.graphics.drawRect(hoverStyle.tx + hoverStyle.width * .5 - dis, hoverStyle.ty, hoverStyle.width * .5, hoverStyle.height);
 			hoverEffectShape.graphics.endFill();
 		}
 		
@@ -135,6 +135,11 @@ package view.element.shapes
 		override public function get scaledWidth():Number
 		{
 			return super.scaledWidth * .5;
+		}
+		
+		override public function get tempScaledWidth():Number
+		{
+			return super.tempScaledWidth * .5;
 		}
 		
 		override public function get topLeft():Point
