@@ -78,7 +78,7 @@ package model.vo
 		
 		override public function dispatchEvent(event:Event):Boolean
 		{
-			return (dispatchable) ? super.dispatchEvent(event) : dispatchable;
+			return (thumbUpdatable) ? super.dispatchEvent(event) : false;
 		}
 		
 		public function get parent():PageQuene
@@ -92,30 +92,28 @@ package model.vo
 		 */		
 		public function set index(value:int):void
 		{
-			_index = value;	
+			__index = value;	
 		}
 		
 		public function get index():int
 		{
-			return _index;
+			return __index;
 		}
+		private var __index:int = -1;
 		
-		public function get dispatchable():Boolean
+		public function get thumbUpdatable():Boolean
 		{
-			return __dispatchable;
+			return __thumbUpdatable;
 		}
-		public function set dispatchable(value:Boolean):void
+		public function set thumbUpdatable(value:Boolean):void
 		{
-			if (__dispatchable!= value)
+			if (__thumbUpdatable!= value)
 			{
-				__dispatchable = value;
-				if (dispatchable)
-					super.dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
+				__thumbUpdatable = value;
 			}
 		}
-		public var __dispatchable:Boolean = true;
+		private var __thumbUpdatable:Boolean = true;
 		
-		private var _index:int = -1;
 		public var bitmapData:BitmapData;
 	}
 }

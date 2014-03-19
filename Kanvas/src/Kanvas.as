@@ -43,7 +43,7 @@ package
 		{
 			this.resetLib();
 			
-			var size:int = BitmapUtil.maxBitmapSize;
+			PerformaceTest.ifRun = true;
 			
 			kvsCore.externalUI = uiContainer;
 			kvsCore.addEventListener(KVSEvent.READY, kvsReadyHandler);

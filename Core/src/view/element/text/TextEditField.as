@@ -52,21 +52,22 @@ package view.element.text
 		
 		override public function toShotcut(renderable:Boolean = false):void
 		{
-			
 			super.toShotcut(renderable);
 			if (renderable)
 			{
-				trace("TextEditField.toShotcut("+renderable+")");
 				var bound:Rectangle = textManager.getContentBounds();
 				textDrawer.renderTextBMD(graphics, textCanvas, textVO.scale * parent.scaleX, 0, 0, bound.width, bound.height);
 			}
 		}
 		
-		override public function toPreview():void
+		override public function toPreview(renderable:Boolean = false):void
 		{
-			super.toPreview();
-			var bound:Rectangle = textManager.getContentBounds();
-			textDrawer.renderTextBMD(graphics, textCanvas, textVO.scale * parent.scaleX, 0, 0, bound.width, bound.height);
+			super.toPreview(renderable);
+			if (renderable)
+			{
+				var bound:Rectangle = textManager.getContentBounds();
+				textDrawer.renderTextBMD(graphics, textCanvas, textVO.scale * parent.scaleX, 0, 0, bound.width, bound.height);
+			}
 		}
 		
 		/**

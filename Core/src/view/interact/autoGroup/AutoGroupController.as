@@ -9,6 +9,8 @@ package view.interact.autoGroup
 	import model.CoreProxy;
 	import model.vo.PageVO;
 	
+	import modules.pages.PageUtil;
+	
 	import util.StyleUtil;
 	
 	import view.element.Camera;
@@ -107,7 +109,7 @@ package view.interact.autoGroup
 		/**
 		 * 拖动元素和粘贴临时组合时触发，将智能组合中的元素平移
 		 */		
-		public function moveElement(xOff:Number, yOff:Number):void
+		public function move(xOff:Number, yOff:Number):void
 		{
 			if (enabled == false) return;
 			for each(var element:ElementBase in _elements)
@@ -129,7 +131,7 @@ package view.interact.autoGroup
 			{
 				var page:Boolean = (element.vo is PageVO);
 				if (page)
-					PageVO(element.vo).dispatchable = false;
+					PageVO(element.vo).thumbUpdatable = false;
 				
 				point.x = element.vo.x + xOff;
 				point.y = element.vo.y + yOff;
@@ -137,7 +139,10 @@ package view.interact.autoGroup
 				element.moveTo(point);
 				
 				if (page)
-					PageVO(element.vo).dispatchable = true;
+				{
+					PageVO(element.vo).thumbUpdatable = true;
+					PageUtil.notifyPageVOUpdateThumb(PageVO(element.vo));
+				}
 			}
 		}
 		
@@ -175,7 +180,7 @@ package view.interact.autoGroup
 			{
 				var page:Boolean = (element.vo is PageVO);
 				if (page)
-					PageVO(element.vo).dispatchable = false;
+					PageVO(element.vo).thumbUpdatable = false;
 				
 				element.vo.scale = element.vo.scale * scaleRad;
 				
@@ -185,7 +190,10 @@ package view.interact.autoGroup
 				element.moveTo(new Point(curElement.x + xDis * scaleRad, curElement.y + yDis * scaleRad));
 				
 				if (page)
-					PageVO(element.vo).dispatchable = true;
+				{
+					PageVO(element.vo).thumbUpdatable = true;
+					PageUtil.notifyPageVOUpdateThumb(PageVO(element.vo));
+				}
 			}
 		}
 		
@@ -213,7 +221,7 @@ package view.interact.autoGroup
 			{
 				var page:Boolean = (element.vo is PageVO);
 				if (page)
-					PageVO(element.vo).dispatchable = false;
+					PageVO(element.vo).thumbUpdatable = false;
 				
 				element.rotation = element.vo.rotation += dis;
 				tempRollPoint.setTo(element.vo.x, element.vo.y);
@@ -222,7 +230,10 @@ package view.interact.autoGroup
 				element.y = element.vo.y = tempRollPoint.y;
 				
 				if (page)
-					PageVO(element.vo).dispatchable = true;
+				{
+					PageVO(element.vo).thumbUpdatable = true;
+					PageUtil.notifyPageVOUpdateThumb(PageVO(element.vo));
+				}
 			}
 		}
 		

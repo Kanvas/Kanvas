@@ -11,8 +11,10 @@ package view.interact
 	import flash.geom.Rectangle;
 	
 	import model.CoreFacade;
+	import model.vo.PageVO;
 	
 	import modules.pages.PageManager;
+	import modules.pages.PageUtil;
 	
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
@@ -884,8 +886,18 @@ package view.interact
 			
 			if (currentElement)
 			{
+				if (currentElement.vo is PageVO)
+					var pageVO:PageVO = currentElement.vo as PageVO;
+				if (pageVO)
+					pageVO.thumbUpdatable = false;
 				currentElement.vo.x = currentElement.x;
 				currentElement.vo.y = currentElement.y;
+				if (pageVO)
+				{
+					pageVO.thumbUpdatable = true;
+					PageUtil.notifyPageVOUpdateThumb(pageVO);
+				}
+				
 			}
 		}
 		

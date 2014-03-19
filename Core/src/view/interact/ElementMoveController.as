@@ -5,6 +5,8 @@ package view.interact
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
+	import model.vo.PageVO;
+	
 	import util.LayoutUtil;
 	import util.layout.LayoutTransformer;
 	
@@ -89,7 +91,7 @@ package view.interact
 			
 			if (curMovingElement.autoGroupChangable)
 			{
-				coreMdt.autoGroupController.moveElement(curMovingElement.x - curMovingElement.vo.x, 
+				coreMdt.autoGroupController.move(curMovingElement.x - curMovingElement.vo.x, 
 														curMovingElement.y - curMovingElement.vo.y);
 			}
 		}
@@ -124,6 +126,8 @@ package view.interact
 			}
 			else
 			{
+				if (coreMdt.currentElement.vo is PageVO)
+					PageVO(coreMdt.currentElement.vo).thumbUpdatable = true;
 				coreMdt.createNewShape = false;
 				coreMdt.createNewShapeMouseUped = true;
 				if (coreMdt.createNewShapeMouseUped && coreMdt.createNewShapeTweenOver)

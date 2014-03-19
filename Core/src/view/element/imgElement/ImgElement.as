@@ -62,7 +62,7 @@ package view.element.imgElement
 		private var renderBmdNeeded:Boolean;
 		private var lastWidth:Number;
 		private var lastHeight:Number;
-		private var minSize:Number = 15;
+		private var minSize:Number = 20;
 		
 		
 		

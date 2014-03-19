@@ -57,7 +57,7 @@ package landray.kp.maps.mind.view
 		{
 			
 		}
-		public function toPreview():void
+		public function toPreview(renderable:Boolean = false):void
 		{
 			
 		}

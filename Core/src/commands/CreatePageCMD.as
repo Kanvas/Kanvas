@@ -46,6 +46,8 @@ package commands
 			// VO 初始化
 			pageVO = ElementCreator.getElementVO(pageProxy.type) as PageVO;
 			
+			pageVO.thumbUpdatable = false;
+			
 			var point:Point = LayoutUtil.stagePointToElementPoint(pageProxy.x, pageProxy.y, layoutTransformer.canvas);
 			pageVO.x = point.x;
 			pageVO.y = point.y;

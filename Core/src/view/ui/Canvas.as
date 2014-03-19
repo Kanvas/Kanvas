@@ -1,10 +1,12 @@
 package view.ui
 {
+	import com.kvs.utils.PerformaceTest;
 	import com.kvs.utils.RectangleUtil;
 	
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
+	import flash.utils.Dictionary;
 	
 	import util.LayoutUtil;
 	
@@ -93,9 +95,10 @@ package view.ui
 		
 		public function toShotcutState($x:Number, $y:Number, $scale:Number, $rotation:Number, page:Rectangle = null):void
 		{
+			
 			if(!previewState)
 			{
-				trace("Canvas.toShotcutState()")
+				PerformaceTest.start("Canvas.toShotcutState()");
 				previewState = true;
 				previewX = x;
 				previewY = y;
@@ -106,6 +109,7 @@ package view.ui
 				__y = $y;
 				__scaleX = __scaleY = $scale;
 				__rotation = $rotation;
+				
 				
 				for each (var item:ICanvasLayout in items)
 				{
@@ -120,22 +124,33 @@ package view.ui
 					{
 						renderable = true;
 					}
+					var vector:Vector.<ICanvasLayout> = (renderable) ? previewItems : visibleItems;
+					vector.push(item);
 					item.toShotcut(renderable);
 				}
+				PerformaceTest.end("Canvas.toShotcutState()");
 			}
 		}
 		public function toPreviewState():void
 		{
 			if( previewState)
 			{
+				PerformaceTest.start("Canvas.toPreviewState()");
 				previewState = false;
 				__x = previewX;
 				__y = previewY;
 				__scaleX = __scaleY = previewScale;
 				__rotation = previewRotation;
 				
-				for each (var item:ICanvasLayout in items)
-					item.toPreview();
+				for each (var item:ICanvasLayout in previewItems)
+					item.toPreview(true);
+				for each (item in visibleItems)
+					item.toPreview(false);
+					
+				previewItems.length = 0;
+				visibleItems.length = 0;
+				
+				PerformaceTest.end("Canvas.toPreviewState()");
 			}
 		}
 		
@@ -144,6 +159,8 @@ package view.ui
 		private var previewY:Number;
 		private var previewScale:Number;
 		private var previewRotation:Number;
+		private var previewItems:Vector.<ICanvasLayout> = new Vector.<ICanvasLayout>;
+		private var visibleItems:Vector.<ICanvasLayout> = new Vector.<ICanvasLayout>;
 		
 		/**
 		 */		

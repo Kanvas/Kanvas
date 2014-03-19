@@ -5,6 +5,8 @@ package commands
 	import model.CoreFacade;
 	import model.vo.PageVO;
 	
+	import modules.pages.PageUtil;
+	
 	import org.puremvc.as3.interfaces.INotification;
 	
 	import util.undoRedo.UndoRedoMannager;
@@ -87,8 +89,9 @@ package commands
 			var ifNeedRender:Boolean = true;
 			
 			var page:Boolean = (element.vo is PageVO);
+			var thumb:Boolean;
 			if (page)
-				PageVO(element.vo).dispatchable = false;
+				PageVO(element.vo).thumbUpdatable = false;
 			
 			for (var propertyName:String in obj) 
 			{
@@ -103,6 +106,7 @@ package commands
 					{
 						if (element.vo.hasOwnProperty(propertyName))
 						{
+							if (!thumb && pageVOUpdateThumbProperties.indexOf(propertyName) != -1) thumb = true;
 							element.vo[propertyName] = obj[propertyName];
 						}
 					}
@@ -114,7 +118,9 @@ package commands
 			}
 			
 			if (page)
-				PageVO(element.vo).dispatchable = true;
+				PageVO(element.vo).thumbUpdatable = true;
+			if (thumb)
+				PageUtil.notifyPageVOUpdateThumb(PageVO(element.vo));
 		
 			if (element.autoGroupChangable && autoGroupEnabled)
 			{
@@ -170,6 +176,7 @@ package commands
 		 */		
 		private var selector:ElementSelector;
 		
+		private static const pageVOUpdateThumbProperties:Array = ["x", "y", "width", "height", "scale"];
 		private static const voPropertyNames:Array = ["radius", "arrowWidth", "trailHeight", 'r', 'rAngle', "innerRadius", "width", "height", "thickness"];
 	}
 }

@@ -73,7 +73,7 @@ package landray.kp.maps.main.elements
 			
 		}
 		
-		public function toPreview():void
+		public function toPreview(renderable:Boolean = false):void
 		{
 			
 		}

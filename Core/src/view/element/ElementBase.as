@@ -478,10 +478,14 @@ package view.element
 			}
 		}
 		
-		public function toPreview():void
+		public function toPreview(renderable:Boolean = false):void
 		{
-			alpha   = previewAlpha;
-			visible = previewVisible;
+			super.visible = previewVisible;
+			if (renderable)
+			{
+				alpha = previewAlpha;
+				updateView(false);
+			}
 		}
 		
 		public function toShotcut(renderable:Boolean = false):void
@@ -501,8 +505,8 @@ package view.element
 			}
 		}
 		
-		private var previewAlpha  :Number;
-		private var previewVisible:Boolean;
+		protected var previewAlpha  :Number;
+		protected var previewVisible:Boolean;
 		
 		override public function set visible(value:Boolean):void
 		{

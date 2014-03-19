@@ -144,29 +144,23 @@ package com.kvs.utils.graphic
 		/**
 		 * 抓取显示对象上的指定范围内位图数据,
 		 */		
-		public static function drawWithSize(target:DisplayObject, width:Number, height:Number, transparent:Boolean = true, color:uint = 0xFFFFFF, mar:Matrix = null):BitmapData
+		public static function drawWithSize(target:DisplayObject, width:Number, height:Number, transparent:Boolean = true, color:uint = 0xFFFFFF, mar:Matrix = null, smooth:Boolean = false):BitmapData
 		{
 			var myBitmapData:BitmapData = new BitmapData(width, height, transparent, color);
-			myBitmapData.draw(target, mar, null, null, null, true);
-			
+			myBitmapData.draw(target, mar, null, null, null, smooth);
 			return myBitmapData;
 		}
 		
 		public static function get maxBitmapSize():int
 		{
-			if (_maxBitmapSize == 0)
+			/*if (_maxBitmapSize == 0)
 			{
 				var f:int = 1;
-				var c:int = 0;
 				try
 				{
 					while (true)
 					{
-						if (c++ > 2)
-						{
-							f*= 2;
-							c = 0;
-						}
+						
 						var bmd:BitmapData = new BitmapData(f, f, true, 0xFFFFFF);
 					}
 				}
@@ -175,9 +169,9 @@ package com.kvs.utils.graphic
 					f /= 4;
 					_maxBitmapSize = f * f;
 				}
-			}
+			}*/
 			return _maxBitmapSize;
 		}
-		private static var _maxBitmapSize:int = 0;
+		private static var _maxBitmapSize:int = 16777216;
 	}
 }

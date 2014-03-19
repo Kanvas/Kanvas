@@ -32,6 +32,6 @@ package view.ui
 		
 		function updateView(check:Boolean = true):void
 		function toShotcut(renderable:Boolean = false):void
-		function toPreview():void
+		function toPreview(renderable:Boolean = false):void
 	}
 }
