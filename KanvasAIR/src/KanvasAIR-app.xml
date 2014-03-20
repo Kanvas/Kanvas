@@ -101,9 +101,9 @@
 		<visible>true</visible>
 		
 		<!-- The render mode for the app (either auto, cpu, or gpu). Optional. Mobile only. Default auto -->
-		<!-- <renderMode>gpu</renderMode> -->
+		<renderMode>gpu</renderMode>
 		
-		<!-- <requestedDisplayResolution>high</requestedDisplayResolution> -->
+		<requestedDisplayResolution>high</requestedDisplayResolution>
 		
     </initialWindow>
 

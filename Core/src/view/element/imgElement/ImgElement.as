@@ -162,6 +162,7 @@ package view.element.imgElement
 			trace("ImgElement.render()")
 			super.render();
 			renderBmdNeeded = false;
+			
 			// 图片插入时
 			if (imgVO.sourceData)
 			{
@@ -184,6 +185,9 @@ package view.element.imgElement
 		 */		
 		internal function drawBmd():void
 		{
+			if (imgVO.sourceData == null)
+				return;
+			
 			if(!smallImgData)
 			{
 				var ow:Number = imgVO.sourceData.width;
@@ -197,6 +201,7 @@ package view.element.imgElement
 					smallImgData.draw(imgVO.sourceData, matrix);
 				}
 			}
+			
 			shape.graphics.clear();
 			var bmd:BitmapData = (smallImgData && (super.width <= minSize || super.height <= minSize)) ? smallImgData : imgVO.sourceData;
 			
