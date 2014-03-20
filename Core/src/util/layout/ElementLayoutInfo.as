@@ -7,6 +7,7 @@ package util.layout
 	import util.LayoutUtil;
 	
 	import view.element.ElementBase;
+	import view.element.shapes.LineElement;
 
 	/**
 	 * 当前图形元件的布局信息获取器， 获取的尺寸
@@ -33,10 +34,19 @@ package util.layout
 		{
 			if (currentElementUI)
 			{
-				_width  = ((useVOProperty) ? currentElementUI.scaledWidth  : currentElementUI.tempScaledWidth ) * transformer.canvasScale;
+				_scale  = ((useVOProperty) ? currentElementUI.vo.scale : currentElementUI.scale) * transformer.canvasScale;
+				
+				
 				_height = ((useVOProperty) ? currentElementUI.scaledHeight : currentElementUI.tempScaledHeight) * transformer.canvasScale;
 				
-				_scale  = ((useVOProperty) ? currentElementUI.vo.scale : currentElementUI.scale) * transformer.canvasScale;
+				if (currentElementUI is LineElement) 
+				{
+					_width = ((useVOProperty) ? currentElementUI.vo.scale : currentElementUI.scale) * currentElementUI.vo.width * transformer.canvasScale;
+				}
+				else
+				{
+					_width  = ((useVOProperty) ? currentElementUI.scaledWidth  : currentElementUI.tempScaledWidth ) * transformer.canvasScale;
+				}
 				
 				//左上角坐标
 				_tx = - _width  * .5;
