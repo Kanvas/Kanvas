@@ -103,17 +103,14 @@ package view.element
 				var right :Number = vo.style.tx + vo.style.width;
 				var bottom:Number = vo.style.ty + vo.style.height;
 				
-				vo.thickness = vo.height * vo.scale * parent.scaleX  / 5;
+				vo.thickness = vo.height / 20;
+				if (vo.thickness < 2)
+					vo.thickness = 2;
 				
 				drawInteract(left, top, right - left, bottom - top);
-				//StyleManager.setLineStyle(graphics, vo.style.getBorder, vo.style, vo);
+				StyleManager.setLineStyle(graphics, vo.style.getBorder, vo.style, vo);
 				
 				var w:Number = vo.thickness * 2;
-				
-				graphics.beginFill(0);
-				graphics.drawRect(left, top, w, vo.height);
-				
-				return;
 				
 				//left
 				graphics.moveTo(left + w, top);
