@@ -34,6 +34,12 @@ package view.element.text
 			
 		}
 		
+		override public function enable():void
+		{
+			
+		}
+		
+		
 		/**
 		 */		
 		override public function startMove():void

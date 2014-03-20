@@ -43,11 +43,11 @@ package view.editor.text
 			colorSelectBtn.iconHeight = 18;
 			colorSelectBtn.bgStatesXML = <states>
 											<normal radius='24'>
-												<border thickness='1' color='CCCCCC'/>
+												<border thickness='2' color='CCCCCC'/>
 												<fill color='#555555' alpha='0'/>
 											</normal>
 											<hover radius='24'>
-												<border thickness='1' color='999999'/>
+												<border thickness='2' color='999999'/>
 											</hover>
 											<down radius='24'>
 												<border color='#555555' alpha='1' angle="90"/>
@@ -364,7 +364,7 @@ package view.editor.text
 			bgShape.graphics.lineTo(bgStyle.width- editor.offSet, bgStyle.ty);
 			
 			fontColors.x = colorSelectBtn.x + colorSelectBtn.width / 2;
-			fontColors.y = bgStyle.ty - editor.offSet - 10;
+			fontColors.y = bgStyle.ty - editor.offSet - 6;
 		}
 		
 		internal function get panelWidth():Number

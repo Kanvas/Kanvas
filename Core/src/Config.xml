@@ -6,6 +6,7 @@
 		<format id='Text' font='微软雅黑' size='${size}' color='${color}'/>
 		<fill id='Simple' color='${color}' alpha='0.9' angle='90' type='radial'/>
 		<border id='Simple' color='${color}' alpha='0.9' thickness='${thickness}' caps='round' pixelHinting='true'/>
+		<border id="PageBorder" color='#666666' alpha='0.6' thickness='${thickness}' caps='square' pixelHinting='false' scaleMode='normal'/>
 		
 		<!--文本和背景颜色全局统一， 每套样式尽需指定颜色序号-->
 		<!--colors id='text'>
@@ -117,8 +118,7 @@
 			</border>
 			
 			<border styleID='Page'>
-				<style>
-					<border color='#666666' alpha='1' thickness='20' caps='square' pixelHinting='false' scaleMode='none'/>
+				<style border='PageBorder'>
 				</style>
 			</border>
 			
@@ -140,9 +140,9 @@
 			
 			<!-- 文本模板 -->
 			<template styleID='text'>
+				<text styleID='Body' text='细黑' colorIndex='0'/>
 				<text styleID='Title' text='仿宋' colorIndex='0'/>
 				<text styleID='SubTitle' text='宋体' colorIndex='0'/>
-				<text styleID='Body' text='细黑' colorIndex='0'/>
 			</template>
 			
 			<text styleID='Title' size='30'>
@@ -240,8 +240,7 @@
 			</border>
 			
 			<border styleID='Page'>
-				<style>
-					<border color='#666666' alpha='1' thickness='20' caps='square' pixelHinting='false' scaleMode='none'/>
+				<style border='PageBorder'>
 				</style>
 			</border>
 			
@@ -264,9 +263,9 @@
 			
 			<!-- 文本模板 -->
 			<template styleID='text'>
+				<text styleID='Body' text='细黑' colorIndex='0'/>
 				<text styleID='Title' text='仿宋' colorIndex='0'/>
 				<text styleID='SubTitle' text='宋体' colorIndex='0'/>
-				<text styleID='Body' text='细黑' colorIndex='0'/>
 			</template>
 			
 			<text styleID='Title' size='30'>
@@ -363,8 +362,7 @@
 			</border>
 			
 			<border styleID='Page'>
-				<style>
-					<border color='#666666' alpha='1' thickness='20' caps='square' pixelHinting='false' scaleMode='none'/>
+				<style border='PageBorder'>
 				</style>
 			</border>
 			
@@ -387,9 +385,9 @@
 			
 			<!-- 文本模板 -->
 			<template styleID='text'>
+				<text styleID='Body' text='细黑' colorIndex='0'/>
 				<text styleID='Title' text='仿宋' colorIndex='0'/>
 				<text styleID='SubTitle' text='宋体' colorIndex='0'/>
-				<text styleID='Body' text='细黑' colorIndex='0'/>
 			</template>
 			
 			<text styleID='Title' size='30'>
@@ -487,8 +485,7 @@
 			</border>
 			
 			<border styleID='Page'>
-				<style>
-					<border color='#666666' alpha='1' thickness='20' caps='square' pixelHinting='false' scaleMode='none'/>
+				<style border='PageBorder'>
 				</style>
 			</border>
 			
@@ -511,9 +508,9 @@
 			
 			<!-- 文本模板 -->
 			<template styleID='text'>
+				<text styleID='Body' text='细黑' colorIndex='0'/>
 				<text styleID='Title' text='仿宋' colorIndex='0'/>
 				<text styleID='SubTitle' text='宋体' colorIndex='0'/>
-				<text styleID='Body' text='细黑' colorIndex='0'/>
 			</template>
 			
 			<text styleID='Title' size='30'>
@@ -611,8 +608,7 @@
 			</border>
 			
 			<border styleID='Page'>
-				<style>
-					<border color='#666666' alpha='1' thickness='20' caps='square' pixelHinting='false' scaleMode='none'/>
+				<style border='PageBorder'>
 				</style>
 			</border>
 			
@@ -635,9 +631,9 @@
 			
 			<!-- 文本模板 -->
 			<template styleID='text'>
+				<text styleID='Body' text='细黑' colorIndex='0'/>
 				<text styleID='Title' text='仿宋' colorIndex='0'/>
 				<text styleID='SubTitle' text='宋体' colorIndex='0'/>
-				<text styleID='Body' text='细黑' colorIndex='0'/>
 			</template>
 			
 			<text styleID='Title' size='30'>
@@ -736,8 +732,7 @@
 			</border>
 			
 			<border styleID='Page'>
-				<style>
-					<border color='#666666' alpha='1' thickness='20' caps='square' pixelHinting='false' scaleMode='none'/>
+				<style border='PageBorder'>
 				</style>
 			</border>
 			
@@ -760,9 +755,9 @@
 			
 			<!-- 文本模板 -->
 			<template styleID='text'>
+				<text styleID='Body' text='细黑' colorIndex='0'/>
 				<text styleID='Title' text='仿宋' colorIndex='0'/>
 				<text styleID='SubTitle' text='宋体' colorIndex='0'/>
-				<text styleID='Body' text='细黑' colorIndex='0'/>
 			</template>
 			
 			<text styleID='Title' size='30'>

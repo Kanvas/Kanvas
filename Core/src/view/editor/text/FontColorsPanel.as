@@ -68,11 +68,14 @@ package view.editor.text
 			super.init();
 			
 			this.colorPanel = new ColorPanel(this);
-			colorPanel.panelWidth = 208;
+			
+			colorPanel.iconGutter = 4;
 			colorPanel.iconWidth = iconSize;
 			colorPanel.iconHeight = iconSize;
+			colorPanel.bgStyleXML = <style>
+										<fill color="ffffff"/>
+									</style>;
 			
-			colorPanel.bgStyleXML = bgStyleXML;
 			colorPanel.iconBGStatesXML = colorBgStatesXML;
 			colorPanel.iconStatesXML = colorIconStatesXML;
 			
@@ -90,9 +93,9 @@ package view.editor.text
 		 */		
 		public function update(xml:XML):void
 		{
+			colorPanel.panelWidth = xml.children().length() * iconSize;
 			colorPanel.dataXML = xml;
-			
-			colorPanel.x = - colorPanel.width / 2;
+			colorPanel.x = - colorPanel.panelWidth / 2;
 			colorPanel.y = - colorPanel.height;
 			
 			drawBg();
@@ -102,22 +105,40 @@ package view.editor.text
 		 */		
 		private function drawBg():void
 		{
-			bgStyle.tx = - colorPanel.width / 2;
-			bgStyle.ty = - colorPanel.height;
-			bgStyle.width = colorPanel.width - 2;
-			bgStyle.height = colorPanel.height + 8;
+			var gap:uint = 4;
+			
+			bgStyle.tx = - colorPanel.panelWidth / 2 - gap;
+			bgStyle.ty = - colorPanel.height - gap;
+			bgStyle.width = colorPanel.panelWidth + gap * 2; 
+			bgStyle.height = colorPanel.height  + gap * 2;
 			
 			this.graphics.clear();
-			StyleManager.setShapeStyle(bgStyle, graphics);
-			this.graphics.moveTo(0, 8);
-			this.graphics.lineTo(- 8, 0);
-			this.graphics.lineTo(bgStyle.tx, 0);
-			this.graphics.lineTo(bgStyle.tx, bgStyle.ty);
-			this.graphics.lineTo(bgStyle.width / 2, bgStyle.ty);
-			this.graphics.lineTo(bgStyle.width / 2, 0);
-			this.graphics.lineTo(8, 0);
-			this.graphics.lineTo(0, 8);
+			
+			//底部三角刑
+			this.graphics.lineStyle(0, 0xDEDEDE);
+			this.graphics.beginFill(uint(bgStyle.getFill.color));
+			this.graphics.moveTo(0, gap * 2 + 6);
+			this.graphics.lineTo(- gap * 2, gap);
+			this.graphics.lineTo(gap * 2, gap);
+			this.graphics.lineTo(0, gap * 2 + 6);
 			this.graphics.endFill();
+			
+			// 灰色背景
+			graphics.lineStyle(0, 0xcccccc);
+			StyleManager.setShapeStyle(bgStyle, graphics);
+			this.graphics.drawRect(bgStyle.tx, bgStyle.ty, bgStyle.width, bgStyle.height);
+			this.graphics.endFill();
+			
+			 //白色背景
+			this.graphics.beginFill(0xfffffff);
+			this.graphics.drawRect(bgStyle.tx + 3, bgStyle.ty + 3, bgStyle.width - 6, bgStyle.height - 6);
+			this.graphics.endFill();
+			
+			//灰色边框
+			this.graphics.lineStyle(0, 0xDEDEDE);
+			this.graphics.drawRect(bgStyle.tx, bgStyle.ty, bgStyle.width, bgStyle.height);
+			this.graphics.endFill();
+			
 		}
 			
 		/**
@@ -148,13 +169,13 @@ package view.editor.text
 		 */		
 		private var colorBgStatesXML:XML = <states>
 											<normal>
-												<fill color='#555555' alpha='1'/>
+												<fill color='#FFFFFF' alpha='0'/>
 											</normal>
 											<hover>
-												<fill color='#DDDDDD' alpha='1'/>
+												<fill color='#FFFFFF' alpha='0'/>
 											</hover>
 											<down>
-												<fill color='#DDDDDD' alpha='1'/>
+												<fill color='#FFFFFF' alpha='0'/>
 											</down>
 										</states>
 			
@@ -162,15 +183,15 @@ package view.editor.text
 		 */		
 		private var colorIconStatesXML:XML = <states>
 												<normal radius='0'>
-													<border color='ffffff' thickness='1' alpha='1'/>
+													<border color='CCCCCC' thickness='0.1' alpha='1'/>
 													<fill color='${iconColor}'/>
 												</normal>
 												<hover radius='30'>
-													<border color='ffffff' thickness='1' alpha='1'/>
+													<border color='CCCCCC' thickness='1' alpha='1'/>
 													<fill color='${iconColor}'/>
 												</hover>
 												<down radius='30'> 
-													<border color='ffffff' thickness='1' alpha='1'/>
+													<border color='CCCCCC' thickness='1' alpha='1'/>
 													<fill color='${iconColor}'/>
 												</down>
 											</states>
@@ -184,8 +205,7 @@ package view.editor.text
 		/**
 		 */		
 		private var bgStyleXML:XML = <style>
-										<fill color='DDDDDD'/>
-										<border color='DDDDDD'/>
+										<fill color='eeeeee'/>
 									</style>
 	}
 }

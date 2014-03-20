@@ -106,7 +106,6 @@ package view.elementSelector.toolBar
 		 */		
 		override public function render():void
 		{
-			toolBar.addBtn(toolBar.linkBtn);
 			toolBar.addBtn(toolBar.styleBtn);
 			toolBar.addBtn(editBtn);
 			toolBar.addBtn(toolBar.topLayerBtn);

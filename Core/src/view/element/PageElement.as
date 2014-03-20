@@ -50,7 +50,7 @@ package view.element
 			maskShape.graphics.drawRect(0, 0, 1, 1);
 			maskShape.graphics.endFill();
 			
-			graphicShape.mask = maskShape;
+			//graphicShape.mask = maskShape;
 		}
 		
 		/**
@@ -103,11 +103,14 @@ package view.element
 				var right :Number = vo.style.tx + vo.style.width;
 				var bottom:Number = vo.style.ty + vo.style.height;
 				
-				drawInteract(left, top, right - left, bottom - top);
+				vo.thickness = vo.height / 20;
+				if (vo.thickness < 2)
+					vo.thickness = 2;
 				
+				drawInteract(left, top, right - left, bottom - top);
 				StyleManager.setLineStyle(graphics, vo.style.getBorder, vo.style, vo);
 				
-				var w:Number = 20;
+				var w:Number = vo.thickness * 2;
 				
 				//left
 				graphics.moveTo(left + w, top);

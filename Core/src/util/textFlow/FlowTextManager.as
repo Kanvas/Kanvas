@@ -13,6 +13,7 @@ package util.textFlow
 	import flash.text.Font;
 	import flash.text.TextFormat;
 	import flash.text.engine.FontLookup;
+	import flash.text.engine.Kerning;
 	import flash.text.engine.TextLine;
 	
 	import flashx.textLayout.compose.ISWFContext;
@@ -23,6 +24,11 @@ package util.textFlow
 	import flashx.textLayout.elements.TextFlow;
 	import flashx.textLayout.factory.StringTextLineFactory;
 	import flashx.textLayout.factory.TextFlowTextLineFactory;
+	import flashx.textLayout.formats.LeadingModel;
+	import flashx.textLayout.formats.LineBreak;
+	import flashx.textLayout.formats.TextAlign;
+	import flashx.textLayout.formats.TextJustify;
+	import flashx.textLayout.formats.VerticalAlign;
 	
 	import model.vo.TextVO;
 
@@ -98,8 +104,16 @@ package util.textFlow
 		 */		
 		public function FlowTextManager(key:Inner)
 		{
+			var fontList:Array = Font.enumerateFonts(true);
 			
+			fontList.sortOn("fontName", Array.CASEINSENSITIVE);
+			
+			for each (var font:Font in fontList) 
+				sysFonts.push(font.fontName);
+				
 		}
+		
+		private var sysFonts:Array = new Array;
 		
 		
 		
@@ -353,13 +367,29 @@ package util.textFlow
 		 */		
 		private function applyTextformat(field:ITextFlowLabel, format:TextFormat):void
 		{
-			field.textLayoutFormat.fontFamily = format.font;
+			
+			if (sysFonts.indexOf(format.font) != - 1)
+			{
+				field.textLayoutFormat.fontFamily = format.font;
+			}
+			else if (sysFonts.indexOf("微软雅黑") != - 1)
+			{
+				field.textLayoutFormat.fontFamily = "微软雅黑";
+			}
+			else 
+			{
+				field.textLayoutFormat.fontFamily = "黑体";
+			}
+			
 			field.textLayoutFormat.fontSize = format.size;
 			field.textLayoutFormat.color = format.color;
-			//field.textLayoutFormat.kerning = Kerning.ON;
 			
-			//field.textLayoutFormat.textJustify = TextJustify.DISTRIBUTE
-				
+			field.textLayoutFormat.kerning = Kerning.AUTO;
+			field.textLayoutFormat.lineHeight = "140%";
+			field.textLayoutFormat.verticalAlign = VerticalAlign.MIDDLE;
+			
+			//field.textLayoutFormat.leadingModel = LeadingModel.IDEOGRAPHIC_TOP_DOWN
+			field.textLayoutFormat.textAlign = TextAlign.LEFT
 			field.textManager.hostFormat = field.textLayoutFormat;
 		}
 		

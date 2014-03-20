@@ -134,6 +134,7 @@ package com.kvs.ui.colorPanel
 			StyleManager.drawRect(this, bgStyle);
 		}
 		
+		
 		/**
 		 * 颜色按钮内间距 
 		 */		
