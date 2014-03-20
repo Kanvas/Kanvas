@@ -15,6 +15,7 @@ package view.interact
 	
 	import modules.pages.PageManager;
 	import modules.pages.PageUtil;
+	import modules.threads.MultiThread;
 	
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
@@ -55,7 +56,7 @@ package view.interact
 			mainUI.textEditor.mainUIMediator = this;
 		}
 		
-
+		
 		/**
 		 * 组合智能组合仅包含其自身的子元素
 		 * 
@@ -68,7 +69,7 @@ package view.interact
 				var group:Vector.<ElementBase> = new Vector.<ElementBase>;
 				var elements:Vector.<ElementBase> = (element as GroupElement).childElements;
 				for each (var child:ElementBase in elements)
-					group = child.getChilds(group);
+				group = child.getChilds(group);
 				
 				autoGroupController.setGroupElements(group);
 			}
@@ -289,7 +290,7 @@ package view.interact
 			currentEditor.close();
 		}
 		
-	
+		
 		
 		/**
 		 */		
@@ -491,6 +492,8 @@ package view.interact
 		
 		public var pageManager:PageManager;
 		
+		public var multiThread:MultiThread;
+		
 		/**
 		 * 属性控制器 , 快捷属性编辑, 工具条，型变控制都由其负责
 		 */		
@@ -571,6 +574,8 @@ package view.interact
 			mainUI.addEventListener(KVSEvent.UPATE_BOUND, renderBoundHandler);
 			
 			pageManager = new PageManager(this);
+			
+			multiThread = new MultiThread(this);
 		}
 		
 		/**

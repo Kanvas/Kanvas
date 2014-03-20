@@ -45,6 +45,17 @@ package view.elementSelector.sizeControl
 		{
 			super.stopMove();
 			
+			if (align && ! isNaN(align.x) && ! isNaN(align.y))
+			{
+				holder.element.vo.width = Point.distance(orign, align) / holder.element.scale;
+				var center:Point = Point.interpolate(orign, align, .5);
+				holder.element.vo.x = center.x;
+				holder.element.vo.y = center.y;
+				holder.element.render();
+			}
+			
+			updateHolderLayout();
+			
 			var index:Vector.<int> = holder.coreMdt.autoLayerController.autoLayer(holder.element);
 			if (index)
 			{
@@ -88,17 +99,17 @@ package view.elementSelector.sizeControl
 			holder.element.render();
 			
 			var currPoint:Point = (oppsite) ? holder.element.middleRight : holder.element.middleLeft;
-			var origPoint:Point = (oppsite) ? middleLeft : middleRight;
+			orign = (oppsite) ? middleLeft : middleRight;
 			
-			var point:Point = holder.coreMdt.autoAlignController.checkPosition(holder.element, currPoint, "x");
-			if (point && ! isNaN(point.x) && ! isNaN(point.y))
+			align = holder.coreMdt.autoAlignController.checkPosition(holder.element, currPoint, "x");
+			/*if (align && ! isNaN(align.x) && ! isNaN(point.y))
 			{
 				holder.element.vo.width = Point.distance(origPoint, point) / holder.element.scale;
 				var center:Point = Point.interpolate(origPoint, point, .5);
 				holder.element.vo.x = center.x;
 				holder.element.vo.y = center.y;
 				holder.element.render();
-			}
+			}*/
 			
 			// 更新型变框布局
 			updateHolderLayout();
@@ -108,6 +119,9 @@ package view.elementSelector.sizeControl
 		private var middleRight:Point;
 		private var oppsite:Boolean;
 		private var oldPropertyObj:Object;
+		
+		private var align:Point;
+		private var orign:Point;
 		
 		private var lastMouseX:Number;
 		private var lastMouseY:Number;

@@ -74,8 +74,8 @@ package view.interact
 			curMovingElement.y = point.y = elementPoint.y;
 			
 			
-			var temp:Point = coreMdt.autoAlignController.checkPosition(curMovingElement);
-			if (temp)
+			align = coreMdt.autoAlignController.checkPosition(curMovingElement);
+			/*if (temp)
 			{
 				if (! isNaN(temp.x))
 					point.x = curMovingElement.x + temp.x;
@@ -83,7 +83,7 @@ package view.interact
 					point.y = curMovingElement.y + temp.y;
 			}
 			curMovingElement.x = point.x;
-			curMovingElement.y = point.y;
+			curMovingElement.y = point.y;*/
 			
 			var selectorPoint:Point = LayoutUtil.elementPointToStagePoint(curMovingElement.x, curMovingElement.y, coreMdt.canvas);
 			selector.x = selectorPoint.x;
@@ -102,6 +102,16 @@ package view.interact
 		{
 			mainUI.stage.removeEventListener(MouseEvent.MOUSE_MOVE, movingElementHandler);
 			coreMdt.currentMode.moveElementEnd();
+			
+			if (align)
+			{
+				if (! isNaN(align.x))
+					point.x = curMovingElement.x + align.x;
+				if (! isNaN(align.y))
+					point.y = curMovingElement.y + align.y;
+			}
+			curMovingElement.x = point.x;
+			curMovingElement.y = point.y;
 			
 			coreMdt.autoAlignController.clear();
 			
@@ -192,6 +202,7 @@ package view.interact
 		private var coreMdt:CoreMediator;
 		
 		private var point:Point = new Point;
+		private var align:Point;
 		private var oldPropertyObj:Object;
 	}
 }
