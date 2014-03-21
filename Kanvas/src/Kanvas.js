@@ -595,7 +595,7 @@
 			}
 		};
 		
-		//registMouseWheel();
+		registMouseWheel();
 		
 		target.onmouseover = function(){
 			if (mouseWheelRegisted == false)
