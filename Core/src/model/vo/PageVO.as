@@ -13,6 +13,8 @@ package model.vo
 	
 	[Event(name="pageSelected", type="modules.pages.PageEvent")]
 	
+	[Event(name="updatePageIndex", type="modules.pages.PageEvent")]
+	
 	/**
 	 */	
 	public final class PageVO extends ElementVO
@@ -93,6 +95,8 @@ package model.vo
 		public function set index(value:int):void
 		{
 			__index = value;	
+			
+			dispatchEvent(new PageEvent(PageEvent.UPDATE_PAGE_INDEX, this));
 		}
 		
 		public function get index():int

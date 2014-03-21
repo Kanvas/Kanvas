@@ -33,8 +33,7 @@ package view.elementSelector.toolBar
 		private function zoomHandler(evt:MouseEvent):void
 		{
 			var selector:ElementSelector = toolBar.selector;
-			var scene:Scene = PageUtil.getSceneFromVO(selector.element.vo as PageVO, selector.coreMdt.mainUI);
-			selector.coreMdt.zoomMoveControl.zoomRotateMoveTo(scene.scale, scene.rotation, scene.x, scene.y);
+			selector.coreMdt.zoomMoveControl.zoomPage(selector.element.vo as PageVO);
 			selector.coreMdt.toUnSelectedMode();
 		}
 		

@@ -65,8 +65,8 @@ package commands
 			// 新创建图形的比例总是与画布比例互补，保证任何时候创建的图形看起来是标准大小
 			pageVO.scale = layoutTransformer.compensateScale;
 			
-			CoreFacade.addElement(page);
 			CoreFacade.coreMediator.pageManager.addPageAt(pageVO, pageProxy.index);
+			CoreFacade.addElement(page);
 			
 			//放置拖动创建时 当前原件未被指定 
 			CoreFacade.coreMediator.currentElement = page;

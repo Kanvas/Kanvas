@@ -250,13 +250,13 @@ package view.pagePanel
 		/**
 		 */		
 		private var normalTextStyle:XML = <label radius='0' vPadding='0' hPadding='0'>
-											<format color='#555555' font='雅痞' size='12'/>
+											<format color='#555555' font='华文细黑' size='12'/>
 										  </label>
 			
 		/**
 		 */		
 		private var selectedTextStyle:XML = <label radius='0' vPadding='0' hPadding='0'>
-											<format color='#ffffff' font='雅痞' size='12'/>
+											<format color='#ffffff' font='华文细黑' size='12'/>
 										  </label>
 		
 		/**

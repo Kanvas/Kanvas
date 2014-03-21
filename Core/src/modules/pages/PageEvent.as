@@ -1,10 +1,20 @@
 package modules.pages
 {
 	import flash.events.Event;
+	
 	import model.vo.PageVO;
 	
+	import view.element.PageElement;
+	
+	/**
+	 */	
 	public final class PageEvent extends Event
 	{
+		/**
+		 * 页面编号被点击，页面自适应
+		 */		
+		public static const PAGE_NUM_CLICKED:String = "pageNumClicked";
+		
 		/**
 		 * 页面被添加后触发事件 
 		 */				
@@ -35,6 +45,12 @@ package modules.pages
 		
 		
 		/**
+		 * 调节页面位置后触发，用来刷新页面编号 
+		 */		
+		public static const UPDATE_PAGE_INDEX:String = "updatePageIndex";
+		
+		
+		/**
 		 */		
 		public function PageEvent(type:String, $pageVO:PageVO = null, bubbles:Boolean = false, cancelable:Boolean = false)
 		{
@@ -53,6 +69,7 @@ package modules.pages
 		}
 		
 		private var __pageVO:PageVO;
+		
 		
 	}
 }

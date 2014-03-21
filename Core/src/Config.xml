@@ -6,7 +6,7 @@
 		<format id='Text' font='微软雅黑' size='${size}' color='${color}'/>
 		<fill id='Simple' color='${color}' alpha='0.9' angle='90' type='radial'/>
 		<border id='Simple' color='${color}' alpha='0.9' thickness='${thickness}' caps='round' pixelHinting='true'/>
-		<border id="PageBorder" color='#666666' alpha='0.6' thickness='${thickness}' caps='square' pixelHinting='false' scaleMode='normal'/>
+		<fill id="PageFrame" color='#666666' alpha='0.6'/>
 		
 		<!--文本和背景颜色全局统一， 每套样式尽需指定颜色序号-->
 		<!--colors id='text'>
@@ -118,9 +118,10 @@
 			</border>
 			
 			<border styleID='Page'>
-				<style border='PageBorder'>
+				<style fill='PageFrame'>
 				</style>
 			</border>
+			
 			
 			<line styleID='Border'>
 				<style border='Simple'/>
@@ -240,7 +241,7 @@
 			</border>
 			
 			<border styleID='Page'>
-				<style border='PageBorder'>
+				<style fill='PageFrame'>
 				</style>
 			</border>
 			
@@ -362,7 +363,7 @@
 			</border>
 			
 			<border styleID='Page'>
-				<style border='PageBorder'>
+				<style fill='PageFrame'>
 				</style>
 			</border>
 			
@@ -485,7 +486,7 @@
 			</border>
 			
 			<border styleID='Page'>
-				<style border='PageBorder'>
+				<style fill='PageFrame'>
 				</style>
 			</border>
 			
@@ -608,7 +609,7 @@
 			</border>
 			
 			<border styleID='Page'>
-				<style border='PageBorder'>
+				<style fill='PageFrame'>
 				</style>
 			</border>
 			
@@ -732,7 +733,7 @@
 			</border>
 			
 			<border styleID='Page'>
-				<style border='PageBorder'>
+				<style fill='PageFrame'>
 				</style>
 			</border>
 			

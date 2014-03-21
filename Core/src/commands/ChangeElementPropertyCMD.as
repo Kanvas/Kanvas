@@ -144,7 +144,7 @@ package commands
 				if (obj["scale"] != undefined)
 				{
 					CoreFacade.coreMediator.autoGroupController.scaleTo(newObj.scale / oldObj.scale, element);
-					ifNeedRender = false;
+					ifNeedRender = true;// 文本，页面元素最终需要重绘
 				}
 			}
 			

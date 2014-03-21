@@ -24,6 +24,7 @@ package view.interact
 	import view.editor.EditorBase;
 	import view.element.ElementBase;
 	import view.element.GroupElement;
+	import view.element.PageElement;
 	import view.element.text.TextEditField;
 	import view.elementSelector.ElementSelector;
 	import view.interact.autoGroup.AutoGroupController;
@@ -729,6 +730,12 @@ package view.interact
 				if (element is TextEditField && element.visible)
 				{
 					(element as TextEditField).checkTextBm(canvas.scaleX);
+				}
+				
+				//刷新页面编号尺寸，防止太大
+				if (element.visible && element is PageElement)
+				{
+					(element as PageElement).layoutPageNum();
 				}
 			}
 			

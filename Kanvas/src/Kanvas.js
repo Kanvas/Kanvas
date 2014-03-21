@@ -658,7 +658,7 @@
 	            //kplayer的此属性为true，是为了防止悬浮div被遮盖；
 	            //kanvas此属性为false；因transparent模式性能较差
 	            if (transparent) {
-	            	params.wmode = "transparent";
+	            	params.wmode = "window";
 	            }else{
 	            	params.wmode = "window";
 	            }

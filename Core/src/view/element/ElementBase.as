@@ -39,6 +39,7 @@ package view.element
 		public function ElementBase(vo:ElementVO)
 		{
 			this.vo = vo;
+			
 			_screenshot = true;
 			addChild(graphicShape = new Shape);
 			
@@ -351,8 +352,6 @@ package view.element
 		}
 		
 		
-		
-		
 		override public function get rotation():Number
 		{
 			return __rotation;
@@ -410,8 +409,6 @@ package view.element
 		}
 		
 		private var __scaleY:Number = 1;
-		
-		
 		
 		override public function get x():Number
 		{
@@ -698,7 +695,7 @@ package view.element
 		/**
 		 * 初始化监听
 		 */
-		private function initListen():void
+		protected function initListen():void
 		{
 			mouseChildren = false;
 			
@@ -1025,7 +1022,7 @@ package view.element
 		/**
 		 *  点击拖动控制 
 		 */		
-		private var clickMoveControl:ClickMoveControl;
+		protected var clickMoveControl:ClickMoveControl;
 		
 		/**
 		 * 从预览状态返回时 ，需要切换到之前的状态
@@ -1039,6 +1036,7 @@ package view.element
 		 */
 		public var vo:ElementVO;
 		
+		//绘制图形的画布
 		protected var graphicShape:Shape;
 	}
 }

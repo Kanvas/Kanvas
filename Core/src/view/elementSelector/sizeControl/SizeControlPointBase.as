@@ -41,7 +41,7 @@ package view.elementSelector.sizeControl
 		 */		
 		public function startMove():void
 		{
-			holder.element.disable();
+			//holder.element.disable();
 			oldDis = holder.curRDis;
 			
 			oldX = holder.x;
@@ -52,7 +52,7 @@ package view.elementSelector.sizeControl
 		 */		
 		public function stopMove():void
 		{
-			holder.element.enable();
+			//holder.element.enable();
 			holder.coreMdt.autoAlignController.clear();
 		}
 		

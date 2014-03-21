@@ -11,8 +11,6 @@ package com.kvs.ui.label
 	import flashx.textLayout.formats.TextAlign;
 	import flashx.textLayout.formats.TextLayoutFormat;
 	
-	import model.vo.TextVO;
-	
 	import util.textFlow.FlowTextManager;
 	import util.textFlow.ITextFlowLabel;
 	

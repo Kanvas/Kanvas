@@ -5,6 +5,8 @@ package view.interact
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
+	import modules.pages.PageEvent;
+	
 	import view.element.ElementBase;
 	import view.element.ElementEvent;
 
@@ -53,6 +55,18 @@ package view.interact
 			mainUI.addEventListener(ElementEvent.PASTE_TEM_GROUP, pasteTemGroup);
 			mainUI.addEventListener(ElementEvent.PAST_GROUP, pasteGroup);
 			
+			mainUI.addEventListener(PageEvent.PAGE_NUM_CLICKED, zoomPage);
+			
+		}
+		
+		/**
+		 */		
+		private function zoomPage(evt:PageEvent):void
+		{
+			evt.stopPropagation();
+			
+			mainMediator.zoomMoveControl.zoomPage(evt.pageVO);
+			mainMediator.toUnSelectedMode();
 		}
 		
 		/**
