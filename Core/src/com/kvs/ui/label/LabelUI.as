@@ -206,7 +206,7 @@ package com.kvs.ui.label
 		/**
 		 */		
 		private var _styleXML:XML = <label radius='0' vPadding='5' hPadding='5'>
-									<format color='#555555' font='雅痞' size='12'/>
+									<format color='#555555' font='华文细黑' size='12'/>
 								  </label>
 		
 		

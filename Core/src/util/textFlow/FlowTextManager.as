@@ -24,10 +24,7 @@ package util.textFlow
 	import flashx.textLayout.elements.TextFlow;
 	import flashx.textLayout.factory.StringTextLineFactory;
 	import flashx.textLayout.factory.TextFlowTextLineFactory;
-	import flashx.textLayout.formats.LeadingModel;
-	import flashx.textLayout.formats.LineBreak;
 	import flashx.textLayout.formats.TextAlign;
-	import flashx.textLayout.formats.TextJustify;
 	import flashx.textLayout.formats.VerticalAlign;
 	
 	import model.vo.TextVO;
@@ -384,12 +381,8 @@ package util.textFlow
 			field.textLayoutFormat.fontSize = format.size;
 			field.textLayoutFormat.color = format.color;
 			
-			field.textLayoutFormat.kerning = Kerning.AUTO;
 			field.textLayoutFormat.lineHeight = "140%";
-			field.textLayoutFormat.verticalAlign = VerticalAlign.MIDDLE;
 			
-			//field.textLayoutFormat.leadingModel = LeadingModel.IDEOGRAPHIC_TOP_DOWN
-			field.textLayoutFormat.textAlign = TextAlign.LEFT
 			field.textManager.hostFormat = field.textLayoutFormat;
 		}
 		

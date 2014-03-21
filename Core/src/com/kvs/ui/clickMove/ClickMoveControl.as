@@ -1,5 +1,6 @@
 package com.kvs.ui.clickMove
 {
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 
@@ -39,7 +40,12 @@ package com.kvs.ui.clickMove
 			
 			moveTarget.stage.addEventListener(MouseEvent.MOUSE_MOVE, moveHandler, false, 0, true);
 			moveTarget.stage.addEventListener(MouseEvent.MOUSE_UP, stopMoveCanvas, false, 0, true);
+			
+			clickTarget = evt.target;
 		}
+		
+		//鼠标点下时当前的触碰对象
+		public var clickTarget:Object;
 		
 		/**
 		 * 屏幕移动过程

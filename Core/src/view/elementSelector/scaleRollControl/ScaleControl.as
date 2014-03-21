@@ -8,6 +8,8 @@ package view.elementSelector.scaleRollControl
 	
 	import flash.display.Sprite;
 	
+	import view.element.PageElement;
+	import view.element.text.TextEditField;
 	import view.elementSelector.ControlPointBase;
 	import view.elementSelector.ElementSelector;
 	
@@ -52,6 +54,10 @@ package view.elementSelector.scaleRollControl
 			
 			selector.layoutInfo.update(false);
 			selector.render();
+			
+			if (selector.element is PageElement)
+				(selector.element as PageElement).layoutPageNum(scale);
+			
 		}
 		
 		/**
@@ -97,8 +103,8 @@ package view.elementSelector.scaleRollControl
 			yDir = (yDir == 0) ? yDir : ((yDir > 0) ? 1 : -1);
 			
 			selector.coreMdt.autofitController.autofitElementPosition(selector.coreMdt.currentElement, xDir, yDir);
-			
 			selector.coreMdt.autoAlignController.clear();
+			
 		}
 		
 		private var oldPropertyObj:Object;

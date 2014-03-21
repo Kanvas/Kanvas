@@ -1,9 +1,14 @@
 package view.element
 {
+	import com.kvs.ui.label.LabelUI;
 	import com.kvs.utils.ViewUtil;
 	import com.kvs.utils.XMLConfigKit.StyleManager;
 	
 	import flash.display.Shape;
+	import flash.display.Sprite;
+	import flash.events.MouseEvent;
+	
+	import landray.kp.ui.PageNext;
 	
 	import model.vo.PageVO;
 	
@@ -22,10 +27,20 @@ package view.element
 		public function PageElement(vo:PageVO)
 		{
 			super(vo);
+			
 			xmlData = <page/>;
 			_screenshot = false;
 			_isPage = true;
 			vo.addEventListener(PageEvent.DELETE_PAGE_FROM_UI, deletePageHandler);
+			
+			vo.addEventListener(PageEvent.UPDATE_PAGE_INDEX, updatePageIndex);
+		}
+		
+		/**
+		 */		
+		private function updatePageIndex(evt:PageEvent):void
+		{
+			drawPageNum();
 		}
 		
 		/**
@@ -45,14 +60,21 @@ package view.element
 		{
 			super.preRender();
 			
-			addChild(maskShape = new Shape);
-			maskShape.graphics.beginFill(0, 0);
-			maskShape.graphics.drawRect(0, 0, 1, 1);
-			maskShape.graphics.endFill();
+			numLabel.styleXML = <label radius='0' vPadding='0' hPadding='0'>
+									<format color='#FFFFFF' font='华文细黑' size='12'/>
+								  </label>
 			
-			//graphicShape.mask = maskShape;
+			drawPageNum();
+			layoutPageNum();
+			
+			numShape.mouseChildren = false;
+			numShape.buttonMode = true;
+			numShape.cacheAsBitmap = true;
+			
+			numShape.addChild(numLabel);
+			addChild(numShape);
 		}
-		
+		 
 		/**
 		 * 热点在预览状态时不显示
 		 */		
@@ -60,7 +82,7 @@ package view.element
 		{
 			super.toPrevState();
 			
-			graphicShape.visible = false;
+			graphicShape.visible = numShape.visible = false;
 		}
 		
 		/**
@@ -69,7 +91,7 @@ package view.element
 		{
 			super.returnFromPrevState();
 			
-			graphicShape.visible = true;
+			graphicShape.visible = numShape.visible = true;
 			
 			this.render();
 		}
@@ -103,54 +125,134 @@ package view.element
 				var right :Number = vo.style.tx + vo.style.width;
 				var bottom:Number = vo.style.ty + vo.style.height;
 				
-				vo.thickness = vo.height / 20;
-				if (vo.thickness < 2)
-					vo.thickness = 2;
+				var frameSize:Number = vo.height / 16;
 				
-				drawInteract(left, top, right - left, bottom - top);
-				StyleManager.setLineStyle(graphics, vo.style.getBorder, vo.style, vo);
+				if (frameSize * vo.scale * parent.scaleX < 2)
+					frameSize = 2 / vo.scale / parent.scaleX;
 				
-				var w:Number = vo.thickness * 2;
-				
-				//left
-				graphics.moveTo(left + w, top);
-				graphics.lineTo(left, top);
+				//从左上角开始绘制
+				StyleManager.setFillStyle(graphics, vo.style, vo);
+				graphics.moveTo(left, top);
 				graphics.lineTo(left, bottom);
-				graphics.lineTo(left + w, bottom);
+				graphics.lineTo(left + frameSize * 2, bottom);
+				graphics.lineTo(left + frameSize * 2, bottom - frameSize);
+				graphics.lineTo(left + frameSize, bottom - frameSize);
+				graphics.lineTo(left + frameSize, top + frameSize);
+				graphics.lineTo(left + frameSize * 2, top + frameSize);
+				graphics.lineTo(left + frameSize * 2, top);
+				graphics.lineTo(left, top);
+				graphics.endFill();
 				
-				//right
-				graphics.moveTo(right - w, top);
-				graphics.lineTo(right, top);
+				//从右上角开始绘制
+				StyleManager.setFillStyle(graphics, vo.style, vo);
+				graphics.moveTo(right, top);
 				graphics.lineTo(right, bottom);
-				graphics.lineTo(right - w, bottom);
+				graphics.lineTo(right - frameSize * 2, bottom);
+				graphics.lineTo(right - frameSize * 2, bottom - frameSize);
+				graphics.lineTo(right - frameSize, bottom - frameSize);
+				graphics.lineTo(right - frameSize, top + frameSize);
+				graphics.lineTo(right - frameSize * 2, top + frameSize);
+				graphics.lineTo(right - frameSize * 2, top);
+				graphics.lineTo(right, top);
+				graphics.endFill();
 				
-				maskShape.x = vo.style.tx;
-				maskShape.y = vo.style.ty;
-				maskShape.width  = vo.style.width;
-				maskShape.height = vo.style.height;
+			}
+			
+			layoutPageNum();
+		}
+		
+		/**
+		 * 页面点击有可能会点击到页面编号
+		 */		
+		override public function clicked():void
+		{
+			if (clickMoveControl.clickTarget == numShape)
+			{
+				var evt:PageEvent = new PageEvent(PageEvent.PAGE_NUM_CLICKED, vo as PageVO, true);
+				this.dispatchEvent(evt);
+			}
+			else
+			{
+				currentState.clicked();
 			}
 		}
+		
+		override public function disable():void
+		{
+			super.disable();
+			
+			//numShape.visible = false;
+		}
+		
+		override public function enable():void
+		{
+			super.enable();
+			//numShape.visible = true;
+		}
+		
+		/**
+		 *  保证页面编号控制在和尺寸内
+		 * 
+		 */		
+		public function layoutPageNum(s:Number = NaN):void
+		{
+			var h:Number;
+			var s:Number;
+			
+			//尺寸缩放时需要临时取表象的信息
+			
+			if (isNaN(s))
+				s = vo.scale;
+			
+			numShape.width = numShape.height = vo.height / 5;
+			var temSize:Number = numShape.width * s * parent.scaleX;
+			
+			if (temSize > maxNumSize)
+			{
+				var size:Number = maxNumSize / s / parent.scaleX;
+				
+				numShape.width = size;
+				numShape.height = size;
+			}
+			
+			numShape.x = - vo.width / 2 - numShape.width / 2;
+			numShape.y = - numShape.height;
+		}
+		
+		/**
+		 *  
+		 */		
+		private var maxNumSize:uint = 26;
+		
+		/**
+		 */		
+		private function drawPageNum(size:Number = 20):void
+		{
+			numShape.graphics.clear();
+			
+			numLabel.text = ((vo as PageVO).index + 1).toString();
+			numLabel.render();
+			numLabel.x = - numLabel.width / 2;
+			numLabel.y = - numLabel.height / 2;
+				
+			numShape.graphics.lineStyle(1, 0, 0.8);
+			numShape.graphics.beginFill(0x555555, .8);
+			numShape.graphics.drawCircle(0, 0, size / 2);
+			numShape.graphics.endFill();
+		}
+		
+		private var numLabel:LabelUI = new LabelUI;
+		
+		/**
+		 * 用来绘制页面序号 
+		 */		
+		private var numShape:Sprite = new Sprite;
 		
 		/**
 		 */		
 		override public function del():void
 		{
 			dispatchEvent(new ElementEvent(ElementEvent.DEL_PAGE, this));
-		}
-		
-		private function drawInteract(x:Number, y:Number, w:Number, h:Number):void
-		{
-			graphics.beginFill(0, 0);
-			//left
-			graphics.drawRect(x, y, 40, 20);
-			graphics.drawRect(x, y + h - 20, 40, 20);
-			graphics.drawRect(x, y, 20, h);
-			
-			//right
-			graphics.drawRect(x + w - 40, y, 40, 20);
-			graphics.drawRect(x + w - 40, y + h - 20, 40, 20);
-			graphics.drawRect(x + w - 20, y, 20, h);
-			graphics.endFill();
 		}
 		
 		/**
@@ -217,6 +319,5 @@ package view.element
 			return vo as PageVO;
 		}
 		
-		private var maskShape:Shape;
 	}
 }
