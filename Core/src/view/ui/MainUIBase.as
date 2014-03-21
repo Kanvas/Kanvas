@@ -1,12 +1,17 @@
 package view.ui
 {
+	import com.greensock.TweenMax;
+	import com.kvs.utils.MathUtil;
 	import com.kvs.utils.RectangleUtil;
 	import com.kvs.utils.graphic.BitmapUtil;
 	
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
+	
+	import util.LayoutUtil;
 	
 	import view.screenState.FullScreenState;
 	import view.screenState.NormalScreenState;
@@ -25,11 +30,11 @@ package view.ui
 			curScreenState = normalState;
 			
 			// 背景颜色
-			this.addChild(bgColorCanvas);
-			this.addChild(bgImgCanvas);
+			addChild(bgColorCanvas);
+			addChild(bgImgCanvas);
+			bgImgCanvas.mouseEnabled = bgImgCanvas.mouseChildren = false;
 			
-			canvas = new Canvas(this);
-			addChild(canvas);
+			addChild(canvas = new Canvas(this));
 		}
 		
 		
@@ -86,7 +91,9 @@ package view.ui
 			
 			__boundDiagonalDistance = RectangleUtil.getDiagonalDistance(bound);
 			
-			this.dispatchEvent(new KVSEvent(KVSEvent.UPATE_BOUND));
+			fitBgBitmapToBound();
+			
+			dispatchEvent(new KVSEvent(KVSEvent.UPATE_BOUND));
 		}
 		
 		public function get boundDiagonalDistance():Number
@@ -121,18 +128,26 @@ package view.ui
 		 * 
 		 * 及移动时需要被调用
 		 */		
-		public function synBgImgWidthCanvas():void
+		public function synBgImgWidthCanvas(tween:Boolean = false):void
 		{
-			var cDisX:Number = canvas.x - canvas.stage.stageWidth  / 2;
+			/*var cDisX:Number = canvas.x - canvas.stage.stageWidth  / 2;
 			var cDisY:Number = canvas.y - canvas.stage.stageHeight / 2;
 			var s:Number = Math.pow(canvas.scaleX, 0.5);
+			
 			
 			bgImgCanvas.scaleX = bgImgCanvas.scaleY = s;
 			
 			var p:Number = Math.min(1, s / canvas.scaleX / 4);
 			
 			bgImgCanvas.x = canvas.stage.stageWidth  / 2 + cDisX * p;
-			bgImgCanvas.y = canvas.stage.stageHeight / 2 + cDisY * p;
+			bgImgCanvas.y = canvas.stage.stageHeight / 2 + cDisY * p;*/
+			bgImgCanvas.scaleX = bgImgCanvas.scaleY = Math.pow(canvas.scaleX, .1);
+			bgImgCanvas.rotation = canvas.rotation;
+			var p:Number =  Math.pow(1 / (1 + canvas.scaleX), 2);
+			var hw:Number = stage.stageWidth  * .5;
+			var hh:Number = stage.stageHeight * .5;
+			bgImgCanvas.x = hw + (canvas.x - hw) * p;
+			bgImgCanvas.y = hh + (canvas.y - hh) * p;
 		}
 		
 		/**
@@ -165,19 +180,32 @@ package view.ui
 				else
 					scale = stage.width / bmd.width;
 				
-				BitmapUtil.drawBitmapDataToShape(bmd, bgImgCanvas, bmd.width , bmd.height, 
-					- bmd.width / 2, - bmd.height / 2, false);
-				
-				canvas.scaleX = canvas.scaleY = 1;
-				canvas.x = bound.x + bound.width / 2;
-				canvas.y = bound.y + bound.height / 2;
-					
+				if (bgImgBitmap) bgImgCanvas.removeChild(bgImgBitmap);
+				bgImgBitmap = new Bitmap(bmd);
+				bgImgBitmap.x = -.5 * bgImgBitmap.width;
+				bgImgBitmap.y = -.5 * bgImgBitmap.height;
+				bgImgCanvas.addChild(bgImgBitmap);
+				fitBgBitmapToBound();
 				synBgImgWidthCanvas();
+			}
+		}
+		
+		private function fitBgBitmapToBound():void
+		{
+			if (bgImgBitmap && bound)
+			{
+				var vw:Number = bound.width;
+				var vh:Number = bound.height;
+				var bw:Number = bgImgBitmap.width  / bgImgBitmap.scaleX;
+				var bh:Number = bgImgBitmap.height / bgImgBitmap.scaleY;
+				var ss:Number = 1.5 * ((vw / vh > bw / bh) ? vw / bw : vh / bh);
+				TweenMax.to(bgImgBitmap, 1, {scaleX:ss, scaleY:ss, x:-.5 * bw * ss, y:-.5 * bh * ss});
 			}
 		}
 		
 		/**
 		 */		
-		public var bgImgCanvas:Shape = new Shape;
+		public var bgImgCanvas:Sprite = new Sprite;
+		private var bgImgBitmap:Bitmap;
 	}
 }

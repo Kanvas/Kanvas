@@ -170,12 +170,6 @@ package view.interact.zoomMove
 			return control.mainUI.canvas;
 		}
 		
-		/**
-		 */		
-		private function get bgImgCanvas():Shape
-		{
-			return control.mainUI.bgImgCanvas;
-		}
 		
 		private var speedScale:Number = 2;
 		private var speedRotation:Number = 90;

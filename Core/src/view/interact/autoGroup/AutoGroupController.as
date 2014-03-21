@@ -131,18 +131,12 @@ package view.interact.autoGroup
 			{
 				var page:Boolean = (element.vo is PageVO);
 				if (page)
-					PageVO(element.vo).thumbUpdatable = false;
+					PageUtil.registUpdateThumbVO(PageVO(element.vo));
 				
 				point.x = element.vo.x + xOff;
 				point.y = element.vo.y + yOff;
 				
 				element.moveTo(point);
-				
-				if (page)
-				{
-					PageVO(element.vo).thumbUpdatable = true;
-					PageUtil.notifyPageVOUpdateThumb(PageVO(element.vo));
-				}
 			}
 		}
 		
@@ -180,20 +174,15 @@ package view.interact.autoGroup
 			{
 				var page:Boolean = (element.vo is PageVO);
 				if (page)
-					PageVO(element.vo).thumbUpdatable = false;
+					PageUtil.registUpdateThumbVO(PageVO(element.vo));
 				
 				element.vo.scale = element.vo.scale * scaleRad;
 				
 				xDis = element.vo.x - curElement.x;
 				yDis = element.vo.y - curElement.y;
 				
-				element.moveTo(new Point(curElement.x + xDis * scaleRad, curElement.y + yDis * scaleRad));
-				
-				if (page)
-				{
-					PageVO(element.vo).thumbUpdatable = true;
-					PageUtil.notifyPageVOUpdateThumb(PageVO(element.vo));
-				}
+				element.vo.x = curElement.x + xDis * scaleRad;
+				element.vo.y = curElement.y + yDis * scaleRad;
 			}
 		}
 		
@@ -221,19 +210,13 @@ package view.interact.autoGroup
 			{
 				var page:Boolean = (element.vo is PageVO);
 				if (page)
-					PageVO(element.vo).thumbUpdatable = false;
+					PageUtil.registUpdateThumbVO(PageVO(element.vo));
 				
-				element.rotation = element.vo.rotation += dis;
+				element.vo.rotation += dis;
 				tempRollPoint.setTo(element.vo.x, element.vo.y);
 				PointUtil.rotate(tempRollPoint, MathUtil.angleToRadian(dis), curElement.middleCenter);
-				element.x = element.vo.x = tempRollPoint.x;
-				element.y = element.vo.y = tempRollPoint.y;
-				
-				if (page)
-				{
-					PageVO(element.vo).thumbUpdatable = true;
-					PageUtil.notifyPageVOUpdateThumb(PageVO(element.vo));
-				}
+				element.vo.x = tempRollPoint.x;
+				element.vo.y = tempRollPoint.y;
 			}
 		}
 		

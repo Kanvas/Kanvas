@@ -153,6 +153,11 @@ package com.kvs.utils
 			return Math.pow(3, value);
 		}
 		
+		public static function log10(value:Number):Number
+		{
+			return Math.log(value) / Math.LN10;
+		}
+		
 		public static const LN3:Number = Math.log(3);
 	}
 }

@@ -53,7 +53,7 @@ package view.elementSelector.lineControl
 				startPoint.x = 0//- selector.elementWidthForStage / 2;
 				startPoint.y = 0;
 				
-				endPoint.x = style.width * .5 - selector.offSet / 2;
+				endPoint.x = style.width * .5 - selector.offSet;
 				endPoint.y = 0;
 			}
 		}

@@ -153,10 +153,5 @@ package view.ui
 		{
 			return core.canvas;
 		}
-		
-		private function get bgImg():Shape
-		{
-			return core.bgImgCanvas;
-		}
 	}
 }

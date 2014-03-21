@@ -114,8 +114,7 @@ package view.interact
 			}//end of for i
 			if (alignArr[0] && alignArr[1])
 			{
-				tempPoint.x = alignArr[0].x + alignArr[1].x;
-				tempPoint.y = alignArr[0].y + alignArr[1].y;
+				tempPoint.setTo(alignArr[0].x + alignArr[1].x, alignArr[0].y + alignArr[1].y);
 			}
 			return tempPoint;
 		}
@@ -128,7 +127,6 @@ package view.interact
 		{
 			tempPoint.x = NaN;
 			tempPoint.y = NaN;
-			var area:Number = areaPosition / canvas.scaleX;
 			var elementsLoopBreak:Boolean = false;
 			for each (var element:ElementBase in elements)
 			{
@@ -156,12 +154,11 @@ package view.interact
 							//两直线相交的点
 							var aimPoint:Point = getPointByIntersect(points1, points2);
 							//距离判断
-							if (distance(aimPoint, curPoint) < area)
+							if (distance(aimPoint, curPoint) < areaPosition)
 							{
 								drawLineInPoints(Point.interpolate(points2[0], points2[1], .5), aimPoint);
 								//此方向的增量向量
-								tempPoint.x = aimPoint.x;
-								tempPoint.y = aimPoint.y;
+								tempPoint.setTo(aimPoint.x, aimPoint.y);
 								elementsLoopBreak = true;
 								break;
 							}
@@ -176,11 +173,7 @@ package view.interact
 		
 		private function distance(p1:Point, p2:Point):Number
 		{
-			p1 = LayoutUtil.elementPointToStagePoint(p1.x, p1.y, canvas);
-			p2 = LayoutUtil.elementPointToStagePoint(p2.x, p2.y, canvas);
-			//CoreUtil.drawCircle(0xFF0000, p1, 2);
-			//CoreUtil.drawCircle(0x0000FF, p2, 2);
-			return Point.distance(p1, p2);
+			return Point.distance(p1, p2) * canvas.scaleX;
 		}
 		
 		/**
@@ -317,23 +310,17 @@ package view.interact
 		//获取2直线相交的点
 		private function getPointByIntersect(points1:Array, points2:Array):Point
 		{
-			var a:Array = [];
-			var b:Array = [];
-			var c:Array = [];
-			
 			//第一直线a1x+b1y+c1=0
-			a[1] = points1[0].y - points1[1].y;
-			b[1] = points1[1].x - points1[0].x;
-			c[1] = points1[0].x * points1[1].y - points1[0].y * points1[1].x;
+			var a1:Number = points1[0].y - points1[1].y;
+			var b1:Number = points1[1].x - points1[0].x;
+			var c1:Number = points1[0].x * points1[1].y - points1[0].y * points1[1].x;
 			//第二直线a2x+b2y+c2=0
-			a[2] = points2[0].y - points2[1].y;
-			b[2] = points2[1].x - points2[0].x;
-			c[2] = points2[0].x * points2[1].y - points2[0].y * points2[1].x;
+			var a2:Number = points2[0].y - points2[1].y;
+			var b2:Number = points2[1].x - points2[0].x;
+			var c2:Number = points2[0].x * points2[1].y - points2[0].y * points2[1].x;
 			//两直线相交的点
-			var x:Number = (b[1] * c[2] - b[2] * c[1]) / (a[1] * b[2] - a[2] * b[1]);
-			var y:Number = (a[2] * c[1] - a[1] * c[2]) / (a[1] * b[2] - a[2] * b[1]);
-			
-			return new Point(x, y);
+			var p:Number = 1 / (a1 * b2 - a2 * b1);
+			return new Point((b1 * c2 - b2 * c1) * p, (a2 * c1 - a1 * c2) * p);
 		}
 		
 		/**
@@ -376,14 +363,14 @@ package view.interact
 			while (currLen <= totalLen)
 			{
 				x = Ox + Math.cos(radian) * currLen;
-				y = Oy +Math.sin(radian) * currLen;
+				y = Oy + Math.sin(radian) * currLen;
 				graphics.moveTo(x, y);
 				
 				currLen += width;
 				if (currLen > totalLen) currLen = totalLen;
 				
 				x = Ox + Math.cos(radian) * currLen;
-				y = Oy +Math.sin(radian) * currLen;
+				y = Oy + Math.sin(radian) * currLen;
 				graphics.lineTo(x, y);
 				
 				currLen += grap;

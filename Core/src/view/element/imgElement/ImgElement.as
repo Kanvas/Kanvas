@@ -159,7 +159,6 @@ package view.element.imgElement
 		override public function render():void
 		{
 			rendered = true;
-			trace("ImgElement.render()")
 			super.render();
 			renderBmdNeeded = false;
 			
@@ -185,30 +184,30 @@ package view.element.imgElement
 		 */		
 		internal function drawBmd():void
 		{
-			if (imgVO.sourceData == null)
-				return;
-			
-			if(!smallImgData)
+			if (imgVO.sourceData)
 			{
-				var ow:Number = imgVO.sourceData.width;
-				var oh:Number = imgVO.sourceData.height;
-				if (ow > minSize && oh > minSize)
+				if(!smallImgData)
 				{
-					var ss:Number = (ow > oh) ? minSize / oh : minSize / ow;
-					smallImgData = new BitmapData(ow * ss, oh * ss, true, 0);
-					var matrix:Matrix = new Matrix();
-					matrix.scale(ss, ss);
-					smallImgData.draw(imgVO.sourceData, matrix);
+					var ow:Number = imgVO.sourceData.width;
+					var oh:Number = imgVO.sourceData.height;
+					if (ow > minSize && oh > minSize)
+					{
+						var ss:Number = (ow > oh) ? minSize / oh : minSize / ow;
+						smallImgData = new BitmapData(ow * ss, oh * ss, true, 0);
+						var matrix:Matrix = new Matrix();
+						matrix.scale(ss, ss);
+						smallImgData.draw(imgVO.sourceData, matrix);
+					}
 				}
+				
+				shape.graphics.clear();
+				var bmd:BitmapData = (smallImgData && (super.width <= minSize || super.height <= minSize)) ? smallImgData : imgVO.sourceData;
+				
+				BitmapUtil.drawBitmapDataToShape(bmd, shape, 
+					vo.width, vo.height, - vo.width / 2, - vo.height / 2, false);
+				
+				removeLoading();
 			}
-			
-			shape.graphics.clear();
-			var bmd:BitmapData = (smallImgData && (super.width <= minSize || super.height <= minSize)) ? smallImgData : imgVO.sourceData;
-			
-			BitmapUtil.drawBitmapDataToShape(bmd, shape, 
-				vo.width, vo.height, - vo.width / 2, - vo.height / 2, false);
-			
-			removeLoading();
 		}
 		
 		/**

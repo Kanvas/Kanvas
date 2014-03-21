@@ -4,6 +4,7 @@ package view.interact.zoomMove
 	import com.greensock.easing.Quad;
 	
 	import flash.display.Shape;
+	import flash.display.Sprite;
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -136,7 +137,7 @@ package view.interact.zoomMove
 		
 		/**
 		 */		
-		private function get bgImgCanvas():Shape
+		private function get bgImgCanvas():Sprite
 		{
 			return mainUI.bgImgCanvas;
 		}

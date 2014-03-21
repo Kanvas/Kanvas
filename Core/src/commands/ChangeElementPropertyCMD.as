@@ -52,7 +52,7 @@ package commands
 							layer[i] = oldPropertyObj["indexChangeElement"][i].index;
 						newPropertyObj[propertyName] = layer;
 					}
-					else if (voPropertyNames.indexOf(propertyName) != -1)
+					else if (customPropertyNames[propertyName])
 					{
 						newPropertyObj[propertyName] = element.vo[propertyName];
 					}
@@ -90,8 +90,6 @@ package commands
 			
 			var page:Boolean = (element.vo is PageVO);
 			var thumb:Boolean;
-			if (page)
-				PageVO(element.vo).thumbUpdatable = false;
 			
 			for (var propertyName:String in obj) 
 			{
@@ -100,13 +98,16 @@ package commands
 					if (propertyName == "index")
 					{
 						CoreFacade.coreMediator.autoLayerController.swapElements(obj["indexChangeElement"], obj[propertyName]);
-						//obj["indexChangeElement"][propertyName] = obj[propertyName];
 					}
 					else
 					{
 						if (element.vo.hasOwnProperty(propertyName))
 						{
-							if (page && !thumb && pageVOUpdateThumbProperties.indexOf(propertyName) != -1) thumb = true;
+							if (page && !thumb && thumbPropertyNames[propertyName]) 
+							{
+								thumb = true;
+								PageUtil.registUpdateThumbVO(PageVO(element.vo));
+							}
 							element.vo[propertyName] = obj[propertyName];
 						}
 					}
@@ -117,13 +118,6 @@ package commands
 				}
 			}
 			
-			if (page)
-			{
-				PageVO(element.vo).thumbUpdatable = true;
-				if (thumb)
-					PageUtil.notifyPageVOUpdateThumb(PageVO(element.vo));
-			}
-		
 			if (element.autoGroupChangable && autoGroupEnabled)
 			{
 				CoreFacade.coreMediator.autoGroupController.resetElements(groupElements);
@@ -154,6 +148,8 @@ package commands
 				element.render();
 			
 			selector.update();
+			
+			PageUtil.refreshVOThumbs();
 		}
 		
 		/**
@@ -172,13 +168,34 @@ package commands
 		 */		
 		private var element:ElementBase;
 		
+		/**
+		 */	
 		private var autoGroupEnabled:Boolean;
 		
 		/**
 		 */		
 		private var selector:ElementSelector;
 		
-		private static const pageVOUpdateThumbProperties:Array = ["x", "y", "width", "height", "scale"];
-		private static const voPropertyNames:Array = ["radius", "arrowWidth", "trailHeight", 'r', 'rAngle', "innerRadius", "width", "height", "thickness"];
+		private static const thumbPropertyNames:Object = 
+		{
+			x:true, 
+			y:true, 
+			width:true, 
+			height:true, 
+			scale:true, 
+			rotation:true
+		};
+		private static const customPropertyNames:Object = 
+		{
+			radius:true, 
+			arrowWidth:true, 
+			trailHeight:true, 
+			r:true, 
+			rAngle:true, 
+			innerRadius:true, 
+			width:true, 
+			height:true, 
+			thickness:true
+		};
 	}
 }

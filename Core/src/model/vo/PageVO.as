@@ -27,7 +27,8 @@ package model.vo
 			if (x != value)
 			{
 				super.x = value;
-				dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
+				if (thumbUpdatable)
+					dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
 			}
 		}
 		
@@ -36,7 +37,8 @@ package model.vo
 			if (y != value)
 			{
 				super.y = value;
-				dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
+				if (thumbUpdatable)
+					dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
 			}
 		}
 		
@@ -45,7 +47,8 @@ package model.vo
 			if (width != value)
 			{
 				super.width = value;
-				dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
+				if (thumbUpdatable)
+					dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
 			}
 		}
 		
@@ -54,7 +57,8 @@ package model.vo
 			if (height != value)
 			{
 				super.height = value;
-				dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
+				if (thumbUpdatable)
+					dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
 			}
 		}
 		
@@ -63,7 +67,8 @@ package model.vo
 			if (scale != value)
 			{
 				super.scale = value;
-				dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
+				if (thumbUpdatable)
+					dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
 			}
 		}
 		
@@ -72,13 +77,9 @@ package model.vo
 			if (rotation != value)
 			{
 				super.rotation = value;
-				dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
+				if (thumbUpdatable)
+					dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
 			}
-		}
-		
-		override public function dispatchEvent(event:Event):Boolean
-		{
-			return (thumbUpdatable) ? super.dispatchEvent(event) : false;
 		}
 		
 		public function get parent():PageQuene

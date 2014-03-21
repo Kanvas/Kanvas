@@ -163,8 +163,23 @@ package view.pagePanel
 			
 			drawPageThumb();
 			
-			if(!pageVO.bitmapData && pageVO.thumbUpdatable)
-				updateThumb();
+			if (pageVO.bitmapData)
+			{
+				if (bmp && con.contains(bmp)) con.removeChild(bmp);
+				con.addChild(bmp = new Bitmap(pageVO.bitmapData));
+				bmp.x = leftGutter;
+				bmp.y = (currState.height - iconH) / 2;
+				bmp.width = iconW;
+				bmp.height = iconH;
+				bmp.smoothing = true;
+			}
+			else
+			{
+				if (pageVO.thumbUpdatable)
+				{
+					updateThumb();
+				}
+			}
 			
 			
 			

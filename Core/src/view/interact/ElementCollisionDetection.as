@@ -107,15 +107,14 @@ package view.interact
 			var maxLineInteractSizeSquare:Number = w * w;
 			for each (var element:ElementBase in elements)
 			{
-				var bound:Rectangle = LayoutUtil.getItemRect(coreMdt.canvas, element);
-				//var size:Number = RectangleUtil.getDiagonalDistance(bound);
-				
 				if (element.visible)
 				{
+					var bound:Rectangle = LayoutUtil.getItemRect(coreMdt.canvas, element);
 					if (element is LineElement)
 					{
 						var size:Number = (bound.width * bound.width + bound.height * bound.height) >> 1;
-						if (size > maxLineInteractSizeSquare || size < minLineInteractSizeSquare)
+						if (size > maxLineInteractSizeSquare || 
+							size < minLineInteractSizeSquare)
 							element.disable();//过小禁止交互
 						else
 							element.enable();
@@ -136,39 +135,6 @@ package view.interact
 						element.enable();
 					}
 				}
-				
-				/*if (RectangleUtil.rectOverlapping(bound, stage))
-				{
-					element.visible = ! (bound.width < minVisibleSize && bound.height < minVisibleSize);
-					
-					if (element is LineElement)
-					{
-						var size:Number = (bound.width * bound.width + bound.height * bound.height) >> 1;
-						if (size > maxLineInteractSizeSquare || size < minLineInteractSizeSquare)
-							element.disable();//过小禁止交互
-						else
-							element.enable();
-					}
-					else if (element is TextEditField)
-					{
-						if (bound.width > w || bound.height > h || bound.width < 15 || bound.height < 5)
-							element.disable();
-						else
-							element.enable();
-					}
-					else if (element.enableChangable && (bound.width > w || bound.width < minInteractSize || bound.height > h || bound.height < minInteractSize))
-					{
-						element.disable();
-					}
-					else
-					{
-						element.enable();
-					}
-				}
-				else
-				{
-					element.visible = false;
-				}*/
 			}
 		}
 		
