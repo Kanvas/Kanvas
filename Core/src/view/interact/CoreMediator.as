@@ -25,6 +25,7 @@ package view.interact
 	import view.element.ElementBase;
 	import view.element.GroupElement;
 	import view.element.PageElement;
+	import view.element.imgElement.ImgElement;
 	import view.element.text.TextEditField;
 	import view.elementSelector.ElementSelector;
 	import view.interact.autoGroup.AutoGroupController;
@@ -718,6 +719,20 @@ package view.interact
 		
 		/**
 		 */		
+		public function flashStart():void
+		{
+			var elements:Vector.<ElementBase> = CoreFacade.coreProxy.elements;
+			for each (var element:ElementBase in elements)
+			{
+				if (element is ImgElement)
+				{
+					(element as ImgElement).drawBmd(false);
+				}
+			}
+		}
+		
+		/**
+		 */		
 		public function updateAfterZoomMove():void
 		{
 			currentMode.updateSelector();
@@ -735,12 +750,26 @@ package view.interact
 				//刷新页面编号尺寸，防止太大
 				if (element.visible && element is PageElement)
 				{
-					(element as PageElement).layoutPageNum();
+					(element as PageElement).render();
 				}
 			}
 			
 			//mainUI.drawBgInteractorShape();
 			mainUI.updatePastPoint();
+		}
+		
+		/**
+		 */		
+		public function flashStop():void
+		{
+			var elements:Vector.<ElementBase> = CoreFacade.coreProxy.elements;
+			for each (var element:ElementBase in elements)
+			{
+				if (element is ImgElement)
+				{
+					(element as ImgElement).drawBmd(true);
+				}
+			}
 		}
 		
 		/**

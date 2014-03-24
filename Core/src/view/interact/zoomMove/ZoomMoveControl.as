@@ -57,7 +57,7 @@ package view.interact.zoomMove
 		
 		
 		/**
-		 * 画布缩放，旋转，移动 
+		 * 画布缩放，旋转，移动 页面播放时的镜头动画
 		 * 
 		 * @param scale
 		 * @param rotation

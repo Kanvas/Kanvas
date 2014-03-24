@@ -5,7 +5,6 @@ package com.kvs.ui.label
 	import flash.display.BitmapData;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Graphics;
-	import flash.display.Shape;
 	import flash.display.Sprite;
 	
 	/**
@@ -56,7 +55,7 @@ package com.kvs.ui.label
 		/**
 		 * 将textCanvas上的文本转换为bitmapdata并绘制
 		 */		
-		public function renderTextBMD(shape:Graphics, textCanvas:Sprite, scale:Number = 1, tx:Number = 0, ty:Number = 0, w:Number = 1, h:Number = 1, smooth:Boolean = false):void
+		public function renderTextBMD(shape:Graphics, textCanvas:Sprite, scale:Number = 1, tx:Number = 0, ty:Number = 0, w:Number = 1, h:Number = 1, smooth:Boolean = true):void
 		{
 			shape.clear();
 			

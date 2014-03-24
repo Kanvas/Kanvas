@@ -1,18 +1,14 @@
 package view.interact.zoomMove
 {
-	import com.greensock.easing.Cubic;
-	
 	import consts.ConstsTip;
 	
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-	import util.CoreUtil;
 	import util.LayoutUtil;
 	
 	import view.ui.Bubble;
 	import view.ui.Canvas;
-	import view.ui.ICanvasLayout;
 	import view.ui.MainUIBase;
 
 	/**
@@ -72,7 +68,6 @@ package view.interact.zoomMove
 		 */
 		public function zoomIn(notMouseCenter:Boolean = false):void
 		{
-			flasher.close();
 			flasher.ready();
 			
 			var newScale:Number = flasher.canvasTargetScale * control.zoomScale;
@@ -93,7 +88,6 @@ package view.interact.zoomMove
 		 */
 		public function zoomOut(notMouseCenter:Boolean = false):void
 		{
-			flasher.close();
 			flasher.ready();
 			
 			var newScale:Number = flasher.canvasTargetScale / control.zoomScale;
@@ -110,7 +104,6 @@ package view.interact.zoomMove
 		
 		public function zoomMoveOff(scale:Number, x:Number, y:Number, time:Number = 1, ease:Object = null):void
 		{
-			flasher.close();
 			flasher.ready();
 			flasher.canvasTargetScale = canvas.scaleX * scale;
 			flasher.canvasTargetX = canvas.x + x;
@@ -120,8 +113,8 @@ package view.interact.zoomMove
 		
 		public function zoomRotateMoveTo(scale:Number, rotation:Number, x:Number, y:Number, ease:Object = null, time:Number = NaN):void
 		{
-			flasher.close();
 			flasher.ready();
+			
 			flasher.canvasTargetScale = scale;
 			flasher.canvasTargetRotation = rotation;
 			flasher.canvasTargetX = x;
@@ -166,7 +159,6 @@ package view.interact.zoomMove
 		 */
 		public function zoomAuto(originalScale:Boolean = false):void
 		{
-			flasher.close();
 			flasher.ready();
 			
 			if (canvas.ifHasElements)

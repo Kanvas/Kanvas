@@ -90,12 +90,30 @@ package landray.kp.mediator
 			}
 		}
 		
+		/**
+		 * 画布开始动画
+		 */		
+		public function flashStart():void
+		{
+			
+		}
+		
 		public function updateAfterZoomMove():void
 		{
 			selector.render();
+			
 			for each (var graph:Graph in config.kp_internal::graphs)
 				graph.render(viewer.canvas.scaleX);
+				
 			viewer.synBgImgWidthCanvas();
+		}
+		
+		/**
+		 * 画布动画结束
+		 */		
+		public function flashStop():void
+		{
+			
 		}
 		
 		public function bgClicked():void

@@ -1,19 +1,15 @@
 package view.element.imgElement
 {
 	import com.kvs.utils.RexUtil;
-	import com.kvs.utils.XMLConfigKit.StyleManager;
 	import com.kvs.utils.graphic.BitmapUtil;
 	
 	import flash.display.BitmapData;
-	import flash.display.Shape;
 	import flash.geom.Matrix;
 	
 	import landray.kp.ui.Loading;
 	
 	import model.vo.ImgVO;
 	
-	import util.img.ImgInsertEvent;
-	import util.img.ImgInsertor;
 	import util.img.ImgLib;
 	
 	import view.element.ElementBase;
@@ -181,8 +177,9 @@ package view.element.imgElement
 		private var rendered:Boolean;
 		
 		/**
+		 * 画布缩放的过程中，关闭位图平滑， 画布缩放／移动结束后，开启平滑
 		 */		
-		internal function drawBmd():void
+		public function drawBmd(ifSmooth:Boolean = false):void
 		{
 			if (imgVO.sourceData)
 			{
@@ -196,7 +193,7 @@ package view.element.imgElement
 						smallImgData = new BitmapData(ow * ss, oh * ss, true, 0);
 						var matrix:Matrix = new Matrix();
 						matrix.scale(ss, ss);
-						smallImgData.draw(imgVO.sourceData, matrix);
+						smallImgData.draw(imgVO.sourceData, matrix, null, null, null, ifSmooth);
 					}
 				}
 				
@@ -204,7 +201,7 @@ package view.element.imgElement
 				var bmd:BitmapData = (smallImgData && (super.width <= minSize || super.height <= minSize)) ? smallImgData : imgVO.sourceData;
 				
 				BitmapUtil.drawBitmapDataToShape(bmd, shape, 
-					vo.width, vo.height, - vo.width / 2, - vo.height / 2, false);
+					vo.width, vo.height, - vo.width / 2, - vo.height / 2, ifSmooth);
 				
 				removeLoading();
 			}
