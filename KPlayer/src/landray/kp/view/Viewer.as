@@ -3,10 +3,8 @@ package landray.kp.view
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 	
-	import landray.kp.components.Selector;
 	import landray.kp.components.ToolBarSlide;
 	import landray.kp.components.ToolBarZoom;
-	import landray.kp.components.ZoomToolBar;
 	import landray.kp.core.KPConfig;
 	import landray.kp.core.KPProvider;
 	import landray.kp.core.kp_internal;

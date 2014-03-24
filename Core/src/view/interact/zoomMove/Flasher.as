@@ -2,13 +2,9 @@ package view.interact.zoomMove
 {
 	import com.greensock.TweenMax;
 	import com.greensock.easing.*;
-	import com.greensock.easing.Quart;
 	import com.kvs.utils.MathUtil;
-	import com.kvs.utils.RectangleUtil;
 	
-	import flash.display.Shape;
 	import flash.display.Sprite;
-	import flash.geom.Point;
 	
 	import util.layout.CanvasLayoutPacker;
 	
@@ -31,35 +27,24 @@ package view.interact.zoomMove
 		 */		
 		public function ready():void
 		{
-			if (isFlashing == false)
-			{
-				canvasTargetRotation = canvas.rotation;
-				canvasTargetScale = canvas.scaleX;
-				canvasTargetX = canvas.x;
-				canvasTargetY = canvas.y;
-			}
-		}
-		
-		/**
-		 */		
-		public function close(toEnd:Boolean = false):void
-		{
-			isFlashing = false;
-			TweenMax.killTweensOf(canvas, toEnd);
+			TweenMax.killTweensOf(canvas, false);
+			
 			if (packer)
 			{
-				TweenMax.killTweensOf(packer, toEnd);
+				TweenMax.killTweensOf(packer, false);
 				packer.modCanvasPositionEnd();
 			}
+			
+			canvasTargetRotation = canvas.rotation;
+			canvasTargetScale = canvas.scaleX;
+			canvasTargetX = canvas.x;
+			canvasTargetY = canvas.y;
 		}
 		
 		/**
 		 */		
-
 		public function flash(time:Number = 0.3, easeFlash:Object = null):void
 		{
-			close();
-			
 			if (Math.max(canvasTargetScale / canvas.scaleX, canvas.scaleX / canvasTargetScale) > 1.0005)
 				control.mainUI.curScreenState.disableCanvas();
 			
@@ -67,18 +52,18 @@ package view.interact.zoomMove
 				ease : easeFlash, 
 				onUpdate : updated,
 				onComplete : finishZoom});
-			
-			isFlashing = true;
 		}
 		
+		/**
+		 */		
 		public function advancedFlash(easeFlash:Object = null, time:Number = NaN):void
 		{
-			
 			if (MathUtil.equals(MathUtil.log2(canvas.scaleX), MathUtil.log2(canvasTargetScale)) && 
 				MathUtil.equals(MathUtil.modRotation(canvas.rotation), MathUtil.modRotation(canvasTargetRotation)) && 
 				MathUtil.equals(canvas.x, canvasTargetX) && 
 				MathUtil.equals(canvas.y, canvasTargetY))
 				return;
+			
 			if (Math.max(canvasTargetScale / canvas.scaleX, canvas.scaleX / canvasTargetScale) > 1.0005)
 				control.mainUI.curScreenState.disableCanvas();
 			
@@ -109,19 +94,18 @@ package view.interact.zoomMove
 				onComplete:finishZoom
 			});
 			
-			isFlashing = true;
 		}
 		
-		
+		/**
+		 */		
 		private function getScalePlus(canvasMiddleScale:Number):Number
 		{
 			var log2S:Number = MathUtil.log2(canvas.scaleX);
 			var log2E:Number = MathUtil.log2(canvasTargetScale);
 			var log2M:Number = MathUtil.log2(canvasMiddleScale);
+			
 			return ((isNaN(log2M)) ? Math.abs(log2E - log2S) : (Math.abs(log2E - log2M) + Math.abs(log2M - log2S))) / speedScale;
 		}
-		
-		
 		
 		/**
 		 */		
@@ -132,6 +116,12 @@ package view.interact.zoomMove
 			control.mainUI.synBgImgWidthCanvas();
 			
 			control.uiMediator.updateAfterZoomMove();
+			
+			if (isFlashing == false)
+			{
+				control.uiMediator.flashStart();
+				isFlashing = true;
+			}
 		}
 		
 		/**
@@ -142,6 +132,8 @@ package view.interact.zoomMove
 			
 			control.mainUI.curScreenState.enableCanvas();
 			isFlashing = false;
+			
+			control.uiMediator.flashStop();
 		}
 		
 		public var canvasTargetRotation:Number = 0;
@@ -170,10 +162,11 @@ package view.interact.zoomMove
 			return control.mainUI.canvas;
 		}
 		
-		
+		/**
+		 * 
+		 */		
 		private var speedScale:Number = 2;
 		private var speedRotation:Number = 90;
-		
 		private var packer:CanvasLayoutPacker;
 	}
 }
