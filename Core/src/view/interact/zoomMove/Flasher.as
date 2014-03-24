@@ -129,7 +129,7 @@ package view.interact.zoomMove
 		{
 			if (packer) packer.modCanvasPosition();
 			
-			control.mainUI.synBgImgWidthCanvas();
+			control.mainUI.synBgImageToCanvas();
 			
 			control.uiMediator.updateAfterZoomMove();
 		}

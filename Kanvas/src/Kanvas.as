@@ -34,7 +34,7 @@ package
 	{
 		public function Kanvas()
 		{
-			StageUtil.initApplication(this, init, true);
+			StageUtil.initApplication(this, init);
 		}
 		
 		/**
@@ -82,7 +82,7 @@ package
 				kvsCore.addEventListener(KVSEvent.SET_CUSTOM_DATA, setCustomData, false, 0, true);
 			
 			// 数据测试用
-			dataTest = new DataTest(this.toolBar, shapePanel, kvsCore);
+			dataTest = new DataTest(toolBar, shapePanel, kvsCore);
 		}
 		
 		

@@ -1,7 +1,5 @@
 package 
 {
-	import com.kvs.utils.MathUtil;
-	import com.kvs.utils.PointUtil;
 	import com.kvs.utils.RexUtil;
 	import com.kvs.utils.XMLConfigKit.IApp;
 	import com.kvs.utils.XMLConfigKit.XMLVOLib;
@@ -19,7 +17,6 @@ package
 	import model.ConfigInitor;
 	import model.CoreFacade;
 	import model.ElementProxy;
-	import model.vo.ElementVO;
 	
 	import util.LayoutUtil;
 	import util.layout.ElementLayoutInfo;
@@ -118,7 +115,7 @@ package
 		 */		
 		public function startDragElement():void
 		{
-			CoreFacade.coreMediator.startDragElement();
+			facade.coreMediator.startDragElement();
 		}
 		
 		/**
@@ -126,7 +123,7 @@ package
 		 */		
 		public function endDragElement():void
 		{
-			CoreFacade.coreMediator.endDragElment();
+			facade.coreMediator.endDragElment();
 		}
 		
 		/**
@@ -134,7 +131,7 @@ package
 		 */		
 		public function showSelector():void
 		{
-			CoreFacade.coreMediator.openSelector();
+			facade.coreMediator.openSelector();
 		}
 		
 		/**
@@ -142,7 +139,7 @@ package
 		 */		
 		public function hideSelector():void
 		{
-			CoreFacade.coreMediator.showSelector();
+			facade.coreMediator.showSelector();
 		}
 		
 		/**
@@ -150,7 +147,7 @@ package
 		 */		
 		public function get currentElement():ElementBase
 		{
-			return CoreFacade.coreMediator.currentElement;
+			return facade.coreMediator.currentElement;
 		}
 		
 		/**
@@ -158,7 +155,7 @@ package
 		 */		
 		public function undo():void
 		{
-			CoreFacade.coreMediator.undo();
+			facade.coreMediator.undo();
 		}
 		
 		/**
@@ -166,7 +163,7 @@ package
 		 */	
 		public function redo():void
 		{
-			CoreFacade.coreMediator.redo();
+			facade.coreMediator.redo();
 		}
 		
 		/**
@@ -187,35 +184,35 @@ package
 		 */		
 		public function copy():void
 		{
-			CoreFacade.coreMediator.copy();
+			facade.coreMediator.copy();
 		}
 		
 		/**
 		 */		
 		public function cut():void
 		{
-			CoreFacade.coreMediator.cut();
+			facade.coreMediator.cut();
 		}
 		  
 		/**
 		 */		
 		public function paste():void
 		{
-			CoreFacade.coreMediator.paste();
+			facade.coreMediator.paste();
 		}
 		
 		/**
 		 */		
 		public function exportData():XML
 		{
-			return CoreFacade.coreProxy.exportData();
+			return facade.coreProxy.exportData();
 		}
 		
 		/**
 		 */		
 		public function importData(xml:XML):void
 		{
-			CoreFacade.coreProxy.importData(xml);
+			facade.coreProxy.importData(xml);
 			if (stage && stage.stageWidth && stage.stageHeight)
 			{
 				autoZoom();
@@ -243,7 +240,7 @@ package
 		{
 			resetLib();
 			
-			CoreFacade.coreProxy.importZipData(byte);
+			facade.coreProxy.importZipData(byte);
 			autoZoom();
 		}
 		
@@ -253,7 +250,7 @@ package
 		{
 			resetLib();
 			
-			return CoreFacade.coreProxy.exportZipData();
+			return facade.coreProxy.exportZipData();
 		}
 		
 		
@@ -264,7 +261,7 @@ package
 		public function getImgURLList():String
 		{
 			var temp:Array = [];
-			var imgs:Vector.<ImgElement> = CoreFacade.coreProxy.imageElements;
+			var imgs:Vector.<ImgElement> = facade.coreProxy.imageElements;
 			for each (var imgElement:ImgElement in imgs)
 			{
 				temp.push(imgElement.imgVO.url);
@@ -458,7 +455,7 @@ package
 			initUI();
 			initMVC();
 			
-			configInitor = new ConfigInitor(this);
+			new ConfigInitor(this);
 			
 			//testImage();
 			
@@ -497,8 +494,8 @@ package
 			// 值越高，动画播放更流畅, 但更消耗性能 
 			stage.frameRate = 30;
 			
-			this.thumbManager = new ThumbManager(this);
-			this.bgColorFlasher = new BgColorFlasher(this);
+			thumbManager = new ThumbManager(this);
+			bgColorFlasher = new BgColorFlasher(this);
 
 			Bubble.init(stage);
 
@@ -512,13 +509,9 @@ package
 			
 			// 解决IE初始化时有一段时间宽高为0的问题
 			if (stage.stageWidth == 0 || stage.stageHeight == 0)
-			{
 				addEventListener(Event.ENTER_FRAME, updateCanvasPositionEnterFrame);
-			}
 			else
-			{
 				updateCanvasPosition();
-			}
 			
 			//自动对齐划线的UI
 			addChild(autoAlignUI);
@@ -531,7 +524,7 @@ package
 			addChild(textEditor);
 			
 			drawBgInteractorShape();
-			this.updatePastPoint();
+			updatePastPoint();
 		}
 		
 		/**
@@ -564,10 +557,10 @@ package
 		// 主场景, 默认居中对齐
 		private function updateCanvasPosition():void
 		{
-			canvas.x = stage.stageWidth * .5;
-			canvas.y = stage.stageHeight * .5;
+			canvas.x = .5 * stage.stageWidth;
+			canvas.y = .5 * stage.stageHeight;
 			
-			synBgImgWidthCanvas();
+			synBgImageToCanvas();
 		}
 		
 		/**
@@ -666,7 +659,7 @@ package
 		 */
 		public function renderBGWithColor(color:uint = 0xffffff):void
 		{
-			this.bgColorFlasher.render(color);
+			bgColorFlasher.render(color);
 		}
 		
 		/**
@@ -674,10 +667,7 @@ package
 		 */		
 		public function drawBgInteractorShape():void
 		{
-			var rect:Rectangle = new Rectangle;
-			rect.width  = stage.stageWidth;
-			rect.height = stage.stageHeight;
-			canvas.drawBG(rect);
+			canvas.drawBG(new Rectangle(0, 0, stage.stageWidth, stage.stageHeight));
 		}
 		
 		
@@ -696,56 +686,57 @@ package
 		
 		public function get controller():ZoomMoveControl
 		{
-			return _zoomMoveControl;
+			return __controller;
 		}
 		
 		public function set controller(value:ZoomMoveControl):void
 		{
-			_zoomMoveControl = value;
+			__controller = value;
 		}
 		
-		private var _zoomMoveControl:ZoomMoveControl;
+		private var __controller:ZoomMoveControl;
 			
 		
 		/**
-		 */		
+		 * 控制器
+		 */	
 		public function get facade():CoreFacade
 		{
-			return _facade;
+			return __facade;
 		}
 		
 		public function set facade(value:CoreFacade):void
 		{
-			_facade = value;
+			__facade = value;
 		}
 		
+		private var __facade:CoreFacade;
+		
+		
 		/**
-		 * 控制器
+		 * 自定义按钮XML
 		 */
-		private var _facade:CoreFacade;
-		
-		/**
-		 * 配置文件初始化控制器
-		 */		
-		private var configInitor:ConfigInitor;
-		
 		public function get customButtonData():XML
 		{
-			return _customButtonData;
+			return __customButtonData;
 		}
 		
 		public function set customButtonData(value:XML):void
 		{
-			_customButtonData = value;
+			__customButtonData = value;
 			dispatchEvent(new KVSEvent(KVSEvent.SET_CUSTOM_DATA));
 		}
 		
-		/**
-		 */		
-		private var _customButtonData:XML;
+		private var __customButtonData:XML;
 		
+		/**
+		 * 传入的自定义按钮是否调用js。
+		 */
 		public var customButtonJS:Boolean = true;
 		
-		public var isAIR:Boolean;
+		/**
+		 * 是否为AIR桌面程序，此属性在客户端中设置为true。
+		 */
+		public var air:Boolean;
 	}
 }

@@ -95,7 +95,7 @@ package landray.kp.mediator
 			selector.render();
 			for each (var graph:Graph in config.kp_internal::graphs)
 				graph.render(viewer.canvas.scaleX);
-			viewer.synBgImgWidthCanvas();
+			viewer.synBgImageToCanvas();
 		}
 		
 		public function bgClicked():void
@@ -330,7 +330,7 @@ package landray.kp.mediator
 			var aimY:Number = canvas.y + stageCenter.y - canvasCenter.y;
 			controller.zoomRotateMoveTo(canvasToScale, canvas.rotation, aimX, aimY, null, 1);
 			
-			viewer.synBgImgWidthCanvas();
+			viewer.synBgImageToCanvas();
 			
 			lastWidth  = thisWidth;
 			lastHeight = thisHeight;

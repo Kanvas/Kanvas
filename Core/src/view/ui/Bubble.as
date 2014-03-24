@@ -1,6 +1,6 @@
 package view.ui
 {
-	import com.greensock.TweenLite;
+	import com.greensock.TweenMax;
 	import com.greensock.easing.Back;
 	import com.kvs.ui.label.LabelUI;
 	
@@ -59,7 +59,7 @@ package view.ui
 		/**
 		 * 
 		 */		
-		private function show(text:String):void
+		private function show(text:String, time:Number = 1):void
 		{
 			if (stage)
 			{
@@ -81,8 +81,8 @@ package view.ui
 					{
 						isShowing = true;
 						
-						TweenLite.to(labelBtn, .5, {alpha: 1, y:stage.stageHeight - labelBtn.height - 10, ease: Back.easeOut});
-						TweenLite.to(labelBtn, .5, {alpha:0, y:stage.stageHeight, delay:2, onComplete:hideComplete, ease: Back.easeIn});
+						TweenMax.to(labelBtn, .5, {alpha: 1, y: stage.stageHeight - labelBtn.height - 10, ease: Back.easeOut});
+						TweenMax.to(labelBtn, .5, {alpha: 0, y: stage.stageHeight, delay:time + 1, onComplete: hideComplete, ease: Back.easeIn});
 					}
 					
 				}

@@ -248,7 +248,7 @@ package model
 				zipOut.closeEntry();
 			}
 			
-			if(!CoreFacade.coreMediator.mainUI.isAIR)
+			if(!CoreFacade.coreMediator.mainUI.air)
 			{
 				var pageBytes:ByteArray = CoreFacade.coreMediator.mainUI.thumbManager.getPageBytes(pageW, pageH);
 				var jpgs:Vector.<ByteArray> = CoreFacade.coreMediator.mainUI.thumbManager.resolvePageData(pageBytes);

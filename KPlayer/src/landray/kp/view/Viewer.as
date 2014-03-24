@@ -49,12 +49,7 @@ package landray.kp.view
 			
 			Bubble.init(stage);
 			
-			//添加背景颜色
-			addChild(bgColorCanvas);
-			//背景图片
-			addChild(bgImgCanvas);
-			//添加画布
-			addChild(canvas);
+			
 			//添加selector选择框
 			addChild(config.kp_internal::selector);
 			//添加按钮工具条

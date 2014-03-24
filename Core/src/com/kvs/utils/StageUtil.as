@@ -14,9 +14,9 @@ package com.kvs.utils
 		
 		/**
 		 */		
-		public static function initApplication(container:Sprite, handler:Function, isMain:Boolean = false):void
+		public static function initApplication(sprite:Sprite, handler:Function):void
 		{
-			new App(container, handler, isMain);
+			new App(sprite, handler);
 		}
 	}
 	
@@ -43,51 +43,48 @@ import flash.display.StageAlign;
 import flash.display.StageQuality;
 import flash.display.StageScaleMode;
 import flash.events.Event;
-import flash.system.IME;
 
 /**
  */
 class App
 {
 	/**
-	 */	
-	public function App(target:Sprite, initFun:Function, main:Boolean = false)
+	 * 为Sprite添加添加至场景时的执行函数。
+	 * 
+	 * @param $sprite 传入的Sprite实例。
+	 * @param $handler 执行函数，执行函数不可包含任何参数。
+	 * @param $main 传入的Sprite实例是否为程序主入口Sprite，默认为false。如为true，会针对Stage进行初始化操作。
+	 * 
+	 */
+	public function App($sprite:Sprite, $handler:Function)
 	{
-		handler = initFun;
-		container = target;
-		isMain = main;
-		container.addEventListener(Event.ADDED_TO_STAGE, addToStageHandler, false, 0, true);
+		sprite  = $sprite;
+		handler = $handler;
 		apps.push(this);
+		sprite.addEventListener(Event.ADDED_TO_STAGE, addToStageHandler, false, 0, true);
 	}
-	
-	/**
-	 */		
-	internal static var apps:Array = [];
 	
 	/**
 	 * @param evt
 	 */		
 	private function addToStageHandler(evt:Event):void
 	{
-		if (isMain && (container.stage.stageWidth == 0 || container.stage.stageHeight == 0))
-		{
-			container.stage.addEventListener(Event.RESIZE, initResizeHandler, false, 0, true);
-		}
+		sprite.removeEventListener(Event.ADDED_TO_STAGE, addToStageHandler);
+		if (stage && (sprite.stage.stageWidth == 0 || sprite.stage.stageHeight == 0))
+			sprite.stage.addEventListener(Event.RESIZE, resizeHandler, false, 0, true);
 		else
-		{
 			ready();
-		}
 		
 	}
 	
 	/**
 	 * 解决IE下Flash初始化舞台尺寸无法获取的问题。
 	 */		
-	private function initResizeHandler(evt:Event):void
+	private function resizeHandler(evt:Event):void
 	{
-		if (container && container.stage.stageWidth && container.stage.stageHeight)
+		if (sprite.stage.stageWidth && sprite.stage.stageHeight)
 		{
-			container.stage.removeEventListener(Event.RESIZE, initResizeHandler, false);
+			sprite.stage.removeEventListener(Event.RESIZE, resizeHandler);
 			ready();
 		}
 	}
@@ -96,16 +93,16 @@ class App
 	 */		
 	private function ready():void
 	{
-		container.removeEventListener(Event.ADDED_TO_STAGE, addToStageHandler);
-		if (isMain)
-			initStage(container.stage);
+		if (stage)
+		{
+			stage = false;
+			initStage(sprite.stage);
+		}
 		
-		if (handler != null && (handler is Function))
-			handler();
+		if (handler != null && (handler is Function)) handler();
 		
 		handler = null;
-		container = null;
-		
+		sprite  = null;
 		apps.splice(apps.indexOf(this), 1);
 	}
 	
@@ -115,24 +112,19 @@ class App
 	public function initStage(stage:Stage):void
 	{
 		stage.stageFocusRect = false;
-		stage.tabChildren = false;
-		
-		stage.quality = StageQuality.BEST;
-		stage.scaleMode = StageScaleMode.NO_SCALE;
-		stage.align = StageAlign.TOP_LEFT;
+		stage.tabChildren    = false;
+		stage.quality        = StageQuality  .BEST;
+		stage.scaleMode      = StageScaleMode.NO_SCALE;
+		stage.align          = StageAlign    .TOP_LEFT;
 	}
 	
-	/**
-	 */		
+	
+	private static const apps:Array = [];
+	
+	private static var stage:Boolean = true;
+	
 	private var handler:Function;
 	
-	private var lastWidth:Number = 0;
-	private var lastHeight:Number = 0;
-	
-	private var isMain:Boolean;
-	
-	/**
-	 */	
-	private var container:Sprite;
+	private var sprite:Sprite;
 	
 }

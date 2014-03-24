@@ -81,6 +81,15 @@ package model
 			return instance._coreMediator;
 		}
 		
+		public function get coreMediator():CoreMediator
+		{
+			return _coreMediator;
+		}
+		
+		/**
+		 */		
+		private var _coreMediator:CoreMediator;
+		
 		/**
 		 */		
 		public static function get coreProxy():CoreProxy
@@ -88,9 +97,10 @@ package model
 			return instance._coreProxy;
 		}
 		
-		/**
-		 */		
-		private var _coreMediator:CoreMediator;
+		public function get coreProxy():CoreProxy
+		{
+			return _coreProxy;
+		}
 		
 		/**
 		 */		

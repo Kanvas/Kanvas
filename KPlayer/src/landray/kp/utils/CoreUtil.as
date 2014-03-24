@@ -26,9 +26,9 @@ package landray.kp.utils
 			return RexUtil.ifHasText(value);
 		}
 		
-		public static function initApplication(container:Sprite, handler:Function, isMain:Boolean = false):void
+		public static function initApplication(container:Sprite, handler:Function):void
 		{
-			StageUtil.initApplication(container, handler, isMain);
+			StageUtil.initApplication(container, handler);
 		}
 		
 		public static function drawBitmapDataToShape(bmd:BitmapData, ui:Shape, w:Number, h:Number, tx:Number = 0, ty:Number = 0, smooth:Boolean = true, radius:uint = 0):void
