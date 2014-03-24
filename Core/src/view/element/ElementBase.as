@@ -41,6 +41,7 @@ package view.element
 			this.vo = vo;
 			
 			_screenshot = true;
+			mouseChildren = false;
 			addChild(graphicShape = new Shape);
 			
 			initState();
@@ -697,8 +698,6 @@ package view.element
 		 */
 		protected function initListen():void
 		{
-			mouseChildren = false;
-			
 			addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler, false, 0, true);
 			addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
 			

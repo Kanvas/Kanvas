@@ -2,7 +2,6 @@ package view.element.text
 {
 	import com.kvs.ui.label.TextDrawer;
 	import com.kvs.utils.XMLConfigKit.style.elements.TextFormatStyle;
-	import com.kvs.utils.graphic.BitmapUtil;
 	
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
@@ -22,8 +21,6 @@ package view.element.text
 	
 	import view.element.ElementBase;
 	import view.element.IEditElement;
-	import view.element.state.ElementGroupState;
-	import view.element.state.ElementMultiSelected;
 	import view.element.state.IEditShapeState;
 	import view.elementSelector.toolBar.ToolBarController;
 	import view.interact.autoGroup.IAutoGroupElement;
@@ -50,6 +47,8 @@ package view.element.text
 		 */		
 		private var textDrawer:TextDrawer;
 		
+		/**
+		 */		
 		override public function toShotcut(renderable:Boolean = false):void
 		{
 			super.toShotcut(renderable);
@@ -60,9 +59,12 @@ package view.element.text
 			}
 		}
 		
+		/**
+		 */		
 		override public function toPreview(renderable:Boolean = false):void
 		{
 			super.toPreview(renderable);
+			
 			if (renderable)
 			{
 				var bound:Rectangle = textManager.getContentBounds();

@@ -31,9 +31,18 @@ package view.element
 			xmlData = <page/>;
 			_screenshot = false;
 			_isPage = true;
-			vo.addEventListener(PageEvent.DELETE_PAGE_FROM_UI, deletePageHandler);
 			
+			this.mouseChildren = true;			
+			vo.addEventListener(PageEvent.DELETE_PAGE_FROM_UI, deletePageHandler);
 			vo.addEventListener(PageEvent.UPDATE_PAGE_INDEX, updatePageIndex);
+		}
+		
+		override public function disable():void
+		{
+			super.disable();
+			
+			//使得放大时，页面编号依旧可被点击
+			this.mouseChildren = true;
 		}
 		
 		/**
@@ -170,24 +179,13 @@ package view.element
 			{
 				var evt:PageEvent = new PageEvent(PageEvent.PAGE_NUM_CLICKED, vo as PageVO, true);
 				this.dispatchEvent(evt);
+				
+				pageVO.dispatchEvent(new PageEvent(PageEvent.PAGE_SELECTED, pageVO, false));
 			}
 			else
 			{
 				currentState.clicked();
 			}
-		}
-		
-		override public function disable():void
-		{
-			super.disable();
-			
-			//numShape.visible = false;
-		}
-		
-		override public function enable():void
-		{
-			super.enable();
-			//numShape.visible = true;
 		}
 		
 		/**
