@@ -30,17 +30,14 @@ package view.element.shapes
 		{
 			super.render();
 			
-			graphics.moveTo(lineVO.width / 2, 0);
-			graphics.lineTo(lineVO.width / 2 - 20, - 15);
+			var rad:Number = Math.atan2(lineVO.arc * 2, lineVO.width / 2);
+			var r:uint = 5 * lineVO.thickness;
 			
-			graphics.moveTo(lineVO.width / 2, 0);
-			graphics.lineTo(lineVO.width / 2 - 20, 15);
+			graphics.moveTo( - lineVO.width / 2, 0);
+			graphics.lineTo( - lineVO.width / 2 + Math.cos(rad + Math.PI / 4) * r, Math.sin(rad + Math.PI / 4) * r);
 			
-			graphics.moveTo(0, 0);
-			graphics.lineTo(20, - 15);
-			
-			graphics.moveTo(0, 0);
-			graphics.lineTo(20, 15);
+			graphics.moveTo( - lineVO.width / 2, 0);
+			graphics.lineTo( - lineVO.width / 2 + Math.cos(rad - Math.PI / 4) * r, Math.sin(rad - Math.PI / 4) * r);
 			
 		}
 	}

@@ -1,10 +1,6 @@
 package view.elementSelector.toolBar
 {
 	import com.kvs.ui.button.IconBtn;
-	import com.kvs.ui.button.LabelBtn;
-	import com.kvs.ui.button.LabelBtnWithTopIcon;
-	import com.kvs.utils.XMLConfigKit.XMLVOMapper;
-	import com.kvs.utils.XMLConfigKit.style.States;
 	
 	import commands.Command;
 	
@@ -15,6 +11,11 @@ package view.elementSelector.toolBar
 	 */	
 	public class BorderShape extends ToolbarWithStyle
 	{
+		/**
+		 * 线条的最大线粗
+		 */		
+		public static var MAX_LINE_THICKNESS:uint = 30;
+		
 		public function BorderShape(toolBar:ToolBarController)
 		{
 			super(toolBar);
@@ -60,14 +61,12 @@ package view.elementSelector.toolBar
 		 */		
 		private function addHandler(evt:MouseEvent):void
 		{
-			if (element.vo.thickness < 10) 
+			if (element.vo.thickness < MAX_LINE_THICKNESS) 
 			{
 				var oldObj:Object = {};
 				oldObj.thickness = element.vo.thickness;
 				
-				element.vo.thickness ++;
-				//element.vo.thickness += 1/toolBar.selector.coreMdt.canvas.scaleX;
-				
+				element.vo.thickness *= 1.1;
 				element.render();
 				
 				toolBar.selector.layoutInfo.update();

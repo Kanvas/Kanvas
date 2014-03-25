@@ -29,6 +29,7 @@ package view.elementSelector.lineControl
 			
 			super.moveOff(xOff, yOff);
 			
+			
 			return;
 			var rotation:Number = selector.coreMdt.autoAlignController.checkRotation(selector.element, selector.element.rotation);
 			if (! isNaN(rotation))

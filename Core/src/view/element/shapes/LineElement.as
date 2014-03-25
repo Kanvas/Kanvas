@@ -43,16 +43,11 @@ package view.element.shapes
 			
 			xmlData.@thickness = vo.thickness;
 			xmlData.@borderAlpha = vo.style.getBorder.alpha;
+			xmlData.@arc = lineVO.arc;
 			
 			return xmlData;
 		}
 		
-		/**
-		 */		
-		override public function showToolBar(toolbar:ToolBarController):void
-		{
-			toolbar.setCurToolBar(toolbar.lineShape);
-		}
 		
 		/**
 		 */		
@@ -77,12 +72,7 @@ package view.element.shapes
 		 */		
 		override public function showHoverEffect():void
 		{
-			var dis:Number = (hoverStyle.width - vo.width) * .5;
 			
-			hoverEffectShape.graphics.clear();
-			StyleManager.setLineStyle(hoverEffectShape.graphics, hoverStyle.getBorder);
-			hoverEffectShape.graphics.drawRect(hoverStyle.tx + hoverStyle.width * .5 - dis, hoverStyle.ty, hoverStyle.width * .5, hoverStyle.height);
-			hoverEffectShape.graphics.endFill();
 		}
 		
 		/**
@@ -94,7 +84,23 @@ package view.element.shapes
 			this.graphics.clear();
 			StyleManager.setLineStyle(graphics, vo.style.getBorder, vo.style, vo);
 			graphics.moveTo(- lineVO.width / 2, 0);
-			graphics.lineTo(lineVO.width / 2, 0);
+			graphics.curveTo(0, lineVO.arc * 2, lineVO.width / 2, 0);
+		}
+		
+		/**
+		 * 图形处于选择状态并按下图形时调用
+		 */		
+		override public function hideFrameOnMdown(selector:ElementSelector):void
+		{
+			selector.frame.alpha = 0.5;
+		}
+		
+		/**
+		 * 图形移动结束后或者临时组合被按下并释放后调用此方法，显示型变框
+		 */		
+		override public function showSelectorFrame(selector:ElementSelector):void
+		{
+			selector.frame.alpha = 1;
 		}
 		
 		/**
@@ -103,7 +109,6 @@ package view.element.shapes
 		override public function showControlPoints(selector:ElementSelector):void
 		{
 			ViewUtil.show(selector.lineControl);
-			
 		}
 		
 		/**
@@ -114,20 +119,15 @@ package view.element.shapes
 			ViewUtil.hide(selector.lineControl);
 		}
 		
-		override public function enableBG():void
+		/**
+		 */		
+		override public function showToolBar(toolbar:ToolBarController):void
 		{
-			//bg.visible = true;
-			//bg.mouseEnabled = true;
+			toolbar.setCurToolBar(toolbar.lineShape);
 		}
 		
 		/**
 		 */		
-		override public function disableBG():void
-		{
-			//bg.mouseEnabled = false;
-			//bg.visible = false;
-		}
-		
 		override public function drawBG():void
 		{
 			var w:Number = Math.max(vo.width * .5, 10);

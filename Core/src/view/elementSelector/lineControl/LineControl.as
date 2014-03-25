@@ -73,10 +73,10 @@ package view.elementSelector.lineControl
 				
 				//计算弧度控制点的位置
 				var vo:LineVO = selector.element.vo as LineVO;
-				var rad:Number = MathUtil.modRotation(vo.rotation + selector.coreMdt.canvas.rotation) / 180 * Math.PI - Math.PI / 2;
+				var rad:Number = Math.PI / 2;
 				
-				arcPoint.x = vo.arc * Math.cos(rad);
-				arcPoint.y = - vo.arc * Math.sin(rad);
+				arcPoint.x = vo.arc * Math.cos(rad) * selector.layoutTransformer.canvasScale * vo.scale;
+				arcPoint.y = vo.arc * Math.sin(rad) * selector.layoutTransformer.canvasScale * vo.scale;
 			}
 		}
 		

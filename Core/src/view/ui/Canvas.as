@@ -89,9 +89,10 @@ package view.ui
 			super.removeChildren(beginIndex, endIndex);
 		}
 		
+		/**
+		 */		
 		public function toShotcutState($x:Number, $y:Number, $scale:Number, $rotation:Number, page:Rectangle = null):void
 		{
-			
 			if(!previewState)
 			{
 				//PerformaceTest.start("Canvas.toShotcutState()");
@@ -127,6 +128,9 @@ package view.ui
 				//PerformaceTest.end("Canvas.toShotcutState()");
 			}
 		}
+		
+		/**
+		 */		
 		public function toPreviewState():void
 		{
 			if( previewState)

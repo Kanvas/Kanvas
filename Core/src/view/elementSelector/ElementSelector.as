@@ -107,7 +107,7 @@ package view.elementSelector
 		{
 			element.showSelectorFrame(this);
 		}
-				
+		
 		/**
 		 */		
 		public var toolBar:ToolBarController;
@@ -126,7 +126,7 @@ package view.elementSelector
 		//
 		//
 		//-----------------------------------------------
-			
+		
 		/**
 		 */		
 		public var curScale:Number = 1;
@@ -171,13 +171,19 @@ package view.elementSelector
 		
 		/**
 		 * 根据起始点坐标计算出向量角度，范围为0~360;
+		 * 
+		 * 线条的实际角度
+		 * 
 		 */		
 		public function getRote(endY:Number, endX:Number, startY:Number, startX:Number):Number
 		{
-			return  - Math.atan2(endX - startX, endY - startY) * 180 / Math.PI - coreMdt.canvas.rotation;
+			var rote:Number = MathUtil.modRotation(Math.atan2(endY - startY, endX - startX) * 180 / Math.PI);
+			var kanvasRote:Number = coreMdt.canvas.rotation;
+			
+			return MathUtil.modRotation(rote - kanvasRote);
 		}
 		
-		/** 
+		/**
 		 * 相对于整个舞台的元素宽度
 		 */		
 		public function get elementWidthForStage():Number
@@ -262,7 +268,7 @@ package view.elementSelector
 			// 刷新控制器的布局
 			var control:IPointControl;
 			for each (control in controls)
-				control.layout(style);
+			control.layout(style);
 			
 			rote();
 		}
@@ -271,7 +277,7 @@ package view.elementSelector
 		 */		
 		public function rote():void
 		{
-			this.rotation = element.rotation + layoutInfo.rotation;
+			this.rotation = element.rotation + coreMdt.canvas.rotation;
 			toolBar.rotation = - this.rotation;
 			
 			toolBar.layout(style);
@@ -350,7 +356,7 @@ package view.elementSelector
 		private var styleXML:XML = <style>
 										<border color='#DDDDDD' alpha='1' thikness='1'/>
 									</style>
-			
+		
 		/**
 		 */		
 		public var layoutInfo:ElementLayoutInfo;
@@ -362,14 +368,14 @@ package view.elementSelector
 		/**
 		 */		
 		private var _element:ElementBase;
-
+		
 		/**
 		 */
 		public function get element():ElementBase
 		{
 			return _element;
 		}
-
+		
 		/**
 		 * @private
 		 */
@@ -377,6 +383,6 @@ package view.elementSelector
 		{
 			_element = value;
 		}
-
+		
 	}
 }

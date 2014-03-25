@@ -44,6 +44,8 @@ package view.elementSelector.lineControl
 		{
 			var xDis:Number = (endX - startX);
 			var yDis:Number = (endY - startY);
+			
+			//线条中心点的全局坐标
 			var x:Number = startX + xDis / 2;
 			var y:Number = startY + yDis / 2;
 			
@@ -57,12 +59,9 @@ package view.elementSelector.lineControl
 			vo.width = r / selector.layoutTransformer.canvasScale / vo.scale;
 			vo.rotation = selector.getRote(endY, endX, startY, startX);
 			
-			trace(vo.rotation);
-			
-			CoreUtil.drawLine(0, new Point(x, y), new Point(endX, endY));
-			
+			//刷新，渲染
 			selector.element.render();
-			//selector.update();
+			selector.update();
 		}
 		
 		/**
@@ -71,37 +70,22 @@ package view.elementSelector.lineControl
 		public function startMove():void
 		{
 			//获取结束点的坐标
-			var rad:Number = lineRad;
+			var rad:Number = lineRad;// 全局相对角度
 			var r:Number = vo.width / 2 * vo.scale * selector.layoutTransformer.canvasScale;
 			
 			endX = selector.x + r * Math.cos(rad);
-			endY = selector.y - r * Math.sin(rad);
+			endY = selector.y + r * Math.sin(rad);
 			
-			var sRad:Number = rad + Math.PI;
+			var sRad:Number = rad - Math.PI;
 			
 			startX = selector.x + r * Math.cos(sRad);
-			startY = selector.y - r * Math.sin(sRad);
+			startY = selector.y + r * Math.sin(sRad);
 			
-			//计算弧度控制点的位置
-			var arcR:Number = vo.arc * vo.scale * selector.layoutTransformer.canvasScale;
-			var aRad:Number = rad - Math.PI / 2;
-			
-			arcX = selector.x + arcR * Math.cos(aRad);
-			arcY = selector.y - arcR * Math.sin(aRad);
-				
-			//记录历史属性，用于撤销
-			oldObj = {};
-			oldObj.x = vo.x;
-			oldObj.y = vo.y;
-			oldObj.width = vo.width;
-			oldObj.rotation = vo.rotation;
-			oldObj.arc = vo.arc;
-			
-			lastMouseX = selector.coreMdt.mainUI.stage.mouseX;
-			lastMouseY = selector.coreMdt.mainUI.stage.mouseY;
+			cacheOldProperty();
 		}
 		
 		/**
+		 * 结束控制点的移动
 		 */		
 		public function stopMove():void
 		{
@@ -116,11 +100,27 @@ package view.elementSelector.lineControl
 		}
 		
 		/**
-		 * 线条的角度
+		 */		
+		protected function cacheOldProperty():void
+		{
+			//记录历史属性，用于撤销
+			oldObj = {};
+			oldObj.x = vo.x;
+			oldObj.y = vo.y;
+			oldObj.width = vo.width;
+			oldObj.rotation = vo.rotation;
+			oldObj.arc = vo.arc;
+			
+			lastMouseX = selector.coreMdt.mainUI.stage.mouseX;
+			lastMouseY = selector.coreMdt.mainUI.stage.mouseY;
+		}
+		
+		/**
+		 * 线条的相对角度
 		 */		
 		protected function get lineRad():Number
 		{
-			return (vo.rotation + selector.coreMdt.canvas.rotation) / 180 * Math.PI;
+			return (selector.element.rotation + selector.coreMdt.canvas.rotation) / 180 * Math.PI;
 		}
 		 
 		/**
@@ -136,8 +136,10 @@ package view.elementSelector.lineControl
 		{
 		}
 		
-		private var lastMouseX:Number;
-		private var lastMouseY:Number;
+		/**
+		 */		
+		protected var lastMouseX:Number;
+		protected var lastMouseY:Number;
 		
 		/**
 		 */		
@@ -157,15 +159,7 @@ package view.elementSelector.lineControl
 		
 		/**
 		 */		
-		protected var arcX:Number = 0;
-		
-		/**
-		 */		
-		protected var arcY:Number = 0;
-		
-		/**
-		 */		
-		private var oldObj:Object;
+		protected var oldObj:Object;
 		
 	}
 }

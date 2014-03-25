@@ -105,6 +105,7 @@ package view.interact
 			var h:Number = stage.height;
 			var minLineInteractSizeSquare:Number = minInteractSize * minInteractSize * .25;
 			var maxLineInteractSizeSquare:Number = w * w;
+			
 			for each (var element:ElementBase in elements)
 			{
 				if (element.visible)
@@ -113,8 +114,7 @@ package view.interact
 					if (element is LineElement)
 					{
 						var size:Number = (bound.width * bound.width + bound.height * bound.height) >> 1;
-						if (size > maxLineInteractSizeSquare || 
-							size < minLineInteractSizeSquare)
+						if (size > maxLineInteractSizeSquare || size < minLineInteractSizeSquare)
 							element.disable();//过小禁止交互
 						else
 							element.enable();

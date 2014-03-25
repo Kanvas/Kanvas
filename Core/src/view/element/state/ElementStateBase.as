@@ -95,6 +95,9 @@ package view.element.state
 		 */		
 		public function enable():void
 		{
+			if (element.alpha == 1)
+				return;
+			
 			element.mouseChildren = element.mouseEnabled = true;
 			element.alpha = 1;
 		}
