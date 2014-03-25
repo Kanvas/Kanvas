@@ -123,13 +123,6 @@ package view.interact.zoomMove
 			return mainUI.canvas;
 		}
 		
-		/**
-		 */		
-		private function get bgImgCanvas():Sprite
-		{
-			return mainUI.bgImgCanvas;
-		}
-		
 		public var zoomScale:Number = 1.5;
 		
 		public var speedScale:Number = 4;
@@ -137,6 +130,7 @@ package view.interact.zoomMove
 		public var speedRotation:Number = 90;
 		
 		public var maxTweenTime:Number = 5;
+		
 		public var minTweenTime:Number = 1;
 		
 		public var plusScale:Number = .5;

@@ -31,7 +31,7 @@ package view.interact.zoomMove
 		/**
 		 * 要移动的画布
 		 */
-		private var canvas:Sprite
+		private var canvas:Sprite;
 		
 		/**
 		 */		

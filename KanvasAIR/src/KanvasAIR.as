@@ -28,9 +28,9 @@ package
 		override protected function init():void
 		{
 			super.init();
+			kvsCore.air = true;
 			ToolBarCustomFunc.importData = dataTest.importData;
 			ToolBarCustomFunc.exportData = dataTest.exportData;
-			kvsCore.isAIR = true;
 			kvsCore.customButtonJS = false;
 			kvsCore.customButtonData = customButtonData;
 			registFileRef();
@@ -40,15 +40,16 @@ package
 		{
 			addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER, onDragIn);
 			addEventListener(NativeDragEvent.NATIVE_DRAG_DROP, onDragDrop);
-			NativeApplication.nativeApplication.addEventListener(InvokeEvent.INVOKE, onInvoke); 
-			var t:Boolean = NativeApplication.nativeApplication.isSetAsDefaultApplication("kvs");
-			if (!t) NativeApplication.nativeApplication.setAsDefaultApplication("kvs");
+			NativeApplication.nativeApplication.addEventListener(InvokeEvent.INVOKE, onInvoke);
+			
+			if(!NativeApplication.nativeApplication.isSetAsDefaultApplication("kvs")) 
+				NativeApplication.nativeApplication.setAsDefaultApplication("kvs");
 		}
 		
 		private function onDragIn(e:NativeDragEvent):void
 		{
 			var filesInClip:Clipboard = e.clipboard;
-			if(filesInClip.hasFormat(ClipboardFormats.FILE_LIST_FORMAT))
+			if (filesInClip.hasFormat(ClipboardFormats.FILE_LIST_FORMAT))
 			{
 				NativeDragManager.acceptDragDrop(this);
 				NativeDragManager.dropAction = NativeDragActions.MOVE;
@@ -62,8 +63,8 @@ package
 			{
 				var f:File = filesArray[0];
 				var fs:FileStream = new FileStream(); 
-				fs.addEventListener( Event.COMPLETE, onComplete ); 
-				fs.openAsync( f, FileMode.READ ); 
+				fs.addEventListener(Event.COMPLETE, onComplete); 
+				fs.openAsync(f, FileMode.READ); 
 			}
 		}
 		
@@ -73,16 +74,16 @@ package
 			{ 
 				var f:File = new File(event.arguments[0]); 
 				var fs:FileStream = new FileStream(); 
-				fs.addEventListener( Event.COMPLETE, onComplete ); 
-				fs.openAsync( f, FileMode.READ ); 
+				fs.addEventListener(Event.COMPLETE, onComplete); 
+				fs.openAsync(f, FileMode.READ); 
 			} 
 		} 
 		private function onComplete( event:Event ):void 
 		{ 
 			var fs:FileStream = event.target as FileStream; 
-			var bytes:ByteArray = new ByteArray;
-			fs.readBytes(bytes);
-			kvsCore.importZipData(bytes);
+			var bs:ByteArray  = new ByteArray;
+			fs.readBytes(bs);
+			kvsCore.importZipData(bs);
 			fs.close(); 
 		}
 		

@@ -262,7 +262,7 @@ package
 		
 		private function onWebMouseWheel(value:int):void
 		{
-			core.stage.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_WHEEL, true, false, NaN, NaN, null, false, false, false, false, - value));
+			core.stage.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_WHEEL, true, false, NaN, NaN, null, false, false, false, false, -value));
 		}
 		
 		/**
@@ -283,16 +283,14 @@ package
 		
 		private function setCustomButton(data:String):void
 		{
-			var xml:XML;
 			try 
 			{
-				xml = XML(data);
+				core.customButtonData = XML(data);
 			}
 			catch(e:Error)
 			{
 				ExternalUtil.call("alert", "传入的自定义按钮XML语法不正确:"+data);
 			}
-			core.customButtonData = xml;
 		}
 		
 		/**
@@ -301,12 +299,12 @@ package
 		private function saveDataToServer(url:String):void
 		{
 			var req:URLRequest = new URLRequest(url);
-			var data:ByteArray = new ByteArray;
+			var dat:ByteArray = new ByteArray;
 			
-			data.writeUTFBytes(getXMLData());
-			data.compress();
+			dat.writeUTFBytes(getXMLData());
+			dat.compress();
 			
-			req.data = data;
+			req.data = dat;
 			datalLoader.load(req);
 		}
 		

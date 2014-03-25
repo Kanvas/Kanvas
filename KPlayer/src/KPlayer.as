@@ -21,7 +21,7 @@ package
 		{
 			super();
 			//注册初始化函数，容器添加至舞台后调用
-			CoreUtil.initApplication(this, initialize, true);
+			CoreUtil.initApplication(this, initialize);
 		}
 
 		/**

@@ -1,11 +1,6 @@
 package model
 {
-	import com.kvs.utils.Base64;
 	import com.kvs.utils.XMLConfigKit.XMLVOLib;
-	
-	import commands.Command;
-	
-	import flash.utils.ByteArray;
 	
 
 	/**
@@ -33,31 +28,11 @@ package model
 		 */		
 		public function ConfigInitor(core:CoreApp)
 		{
-			this.core = core;
-			initConfig();
-		}
-		
-		/**
-		 * 初始化样式配置
-		 */		
-		protected function initConfig():void
-		{
-			data = StyleEmbeder.styleXML;
-			
-			// 注册通用样式元素
-			for each (var item:XML in data.child('template').children())
+			for each (var item:XML in StyleEmbeder.styleXML.child('template').children())
 				XMLVOLib.registWholeXML(item.@id, item, item.name().toString());
 			
-			CoreFacade.coreProxy.initThemeConfig(XML(data.child('themes').toXMLString()));
+			CoreFacade.coreProxy.initThemeConfig(XML(StyleEmbeder.styleXML.child('themes').toXMLString()));
 			core.ready();
 		}
-		
-		/**
-		 */		
-		public var data:XML;
-		
-		/**
-		 */		
-		private var core:CoreApp;
 	}
 }
