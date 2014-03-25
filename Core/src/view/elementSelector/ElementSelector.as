@@ -174,10 +174,10 @@ package view.elementSelector
 		 */		
 		public function getRote(endY:Number, endX:Number, startY:Number, startX:Number):Number
 		{
-			return -MathUtil.modRotation(Math.atan2(endX - startX, endY - startY) * 180 / Math.PI - coreMdt.canvas.rotation);
+			return  - Math.atan2(endX - startX, endY - startY) * 180 / Math.PI - coreMdt.canvas.rotation;
 		}
 		
-		/**
+		/** 
 		 * 相对于整个舞台的元素宽度
 		 */		
 		public function get elementWidthForStage():Number

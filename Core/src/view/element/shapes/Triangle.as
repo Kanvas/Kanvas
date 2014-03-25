@@ -50,8 +50,8 @@ package view.element.shapes
 			selector.customPointControl.y = - vo.height / 2 * style.scale;
 		}
 		
-		
-		
+		/**
+		 */		
 		public function get propertyNameArray():Array
 		{
 			return _propertyNameArray;

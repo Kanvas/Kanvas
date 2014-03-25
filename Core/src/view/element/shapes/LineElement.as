@@ -25,6 +25,15 @@ package view.element.shapes
 			xmlData = <line/>
 		}
 		
+		/**
+		 */		
+		public function get propertyNameArray():Array
+		{
+			return _propertyNameArray;
+		}
+		
+		private const _propertyNameArray:Array = ["arc"];
+		
 		
 		/**
 		 */		
@@ -84,7 +93,7 @@ package view.element.shapes
 			
 			this.graphics.clear();
 			StyleManager.setLineStyle(graphics, vo.style.getBorder, vo.style, vo);
-			graphics.moveTo(0, 0);
+			graphics.moveTo(- lineVO.width / 2, 0);
 			graphics.lineTo(lineVO.width / 2, 0);
 		}
 		
@@ -94,8 +103,7 @@ package view.element.shapes
 		override public function showControlPoints(selector:ElementSelector):void
 		{
 			ViewUtil.show(selector.lineControl);
-			ViewUtil.show(selector.scaleRollControl);
-			ViewUtil.hide(selector.scaleRollControl.rollPoint);
+			
 		}
 		
 		/**
@@ -104,8 +112,6 @@ package view.element.shapes
 		override public function hideControlPoints(selector:ElementSelector):void
 		{
 			ViewUtil.hide(selector.lineControl);
-			ViewUtil.hide(selector.scaleRollControl);
-			ViewUtil.show(selector.scaleRollControl.rollPoint);
 		}
 		
 		override public function enableBG():void
@@ -126,6 +132,7 @@ package view.element.shapes
 		{
 			var w:Number = Math.max(vo.width * .5, 10);
 			var h:Number = Math.max(vo.height * .5, 10);
+			
 			bg.graphics.clear();
 			bg.graphics.beginFill(0xe0e0e0, 0);
 			bg.graphics.drawRect(0, 0, w, h);
@@ -146,6 +153,7 @@ package view.element.shapes
 		{
 			tlPoint.x = 0;
 			tlPoint.y = - .5 * vo.scale * vo.height;
+			
 			return caculateTransform(tlPoint);
 		}
 		
@@ -153,6 +161,7 @@ package view.element.shapes
 		{
 			tcPoint.x =   .25 * vo.scale * vo.width;
 			tcPoint.y = - .5  * vo.scale * vo.height;
+			
 			return caculateTransform(tcPoint);
 		}
 		
@@ -160,6 +169,7 @@ package view.element.shapes
 		{
 			mlPoint.x = x;
 			mlPoint.y = y;
+			
 			return mlPoint;
 		}
 		
@@ -167,6 +177,7 @@ package view.element.shapes
 		{
 			mcPoint.x = .25 * vo.scale * vo.width;
 			mcPoint.y = 0;
+			
 			return caculateTransform(mcPoint);
 		}
 		
@@ -174,6 +185,7 @@ package view.element.shapes
 		{
 			blPoint.x = 0;
 			blPoint.y = .5 * vo.scale * vo.height;
+			
 			return caculateTransform(blPoint);
 		}
 		
@@ -181,6 +193,7 @@ package view.element.shapes
 		{
 			bcPoint.x = .25 * vo.scale * vo.width;;
 			bcPoint.y = .5  * vo.scale * vo.height;
+			
 			return caculateTransform(bcPoint);
 		}
 		

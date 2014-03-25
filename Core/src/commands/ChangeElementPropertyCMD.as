@@ -48,8 +48,10 @@ package commands
 						//获取改变层级元素的新层级关系
 						var layer:Vector.<int> = new Vector.<int>;
 						var length:int =  oldPropertyObj["indexChangeElement"].length;
+						
 						for (var i:int = 0; i <　length; i++)
 							layer[i] = oldPropertyObj["indexChangeElement"][i].index;
+						
 						newPropertyObj[propertyName] = layer;
 					}
 					else if (customPropertyNames[propertyName])
@@ -195,6 +197,7 @@ package commands
 			innerRadius:true, 
 			width:true, 
 			height:true, 
+			arc:true,
 			thickness:true
 		};
 	}

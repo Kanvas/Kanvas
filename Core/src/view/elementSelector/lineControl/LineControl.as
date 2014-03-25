@@ -1,8 +1,11 @@
 package view.elementSelector.lineControl
 {
+	import com.kvs.utils.MathUtil;
 	import com.kvs.utils.XMLConfigKit.style.Style;
 	
 	import flash.display.Sprite;
+	
+	import model.vo.LineVO;
 	
 	import view.elementSelector.ControlPointBase;
 	import view.elementSelector.ElementSelector;
@@ -26,6 +29,10 @@ package view.elementSelector.lineControl
 			endControl = new EndPointControl(selector, endPoint);
 			endPoint.styleConfig = pointStyle;
 			addChild(endPoint);
+			
+			arcControl = new ArcPointControl(selector, arcPoint);
+			arcPoint.styleConfig = pointStyle;
+			addChild(arcPoint);
 		}
 		
 		/**
@@ -42,6 +49,14 @@ package view.elementSelector.lineControl
 		
 		/**
 		 */		
+		private var arcPoint:ControlPointBase = new ControlPointBase;
+		
+		/**
+		 */		
+		private var arcControl:ArcPointControl;
+		
+		/**
+		 */		
 		private var endControl:EndPointControl;
 		
 		/**
@@ -50,11 +65,18 @@ package view.elementSelector.lineControl
 		{
 			if (visible)
 			{
-				startPoint.x = 0//- selector.elementWidthForStage / 2;
+				startPoint.x = - style.width * .5 + selector.offSet;
 				startPoint.y = 0;
 				
 				endPoint.x = style.width * .5 - selector.offSet;
 				endPoint.y = 0;
+				
+				//计算弧度控制点的位置
+				var vo:LineVO = selector.element.vo as LineVO;
+				var rad:Number = MathUtil.modRotation(vo.rotation + selector.coreMdt.canvas.rotation) / 180 * Math.PI - Math.PI / 2;
+				
+				arcPoint.x = vo.arc * Math.cos(rad);
+				arcPoint.y = - vo.arc * Math.sin(rad);
 			}
 		}
 		
