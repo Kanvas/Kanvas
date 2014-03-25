@@ -3,6 +3,11 @@ package com.kvs.utils
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
+	/**
+	 * 
+	 * @author wallenMac
+	 * 
+	 */	
 	public class RectangleUtil
 	{
 		/**
@@ -11,19 +16,23 @@ package com.kvs.utils
 		public static function rotateRectangle($rectangle:Rectangle, $rotation:Number, $origin:Point = null):Rectangle
 		{
 			if(!$origin) $origin = PointUtil.origin;
+			
 			var radian:Number = MathUtil.angleToRadian($rotation);
 			var topLeft    :Point = $rectangle.topLeft    .clone();
 			var bottomRight:Point = $rectangle.bottomRight.clone();
 			var topRight   :Point = new Point($rectangle.right, $rectangle.top);
 			var bottomLeft :Point = new Point($rectangle.left , $rectangle.bottom);
+			
 			PointUtil.rotate(topLeft    , radian, $origin);
 			PointUtil.rotate(bottomRight, radian, $origin);
 			PointUtil.rotate(topRight   , radian, $origin);
 			PointUtil.rotate(bottomLeft , radian, $origin);
+			
 			var left  :Number = Math.min(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
 			var right :Number = Math.max(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x);
 			var top   :Number = Math.min(topLeft.y, topRight.y, bottomLeft.y, bottomRight.y);
 			var bottom:Number = Math.max(topLeft.y, topRight.y, bottomLeft.y, bottomRight.y);
+			
 			return new Rectangle(left, top, right - left, bottom - top);
 		}
 		

@@ -3,7 +3,6 @@ package view.element
 	import com.kvs.ui.clickMove.ClickMoveControl;
 	import com.kvs.ui.clickMove.IClickMove;
 	import com.kvs.utils.MathUtil;
-	import com.kvs.utils.PointUtil;
 	import com.kvs.utils.RectangleUtil;
 	import com.kvs.utils.StageUtil;
 	import com.kvs.utils.ViewUtil;
@@ -441,13 +440,18 @@ package view.element
 			}
 		}
 		
+		/**
+		 */		
 		private var __y:Number = 0;
 		
+		/**
+		 */		
 		public function updateView(check:Boolean = true):void
 		{
 			if (check && stage)
 			{
 				var rect:Rectangle = LayoutUtil.getItemRect(parent as Canvas, this);
+				
 				if (rect.width < 1 || rect.height < 1)
 				{
 					super.visible = false;
@@ -458,15 +462,18 @@ package view.element
 					super.visible = RectangleUtil.rectOverlapping(rect, boud);
 				}
 			}
+			
 			if (parent && visible)
 			{
 				var prtScale :Number = parent.scaleX;
 				var prtRadian:Number = MathUtil.angleToRadian(parent.rotation);
 				var prtCos:Number = Math.cos(prtRadian);
 				var prtSin:Number = Math.sin(prtRadian);
+				
 				//scale
 				var tmpX:Number = x * prtScale;
 				var tmpY:Number = y * prtScale;
+				
 				//rotate, move
 				super.rotation = parent.rotation + rotation;
 				super.scaleX = prtScale * scaleX;
@@ -476,6 +483,8 @@ package view.element
 			}
 		}
 		
+		/**
+		 */		
 		public function toPreview(renderable:Boolean = false):void
 		{
 			super.visible = previewVisible;
