@@ -64,6 +64,7 @@ package view.element.shapes
 			
 			newVO.type = vo.type;
 			newVO.styleID = vo.styleID;
+			(newVO as LineVO).arc = lineVO.arc;
 			
 			return newVO;
 		}
