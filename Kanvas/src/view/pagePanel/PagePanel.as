@@ -57,6 +57,8 @@ package view.pagePanel
 		private function pageSelectedFromCore(evt:PageEvent):void
 		{
 			setCurrentPage(findPageUIByVO(evt.pageVO));
+			pageManager.index = evt.pageVO.index;//仅仅选择页面时，只刷新index信息，不zoom
+			
 			udpateScrollForCurrPage();
 		}
 		
@@ -195,7 +197,7 @@ package view.pagePanel
 		public function pageSelected(pageVO:PageVO):void
 		{
 			//通知核心core切换至当前page
-			pageManager.index = pageVO.index;
+			pageManager.indexWithZoom = pageVO.index;
 		}
 		
 		/**

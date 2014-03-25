@@ -4,11 +4,7 @@ package view.element
 	import com.kvs.utils.ViewUtil;
 	import com.kvs.utils.XMLConfigKit.StyleManager;
 	
-	import flash.display.Shape;
 	import flash.display.Sprite;
-	import flash.events.MouseEvent;
-	
-	import landray.kp.ui.PageNext;
 	
 	import model.vo.PageVO;
 	
