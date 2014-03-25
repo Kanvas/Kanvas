@@ -174,7 +174,7 @@ package view.elementSelector
 		 */		
 		public function getRote(endY:Number, endX:Number, startY:Number, startX:Number):Number
 		{
-			return -MathUtil.modRotation(Math.atan2(endX - startX, endY - startY) * 180 / Math.PI - coreMdt.canvas.rotation);
+			return - MathUtil.modRotation(Math.atan2(endX - startX, endY - startY) * 180 / Math.PI - coreMdt.canvas.rotation);
 		}
 		
 		/**
