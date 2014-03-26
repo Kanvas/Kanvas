@@ -39,6 +39,7 @@ package view.elementSelector
 				layoutInfo.currentElementUI = element;
 				layoutInfo.update();
 				
+				
 				style.width  = (layoutInfo.width  + offSet * 2) / element.vo.scale / canvas.scaleX;
 				style.height = (layoutInfo.height + offSet * 2) / element.vo.scale / canvas.scaleY;
 				style.tx = - style.width  / 2;

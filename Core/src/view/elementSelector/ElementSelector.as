@@ -11,6 +11,7 @@ package view.elementSelector
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	
+	import util.CoreUtil;
 	import util.layout.ElementLayoutInfo;
 	import util.layout.LayoutTransformer;
 	
@@ -39,8 +40,8 @@ package view.elementSelector
 			
 			this.coreMdt = coreMdt;
 			
-			this.layoutInfo = new ElementLayoutInfo(coreMdt.mainUI.layoutTransformer);
-			this.layoutTransformer = layoutInfo.transformer;
+			layoutTransformer = coreMdt.mainUI.layoutTransformer;
+			layoutInfo = new ElementLayoutInfo(layoutTransformer);
 			
 			XMLVOMapper.fuck(styleXML, style);
 			
@@ -239,7 +240,6 @@ package view.elementSelector
 			if (element)
 			{
 				layoutInfo.update();
-				
 				this.x = Math.ceil(layoutInfo.x);
 				this.y = Math.ceil(layoutInfo.y);
 				
@@ -268,7 +268,7 @@ package view.elementSelector
 			// 刷新控制器的布局
 			var control:IPointControl;
 			for each (control in controls)
-			control.layout(style);
+				control.layout(style);
 			
 			rote();
 		}

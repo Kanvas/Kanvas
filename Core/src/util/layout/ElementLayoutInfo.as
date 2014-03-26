@@ -39,14 +39,9 @@ package util.layout
 				
 				_height = ((useVOProperty) ? currentElementUI.scaledHeight : currentElementUI.tempScaledHeight) * transformer.canvasScale;
 				
-				if (currentElementUI is LineElement) 
-				{
-					_width = ((useVOProperty) ? currentElementUI.vo.scale : currentElementUI.scale) * currentElementUI.vo.width * transformer.canvasScale;
-				}
-				else
-				{
-					_width  = ((useVOProperty) ? currentElementUI.scaledWidth  : currentElementUI.tempScaledWidth ) * transformer.canvasScale;
-				}
+				
+				_width  = ((useVOProperty) ? currentElementUI.scaledWidth  : currentElementUI.tempScaledWidth ) * transformer.canvasScale;
+				
 				
 				//左上角坐标
 				_tx = - _width  * .5;

@@ -4,6 +4,7 @@ package view.element.shapes
 	import com.kvs.utils.XMLConfigKit.StyleManager;
 	
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	import model.vo.ElementVO;
 	import model.vo.LineVO;
@@ -71,10 +72,7 @@ package view.element.shapes
 		
 		/**
 		 */		
-		override public function showHoverEffect():void
-		{
-			
-		}
+		override public function showHoverEffect():void { }
 		
 		/**
 		 */		
@@ -87,6 +85,88 @@ package view.element.shapes
 			graphics.moveTo(- lineVO.width / 2, 0);
 			graphics.curveTo(0, lineVO.arc * 2, lineVO.width / 2, 0);
 		}
+		
+		override public function get topLeft():Point
+		{
+			tlPoint.x = vo.scale * - .5 * vo.width;
+			tlPoint.y = vo.scale *(- .5 * vo.height + ((lineVO.arc < 0) ? lineVO.arc : 0));
+			return caculateTransform(tlPoint);
+		}
+		
+		override public function get topCenter():Point
+		{
+			tcPoint.x = 0;
+			tcPoint.y = vo.scale *(- .5 * vo.height + ((lineVO.arc < 0) ? lineVO.arc : 0));
+			return caculateTransform(tcPoint);
+		}
+		
+		override public function get topRight():Point
+		{
+			trPoint.x = vo.scale *   .5 * vo.width;
+			trPoint.y = vo.scale *(- .5 * vo.height + ((lineVO.arc < 0) ? lineVO.arc : 0));
+			return caculateTransform(trPoint);
+		}
+		
+		override public function get middleLeft():Point
+		{
+			mlPoint.x = vo.scale * - .5 * vo.width;
+			mlPoint.y = vo.scale *   .5 * lineVO.arc;
+			return caculateTransform(mlPoint);
+		}
+		
+		override public function get middleCenter():Point
+		{
+			mcPoint.x = 0;
+			mcPoint.y = vo.scale * .5 * lineVO.arc;
+			return caculateTransform(mlPoint);
+		}
+		
+		override public function get middleRight():Point
+		{
+			mrPoint.x = vo.scale * .5 * vo.width;
+			mrPoint.y = vo.scale * .5 * lineVO.arc;
+			return caculateTransform(mrPoint);
+		}
+		
+		override public function get bottomLeft():Point
+		{
+			blPoint.x = vo.scale * - .5 * vo.width;
+			blPoint.y = vo.scale *(  .5 * vo.height + ((lineVO.arc>= 0) ? lineVO.arc : 0));
+			return caculateTransform(blPoint);
+		}
+		
+		override public function get bottomCenter():Point
+		{
+			bcPoint.x = 0;
+			bcPoint.y = vo.scale *(  .5 * vo.height + ((lineVO.arc>= 0) ? lineVO.arc : 0));
+			return caculateTransform(bcPoint);
+		}
+		
+		override public function get bottomRight():Point
+		{
+			brPoint.x = vo.scale *   .5 * vo.width;
+			brPoint.y = vo.scale *(  .5 * vo.height + ((lineVO.arc>= 0) ? lineVO.arc : 0));
+			return caculateTransform(brPoint);
+		}
+		
+		override public function get scaledHeight():Number
+		{
+			var h:Number = (vo.height + Math.abs(lineVO.arc * 2)) * vo.scale;
+			
+			if(vo.style && vo.style.getBorder)
+				h = h + vo.thickness * vo.scale;
+			
+			return h;
+		}
+		
+		override public function get tempScaledHeight():Number
+		{
+			var h:Number = (vo.height + Math.abs(lineVO.arc * 2)) * scale;
+			if(vo.style && vo.style.getBorder)
+				h = h + vo.thickness * scale;
+			return h;
+		}
+		
 		
 		/**
 		 * 图形处于选择状态并按下图形时调用
@@ -138,69 +218,6 @@ package view.element.shapes
 			bg.graphics.beginFill(0xe0e0e0, 0);
 			bg.graphics.drawRect(0, 0, w, h);
 			bg.graphics.endFill();
-		}
-		
-		override public function get scaledWidth():Number
-		{
-			return super.scaledWidth * .5;
-		}
-		
-		override public function get tempScaledWidth():Number
-		{
-			return super.tempScaledWidth * .5;
-		}
-		
-		override public function get topLeft():Point
-		{
-			tlPoint.x = 0;
-			tlPoint.y = - .5 * vo.scale * vo.height;
-			
-			return caculateTransform(tlPoint);
-		}
-		
-		override public function get topCenter():Point
-		{
-			tcPoint.x =   .25 * vo.scale * vo.width;
-			tcPoint.y = - .5  * vo.scale * vo.height;
-			
-			return caculateTransform(tcPoint);
-		}
-		
-		override public function get middleLeft():Point
-		{
-			mlPoint.x = x;
-			mlPoint.y = y;
-			
-			return mlPoint;
-		}
-		
-		override public function get middleCenter():Point
-		{
-			mcPoint.x = .25 * vo.scale * vo.width;
-			mcPoint.y = 0;
-			
-			return caculateTransform(mcPoint);
-		}
-		
-		override public function get bottomLeft():Point
-		{
-			blPoint.x = 0;
-			blPoint.y = .5 * vo.scale * vo.height;
-			
-			return caculateTransform(blPoint);
-		}
-		
-		override public function get bottomCenter():Point
-		{
-			bcPoint.x = .25 * vo.scale * vo.width;;
-			bcPoint.y = .5  * vo.scale * vo.height;
-			
-			return caculateTransform(bcPoint);
-		}
-		
-		override public function get left():Number
-		{
-			return x;
 		}
 		
 		/**

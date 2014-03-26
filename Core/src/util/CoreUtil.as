@@ -15,6 +15,7 @@ package util
 	{
 		public static function drawRect(color:uint, rect:Rectangle):void
 		{
+			clear();
 			coreMdt.mainUI.autoAlignUI.graphics.lineStyle(1, color);
 			coreMdt.mainUI.autoAlignUI.graphics.drawRect(rect.x, rect.y, rect.width, rect.height);
 		}

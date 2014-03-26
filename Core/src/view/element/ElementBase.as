@@ -326,9 +326,6 @@ package view.element
 			brPoint.y = .5 * vo.scale * vo.height;
 			return caculateTransform(brPoint);
 		}
-		
-		/**
-		 */		
 		protected var brPoint:Point = new Point;
 		
 		public function get left():Number

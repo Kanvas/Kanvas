@@ -3,6 +3,7 @@ package util
 	import com.kvs.utils.MathUtil;
 	import com.kvs.utils.PointUtil;
 	
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.geom.Point;
@@ -163,17 +164,8 @@ package util
 			var offsetX:Number = (toStage && canvas) ? canvas.x : 0;
 			var offsetY:Number = (toStage && canvas) ? canvas.y : 0;
 			var offsetScale   :Number = (toStage && canvas) ? canvas.scaleX : 1;
-			var offsetRotation:Number = (toStage && canvas && ! ignoreCanvasRotate) ? canvas.rotation : 0;
-			if (ignoreItemRotate)
-			{
-				var point:Point = new Point(item.left, item.top);
-				LayoutUtil.convertPointCanvas2Stage(point, offsetX, offsetY, offsetScale, offsetRotation);
-				x = point.x;
-				y = point.y;
-				w = offsetScale * item.scaledWidth;
-				h = offsetScale * item.scaledHeight;
-			}
-			else
+			var offsetRotation:Number = (toStage && canvas && !ignoreCanvasRotate) ? canvas.rotation : 0;
+			if (!ignoreItemRotate)
 			{
 				var p1:Point = item.topLeft;
 				var p2:Point = item.topRight;
@@ -191,6 +183,15 @@ package util
 				y = minY;
 				w = maxX - minX;
 				h = maxY - minY;
+			}
+			else
+			{
+				var point:Point = new Point(item.left, item.top);
+				LayoutUtil.convertPointCanvas2Stage(point, offsetX, offsetY, offsetScale, offsetRotation);
+				x = point.x;
+				y = point.y;
+				w = offsetScale * item.scaledWidth;
+				h = offsetScale * item.scaledHeight;
 			}
 			return new Rectangle(x, y, w, h);
 		}
