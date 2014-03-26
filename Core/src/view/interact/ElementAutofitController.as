@@ -38,7 +38,7 @@ package view.interact
 				var x:Number = 0;
 				var y:Number = 0;
 				//画布矩形范围
-				var canvasBound:Rectangle = coreMdt.mainUI.bound;
+				var canvasBound:Rectangle = coreMdt.coreApp.bound;
 				
 				var toolBarWidth :Number = coreMdt.selector.toolBar.barWidth;
 				var toolBarHeight:Number = coreMdt.selector.toolBar.barHeight;
@@ -109,8 +109,8 @@ package view.interact
 				var x:Number = 0;
 				var y:Number = 0;
 				//画布矩形范围
-				var canvasBound:Rectangle = coreMdt.mainUI.bound;
-				var editorBound:Rectangle = coreMdt.mainUI.textEditor.editorBound;
+				var canvasBound:Rectangle = coreMdt.coreApp.bound;
+				var editorBound:Rectangle = coreMdt.coreApp.textEditor.editorBound;
 				
 				if (xDir == 0 || xDir == 1)
 					x = autofitRight(editorBound.right, canvasBound.right);
@@ -167,16 +167,16 @@ package view.interact
 				var vector:Point = eleBefVector.subtract(eleAftVector);
 				
 				//editor缩放前所占矩形
-				var edtBefBound:Rectangle = coreMdt.mainUI.textEditor.editorBound;
+				var edtBefBound:Rectangle = coreMdt.coreApp.textEditor.editorBound;
 				//editor缩放后所占矩形
 				var edtAftBound:Rectangle = edtBefBound.clone();
-				edtAftBound.bottom -= coreMdt.mainUI.textEditor.fieldHeight * (1 - plsScale);
-				edtAftBound.right = edtAftBound.left + Math.max(coreMdt.mainUI.textEditor.offSet * 2 + eleAftBound.width, coreMdt.mainUI.textEditor.panelWidth);
-				edtAftBound.x = eleAftBound.x - coreMdt.mainUI.textEditor.offSet;
-				edtAftBound.y = eleAftBound.y - coreMdt.mainUI.textEditor.offSet - coreMdt.mainUI.textEditor.panelHeight;
+				edtAftBound.bottom -= coreMdt.coreApp.textEditor.fieldHeight * (1 - plsScale);
+				edtAftBound.right = edtAftBound.left + Math.max(coreMdt.coreApp.textEditor.offSet * 2 + eleAftBound.width, coreMdt.coreApp.textEditor.panelWidth);
+				edtAftBound.x = eleAftBound.x - coreMdt.coreApp.textEditor.offSet;
+				edtAftBound.y = eleAftBound.y - coreMdt.coreApp.textEditor.offSet - coreMdt.coreApp.textEditor.panelHeight;
 				
 				//画布矩形范围
-				var canvasBound:Rectangle = coreMdt.mainUI.bound;
+				var canvasBound:Rectangle = coreMdt.coreApp.bound;
 				
 				//检测编辑器范围是否超出画布范围
 				if (xDir == 0 || xDir == 1)

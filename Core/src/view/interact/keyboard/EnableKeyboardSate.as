@@ -19,7 +19,7 @@ package view.interact.keyboard
 		{
 			super(mainMediator);
 			
-			mainMediator.mainUI.addChild(eventCreator);
+			mainMediator.coreApp.addChild(eventCreator);
 			eventCreator.visible = false;
 			eventCreator.addEventListener(Event.COPY, copyPastHandler, false, 0, true);
 			eventCreator.addEventListener(Event.CUT, copyPastHandler, false, 0, true);

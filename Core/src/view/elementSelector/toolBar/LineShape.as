@@ -43,7 +43,7 @@ package view.elementSelector.toolBar
 			var py:Number;
 			
 			//手动获取hover高度，防止r与实际不同步
-			r = toolBar.selector.coreMdt.mainUI.hoverEffect.getHoverHeight(toolBar.selector.layoutInfo.height, toolBar.selector.element) / 2 * scale + 5;
+			r = toolBar.selector.coreMdt.coreApp.hoverEffect.getHoverHeight(toolBar.selector.layoutInfo.height, toolBar.selector.element) / 2 * scale + 5;
 			
 			if (selectorRotation == 0)
 			{
@@ -62,7 +62,7 @@ package view.elementSelector.toolBar
 			}
 		
 			//画布所方时，防止两个动画冲突导致的工具条动画停顿
-			if (TweenMax.isTweening(toolBar.selector.coreMdt.mainUI.canvas))
+			if (TweenMax.isTweening(toolBar.selector.coreMdt.coreApp.canvas))
 			{
 				toolBar.x = px;
 				toolBar.y = py;

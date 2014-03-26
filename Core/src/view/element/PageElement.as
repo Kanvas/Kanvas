@@ -10,6 +10,7 @@ package view.element
 	
 	import modules.pages.PageEvent;
 	
+	import view.element.state.ElementPrevState;
 	import view.elementSelector.ElementSelector;
 	import view.elementSelector.toolBar.ToolBarController;
 	import view.interact.autoGroup.IAutoGroupElement;
@@ -87,7 +88,7 @@ package view.element
 		{
 			super.toPrevState();
 			
-			graphicShape.visible = numShape.visible = false;
+			numShape.visible = false;
 		}
 		
 		/**
@@ -96,8 +97,7 @@ package view.element
 		{
 			super.returnFromPrevState();
 			
-			graphicShape.visible = numShape.visible = true;
-			
+			numShape.visible = true;
 			this.render();
 		}
 		
@@ -115,6 +115,16 @@ package view.element
 			super.render();
 			
 			graphics.clear();
+			
+			//页面在预览模式时，为了能够使其被点击到，需要绘制一个点击区域
+			if (currentState is ElementPrevState)
+			{
+				graphics.beginFill(0, 0);
+				graphics.drawRect(- vo.width  / 2, - vo.height / 2, vo.width, vo.height);
+				graphics.endFill();
+				
+				return;
+			}
 			
 			// 中心点为注册点
 			if (vo.style)

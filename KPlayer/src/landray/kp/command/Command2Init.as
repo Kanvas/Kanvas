@@ -1,7 +1,6 @@
 package landray.kp.command
 {	
 	import flash.events.Event;
-	import flash.text.TextFormat;
 	
 	import landray.kp.components.Selector;
 	import landray.kp.components.ToolBarSlide;
@@ -12,8 +11,7 @@ package landray.kp.command
 	import landray.kp.mediator.MediatorViewer;
 	import landray.kp.view.Viewer;
 	
-	import util.textFlow.FlowTextManager;
-	
+	import view.interact.PreviewClicker;
 	import view.interact.zoomMove.ZoomMoveControl;
 	
 	/**
@@ -46,7 +44,11 @@ package landray.kp.command
 			
 			config.kp_internal::viewer      = new Viewer;
 			config.kp_internal::mediator    = new MediatorViewer;
-			config.kp_internal::controller  = new ZoomMoveControl(config.kp_internal::viewer, config.kp_internal::mediator);
+			config.kp_internal::controller  = new ZoomMoveControl(config.kp_internal::mediator);
+			
+			config.kp_internal::previewClicker  = new PreviewClicker(config.kp_internal::mediator);
+			config.kp_internal::previewClicker.enable = true;
+				
 			config.kp_internal::selector    = new Selector;
 			config.kp_internal::toolBarZoom = new ToolBarZoom;
 			config.kp_internal::toolBarSlid = new ToolBarSlide;
@@ -57,6 +59,7 @@ package landray.kp.command
 			{
 				executeEnd();
 			}, false, 0, true);
+			
 			config.kp_internal::container.addChildAt(config.kp_internal::viewer, 0);
 		}
 	}

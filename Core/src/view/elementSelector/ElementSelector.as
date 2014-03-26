@@ -39,7 +39,7 @@ package view.elementSelector
 			
 			this.coreMdt = coreMdt;
 			
-			this.layoutInfo = new ElementLayoutInfo(coreMdt.mainUI.layoutTransformer);
+			this.layoutInfo = new ElementLayoutInfo(coreMdt.coreApp.layoutTransformer);
 			this.layoutTransformer = layoutInfo.transformer;
 			
 			XMLVOMapper.fuck(styleXML, style);

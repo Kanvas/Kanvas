@@ -9,6 +9,7 @@ package view.ui
 	import util.LayoutUtil;
 	
 	/**
+	 * 核心画布，
 	 */	
 	public class Canvas extends Sprite
 	{
@@ -21,10 +22,10 @@ package view.ui
 			items  = new Vector.<ICanvasLayout>;
 			
 			addChild(interactorBG);
-			//interactorBG.addChild(bgImgContainer = new Sprite);
 		}
 		
-		
+		/**
+		 */		
 		override public function addChild(child:DisplayObject):DisplayObject
 		{
 			super.addChild(child);
@@ -34,6 +35,7 @@ package view.ui
 				item.updateView();
 				items.push(item);
 			}
+			
 			return child;
 		}
 		
@@ -46,18 +48,21 @@ package view.ui
 				item.updateView();
 				items.push(item);
 			}
+			
 			return child;
 		}
 		
 		override public function removeChild(child:DisplayObject):DisplayObject
 		{
 			super.removeChild(child);
+			
 			if (child is ICanvasLayout)
 			{
 				var item:ICanvasLayout = ICanvasLayout(child);
 				var index:int = items.indexOf(item);
 				if (index > -1) items.splice(index, 1);
 			}
+			
 			return child;
 		}
 		
@@ -154,6 +159,8 @@ package view.ui
 			}
 		}
 		
+		/**
+		 */		
 		private var previewState:Boolean;
 		private var previewX:Number;
 		private var previewY:Number;
@@ -183,17 +190,6 @@ package view.ui
 			interactorBG.graphics.drawRect(rect.x, rect.y, rect.width, rect.height);
 			interactorBG.graphics.endFill();
 		}
-		
-		
-		
-		/**
-		 * 画布自动缩放时需要清空背景，保证尺寸位置计算的准确性
-		 */		
-		/*public function clearBG():void
-		{
-			interactorBG.graphics.clear();
-		}*/
-		
 		
 		override public function get scaleX():Number
 		{
@@ -297,6 +293,8 @@ package view.ui
 		
 		private var __y:Number = 0;
 		
+		/**
+		 */		
 		public function get elements():Vector.<ICanvasLayout>
 		{
 			return  items.concat();
@@ -306,6 +304,8 @@ package view.ui
 		 */		
 		public var interactorBG:Sprite = new Sprite;
 		
+		/**
+		 */		
 		private var items:Vector.<ICanvasLayout>;
 	}
 }

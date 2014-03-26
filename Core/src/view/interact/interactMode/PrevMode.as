@@ -19,8 +19,10 @@ package view.interact.interactMode
 			mainMediator.currentMode = mainMediator.unSelectedMode;
 			mainMediator.currentMode.drawShotFrame();
 				
-			mainMediator.zoomMoveControl.autoZoom();
+			mainMediator.zoomMoveControl.zoomAuto();
 			returnFromPrevState();
+			
+			mainMediator.previewCliker.enable = false;
 		}
 	}
 }

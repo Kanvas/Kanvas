@@ -11,6 +11,7 @@ package view.interact
 	import flash.geom.Rectangle;
 	
 	import model.CoreFacade;
+	import model.vo.ElementVO;
 	import model.vo.PageVO;
 	
 	import modules.pages.PageManager;
@@ -43,6 +44,7 @@ package view.interact
 	import view.ui.Bubble;
 	import view.ui.Canvas;
 	import view.ui.IMainUIMediator;
+	import view.ui.MainUIBase;
 	
 	/**
 	 * 核心core整体的UI控制器
@@ -55,9 +57,22 @@ package view.interact
 		{
 			super(mediatorName, viewComponent);
 			
-			mainUI.textEditor.mainUIMediator = this;
+			coreApp.textEditor.mainUIMediator = this;
 		}
 		
+		/**
+		 */		
+		public function setPageIndex(value:int):void
+		{
+			pageManager.index = value;
+		}
+		
+		/**
+		 */		
+		public function zoomElement(elementVO:ElementVO):void
+		{
+			zoomMoveControl.zoomElement(elementVO);
+		}
 		
 		/**
 		 * 组合智能组合仅包含其自身的子元素
@@ -248,7 +263,7 @@ package view.interact
 		 */		
 		public function setEditorASText():void
 		{
-			setEditor(mainUI.textEditor);
+			setEditor(coreApp.textEditor);
 		}
 		
 		/**
@@ -277,7 +292,7 @@ package view.interact
 		 */		
 		public function editElement(element:ElementBase):void
 		{
-			mainUI.textEditor.edit(element);
+			coreApp.textEditor.edit(element);
 			CoreFacade.coreMediator.autofitController.autofitEditorModifyText(element);
 			toEditMode();
 		}
@@ -472,6 +487,11 @@ package view.interact
 		public var zoomMoveControl:ZoomMoveControl;
 		
 		/**
+		 * 预览时鼠标点击控制 
+		 */		
+		public var previewCliker:PreviewClicker;
+		
+		/**
 		 * 元素移动控制器
 		 */		
 		public var elementMoveController:ElementMoveController;
@@ -523,14 +543,14 @@ package view.interact
 		 */		
 		override public function onRegister():void
 		{
-			zoomMoveControl = new ZoomMoveControl(mainUI, this);
-			mainUI.controller = zoomMoveControl;
-			elementsInteractControl = new ElementsInteractor(mainUI, this);
+			zoomMoveControl = new ZoomMoveControl(this);
+			previewCliker = new PreviewClicker(this);
+			elementsInteractControl = new ElementsInteractor(coreApp, this);
 			elementMoveController = new ElementMoveController(this);
 			autoGroupController = new AutoGroupController(this);
 			
 			selector = new ElementSelector(this);
-			mainUI.addChild(selector);
+			coreApp.addChild(selector);
 			
 			//多选控制器
 			multiSelectControl = new MultiSelectControl(this);
@@ -544,24 +564,24 @@ package view.interact
 			currentMode = unSelectedMode;
 			
 			// 划入core的主场景后滚轮监听才生效，防止干扰主UI上的滚轮交互；
-			mainUI.addEventListener(MouseEvent.ROLL_OUT, outKanvas);
-			mainUI.addEventListener(MouseEvent.ROLL_OVER, overKanvas);
+			coreApp.addEventListener(MouseEvent.ROLL_OUT, outKanvas);
+			coreApp.addEventListener(MouseEvent.ROLL_OVER, overKanvas);
 			
 			// 键盘按键是全局式响应
 			enableKeyboardState = new EnableKeyboardSate(this);
 			disKeyboardState = new DisKeyboardState(this);
 			currentKeyboardState = enableKeyboardState;
 			
-			mainUI.stage.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler, true);
-			mainUI.stage.addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler, true);
-			mainUI.stage.addEventListener(KeyboardEvent.KEY_UP, keyUpBoardHandler, false, 0, true);
-			mainUI.stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownBoardHandler, false, 0, true);
+			coreApp.stage.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler, true);
+			coreApp.stage.addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler, true);
+			coreApp.stage.addEventListener(KeyboardEvent.KEY_UP, keyUpBoardHandler, false, 0, true);
+			coreApp.stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownBoardHandler, false, 0, true);
 			
 			// 元件碰撞检测，从而控制智能组合，大元件不可以被拖动和超出场景外元素的隐藏
-			collisionDetection = new ElementCollisionDetection(this, CoreFacade.coreProxy.elements, mainUI.externalUI);
+			collisionDetection = new ElementCollisionDetection(this, CoreFacade.coreProxy.elements, coreApp.externalUI);
 			
 			//声明自动对其控制器，用于检测移动，缩放，旋转时的自动对其功能
-			autoAlignController = new ElementAutoAlignController(CoreFacade.coreProxy.elements, mainUI.canvas, mainUI.autoAlignUI, this);
+			autoAlignController = new ElementAutoAlignController(CoreFacade.coreProxy.elements, coreApp.canvas, coreApp.autoAlignUI, this);
 			
 			//检测元素与场景的关系，如果超出尺寸范围则缩放与移动至画布中央
 			autofitController = new ElementAutofitController(this);
@@ -571,12 +591,11 @@ package view.interact
 			
 			//镜头绘制
 			cameraShotShape.visible = false;
-			mainUI.addChild(cameraShotShape);
+			coreApp.addChild(cameraShotShape);
 			currentMode.drawShotFrame();
-			mainUI.addEventListener(KVSEvent.UPATE_BOUND, renderBoundHandler);
+			coreApp.addEventListener(KVSEvent.UPATE_BOUND, renderBoundHandler);
 			
 			pageManager = new PageManager(this);
-			
 			multiThread = new MultiThread(this);
 		}
 		
@@ -586,7 +605,7 @@ package view.interact
 		private function overKanvas(event:MouseEvent):void
 		{
 			// 添加画布滚动缩放监听
-			mainUI.stage.addEventListener(MouseEvent.MOUSE_WHEEL, mouseWheelHandler, false, 0, true);
+			coreApp.stage.addEventListener(MouseEvent.MOUSE_WHEEL, mouseWheelHandler, false, 0, true);
 		}
 		
 		/**
@@ -594,7 +613,7 @@ package view.interact
 		 */
 		private function outKanvas(event:MouseEvent):void
 		{
-			mainUI.stage.removeEventListener(MouseEvent.MOUSE_WHEEL, mouseWheelHandler);
+			coreApp.stage.removeEventListener(MouseEvent.MOUSE_WHEEL, mouseWheelHandler);
 		}
 		
 		/**
@@ -688,7 +707,7 @@ package view.interact
 		public function zoomIn(multiple:Number = 1.2):void
 		{
 			zoomMoveControl.zoomIn();
-			mainUI.updatePastPoint();
+			coreApp.updatePastPoint();
 		}
 		
 		/**
@@ -697,7 +716,7 @@ package view.interact
 		public function zoomOut(multiple:Number = 1.2):void
 		{
 			zoomMoveControl.zoomOut();
-			mainUI.updatePastPoint();
+			coreApp.updatePastPoint();
 		}
 		
 		/**
@@ -705,8 +724,8 @@ package view.interact
 		 */
 		public function zoomAuto():void
 		{
-			zoomMoveControl.autoZoom();
-			mainUI.updatePastPoint();
+			zoomMoveControl.zoomAuto();
+			coreApp.updatePastPoint();
 		}
 		
 		/**
@@ -714,7 +733,7 @@ package view.interact
 		 */
 		public function renderBGWidthColor(color:uint):void
 		{
-			mainUI.renderBGWithColor(color);
+			coreApp.renderBGWithColor(color);
 		}
 		
 		/**
@@ -755,7 +774,7 @@ package view.interact
 			}
 			
 			//mainUI.drawBgInteractorShape();
-			mainUI.updatePastPoint();
+			coreApp.updatePastPoint();
 		}
 		
 		/**
@@ -794,7 +813,7 @@ package view.interact
 		 */		
 		public function showCameraShot():void
 		{
-			mainUI.stage.addEventListener(Event.ENTER_FRAME, shotFlash);
+			coreApp.stage.addEventListener(Event.ENTER_FRAME, shotFlash);
 			
 			cameraShotShape.alpha = 0;
 			cameraShotShape.visible = true;
@@ -804,7 +823,7 @@ package view.interact
 		 */		
 		public function hideCanmeraShot():void
 		{
-			mainUI.stage.removeEventListener(Event.ENTER_FRAME, shotFlash);
+			coreApp.stage.removeEventListener(Event.ENTER_FRAME, shotFlash);
 			
 			cameraShotShape.visible = false;
 			cameraShotShape.alpha = 0;
@@ -988,7 +1007,7 @@ package view.interact
 		 */		
 		public function get layoutTransformer():LayoutTransformer
 		{
-			return mainUI.layoutTransformer;
+			return coreApp.layoutTransformer;
 		}
 		
 		/**
@@ -1037,16 +1056,23 @@ package view.interact
 		
 		/**
 		 */		
-		public function get mainUI():CoreApp
+		public function get coreApp():CoreApp
 		{
 			return viewComponent as CoreApp;
 		}
 		
 		/**
 		 */		
+		public function get mainUI():MainUIBase
+		{
+			return viewComponent as MainUIBase
+		}
+		
+		/**
+		 */		
 		public function get canvas():Canvas
 		{
-			return mainUI.canvas;
+			return coreApp.canvas;
 		}
 	}
 }

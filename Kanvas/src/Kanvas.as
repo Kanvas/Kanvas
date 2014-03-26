@@ -19,6 +19,7 @@ package
 	
 	import model.CoreFacade;
 	
+	import view.interact.CoreMediator;
 	import view.pagePanel.PagePanel;
 	import view.screenState.FullScreenState;
 	import view.shapePanel.ShapePanel;
@@ -72,8 +73,8 @@ package
 			kvsCore.addEventListener(KVSEvent.READY, coreInitCompleteHandler, false, 0, true);
 			kvsCore.startInit();
 			
-			if (kvsCore.controller)
-				zoomToolBar.controller = kvsCore.controller;
+			if (CoreFacade.coreMediator.zoomMoveControl)
+				zoomToolBar.controller = CoreFacade.coreMediator.zoomMoveControl;
 			
 			//自定义按钮
 			if (kvsCore.customButtonData)

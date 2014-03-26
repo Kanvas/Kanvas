@@ -36,13 +36,13 @@ package view.interact.multiSelect
 			temGroupElement = new TemGroupElement(this);
 			
 			
-			mdt.mainUI.addEventListener(ElementEvent.TEM_GROUP_CHILD_DOWN, childDown);
-			mdt.mainUI.addEventListener(ElementEvent.TEM_GROUP_CHILD_UP, childUp);
-			mdt.mainUI.addEventListener(ElementEvent.START_MOVE_TEM_GROUP, startMoveGroup);
-			mdt.mainUI.addEventListener(ElementEvent.STOP_MOVE_TEM_GROUP, stopMoveGroup);
-			mdt.mainUI.addEventListener(ElementEvent.TEM_GROUP_CHILD_CLICKED, childChicked);
+			mdt.coreApp.addEventListener(ElementEvent.TEM_GROUP_CHILD_DOWN, childDown);
+			mdt.coreApp.addEventListener(ElementEvent.TEM_GROUP_CHILD_UP, childUp);
+			mdt.coreApp.addEventListener(ElementEvent.START_MOVE_TEM_GROUP, startMoveGroup);
+			mdt.coreApp.addEventListener(ElementEvent.STOP_MOVE_TEM_GROUP, stopMoveGroup);
+			mdt.coreApp.addEventListener(ElementEvent.TEM_GROUP_CHILD_CLICKED, childChicked);
 			
-			dragSelectControl = new ClickMoveControl(this, coreMdt.mainUI);
+			dragSelectControl = new ClickMoveControl(this, coreMdt.coreApp);
 		}
 		
 		
@@ -124,7 +124,7 @@ package view.interact.multiSelect
 		 */		
 		internal function get dragSlectUI():Shape
 		{
-			return coreMdt.mainUI.dragSlectUI;
+			return coreMdt.coreApp.dragSlectUI;
 		}
 		
 		/**

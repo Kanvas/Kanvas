@@ -63,7 +63,7 @@ package commands
 			CoreFacade.addElement(group);
 			group.render();
 			
-			var canvas:Canvas =  CoreFacade.coreMediator.mainUI.canvas;
+			var canvas:Canvas =  CoreFacade.coreMediator.coreApp.canvas;
 			var minIndex:uint = canvas.getChildIndex(group);
 			var temIndex:uint;
 			var childs:Vector.<ElementBase> = group.childElements;
