@@ -4,8 +4,6 @@ package modules.pages
 	
 	import model.vo.PageVO;
 	
-	import view.element.PageElement;
-	
 	/**
 	 */	
 	public final class PageEvent extends Event
@@ -30,7 +28,8 @@ package modules.pages
 		 */		
 		public static const DELETE_PAGE_FROM_UI:String = "deletePageFromUI";
 		
-		
+		/**
+		 */		
 		public static const PAGE_SELECTED:String = "pageSelected";
 		
 		/**

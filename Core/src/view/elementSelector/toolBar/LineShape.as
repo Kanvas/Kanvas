@@ -3,10 +3,7 @@ package view.elementSelector.toolBar
 	import com.greensock.TweenLite;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Cubic;
-	import com.kvs.utils.XMLConfigKit.XMLVOMapper;
 	import com.kvs.utils.XMLConfigKit.style.Style;
-	
-	import fl.transitions.Tween;
 	
 	import model.ConfigInitor;
 
@@ -48,20 +45,20 @@ package view.elementSelector.toolBar
 			//手动获取hover高度，防止r与实际不同步
 			r = toolBar.selector.coreMdt.mainUI.hoverEffect.getHoverHeight(toolBar.selector.layoutInfo.height, toolBar.selector.element) / 2 * scale + 5;
 			
-			if (selectorRotation >= 0 && selectorRotation < 180)
+			if (selectorRotation == 0)
 			{
-				px = Math.cos(rad) * r;
+				px =  Math.cos(rad) * r;
+				py = - Math.sin(rad) * r;
+			}
+			else if (selectorRotation > 0 && selectorRotation < 180)
+			{
+				px = - newX + Math.cos(rad) * r;
 				py = - Math.sin(rad) * r;
 			}
 			else
 			{
-				//防止尺寸缩放按钮碰撞工具条
-				var R:Number = r;
-				if (selectorRotation < - 70 || selectorRotation == 180)
-					R = r + ConfigInitor.ICON_SIZE_FOR_SCALE_AND_ROLL + 5;
-					
-				px = newX + Math.cos(rad) * R;
-				py = - Math.sin(rad) * R;
+				px = newX + Math.cos(rad) * r;
+				py = - Math.sin(rad) * r;
 			}
 		
 			//画布所方时，防止两个动画冲突导致的工具条动画停顿

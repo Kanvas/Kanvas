@@ -50,11 +50,14 @@ package util
 		public static function stagePointToElementPoint(x:Number, y:Number, canvas:Sprite, ignoreRotation:Boolean = false):Point
 		{
 			var result:Point = new Point(x, y);
+			
 			//平移
-			result.offset(-canvas.x, -canvas.y);
+			result.offset(- canvas.x, - canvas.y);
+			
 			//旋转
 			if(!ignoreRotation)
-				PointUtil.rotate(result, MathUtil.angleToRadian(-canvas.rotation));
+				PointUtil.rotate(result, MathUtil.angleToRadian(- canvas.rotation));
+			
 			//缩放
 			PointUtil.multiply(result, 1 / canvas.scaleX);
 			

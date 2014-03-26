@@ -3,13 +3,12 @@ package modules.pages
 	import commands.Command;
 	
 	import flash.events.EventDispatcher;
-	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	
 	import model.ElementProxy;
+	import model.vo.PageVO;
 	
 	import view.interact.CoreMediator;
-	import model.vo.PageVO;
 
 	[Event(name="pageAdded", type="modules.pages.PageEvent")]
 	
@@ -69,6 +68,7 @@ package modules.pages
 		{
 			pageQuene.addPageAt(pageVO, index);
 			__index = pageVO.index;
+			
 			return pageVO;
 		}
 		
@@ -102,6 +102,7 @@ package modules.pages
 		public function removePage(pageVO:PageVO):PageVO
 		{
 			if (index == pageVO.index) __index = -1;
+			
 			return pageQuene.removePage(pageVO);
 		}
 		
@@ -129,12 +130,12 @@ package modules.pages
 		
 		public function next():void
 		{
-			index = (index + 1 >= pageQuene.length) ? -1 : index + 1;
+			indexWithZoom = (index + 1 >= pageQuene.length) ? -1 : index + 1;
 		}
 		
 		public function prev():void
 		{
-			index = (index - 1 < -1) ? pageQuene.length - 1 : index - 1;
+			indexWithZoom = (index - 1 < -1) ? pageQuene.length - 1 : index - 1;
 		}
 		
 		public function reset():void
@@ -147,19 +148,33 @@ package modules.pages
 			dispatchEvent(e);
 		}
 		
-		
+		/**
+		 */		
 		public function get index():int
 		{
 			return __index;
 		}
+		
+		/**
+		 */		
 		public function set index(value:int):void
 		{
-			if (value >= -1 && value < pageQuene.length)
+			if (value >= - 1 && value < pageQuene.length)
+				__index = value;
+		}
+		
+		/**
+		 * 设置当前的页面index，并且自动缩放画布
+		 */		
+		public function set indexWithZoom(value:int):void
+		{
+			if (value >= - 1 && value < pageQuene.length)
 			{
 				__index = value;
-				if (index >= 0)
+				
+				if (__index >= 0)
 				{
-					var scene:Scene = PageUtil.getSceneFromVO(pageQuene.pages[index], coreMdt.mainUI);
+					var scene:Scene = PageUtil.getSceneFromVO(pageQuene.pages[__index], coreMdt.mainUI);
 					coreMdt.zoomMoveControl.zoomRotateMoveTo(scene.scale, scene.rotation, scene.x, scene.y);
 				}
 				else
@@ -170,6 +185,8 @@ package modules.pages
 			
 		}
 		
+		/**
+		 */		
 		private var __index:int = -1;
 		
 		/**

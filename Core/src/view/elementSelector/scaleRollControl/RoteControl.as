@@ -41,6 +41,7 @@ package view.elementSelector.scaleRollControl
 			
 			if (rote < 0)
 				rote += 360;
+			
 			rote = Math.ceil(rote);
 			
 			//旋转自动对齐检测，如检测不到需要对齐的角度，返回NaN
@@ -49,7 +50,6 @@ package view.elementSelector.scaleRollControl
 				rote = rotation;
 			
 			dis = rote - oldRotation;
-			
 			
 			//selector.element.vo.rotation = rote;
 			selector.element.rotation = rote;
@@ -100,6 +100,7 @@ package view.elementSelector.scaleRollControl
 		{
 			oldAngle = selector.currentRote;
 			oldRotation = selector.rotation;
+			
 			oldPropertyObj = {};
 			oldPropertyObj.rotation = selector.element.rotation;
 			

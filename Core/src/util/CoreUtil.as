@@ -40,13 +40,16 @@ package util
 		
 		public static function drawLine(color:uint, point1:Point, point2:Point):void
 		{
+			clear();
+			
 			coreMdt.mainUI.autoAlignUI.graphics.lineStyle(1, color);
 			coreMdt.mainUI.autoAlignUI.graphics.moveTo(point1.x, point1.y);
 			coreMdt.mainUI.autoAlignUI.graphics.lineTo(point2.x, point2.y);
 			coreMdt.mainUI.autoAlignUI.graphics.endFill();
 		}
 
-		
+		/**
+		 */		
 		public static function clear():void
 		{
 			coreMdt.mainUI.autoAlignUI.graphics.clear();

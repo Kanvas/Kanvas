@@ -21,6 +21,7 @@ package com.kvs.utils
 		{
 			value = value % 360;
 			if (value < 0) value += 360;
+			
 			return value;
 		}
 		

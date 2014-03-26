@@ -29,12 +29,15 @@ package view.elementSelector.lineControl
 			
 			super.moveOff(xOff, yOff);
 			
+			
+			return;
 			var rotation:Number = selector.coreMdt.autoAlignController.checkRotation(selector.element, selector.element.rotation);
 			if (! isNaN(rotation))
 			{
 				vo.rotation = rotation;
 				var rad:Number = vo.rotation / 180 * Math.PI;
 				var r:Number = vo.width / 2 * vo.scale;
+				
 				var point:Point = LayoutUtil.stagePointToElementPoint(endX, endY, selector.coreMdt.canvas);
 				vo.x = point.x - r * Math.cos(rad);
 				vo.y = point.y - r * Math.sin(rad);

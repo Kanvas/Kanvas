@@ -19,7 +19,6 @@ package model
 	import model.vo.PageVO;
 	
 	import modules.pages.PageEvent;
-	import modules.pages.PageManager;
 	
 	import org.puremvc.as3.patterns.proxy.Proxy;
 	
@@ -427,6 +426,7 @@ package model
 				element = createElement(item);//创建并初始化元素
 				pages.push(element.vo as PageVO);
 			}
+			
 			pages.sort(sortOnIndex);
 			var l:int = pages.length;
 			for (var i:int = 0; i < l; i++)
@@ -435,6 +435,13 @@ package model
 				CoreFacade.coreMediator.pageManager.addPageAt(pages[i], pages[i].index);
 			}
 			
+			//调整当前页为第一页
+			if (pages.length)
+			{
+				var firstPage:PageVO = pages[0];
+				firstPage.dispatchEvent(new PageEvent(PageEvent.PAGE_SELECTED, firstPage));
+			}
+				
 			//清空用于临时匹配组合的中专站
 			temElementMap.clear();
 			groupElements.length = 0;

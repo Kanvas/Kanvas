@@ -19,5 +19,10 @@ package model.vo
 		{
 			return this.thickness;
 		}
+		
+		/**
+		 * 线条的弧度， 弧度控制点到起点与终点连线的距离 
+		 */		
+		public var arc:Number = 0;
 	}
 }

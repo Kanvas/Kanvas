@@ -1,7 +1,9 @@
 package view.element.shapes
 {
-	import com.kvs.utils.XMLConfigKit.style.Style;
 	import com.kvs.utils.XMLConfigKit.StyleManager;
+	import com.kvs.utils.XMLConfigKit.style.Style;
+	
+	import flash.events.Event;
 	
 	import model.vo.ElementVO;
 	import model.vo.LineVO;
@@ -32,14 +34,6 @@ package view.element.shapes
 		 */		
 		override public function renderHoverEffect(style:Style):void
 		{
-			var wDis:Number = (style.width - vo.width) / 2;
-			var hDis:Number = 15;
-			
-			hoverEffectShape.graphics.clear();
-			StyleManager.setLineStyle(hoverEffectShape.graphics, style.getBorder);
-			hoverEffectShape.graphics.drawRect(style.tx + style.width / 2 - wDis, 
-				style.ty - hDis, style.width / 2 + wDis, style.height + hDis * 2);
-			hoverEffectShape.graphics.endFill();
 		}
 		
 		/**
@@ -48,12 +42,14 @@ package view.element.shapes
 		{
 			super.render();
 			
+			var rad:Number = Math.PI - Math.atan2(lineVO.arc * 2, lineVO.width / 2);
+			var r:uint = 5 * lineVO.thickness;
 			
 			graphics.moveTo(lineVO.width / 2, 0);
-			graphics.lineTo(lineVO.width / 2 - 20, - 15);
+			graphics.lineTo(lineVO.width / 2 + Math.cos(rad + Math.PI / 4) * r, Math.sin(rad + Math.PI / 4) * r);
 			
 			graphics.moveTo(lineVO.width / 2, 0);
-			graphics.lineTo(lineVO.width / 2 - 20, 15);
+			graphics.lineTo(lineVO.width / 2 + Math.cos(rad - Math.PI / 4) * r, Math.sin(rad - Math.PI / 4) * r);
 		}
 	}
 }

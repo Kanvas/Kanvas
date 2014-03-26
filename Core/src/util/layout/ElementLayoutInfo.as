@@ -53,7 +53,6 @@ package util.layout
 				_ty = - _height * .5;
 				
 				updateXY();
-				updateRotation();
 			}
 			
 		}
@@ -65,11 +64,6 @@ package util.layout
 			var point:Point = LayoutUtil.elementPointToStagePoint(currentElementUI.x, currentElementUI.y, transformer.canvas);
 			_x = point.x;
 			_y = point.y;
-		}
-		
-		private function updateRotation():void
-		{
-			_rotation = transformer.canvas.rotation;
 		}
 		
 		/**
@@ -137,15 +131,6 @@ package util.layout
 		{
 			return currentElementVo.rotation;
 		}
-		
-		public function get rotation():Number
-		{
-			return _rotation;
-		}
-		
-		/**
-		 */		
-		private var _rotation:Number;
 		
 		public function get scale():Number
 		{

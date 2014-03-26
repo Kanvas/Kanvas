@@ -25,6 +25,15 @@ package view.element.shapes
 			xmlData = <line/>
 		}
 		
+		/**
+		 */		
+		public function get propertyNameArray():Array
+		{
+			return _propertyNameArray;
+		}
+		
+		private const _propertyNameArray:Array = ["arc"];
+		
 		
 		/**
 		 */		
@@ -34,16 +43,11 @@ package view.element.shapes
 			
 			xmlData.@thickness = vo.thickness;
 			xmlData.@borderAlpha = vo.style.getBorder.alpha;
+			xmlData.@arc = lineVO.arc;
 			
 			return xmlData;
 		}
 		
-		/**
-		 */		
-		override public function showToolBar(toolbar:ToolBarController):void
-		{
-			toolbar.setCurToolBar(toolbar.lineShape);
-		}
 		
 		/**
 		 */		
@@ -60,6 +64,7 @@ package view.element.shapes
 			
 			newVO.type = vo.type;
 			newVO.styleID = vo.styleID;
+			(newVO as LineVO).arc = lineVO.arc;
 			
 			return newVO;
 		}
@@ -68,12 +73,7 @@ package view.element.shapes
 		 */		
 		override public function showHoverEffect():void
 		{
-			var dis:Number = (hoverStyle.width - vo.width) * .5;
 			
-			hoverEffectShape.graphics.clear();
-			StyleManager.setLineStyle(hoverEffectShape.graphics, hoverStyle.getBorder);
-			hoverEffectShape.graphics.drawRect(hoverStyle.tx + hoverStyle.width * .5 - dis, hoverStyle.ty, hoverStyle.width * .5, hoverStyle.height);
-			hoverEffectShape.graphics.endFill();
 		}
 		
 		/**
@@ -84,8 +84,24 @@ package view.element.shapes
 			
 			this.graphics.clear();
 			StyleManager.setLineStyle(graphics, vo.style.getBorder, vo.style, vo);
-			graphics.moveTo(0, 0);
-			graphics.lineTo(lineVO.width / 2, 0);
+			graphics.moveTo(- lineVO.width / 2, 0);
+			graphics.curveTo(0, lineVO.arc * 2, lineVO.width / 2, 0);
+		}
+		
+		/**
+		 * 图形处于选择状态并按下图形时调用
+		 */		
+		override public function hideFrameOnMdown(selector:ElementSelector):void
+		{
+			selector.frame.alpha = 0.5;
+		}
+		
+		/**
+		 * 图形移动结束后或者临时组合被按下并释放后调用此方法，显示型变框
+		 */		
+		override public function showSelectorFrame(selector:ElementSelector):void
+		{
+			selector.frame.alpha = 1;
 		}
 		
 		/**
@@ -94,8 +110,6 @@ package view.element.shapes
 		override public function showControlPoints(selector:ElementSelector):void
 		{
 			ViewUtil.show(selector.lineControl);
-			ViewUtil.show(selector.scaleRollControl);
-			ViewUtil.hide(selector.scaleRollControl.rollPoint);
 		}
 		
 		/**
@@ -104,28 +118,22 @@ package view.element.shapes
 		override public function hideControlPoints(selector:ElementSelector):void
 		{
 			ViewUtil.hide(selector.lineControl);
-			ViewUtil.hide(selector.scaleRollControl);
-			ViewUtil.show(selector.scaleRollControl.rollPoint);
-		}
-		
-		override public function enableBG():void
-		{
-			//bg.visible = true;
-			//bg.mouseEnabled = true;
 		}
 		
 		/**
 		 */		
-		override public function disableBG():void
+		override public function showToolBar(toolbar:ToolBarController):void
 		{
-			//bg.mouseEnabled = false;
-			//bg.visible = false;
+			toolbar.setCurToolBar(toolbar.lineShape);
 		}
 		
+		/**
+		 */		
 		override public function drawBG():void
 		{
 			var w:Number = Math.max(vo.width * .5, 10);
 			var h:Number = Math.max(vo.height * .5, 10);
+			
 			bg.graphics.clear();
 			bg.graphics.beginFill(0xe0e0e0, 0);
 			bg.graphics.drawRect(0, 0, w, h);
@@ -146,6 +154,7 @@ package view.element.shapes
 		{
 			tlPoint.x = 0;
 			tlPoint.y = - .5 * vo.scale * vo.height;
+			
 			return caculateTransform(tlPoint);
 		}
 		
@@ -153,6 +162,7 @@ package view.element.shapes
 		{
 			tcPoint.x =   .25 * vo.scale * vo.width;
 			tcPoint.y = - .5  * vo.scale * vo.height;
+			
 			return caculateTransform(tcPoint);
 		}
 		
@@ -160,6 +170,7 @@ package view.element.shapes
 		{
 			mlPoint.x = x;
 			mlPoint.y = y;
+			
 			return mlPoint;
 		}
 		
@@ -167,6 +178,7 @@ package view.element.shapes
 		{
 			mcPoint.x = .25 * vo.scale * vo.width;
 			mcPoint.y = 0;
+			
 			return caculateTransform(mcPoint);
 		}
 		
@@ -174,6 +186,7 @@ package view.element.shapes
 		{
 			blPoint.x = 0;
 			blPoint.y = .5 * vo.scale * vo.height;
+			
 			return caculateTransform(blPoint);
 		}
 		
@@ -181,6 +194,7 @@ package view.element.shapes
 		{
 			bcPoint.x = .25 * vo.scale * vo.width;;
 			bcPoint.y = .5  * vo.scale * vo.height;
+			
 			return caculateTransform(bcPoint);
 		}
 		

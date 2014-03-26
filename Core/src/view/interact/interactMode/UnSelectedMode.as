@@ -87,7 +87,7 @@ package view.interact.interactMode
 			if (mainMediator.pageManager.length > 0)
 			{
 				//进入多页面播放模式
-				mainMediator.pageManager.index = mainMediator.pageManager.index;
+				mainMediator.pageManager.indexWithZoom = mainMediator.pageManager.index;
 			}
 			else
 			{
