@@ -684,19 +684,6 @@ package
 		//---------------------------------
 		
 		
-		public function get controller():ZoomMoveControl
-		{
-			return __controller;
-		}
-		
-		public function set controller(value:ZoomMoveControl):void
-		{
-			__controller = value;
-		}
-		
-		private var __controller:ZoomMoveControl;
-			
-		
 		/**
 		 * 控制器
 		 */	

@@ -80,7 +80,7 @@ package view.element.shapes
 		{
 			super.render();
 			
-			this.graphics.clear();
+			graphics.clear();
 			StyleManager.setLineStyle(graphics, vo.style.getBorder, vo.style, vo);
 			graphics.moveTo(- lineVO.width / 2, 0);
 			graphics.curveTo(0, lineVO.arc * 2, lineVO.width / 2, 0);
@@ -147,6 +147,16 @@ package view.element.shapes
 			brPoint.x = vo.scale *   .5 * vo.width;
 			brPoint.y = vo.scale *(  .5 * vo.height + ((lineVO.arc>= 0) ? lineVO.arc : 0));
 			return caculateTransform(brPoint);
+		}
+		
+		override public function get top():Number
+		{
+			return vo.scale *(- .5 * vo.height + ((lineVO.arc < 0) ? lineVO.arc : 0));
+		}
+		
+		override public function get bottom():Number
+		{
+			return vo.scale *(  .5 * vo.height + ((lineVO.arc>= 0) ? lineVO.arc : 0));
 		}
 		
 		override public function get scaledHeight():Number

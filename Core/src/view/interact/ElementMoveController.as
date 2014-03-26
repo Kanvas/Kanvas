@@ -194,7 +194,7 @@ package view.interact
 		 */		
 		private function get mainUI():CoreApp
 		{
-			return coreMdt.mainUI;
+			return coreMdt.coreApp;
 		}
 		
 		/**

@@ -3,8 +3,8 @@ package landray.kp.maps.main.elements
 	import com.kvs.ui.toolTips.ITipsSender;
 	import com.kvs.utils.MathUtil;
 	import com.kvs.utils.RectangleUtil;
-	import com.kvs.utils.XMLConfigKit.style.Style;
 	
+	import flash.display.DisplayObject;
 	import flash.display.Graphics;
 	import flash.display.Shape;
 	import flash.display.Sprite;
@@ -15,10 +15,18 @@ package landray.kp.maps.main.elements
 	
 	import util.LayoutUtil;
 	
+	import view.element.IElement;
 	import view.ui.Canvas;
 	import view.ui.ICanvasLayout;
 	
-	public class Element extends Sprite implements ITipsSender, ICanvasLayout
+	/**
+	 * 
+	 * @author wallenMac
+	 * 
+	 * 元素的基类
+	 * 
+	 */	
+	public class Element extends Sprite implements ITipsSender, ICanvasLayout, IElement
 	{
 		public function Element($vo:ElementVO)
 		{
@@ -27,10 +35,11 @@ package landray.kp.maps.main.elements
 			init();
 		}
 		
-		
+		/**
+		 */		
 		private function init():void
 		{
-			addChild(graph = new Shape);
+			addChild(_shape = new Shape);
 			
 			mouseChildren = false;
 			
@@ -227,15 +236,18 @@ package landray.kp.maps.main.elements
 					super.visible = RectangleUtil.rectOverlapping(rect, boud);
 				}
 			}
+			
 			if (parent && visible)
 			{
 				var prtScale :Number = parent.scaleX;
 				var prtRadian:Number = MathUtil.angleToRadian(parent.rotation);
 				var prtCos:Number = Math.cos(prtRadian);
 				var prtSin:Number = Math.sin(prtRadian);
+				
 				//scale
 				var tmpX:Number = x * prtScale;
 				var tmpY:Number = y * prtScale;
+				
 				//rotate, move
 				super.rotation = parent.rotation + rotation;
 				super.scaleX = prtScale * scaleX;
@@ -377,7 +389,7 @@ package landray.kp.maps.main.elements
 		
 		override public function get graphics():Graphics
 		{
-			return graph.graphics;
+			return _shape.graphics;
 		}
 		
 		private function get canvas():Canvas
@@ -386,10 +398,32 @@ package landray.kp.maps.main.elements
 		}
 		
 		/**
+		 */		
+		private var _vo:ElementVO;
+
+		/**
 		 * 对应的ＶＯ结构体。
 		 */
-		public var vo:ElementVO;
+		public function get vo():ElementVO
+		{
+			return _vo;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set vo(value:ElementVO):void
+		{
+			_vo = value;
+		}
 		
-		private var graph:Shape;
+		/**
+		 */		
+		public function get shape():DisplayObject
+		{
+			return _shape;
+		}
+		
+		private var _shape:Shape;
 	}
 }

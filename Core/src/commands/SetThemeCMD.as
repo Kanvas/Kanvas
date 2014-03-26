@@ -56,16 +56,18 @@ package commands
 				//绘制所有图形  
 				proxy.renderElements();
 				
+				var coreApp:CoreApp = CoreFacade.coreMediator.coreApp as CoreApp
+				
 				//更新文本编辑器样式属性
-				CoreFacade.coreMediator.mainUI.textEditor.initStyle();
+				coreApp.textEditor.initStyle();
 				
 				//绘制背景
 				sendNotification(Command.RENDER_BG_COLOR, proxy.bgColor);
 				
 				// 通知UI更新
-				CoreFacade.coreMediator.mainUI.themeUpdated(value);
-				CoreFacade.coreMediator.mainUI.bgColorsUpdated(proxy.bgColorsXML);
-				CoreFacade.coreMediator.mainUI.bgColorUpdated(proxy.bgColorIndex);
+				coreApp.themeUpdated(value);
+				coreApp.bgColorsUpdated(proxy.bgColorsXML);
+				coreApp.bgColorUpdated(proxy.bgColorIndex);
 				
 			}
 			

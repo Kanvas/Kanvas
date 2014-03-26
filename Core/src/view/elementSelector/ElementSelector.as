@@ -40,7 +40,7 @@ package view.elementSelector
 			
 			this.coreMdt = coreMdt;
 			
-			layoutTransformer = coreMdt.mainUI.layoutTransformer;
+			layoutTransformer = coreMdt.layoutTransformer;
 			layoutInfo = new ElementLayoutInfo(layoutTransformer);
 			
 			XMLVOMapper.fuck(styleXML, style);

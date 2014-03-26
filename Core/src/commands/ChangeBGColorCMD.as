@@ -40,7 +40,7 @@ package commands
 			
 			sendNotification(Command.RENDER_BG_COLOR);
 			
-			CoreFacade.coreMediator.mainUI.bgColorUpdated(CoreFacade.coreProxy.bgColorIndex);
+			(CoreFacade.coreMediator.coreApp as CoreApp).bgColorUpdated(CoreFacade.coreProxy.bgColorIndex);
 		}
 		
 		/**

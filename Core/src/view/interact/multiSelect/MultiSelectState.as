@@ -24,8 +24,8 @@ package view.interact.multiSelect
 		 */		
 		override public function startDragSelect():void
 		{
-			startX = mainMediator.mainUI.mouseX;
-			startY = mainMediator.mainUI.mouseY;
+			startX = mainMediator.coreApp.mouseX;
+			startY = mainMediator.coreApp.mouseY;
 		}
 		
 		/**
@@ -46,7 +46,7 @@ package view.interact.multiSelect
 			StyleManager.setLineStyle(control.dragSlectUI.graphics, style.getBorder, style);
 			control.dragSlectUI.graphics.beginFill(uint(style.getFill.color), Number(style.getFill.alpha));
 			control.dragSlectUI.graphics.drawRect(startX, startY, 
-				 mainMediator.mainUI.mouseX - startX, mainMediator.mainUI.mouseY - startY);
+				 mainMediator.coreApp.mouseX - startX, mainMediator.coreApp.mouseY - startY);
 			control.dragSlectUI.graphics.endFill();
 		}
 		

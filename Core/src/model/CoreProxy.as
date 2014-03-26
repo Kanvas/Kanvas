@@ -229,7 +229,7 @@ package model
 			var imgIDs:Array = ImgLib.imgKeys;
 			var imgDataBytes:ByteArray;
 			
-			var bmd:BitmapData = CoreFacade.coreMediator.mainUI.thumbManager.getShotCut(ConfigInitor.THUMB_WIDTH, ConfigInitor.THUMB_HEIGHT);
+			var bmd:BitmapData = coreApp.thumbManager.getShotCut(ConfigInitor.THUMB_WIDTH, ConfigInitor.THUMB_HEIGHT);
 			
 			
 			
@@ -247,10 +247,10 @@ package model
 				zipOut.closeEntry();
 			}
 			
-			if(!CoreFacade.coreMediator.mainUI.air)
+			if(!coreApp.air)
 			{
-				var pageBytes:ByteArray = CoreFacade.coreMediator.mainUI.thumbManager.getPageBytes(pageW, pageH);
-				var jpgs:Vector.<ByteArray> = CoreFacade.coreMediator.mainUI.thumbManager.resolvePageData(pageBytes);
+				var pageBytes:ByteArray = coreApp.thumbManager.getPageBytes(pageW, pageH);
+				var jpgs:Vector.<ByteArray> = coreApp.thumbManager.resolvePageData(pageBytes);
 				
 				if (jpgs)
 				{
@@ -387,10 +387,10 @@ package model
 			//先设置总体样式风格
 			setCurrTheme(xml.header.@styleID);
 			//更新文本编辑器样式属性
-			CoreFacade.coreMediator.mainUI.textEditor.initStyle();
+			(CoreFacade.coreMediator.coreApp as CoreApp).textEditor.initStyle();
 			// 通知UI更新
-			CoreFacade.coreMediator.mainUI.themeUpdated(xml.header.@styleID);
-			CoreFacade.coreMediator.mainUI.bgColorsUpdated(bgColorsXML);
+			(CoreFacade.coreMediator.coreApp as CoreApp).themeUpdated(xml.header.@styleID);
+			(CoreFacade.coreMediator.coreApp as CoreApp).bgColorsUpdated(bgColorsXML);
 			
 			CoreFacade.clear();
 			
@@ -454,7 +454,7 @@ package model
 			XMLVOMapper.fuck(xml.bg, bgVO);
 			updateBgColor();
 			sendNotification(Command.RENDER_BG_COLOR, bgColor);
-			CoreFacade.coreMediator.mainUI.bgColorUpdated(bgColorIndex);
+			coreApp.bgColorUpdated(bgColorIndex);
 			ElementCreator.setID(bgVO.imgID);
 			
 			//背景图片加载
@@ -467,6 +467,13 @@ package model
 			{
 				renderBgImg(ImgLib.getData(bgVO.imgID));
 			}
+		}
+		
+		/**
+		 */		
+		private function get coreApp():CoreApp
+		{
+			return CoreFacade.coreMediator.coreApp as CoreApp
 		}
 		
 		private function sortOnIndex(a:PageVO, b:PageVO):int
@@ -522,8 +529,8 @@ package model
 			bgImgLoader.removeEventListener(ImgInsertEvent.IMG_LOADED_FROM_SERVER, initializeBgImgLoaded);
 			(evt.bitmapData);
 			
-			CoreFacade.coreMediator.mainUI.drawBGImg(evt.bitmapData);
-			CoreFacade.coreMediator.mainUI.bgImgUpdated(evt.bitmapData);
+			CoreFacade.coreMediator.coreApp.drawBGImg(evt.bitmapData);
+			coreApp.bgImgUpdated(evt.bitmapData);
 		}
 		
 		/**
@@ -532,8 +539,8 @@ package model
 		{
 			bgVO.imgData = img;
 			
-			CoreFacade.coreMediator.mainUI.drawBGImg(img);
-			CoreFacade.coreMediator.mainUI.bgImgUpdated(img);
+			CoreFacade.coreMediator.coreApp.drawBGImg(img);
+			coreApp.bgImgUpdated(img);
 		}
 		
 		/**

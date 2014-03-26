@@ -91,9 +91,9 @@ package view.elementSelector.lineControl
 		{
 			selector.coreMdt.sendNotification(Command.CHANGE_ELEMENT_PROPERTY, oldObj);
 			
-			var xDir:int = selector.coreMdt.mainUI.stage.mouseX - lastMouseX;
+			var xDir:int = selector.coreMdt.coreApp.stage.mouseX - lastMouseX;
 			xDir = (xDir == 0) ? xDir : ((xDir > 0) ? 1 : -1);
-			var yDir:int = selector.coreMdt.mainUI.stage.mouseY - lastMouseY;
+			var yDir:int = selector.coreMdt.coreApp.stage.mouseY - lastMouseY;
 			yDir = (yDir == 0) ? yDir : ((yDir > 0) ? 1 : -1);
 			
 			selector.coreMdt.autofitController.autofitElementPosition(selector.coreMdt.currentElement, xDir, yDir);
@@ -111,8 +111,8 @@ package view.elementSelector.lineControl
 			oldObj.rotation = vo.rotation;
 			oldObj.arc = vo.arc;
 			
-			lastMouseX = selector.coreMdt.mainUI.stage.mouseX;
-			lastMouseY = selector.coreMdt.mainUI.stage.mouseY;
+			lastMouseX = selector.coreMdt.coreApp.stage.mouseX;
+			lastMouseY = selector.coreMdt.coreApp.stage.mouseY;
 		}
 		
 		/**

@@ -4,6 +4,7 @@ package view.element.imgElement
 	import com.kvs.utils.graphic.BitmapUtil;
 	
 	import flash.display.BitmapData;
+	import flash.display.Shape;
 	import flash.geom.Matrix;
 	
 	import landray.kp.ui.Loading;
@@ -197,10 +198,10 @@ package view.element.imgElement
 					}
 				}
 				
-				shape.graphics.clear();
+				graphics.clear();
 				var bmd:BitmapData = (smallImgData && (super.width <= minSize || super.height <= minSize)) ? smallImgData : imgVO.sourceData;
 				
-				BitmapUtil.drawBitmapDataToShape(bmd, shape, 
+				BitmapUtil.drawBitmapDataToShape(bmd, shape as Shape, 
 					vo.width, vo.height, - vo.width / 2, - vo.height / 2, ifSmooth);
 				
 				removeLoading();

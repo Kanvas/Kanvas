@@ -153,12 +153,12 @@ package control
 		{
 			if (CoreFacade.coreMediator.currentElement)
 			{
-				if (CoreFacade.coreMediator.currentElement is TextEditField && CoreFacade.coreMediator.mainUI.textEditor.visible)
+				if (CoreFacade.coreMediator.currentElement is TextEditField && CoreFacade.coreMediator.coreApp.textEditor.visible)
 					CoreFacade.coreMediator.autofitController.autofitEditorModifyText(CoreFacade.coreMediator.currentElement, xDir, yDir);
 				else
 					CoreFacade.coreMediator.autofitController.autofitElementPosition(CoreFacade.coreMediator.currentElement, xDir, yDir);
 			}
-			else if (CoreFacade.coreMediator.mainUI.textEditor.visible)
+			else if (CoreFacade.coreMediator.coreApp.textEditor.visible)
 			{
 				CoreFacade.coreMediator.autofitController.autofitEditorInputText(xDir, yDir);
 			}

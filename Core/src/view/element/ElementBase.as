@@ -9,6 +9,7 @@ package view.element
 	import com.kvs.utils.XMLConfigKit.StyleManager;
 	import com.kvs.utils.XMLConfigKit.style.Style;
 	
+	import flash.display.DisplayObject;
 	import flash.display.Graphics;
 	import flash.display.Shape;
 	import flash.display.Sprite;
@@ -33,7 +34,7 @@ package view.element
 	 * 
 	 * 元素包括、图片、形状、视频、线条、文字
 	 */
-	public class ElementBase extends Sprite implements IClickMove, ICanvasLayout
+	public class ElementBase extends Sprite implements IClickMove, ICanvasLayout, IElement
 	{
 		public function ElementBase(vo:ElementVO)
 		{
@@ -645,21 +646,13 @@ package view.element
 			return graphicShape.graphics;
 		}
 		
-		
-		public function get shape():Shape
+		/**
+		 */		
+		public function get shape():DisplayObject
 		{
 			return graphicShape;
 		}
 		
-		
-		/*override public function set mouseEnabled(enabled:Boolean):void
-		{
-		if (enabled == false)
-		{
-		trace(".............")
-		}
-		super.mouseEnabled = enabled;
-		}*/
 		
 		
 		//---------------------------------------------
@@ -1039,7 +1032,20 @@ package view.element
 		/**
 		 * 数据
 		 */
-		public var vo:ElementVO;
+		public function get vo():ElementVO
+		{
+			return _vo;
+		}
+		
+		/**
+		 * @private
+		 */
+		public function set vo(value:ElementVO):void
+		{
+			_vo = value;
+		}
+		
+		private var _vo:ElementVO;
 		
 		//绘制图形的画布
 		protected var graphicShape:Shape;

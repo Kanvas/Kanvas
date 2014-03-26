@@ -65,7 +65,7 @@ package view.interact
 		{
 			evt.stopPropagation();
 			
-			mainMediator.zoomMoveControl.zoomPage(evt.pageVO);
+			mainMediator.zoomMoveControl.zoomElement(evt.pageVO);
 			mainMediator.toUnSelectedMode();
 		}
 		
