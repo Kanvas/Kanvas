@@ -41,13 +41,27 @@ package landray.kp.view
 			__config = new configClass(this);
 		}
 		
+		
 		/**
-		 * 画布缩放后的渲染接口
-		 * 
-		 * @param scale
-		 * 
+		 * 缩放，移动，旋转等缓动起始时的操作。
 		 */
-		public function render(scale:Number = 1):void
+		public function flashPlay():void
+		{
+			
+		}
+		
+		/**
+		 * 缩放，移动，旋转等缓动结束时的操作。
+		 */
+		public function flashStop():void
+		{
+			
+		}
+		
+		/**
+		 * 缩放，移动，旋转等缓动进行时的操作。
+		 */
+		public function flashTrek():void
 		{
 			
 		}
@@ -180,6 +194,9 @@ package landray.kp.view
 		 */
 		private var __configClass:Class = GRConfig;
 		
+		/**
+		 * 返回父级Viewer实例
+		 */
 		protected function get viewer():Viewer
 		{
 			return KPConfig.instance.kp_internal::viewer;

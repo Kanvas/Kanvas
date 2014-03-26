@@ -30,7 +30,7 @@ package landray.kp.maps.main.elements
 		
 		private function init():void
 		{
-			addChild(shape = new Shape);
+			addChild(graph = new Shape);
 			
 			mouseChildren = false;
 			
@@ -40,9 +40,8 @@ package landray.kp.maps.main.elements
 		
 		public function render(scale:Number = 1):void
 		{
-			updateLayout();
-			
 			mouseEnabled = buttonMode = related;
+			updateLayout();
 			
 			if (vo.style) 
 			{
@@ -52,7 +51,6 @@ package landray.kp.maps.main.elements
 				vo.style.width  = vo.width;
 				vo.style.height = vo.height;
 			}
-			
 			graphics.clear();
 		}
 		
@@ -379,7 +377,7 @@ package landray.kp.maps.main.elements
 		
 		override public function get graphics():Graphics
 		{
-			return shape.graphics;
+			return graph.graphics;
 		}
 		
 		private function get canvas():Canvas
@@ -392,6 +390,6 @@ package landray.kp.maps.main.elements
 		 */
 		public var vo:ElementVO;
 		
-		private var shape:Shape;
+		private var graph:Shape;
 	}
 }

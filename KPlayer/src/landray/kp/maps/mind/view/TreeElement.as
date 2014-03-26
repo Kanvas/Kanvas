@@ -163,12 +163,12 @@ package landray.kp.maps.mind.view
 		
 		public function set expanded(value:Boolean):void 
 		{
-			vo.isExpand = value;
+			vo.expand = value;
 		}
 		
 		public function get expanded():Boolean 
 		{
-			return vo.isExpand;
+			return vo.expand;
 		}
 		
 		

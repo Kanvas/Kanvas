@@ -16,29 +16,23 @@ package landray.kp.maps.mind
 		public function Mind()
 		{
 			super();
+			initialize();
+		}
+		
+		override public function flashTrek():void
+		{
+			for each (var element:TreeElement in allChild)
+				element.render(viewer.canvas.scaleX);
+		}
+		
+		private function initialize():void
+		{
+			allChild = new Vector.<TreeElement>;
+			mindData = new MindData;
 			viewer.canvas.addChild(lineLayer = new Layer);
 			viewer.canvas.addChild(itemLayer = new Layer);
 			lineLayer.mouseEnabled = lineLayer.mouseChildren = false;
 			itemLayer.mouseEnabled = false;
-		}
-		
-		override public function render($scale:Number = 1):void
-		{
-			scale = $scale;
-			for each (var element:TreeElement in allChild)
-				element.render(scale);
-		}
-		
-		private var scale:Number = 1;
-		
-		/**
-		 * 设置思维导图数据
-		 **/
-		override public function set dataProvider(value:XML):void
-		{
-			mindData.mindDataMapping(value);
-			creatMind(MindData.allTreeElementVOs, null);
-			layoutMind();
 		}
 		
 		private function creatMind(arr:Vector.<TreeElementVO>, elementFather:TreeElement):void
@@ -88,15 +82,14 @@ package landray.kp.maps.mind
 		private function clearAllChild():void
 		{
 			while (itemLayer.numChildren) itemLayer.removeChildAt(0);
-			
-			allChild = [];
+			allChild.length = 0;
 		}
 		
 		private function updateMindHandler(event:MindToolEvent):void
 		{
 			clearAllChild();
 			layoutMind();
-			render(scale);
+			flashTrek();
 		}
 		/**
 		 * 布局思维导图
@@ -107,7 +100,7 @@ package landray.kp.maps.mind
 			itemLayer.addChild(MindData.NodeTreeElement);
 			allChild.push(MindData.NodeTreeElement);
 			
-			if (MindData.NodeTreeElement.vo.isExpand)
+			if (MindData.NodeTreeElement.vo.expand)
 				layoutChild(MindData.NodeTreeElement.childs);
 			lineLayer.graphics.clear();
 			layoutLines(MindData.NodeTreeElement.childs);
@@ -126,13 +119,13 @@ package landray.kp.maps.mind
 				var v:int = (item.vo.vDirection == "top" ) ? -1 : 1;
 				
 				item.x = item.father.x + ((MindMapUtil.getElementWidth(item.father) + MindMapUtil.getElementWidth(item)) * .5) * h;
-				if (last[h] == null) last[h] = {};
-				var father:Boolean = (last[h][v] == null);
+				if(!last[h]) last[h] = {};
+				var father:Boolean = (!last[h][v]);
 				last[h][v] = (father) ? item.father : last[h][v];
 				item.y = last[h][v].y + (MindMapUtil.getElementHeight(last[h][v], ! father) + MindMapUtil.getElementHeight(item)) * .5 * v;
 				last[h][v] = item;
 				
-				if(item.vo.isExpand)
+				if(item.vo.expand)
 					layoutlastChild(item.childs);
 			}
 		}
@@ -155,14 +148,14 @@ package landray.kp.maps.mind
 				item.y = last.y + (MindMapUtil.getElementHeight(item) + MindMapUtil.getElementHeight(last) * ((father) ? -1 : 1)) * .5;
 				last = item;
 				
-				if(item.vo.isExpand)
+				if(item.vo.expand)
 					layoutlastChild(item.childs);
 			}	
 		} 
 		
 		private function layoutLines(childs:Vector.<TreeElement>):void
 		{
-			if (childs && childs.length > 0 && childs[0].father.vo.isExpand)
+			if (childs && childs.length > 0 && childs[0].father.vo.expand)
 			{
 				for each (var item:TreeElement in childs) 
 				{
@@ -177,14 +170,24 @@ package landray.kp.maps.mind
 		}
 		
 		/**
+		 * 设置思维导图数据
+		 **/
+		override public function set dataProvider(value:XML):void
+		{
+			mindData.mindDataMapping(value);
+			creatMind(MindData.allTreeElementVOs, null);
+			layoutMind();
+		}
+		
+		/**
 		 * 所有子元素
 		 **/
-		private var allChild:Array=new Array();
+		private var allChild:Vector.<TreeElement>;
+		
+		private var mindData:MindData;
 		
 		private var lineLayer:Layer;
 		
 		private var itemLayer:Layer;
-		
-		private var mindData:MindData = new MindData();
 	}
 }

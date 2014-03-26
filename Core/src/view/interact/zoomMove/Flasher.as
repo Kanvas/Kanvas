@@ -115,11 +115,11 @@ package view.interact.zoomMove
 			
 			control.mainUI.synBgImageToCanvas();
 			
-			control.uiMediator.updateAfterZoomMove();
+			control.uiMediator.flashTrek();
 			
 			if (isFlashing == false)
 			{
-				control.uiMediator.flashStart();
+				control.uiMediator.flashPlay();
 				isFlashing = true;
 			}
 		}

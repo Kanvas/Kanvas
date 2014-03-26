@@ -719,7 +719,7 @@ package view.interact
 		
 		/**
 		 */		
-		public function flashStart():void
+		public function flashPlay():void
 		{
 			var elements:Vector.<ElementBase> = CoreFacade.coreProxy.elements;
 			for each (var element:ElementBase in elements)
@@ -733,7 +733,7 @@ package view.interact
 		
 		/**
 		 */		
-		public function updateAfterZoomMove():void
+		public function flashTrek():void
 		{
 			currentMode.updateSelector();
 			collisionDetection.updateAfterZoomMove();

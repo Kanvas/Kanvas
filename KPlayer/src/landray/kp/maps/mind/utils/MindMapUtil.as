@@ -40,7 +40,7 @@ package landray.kp.maps.mind.utils
 		public static function getElementHeight(element:TreeElement, children:Boolean = true):Number
 		{
 			var height:Number = element.richText.height +  element.vo.vGap * 2;
-			if(element.vo.isExpand && children)
+			if(element.vo.expand && children)
 			{
 				var tempHeight:Number = 0;
 				for (var i:int = 0; i < element.childs.length; i++) 

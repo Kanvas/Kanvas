@@ -3,6 +3,7 @@ package landray.kp.mediator
 	import com.kvs.utils.Map;
 	import com.kvs.utils.XMLConfigKit.XMLVOLib;
 	
+	import flash.display.Stage;
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.events.FullScreenEvent;
@@ -12,9 +13,7 @@ package landray.kp.mediator
 	import flash.geom.Rectangle;
 	
 	import landray.kp.components.Selector;
-	import landray.kp.core.KPConfig;
-	import landray.kp.core.KPProvider;
-	import landray.kp.core.kp_internal;
+	import landray.kp.core.*;
 	import landray.kp.manager.ManagerPage;
 	import landray.kp.maps.main.elements.Element;
 	import landray.kp.utils.*;
@@ -46,12 +45,11 @@ package landray.kp.mediator
 		 */
 		private function initialize():void
 		{
-			config   = KPConfig  .instance;
-			provider = KPProvider.instance;
+			config = KPConfig.instance;
 			
-			kp_internal::setTemplete(provider.styleXML);
+			kp_internal::setTemplete(KPProvider.instance.styleXML);
 			
-			if (viewer.stage) 
+			if (stage) 
 				addedToStage();
 			else 
 				viewer.addEventListener(Event.ADDED_TO_STAGE, addedToStage, false, 0, true);
@@ -59,16 +57,16 @@ package landray.kp.mediator
 		
 		private function initializeStage():void
 		{
-			lastWidth  = viewer.stage.stageWidth;
-			lastHeight = viewer.stage.stageHeight;
+			lastWidth  = stage.stageWidth;
+			lastHeight = stage.stageHeight;
 			viewer.width  = lastWidth;
 			viewer.height = lastHeight;
 			viewer.addEventListener(MouseEvent.CLICK, click);
-			viewer.stage.addEventListener(Event.RESIZE, resize);
-			viewer.stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
-			viewer.stage.addEventListener(FullScreenEvent.FULL_SCREEN, fullScreen);
-			viewer.stage.addEventListener(MouseEvent.MOUSE_WHEEL, mouseWheel, false, 0, true);
-			viewer.stage.focus = viewer;
+			stage.addEventListener(Event.RESIZE, resize);
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
+			stage.addEventListener(FullScreenEvent.FULL_SCREEN, fullScreen);
+			stage.addEventListener(MouseEvent.MOUSE_WHEEL, mouseWheel, false, 0, true);
+			stage.focus = viewer;
 			
 			viewer.dispatchEvent(new Event("initialize"));
 		}
@@ -81,8 +79,8 @@ package landray.kp.mediator
 			}
 			else
 			{
-				var thisWidth :Number = viewer.stage.stageWidth;
-				var thisHeight:Number = viewer.stage.stageHeight;
+				var thisWidth :Number = stage.stageWidth;
+				var thisHeight:Number = stage.stageHeight;
 				canvas.x += (thisWidth  - lastWidth ) * .5;
 				canvas.y += (thisHeight - lastHeight) * .5;
 				lastWidth  = thisWidth;
@@ -93,18 +91,10 @@ package landray.kp.mediator
 		/**
 		 * 画布开始动画
 		 */		
-		public function flashStart():void
+		public function flashPlay():void
 		{
-			
-		}
-		
-		public function updateAfterZoomMove():void
-		{
-			selector.render();
-			
-			for each (var graph:Graph in config.kp_internal::graphs)
-				graph.render(viewer.canvas.scaleX);
-			viewer.synBgImageToCanvas();
+			for each (var graph:Graph in graphs)
+				graph.flashPlay();
 		}
 		
 		/**
@@ -112,7 +102,18 @@ package landray.kp.mediator
 		 */		
 		public function flashStop():void
 		{
+			for each (var graph:Graph in graphs)
+				graph.flashStop();
+		}
+		
+		public function flashTrek():void
+		{
+			for each (var graph:Graph in graphs)
+				graph.flashTrek();
 			
+			viewer.synBgImageToCanvas();
+			
+			selector.render();
 		}
 		
 		public function bgClicked():void
@@ -127,24 +128,27 @@ package landray.kp.mediator
 		/**
 		 * @private
 		 */
-		private function addedToStage(e:Event=null):void
+		private function addedToStage(e:Event = null):void
 		{
-			if (viewer.stage.stageWidth && viewer.stage.stageHeight)
+			if (stage.stageWidth && stage.stageHeight)
 			{
 				viewer.removeEventListener(Event.ADDED_TO_STAGE, addedToStage, false);
 				initializeStage();
 			}
 			else 
 			{
-				viewer.stage.addEventListener(Event.RESIZE, addedToStageResize);
+				stage.addEventListener(Event.RESIZE, addedToStageResize);
 			}
 		}
 		
+		/**
+		 * @private
+		 */
 		private function addedToStageResize(e:Event):void
 		{
-			if (viewer.stage.stageWidth && viewer.stage.stageHeight)
+			if (stage.stageWidth && stage.stageHeight)
 			{
-				viewer.stage.removeEventListener(Event.RESIZE, addedToStageResize);
+				stage.removeEventListener(Event.RESIZE, addedToStageResize);
 				initializeStage();
 			}
 		}
@@ -154,10 +158,10 @@ package landray.kp.mediator
 		 */
 		private function resize(e:Event):void
 		{
-			if (viewer.stage.stageWidth && viewer.stage.stageHeight)
+			if (stage.stageWidth && stage.stageHeight)
 			{
-				viewer.width  = viewer.stage.stageWidth;
-				viewer.height = viewer.stage.stageHeight;
+				viewer.width  = stage.stageWidth;
+				viewer.height = stage.stageHeight;
 				resizeStage();
 			}
 		}
@@ -184,6 +188,9 @@ package landray.kp.mediator
 			}
 		}
 		
+		/**
+		 * @private
+		 */
 		private function fullScreen(e:FullScreenEvent):void
 		{
 			if (e.fullScreen == false)
@@ -311,12 +318,12 @@ package landray.kp.mediator
 			screenFull = (value == "fullScreen");
 			if(isNaN(lastWidth) || isNaN(lastHeight))
 			{
-				lastWidth  = viewer.stage.stageWidth;
-				lastHeight = viewer.stage.stageHeight;
+				lastWidth  = stage.stageWidth;
+				lastHeight = stage.stageHeight;
 			}
-			viewer.stage.displayState = value;
-			var thisWidth :Number = viewer.stage.stageWidth;
-			var thisHeight:Number = viewer.stage.stageHeight;
+			stage.displayState = value;
+			var thisWidth :Number = stage.stageWidth;
+			var thisHeight:Number = stage.stageHeight;
 			var recOld:Rectangle = new Rectangle(5, 5, lastWidth - 10, lastHeight - 50);
 			var recNew:Rectangle = new Rectangle(5, 5, thisWidth - 10, thisHeight - 50);
 			if (value == "fullScreen")
@@ -394,12 +401,20 @@ package landray.kp.mediator
 			return config.kp_internal::themes;
 		}
 		
+		private function get graphs():Vector.<Graph>
+		{
+			return config.kp_internal::graphs;
+		}
+		
+		private function get stage():Stage
+		{
+			return config.kp_internal::viewer.stage;
+		}
+		
 		/**
 		 * @private
 		 */
 		private var config:KPConfig;
-		
-		private var provider:KPProvider;
 		
 		/**
 		 * @private

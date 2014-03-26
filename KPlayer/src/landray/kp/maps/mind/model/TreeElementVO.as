@@ -183,7 +183,7 @@ package landray.kp.maps.mind.model
 		/**
 		 * 展开
 		 */
-		public var isExpand:Boolean = true;
+		public var expand:Boolean = true;
 		/**
 		 * 子集
 		 */

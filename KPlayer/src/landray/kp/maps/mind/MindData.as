@@ -30,7 +30,7 @@ package landray.kp.maps.mind
 		/**
 		 * 所有思维导图VO
 		 **/
-		public static var allTreeElementVOs:Vector.<TreeElementVO> = new Vector.<TreeElementVO>();
+		public static var allTreeElementVOs:Vector.<TreeElementVO> = new Vector.<TreeElementVO>;
 		/**
 		 * 思维导图根元素
 		 **/
@@ -39,6 +39,7 @@ package landray.kp.maps.mind
 		 * 最后层级
 		 **/
 		public static var lastLevel:uint = 0;
+		
 		public function MindData()
 		{
 			
@@ -71,7 +72,7 @@ package landray.kp.maps.mind
 				var childVO:TreeElementVO = new TreeElementVO();
 				XMLVOMapper.fuck(style, childVO);
 				vo.children.push(childVO);
-				childVO.isExpand = false;
+				childVO.expand = false;
 				childVO.father = vo;
 				childVO.level = vo.level + 1;
 				if(childVO.level > lastLevel)
@@ -87,7 +88,7 @@ package landray.kp.maps.mind
 				var childVO:TreeElementVO = new TreeElementVO();
 				XMLVOMapper.fuck(style,childVO);
 				vo.children.push(childVO);
-				childVO.isExpand = false;
+				childVO.expand = false;
 				childVO.father = vo;
 				childVO.level = vo.level + 1;
 				if(childVO.level > lastLevel)
