@@ -16,7 +16,7 @@ package landray.kp.command
 		{
 			executeStart();
 			config.kp_internal::viewer.kp_internal::centerAdaptive();
-			config.kp_internal::controller.autoZoom(config.originalScale);
+			config.kp_internal::controller.zoomAuto(config.originalScale);
 			executeEnd();
 		}
 	}

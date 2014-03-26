@@ -24,7 +24,7 @@ package view.interact.interactMode
 		override public function drawShotFrame():void
 		{
 			//mainMediator.cameraShotShape.x = mainMediator.cameraShotShape.y = mainMediator.cameraShotShape.rotation = 0;
-			mainMediator.drawShotFrame(mainMediator.mainUI.bound);
+			mainMediator.drawShotFrame(mainMediator.coreApp.bound);
 		}
 		
 		/**
@@ -91,10 +91,10 @@ package view.interact.interactMode
 			}
 			else
 			{
-				mainMediator.zoomMoveControl.autoZoom();
+				mainMediator.zoomMoveControl.zoomAuto();
 			}
 			
-			//mainMediator.zoomMoveControl.autoZoom();
+			mainMediator.previewCliker.enable = true;
 		}
 		
 		/**

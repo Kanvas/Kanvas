@@ -21,6 +21,7 @@ package landray.kp.mediator
 	import landray.kp.view.*;
 	
 	import model.vo.BgVO;
+	import model.vo.ElementVO;
 	
 	import util.LayoutUtil;
 	import util.img.ImgInsertEvent;
@@ -29,6 +30,7 @@ package landray.kp.mediator
 	import view.interact.zoomMove.ZoomMoveControl;
 	import view.ui.Canvas;
 	import view.ui.IMainUIMediator;
+	import view.ui.MainUIBase;
 	
 	/**
 	 * Viewer的辅助类，事件处理，缩放控制，样式切换等。
@@ -39,6 +41,35 @@ package landray.kp.mediator
 		public function MediatorViewer()
 		{
 			initialize();
+		}
+		
+		/**
+		 */		
+		public function setPageIndex(value:int):void
+		{
+			pageManager.index = value;
+		}
+		
+		/**
+		 * 镜头对焦到某元素上
+		 */		
+		public function zoomElement(elementVO:ElementVO):void
+		{
+			config.kp_internal::controller.zoomElement(elementVO);
+		}
+		
+		/**
+		 */		
+		public function zoomAuto():void
+		{
+			config.kp_internal::controller.zoomAuto();
+		}
+		
+		/**
+		 */		
+		public function get mainUI():MainUIBase
+		{
+			return this.viewer
 		}
 		
 		/**
@@ -170,7 +201,7 @@ package landray.kp.mediator
 			switch (e.keyCode)
 			{
 				case 32:
-					controller.autoZoom();
+					controller.zoomAuto();
 					pageManager.reset();
 					break;
 				case 37:

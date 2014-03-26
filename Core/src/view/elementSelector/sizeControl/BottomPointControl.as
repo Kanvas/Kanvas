@@ -37,8 +37,8 @@ package view.elementSelector.sizeControl
 			topCenter = holder.element.topCenter;
 			bottomCenter = holder.element.bottomCenter;
 			
-			lastMouseX = holder.coreMdt.mainUI.stage.mouseX;
-			lastMouseY = holder.coreMdt.mainUI.stage.mouseY;
+			lastMouseX = holder.coreMdt.coreApp.stage.mouseX;
+			lastMouseY = holder.coreMdt.coreApp.stage.mouseY;
 		}
 		
 		
@@ -66,9 +66,9 @@ package view.elementSelector.sizeControl
 			
 			holder.coreMdt.sendNotification(Command.CHANGE_ELEMENT_PROPERTY, oldPropertyObj);
 			
-			var xDir:int = holder.coreMdt.mainUI.stage.mouseX - lastMouseX;
+			var xDir:int = holder.coreMdt.coreApp.stage.mouseX - lastMouseX;
 			xDir = (xDir == 0) ? xDir : ((xDir > 0) ? 1 : -1);
-			var yDir:int = holder.coreMdt.mainUI.stage.mouseY - lastMouseY;
+			var yDir:int = holder.coreMdt.coreApp.stage.mouseY - lastMouseY;
 			yDir = (yDir == 0) ? yDir : ((yDir > 0) ? 1 : -1);
 			
 			holder.coreMdt.autofitController.autofitElementPosition(holder.coreMdt.currentElement, xDir, yDir);

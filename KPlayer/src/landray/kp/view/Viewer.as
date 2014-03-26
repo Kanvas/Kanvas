@@ -47,7 +47,6 @@ package landray.kp.view
 			
 			Bubble.init(stage);
 			
-			
 			//添加selector选择框
 			addChild(config.kp_internal::selector);
 			//添加按钮工具条

@@ -11,6 +11,8 @@ package landray.kp.manager
 	import modules.pages.PageUtil;
 	import modules.pages.Scene;
 
+	/**
+	 */	
 	public final class ManagerPage
 	{
 		public  static const instance:ManagerPage = new ManagerPage;
@@ -32,13 +34,13 @@ package landray.kp.manager
 		public function next():void
 		{
 			if (length > 0)
-				index = (index + 1 >= quene.length) ? -1 : index + 1;
+				indexWithZoom = (index + 1 >= quene.length) ? -1 : index + 1;
 		}
 		
 		public function prev():void
 		{
 			if (length > 0)
-				index = (index - 1 < -1) ? quene.length - 1 : index - 1;
+				indexWithZoom = (index - 1 < -1) ? quene.length - 1 : index - 1;
 		}
 		
 		public function reset():void
@@ -67,19 +69,28 @@ package landray.kp.manager
 		{
 			return __index;
 		}
+		
 		public function set index(value:int):void
 		{
 			if (value >= -1 && value < quene.length)
-			{
 				__index = value;
+		}
+		
+		/**
+		 */		
+		public function set indexWithZoom(value:int):void
+		{
+			if (value >= -1 && value < quene.length)
+			{
+				__index = value
+					
 				if (index >= 0)
 				{
-					var scene:Scene = PageUtil.getSceneFromVO(quene.pages[index], config.kp_internal::viewer);
-					config.kp_internal::controller.zoomRotateMoveTo(scene.scale, scene.rotation, scene.x, scene.y);
+					config.kp_internal::controller.zoomElement(quene.pages[index]);
 				}
 				else
 				{
-					config.kp_internal::controller.autoZoom();
+					config.kp_internal::controller.zoomAuto();
 				}
 			}
 			

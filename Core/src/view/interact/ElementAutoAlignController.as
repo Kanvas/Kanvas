@@ -196,8 +196,8 @@ package view.interact
 				
 				if (currentAlignElement)
 				{
-					coreMdt.mainUI.hoverEffect.element = currentAlignElement;
-					coreMdt.mainUI.hoverEffect.show();
+					coreMdt.coreApp.hoverEffect.element = currentAlignElement;
+					coreMdt.coreApp.hoverEffect.show();
 				}
 			}
 			return (enabled) ? rotation : NaN;
@@ -217,8 +217,8 @@ package view.interact
 				
 				if (currentAlignElement)
 				{
-					coreMdt.mainUI.hoverEffect.element = currentAlignElement;
-					coreMdt.mainUI.hoverEffect.show();
+					coreMdt.coreApp.hoverEffect.element = currentAlignElement;
+					coreMdt.coreApp.hoverEffect.show();
 				}
 			}
 			return (enabled) ? scale : NaN;

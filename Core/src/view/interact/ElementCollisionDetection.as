@@ -100,7 +100,7 @@ package view.interact
 		 */		
 		public function updateAfterZoomMove():void
 		{
-			var stage:Rectangle = coreMdt.mainUI.bound;
+			var stage:Rectangle = coreMdt.coreApp.bound;
 			var w:Number = stage.width ;
 			var h:Number = stage.height;
 			var minLineInteractSizeSquare:Number = minInteractSize * minInteractSize * .25;

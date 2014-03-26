@@ -216,7 +216,7 @@ package landray.kp.components
 		 */
 		private function clickZoomAuto(e:MouseEvent):void
 		{
-			controller.autoZoom();
+			controller.zoomAuto();
 			pageManager.reset();
 		}
 		

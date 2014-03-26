@@ -15,44 +15,44 @@ package util
 	{
 		public static function drawRect(color:uint, rect:Rectangle):void
 		{
-			coreMdt.mainUI.autoAlignUI.graphics.lineStyle(1, color);
-			coreMdt.mainUI.autoAlignUI.graphics.drawRect(rect.x, rect.y, rect.width, rect.height);
+			coreMdt.coreApp.autoAlignUI.graphics.lineStyle(1, color);
+			coreMdt.coreApp.autoAlignUI.graphics.drawRect(rect.x, rect.y, rect.width, rect.height);
 		}
 
 		public static function drawFrame(color:uint, points:Array):void
 		{
-			coreMdt.mainUI.autoAlignUI.graphics.lineStyle(1, color);
-			coreMdt.mainUI.autoAlignUI.graphics.moveTo(points[0].x, points[0].y);
+			coreMdt.coreApp.autoAlignUI.graphics.lineStyle(1, color);
+			coreMdt.coreApp.autoAlignUI.graphics.moveTo(points[0].x, points[0].y);
 			for (var i:int = 1; i < points.length; i++)
 			{
-				coreMdt.mainUI.autoAlignUI.graphics.lineTo(points[i].x, points[i].y);
+				coreMdt.coreApp.autoAlignUI.graphics.lineTo(points[i].x, points[i].y);
 			}
-			coreMdt.mainUI.autoAlignUI.graphics.lineTo(points[0].x, points[0].y);
+			coreMdt.coreApp.autoAlignUI.graphics.lineTo(points[0].x, points[0].y);
 		}
 		
 		public static function drawCircle(color:uint, point:Point, r:Number):void
 		{
-			coreMdt.mainUI.autoAlignUI.graphics.lineStyle(0, 0, 0);
-			coreMdt.mainUI.autoAlignUI.graphics.beginFill(color);
-			coreMdt.mainUI.autoAlignUI.graphics.drawCircle(point.x, point.y, r);
-			coreMdt.mainUI.autoAlignUI.graphics.endFill();
+			coreMdt.coreApp.autoAlignUI.graphics.lineStyle(0, 0, 0);
+			coreMdt.coreApp.autoAlignUI.graphics.beginFill(color);
+			coreMdt.coreApp.autoAlignUI.graphics.drawCircle(point.x, point.y, r);
+			coreMdt.coreApp.autoAlignUI.graphics.endFill();
 		}
 		
 		public static function drawLine(color:uint, point1:Point, point2:Point):void
 		{
 			clear();
 			
-			coreMdt.mainUI.autoAlignUI.graphics.lineStyle(1, color);
-			coreMdt.mainUI.autoAlignUI.graphics.moveTo(point1.x, point1.y);
-			coreMdt.mainUI.autoAlignUI.graphics.lineTo(point2.x, point2.y);
-			coreMdt.mainUI.autoAlignUI.graphics.endFill();
+			coreMdt.coreApp.autoAlignUI.graphics.lineStyle(1, color);
+			coreMdt.coreApp.autoAlignUI.graphics.moveTo(point1.x, point1.y);
+			coreMdt.coreApp.autoAlignUI.graphics.lineTo(point2.x, point2.y);
+			coreMdt.coreApp.autoAlignUI.graphics.endFill();
 		}
 
 		/**
 		 */		
 		public static function clear():void
 		{
-			coreMdt.mainUI.autoAlignUI.graphics.clear();
+			coreMdt.coreApp.autoAlignUI.graphics.clear();
 		}
 		
 		/**

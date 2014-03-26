@@ -36,7 +36,7 @@ package modules.pages
 		 */
 		public function addPageFromUI(index:int = 0):void
 		{
-			var bound:Rectangle = coreMdt.mainUI.bound;
+			var bound:Rectangle = coreMdt.coreApp.bound;
 			var proxy:ElementProxy = new ElementProxy;
 			
 			proxy.x = (bound.left + bound.right) * .5;
@@ -174,12 +174,12 @@ package modules.pages
 				
 				if (__index >= 0)
 				{
-					var scene:Scene = PageUtil.getSceneFromVO(pageQuene.pages[__index], coreMdt.mainUI);
+					var scene:Scene = PageUtil.getSceneFromVO(pageQuene.pages[__index], coreMdt.coreApp);
 					coreMdt.zoomMoveControl.zoomRotateMoveTo(scene.scale, scene.rotation, scene.x, scene.y);
 				}
 				else
 				{
-					coreMdt.zoomMoveControl.autoZoom();
+					coreMdt.zoomMoveControl.zoomAuto();
 				}
 			}
 			

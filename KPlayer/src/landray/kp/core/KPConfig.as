@@ -16,6 +16,7 @@ package landray.kp.core
 	
 	import model.vo.BgVO;
 	
+	import view.interact.PreviewClicker;
 	import view.interact.zoomMove.ZoomMoveControl;
 	import view.ui.Debugger;
 	
@@ -58,6 +59,8 @@ package landray.kp.core
 		kp_internal var viewer     :Viewer;
 		kp_internal var mediator   :MediatorViewer;
 		kp_internal var controller :ZoomMoveControl;
+		kp_internal var previewClicker :PreviewClicker;
+		
 		kp_internal var selector   :Selector;
 		kp_internal var toolBarZoom:ToolBarZoom;
 		kp_internal var toolBarSlid:ToolBarSlide;

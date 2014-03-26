@@ -117,8 +117,8 @@ package commands
 			CoreFacade.coreProxy.bgVO.imgData = obj.imgData;
 			CoreFacade.coreProxy.bgVO.imgURL  = obj.imgURL;
 			
-			CoreFacade.coreMediator.mainUI.drawBGImg   (obj.imgData);
-			CoreFacade.coreMediator.mainUI.bgImgUpdated(obj.imgData);
+			CoreFacade.coreMediator.coreApp.drawBGImg   (obj.imgData);
+			(CoreFacade.coreMediator.coreApp as CoreApp).bgImgUpdated(obj.imgData);
 		}
 		
 		private var handler:Function;

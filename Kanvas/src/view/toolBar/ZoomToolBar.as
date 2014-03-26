@@ -230,7 +230,7 @@ package view.toolBar
 		private function clickZoomAuto(e:MouseEvent):void
 		{
 			if (controller)
-				controller.autoZoom();
+				controller.zoomAuto();
 		}
 		
 		/**

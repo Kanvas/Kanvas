@@ -2,8 +2,7 @@ package view.interact.zoomMove
 {
 	import com.greensock.easing.*;
 	
-	import flash.display.Sprite;
-	
+	import model.vo.ElementVO;
 	import model.vo.PageVO;
 	
 	import modules.pages.PageUtil;
@@ -18,9 +17,9 @@ package view.interact.zoomMove
 	 */	
 	public class ZoomMoveControl
 	{
-		public function ZoomMoveControl(mainUI:MainUIBase, uiMediator:IMainUIMediator)
+		public function ZoomMoveControl(uiMediator:IMainUIMediator)
 		{
-			this.mainUI = mainUI;
+			this.mainUI = uiMediator.mainUI;
 			this.uiMediator = uiMediator;
 			
 			flasher = new Flasher(this);
@@ -29,10 +28,11 @@ package view.interact.zoomMove
 		}
 		
 		/**
+		 * 将镜头对焦到元素上
 		 */		
-		public function zoomPage(pageVO:PageVO):void
+		public function zoomElement(elementVO:ElementVO):void
 		{
-			var scene:Scene = PageUtil.getSceneFromVO(pageVO, mainUI);
+			var scene:Scene = PageUtil.getSceneFromVO(elementVO, mainUI);
 		    zoomRotateMoveTo(scene.scale, scene.rotation, scene.x, scene.y);
 		}
 		
@@ -90,7 +90,7 @@ package view.interact.zoomMove
 		
 		/**
 		 */		
-		public function autoZoom(originalScale:Boolean = false):void
+		public function zoomAuto(originalScale:Boolean = false):void
 		{
 			zoomer.zoomAuto(originalScale);
 		}

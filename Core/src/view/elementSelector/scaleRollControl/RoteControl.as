@@ -71,11 +71,11 @@ package view.elementSelector.scaleRollControl
 			
 			selector.coreMdt.sendNotification(Command.CHANGE_ELEMENT_PROPERTY, oldPropertyObj);
 			
-			selector.coreMdt.mainUI.hoverEffect.hide();
+			selector.coreMdt.coreApp.hoverEffect.hide();
 			
-			var xDir:int = selector.coreMdt.mainUI.stage.mouseX - lastMouseX;
+			var xDir:int = selector.coreMdt.coreApp.stage.mouseX - lastMouseX;
 			xDir = (xDir == 0) ? xDir : ((xDir > 0) ? 1 : -1);
-			var yDir:int = selector.coreMdt.mainUI.stage.mouseY - lastMouseY;
+			var yDir:int = selector.coreMdt.coreApp.stage.mouseY - lastMouseY;
 			yDir = (yDir == 0) ? yDir : ((yDir > 0) ? 1 : -1);
 			
 			selector.coreMdt.autofitController.autofitElementPosition(selector.coreMdt.currentElement, xDir, yDir);
@@ -104,8 +104,8 @@ package view.elementSelector.scaleRollControl
 			oldPropertyObj = {};
 			oldPropertyObj.rotation = selector.element.rotation;
 			
-			lastMouseX = selector.coreMdt.mainUI.stage.mouseX;
-			lastMouseY = selector.coreMdt.mainUI.stage.mouseY;
+			lastMouseX = selector.coreMdt.coreApp.stage.mouseX;
+			lastMouseY = selector.coreMdt.coreApp.stage.mouseY;
 		}
 		
 		private var lastMouseX:Number;
