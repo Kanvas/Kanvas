@@ -88,6 +88,11 @@ package view.element
 		{
 			super.toPrevState();
 			
+			graphics.clear();
+			graphics.beginFill(0, 0);
+			graphics.drawRect(- vo.width  / 2, - vo.height / 2, vo.width, vo.height);
+			graphics.endFill();
+			
 			numShape.visible = false;
 		}
 		
@@ -114,21 +119,15 @@ package view.element
 		{
 			super.render();
 			
-			graphics.clear();
-			
-			//页面在预览模式时，为了能够使其被点击到，需要绘制一个点击区域
+			//页面在预览模式时，不显示页面边框
 			if (currentState is ElementPrevState)
-			{
-				graphics.beginFill(0, 0);
-				graphics.drawRect(- vo.width  / 2, - vo.height / 2, vo.width, vo.height);
-				graphics.endFill();
-				
 				return;
-			}
 			
 			// 中心点为注册点
 			if (vo.style)
 			{
+				graphics.clear();
+				
 				vo.style.tx = - vo.width  / 2;
 				vo.style.ty = - vo.height / 2;
 				
@@ -142,8 +141,9 @@ package view.element
 				
 				var frameSize:Number = vo.height / 16;
 				
-				if (frameSize * vo.scale * parent.scaleX < 2)
-					frameSize = 2 / vo.scale / parent.scaleX;
+				//防止边框画布缩放后看着太细
+				//if (frameSize * vo.scale * parent.scaleX < 2)
+					//frameSize = 2 / vo.scale / parent.scaleX;
 				
 				//从左上角开始绘制
 				StyleManager.setFillStyle(graphics, vo.style, vo);

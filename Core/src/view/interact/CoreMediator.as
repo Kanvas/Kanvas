@@ -769,7 +769,7 @@ package view.interact
 				//刷新页面编号尺寸，防止太大
 				if (element.visible && element is PageElement)
 				{
-					(element as PageElement).render();
+					(element as PageElement).layoutPageNum();
 				}
 			}
 			
