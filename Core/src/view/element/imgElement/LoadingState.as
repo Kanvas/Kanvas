@@ -29,7 +29,7 @@ package view.element.imgElement
 			imgLoader.addEventListener(ImgInsertEvent.IMG_LOADED_FROM_SERVER, imgLoaded, false, 0, true);
 			imgLoader.addEventListener(ImgInsertEvent.IMG_LOADED_ERROR, imgLoadError, false, 0, true);
 			
-			imgLoader.loadImg(element.imgVO.url, element.imgVO.imgID, element.imgVO.width, element.imgVO.height);
+			imgLoader.loadImg(element.imgVO.url, element.imgVO.imgID);
 			
 			render();
 		}

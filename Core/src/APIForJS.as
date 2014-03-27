@@ -19,7 +19,7 @@ package
 	/**
 	 * JS与kanvas核心core之间的API管理
 	 */	
-	public class APIForJS
+	public class APIForJS extends KanvasAPI
 	{
 		/**
 		 * 
@@ -28,7 +28,8 @@ package
 		 */
 		public function APIForJS(core:CoreApp)
 		{
-			this.core = core;
+			super(core);
+			
 			core.addEventListener(KVSEvent.LINK_CLICKED, linkBtnClicked);
 			appID = core.stage.loaderInfo.parameters['id'];
 			
@@ -145,23 +146,6 @@ package
 		//----------------------------------------------------
 		
 		
-		private function getPageImgData(url:String, pageW:Number = 960, pageH:Number = 720):void
-		{
-			var loader:URLLoader = new URLLoader;
-			loader.dataFormat = URLLoaderDataFormat.BINARY;
-			loader.addEventListener(Event.COMPLETE, uploadPageData);
-			loader.addEventListener(IOErrorEvent.IO_ERROR, uploadPageData);
-			var request:URLRequest = new URLRequest(url);
-			request.method = URLRequestMethod.POST;
-			request.data = core.thumbManager.getPageBytes(pageW, pageH);
-			loader.load(request);
-		}
-		
-		private function uploadPageData(e:Event):void
-		{
-			e.target.removeEventListener(Event.COMPLETE, uploadPageData);
-			e.target.removeEventListener(IOErrorEvent.IO_ERROR, uploadPageData);
-		}
 		
 		/**
 		 * 上传至服务器端的图片不会随着客户端的删除操作而删除，而是保存数据时
@@ -205,52 +189,10 @@ package
 			core.currentElement.vo.property = value;
 		}
 		
-		/**
-		 */		
-		private function setXMLData(data:String):void
-		{
-			core.importData(XML(data));
-		}
-		
-		/**
-		 * 获取字符串格式的数据(XML结构)
-		 */		
-		private function getXMLData():String
-		{
-			var str:String = core.exportData().toXMLString();
-			
-			return str;
-		}
-		
-		/**
-		 * 将数据压缩后再进行64编码,XML压缩率可达85%
-		 */		
-		private function getBase64Data(ifCompress:Boolean = true):String
-		{
-			var byte:ByteArray = new ByteArray();
-			byte.writeUTFBytes(getXMLData());
-			
-			if (ifCompress)
-				byte.compress();
-			
-			return Base64.encodeByteArray(byte);
-		}
-		
-		/**
-		 * 将字符串进行Base64编码
-		 */		
-		private function stringToBase64(str:String):String
-		{
-			var byte:ByteArray = new ByteArray();
-			byte.writeUTFBytes(str);
-			byte.compress();
-			
-			return Base64.encodeByteArray(byte);
-		}
 			
 		/**
 		 */		
-		private function setBase64Data(value:String, isCompress:Boolean = true):void
+		public function setBase64Data(value:String, isCompress:Boolean = true):void
 		{
 			var newByte:ByteArray = Base64.decodeToByteArray(value);
 			
@@ -407,8 +349,6 @@ package
 			core.undo();
 		}
 		
-		/**
-		 */		
-		private var core:CoreApp;
+		
 	}
 }

@@ -47,17 +47,12 @@ package landray.kp.maps.main.elements
 		{
 			super.render();
 			
-			if (CoreUtil.imageLibHasData(imgVO.imgID))// 资源包导入方式会用到，从资源库中获取数据
-			{
-				initBmp(CoreUtil.imageLibGetData(imgVO.imgID));
-				toNomalState();
-			}
-			else if (CoreUtil.ifHasText(imgVO.url))// 再次编辑时从服务器载入图片
+			if (CoreUtil.ifHasText(imgVO.url))// 再次编辑时从服务器载入图片
 			{
 				loader = new ImgInsertor;
 				loader.addEventListener(ImgInsertEvent.IMG_LOADED_FROM_SERVER, imgLoaded, false, 0, true);
 				loader.addEventListener(ImgInsertEvent.IMG_LOADED_ERROR, imgError, false, 0, true);
-				loader.loadImg(imgVO.url, imgVO.imgID, imgVO.width, imgVO.height);
+				loader.loadImg(imgVO.url, imgVO.imgID);
 				toLoadingState();
 			}
 		}

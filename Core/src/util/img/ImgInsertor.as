@@ -1,6 +1,7 @@
 package util.img
 {
 	import com.adobe.images.PNGEncoder;
+	import com.greensock.loading.ImageLoader;
 	import com.kvs.utils.system.OS;
 	
 	import flash.display.Bitmap;
@@ -36,10 +37,6 @@ package util.img
 			imgUpLoader.addEventListener(IOErrorEvent.IO_ERROR, imgUploadError);
 			imgUpLoader.addEventListener(Event.COMPLETE, imgUploadHandler);
 			imgUpLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, imgUploadSecurityError);
-			
-			imageByteLoader.dataFormat = URLLoaderDataFormat.BINARY;
-			imageByteLoader.addEventListener(Event.COMPLETE, imgByteLoaeded);
-			imageByteLoader.addEventListener(IOErrorEvent.IO_ERROR, imgByteLoadError);
 		}
 		
 		/**
@@ -49,10 +46,6 @@ package util.img
 		{
 			this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_LOADED_ERROR));
 		}
-		
-		/**
-		 */		
-		private var imageByteLoader:URLLoader = new URLLoader;
 		
 		/**
 		 */		
@@ -70,8 +63,9 @@ package util.img
 		}
 		
 		/**
+		 * 图片的原始数据 
 		 */		
-		public var bitmapData:BitmapData;
+		public var bitmapBytes:ByteArray;
 		
 		/**
 		 * 图片ID， 每个图片都会含有一个图片ID， 服务端也会根据此ID记录
@@ -93,109 +87,51 @@ package util.img
 		
 		/**
 		 */		
-		public function loadImg(url:String, imgID:uint, w:Number = 0, h:Number = 0):void
+		public function loadImg(url:String, imgID:uint):void
 		{
 			if (isLoading == false)
 			{
 				this.imgID = imgID;
 				
-				//旧图片数据需要记录图片的宽高信息，以便生成正确的bitmapdata
-				temW = w;
-				temH = h;
+				imgLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, imgloadedFromServer);
+				imgLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, loadImgErrorFormServer);
 				
-				if (url.indexOf("http") != 0)
-					url = IMG_DOMAIN_URL + url;
-				var req:URLRequest = new URLRequest(url);
-				req.method = URLRequestMethod.GET;
-				req.contentType = "application/octet-stream";  
-				imageByteLoader.load(req);
-				
+				imgLoader.load(new URLRequest(url));
 				isLoading = true;
 			}
 		}
 		
-		private var temW:Number;
-		private var temH:Number;
-		
 		/**
-		 * 从服务器加载到图片的数据流
+		 * 从服务器根据url地址加载到图片
 		 */		
-		private function imgByteLoaeded(evt:Event):void
+		private function imgloadedFromServer(evt:Event):void
 		{
-			//这里做了兼容处理，如果加载失败则可能是旧的图片数据
-			imgLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, bmdLoadedFromServerHandler);
-			imgLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imgLoadIoError);
+			//this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_LOADED_FROM_SERVER, bmd, imgID));
 			
-			try
-			{
-				imgLoader.loadBytes(imageByteLoader.data)
-			} 
-			catch(error:Error) 
-			{
-				this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_LOADED_ERROR));
-			}
+			//ImgLib.register(imgID.toString(), imgLoader.content.);
+			
+			//imgLoader.unload();
+			
+			isLoading = false;
+			
+			imgLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imgloadedFromServer);
+			imgLoader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, loadImgErrorFormServer);
 		}
 		
 		/**
-		 * 数据为旧图片数据时也可能导致io错误
+		 * 从服务器加载图片失败
 		 */		
-		private function imgLoadIoError(e:IOErrorEvent):void
+		private function loadImgErrorFormServer(io:IOErrorEvent):void
 		{
-			isLoading = false;
+			this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_LOADED_ERROR));
 			
-			if (imageByteLoader.data)
-			{
-				try
-				{
-					var data:ByteArray = imageByteLoader.data as ByteArray;
-					data.uncompress();
-					
-					imageByteLoader.data.position = 0;
-					var bmd:BitmapData = new BitmapData(temW, temH);
-					bmd.setPixels(new Rectangle(0, 0, bmd.width, bmd.height), imageByteLoader.data);
-					
-					(imageByteLoader.data as ByteArray).clear();// 清空数据
-					
-					//图片加载完毕
-					imageLoaedEnd(bmd);
-				} 
-				catch(error:Error) 
-				{
-					this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_LOADED_ERROR));
-				}
-			}
+			imgLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imgloadedFromServer);
+			imgLoader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, loadImgErrorFormServer);
 		}
 		
 		/**
 		 */		
 		public var isLoading:Boolean = false;
-		
-		/**
-		 * 图片加载成功后，注册至图片库中
-		 */		
-		private function bmdLoadedFromServerHandler(evt:Event):void
-		{
-			(imageByteLoader.data as ByteArray).clear();// 清空数据
-			
-			imageLoaedEnd((imgLoader.content as Bitmap).bitmapData);
-			
-			imgLoader.unload();
-		}
-		
-		/**
-		 */		
-		private function imageLoaedEnd(bmd:BitmapData):void
-		{
-			imgLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, bmdLoadedFromServerHandler);
-			imgLoader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imgLoadIoError);
-			
-			this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_LOADED_FROM_SERVER, bmd, imgID));
-			
-			ImgLib.register(imgID.toString(), bmd);
-			bitmapData = null;
-			
-			isLoading = false;
-		}
 		
 		
 		
@@ -222,7 +158,7 @@ package util.img
 			this.imgID = imgID;
 			
 			fileReference.addEventListener(Event.SELECT, onFileSelected);
-			fileReference.browse([new FileFilter("Images", "*.jpg;*.gif;*.png")]);
+			fileReference.browse([new FileFilter("Images", "*.jpg;*.png")]);
 		}
 		
 		/**
@@ -263,10 +199,9 @@ package util.img
 		private function bmdLoadedFromLocalHandler(evt:Event):void
 		{
 			imgLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, bmdLoadedFromLocalHandler);
-			bitmapData = (imgLoader.content as Bitmap).bitmapData;
 			
+			this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_LOADED_TO_LOCAL, (imgLoader.content as Bitmap).bitmapData, imgID));
 			imgLoader.unload();
-			this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_LOADED_TO_LOCAL, bitmapData, imgID));
 			
 			sendImgDataToServer();
 		}
@@ -288,7 +223,7 @@ package util.img
 				var req:URLRequest = new URLRequest(IMG_UPLOAD_URL);
 				req.method = URLRequestMethod.POST;
 				req.contentType = "application/octet-stream";  
-				req.data = PNGEncoder.encode(bitmapData);//已png编码格式的图片发送至服务端
+				req.data = fileReference.data;
 				
 				//发送图片数据流质服务器
 				imgUpLoader.load(req);
@@ -312,6 +247,7 @@ package util.img
 		}
 		
 		/**
+		 * 图片上传成功
 		 */		
 		private function imgUploadHandler(evt:Event):void
 		{
@@ -338,15 +274,14 @@ package util.img
 			imgUpLoader.removeEventListener(IOErrorEvent.IO_ERROR, imgUploadError);
 			imgUpLoader.removeEventListener(Event.COMPLETE, imgUploadHandler);
 			imgUpLoader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, imgUploadSecurityError);
-			ImgLib.register(imgID.toString(), bitmapData);
+			
+			//ImgLib.register(imgID.toString(), fileReference.data);
 			
 			var imgURL:String;
 			if (imgUpLoader.data)
 				imgURL = imgUpLoader.data.toString();
 				
-			this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_UPLOADED_TO_SERVER, bitmapData, imgID, imgURL));
-			
-			bitmapData = null;
+			//this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_UPLOADED_TO_SERVER, bitmapData, imgID, imgURL));
 		}
 			
 		/**

@@ -5,28 +5,21 @@ package
 	import com.kvs.utils.PerformaceTest;
 	import com.kvs.utils.StageUtil;
 	import com.kvs.utils.XMLConfigKit.App;
-	import com.kvs.utils.graphic.BitmapUtil;
 	
-	import control.InteractEvent;
 	import control.NavControl;
 	
-	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
-	import flash.text.Font;
 	
 	import model.CoreFacade;
 	
-	import view.interact.CoreMediator;
 	import view.pagePanel.PagePanel;
-	import view.screenState.FullScreenState;
 	import view.shapePanel.ShapePanel;
 	import view.themePanel.ThemePanel;
 	import view.toolBar.ToolBar;
 	import view.toolBar.ZoomToolBar;
-	import view.ui.Debugger;
 	
 	/**
 	 * 
@@ -225,7 +218,18 @@ package
 		private function kvsReadyHandler(evt:KVSEvent):void
 		{
 			pagePanel.initPageManager();
+			
+			api = new apiClass(kvsCore);
 		}
+		
+		/**
+		 */		
+		private var api:KanvasAPI;
+		
+		/**
+		 * 默认用js的api，air端需要指定为air自己的api
+		 */		
+		public var apiClass:Class = APIForJS;
 		
 		/**
 		 * 装载工具条，面板的容器

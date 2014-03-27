@@ -457,18 +457,9 @@ package
 			
 			new ConfigInitor(this);
 			
-			//testImage();
-			
 			// 加载嵌入子体
 			//FlowTextManager.loadFont("./FontLib.swf");
 		}
-		
-		/*private function testImage():void
-		{
-			var vo:ElementVO = new ElementVO;
-			var image:TestImgElement = new TestImgElement(vo);
-			CoreFacade.addElement(image);
-		}*/
 		
 		/**
 		 */		
@@ -480,11 +471,6 @@ package
 		/**
 		 */		
 		private var xmlLib:XMLVOLib = new XMLVOLib;
-		
-		/**
-		 * 供JS调用的API
-		 */		
-		private var apiForJS:APIForJS;
 		
 		/**
 		 * UI 构成初始化
@@ -568,14 +554,12 @@ package
 		 */	
 		public function ready():void
 		{
-			this.dispatchEvent(new KVSEvent(KVSEvent.READY));
-			
 			// 撤销开启关闭消息监听与发送, UI根据此消息决定撤销按钮可否被点击;
 			UndoRedoMannager.onEnable(enableFallback);
 			UndoRedoMannager.onDisable(disableFallback);
 			UndoRedoMannager.ifReady = true;
 			
-			apiForJS = new APIForJS(this);
+			this.dispatchEvent(new KVSEvent(KVSEvent.READY));
 		}
 
 		/**
