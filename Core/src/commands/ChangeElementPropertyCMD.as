@@ -12,6 +12,7 @@ package commands
 	import util.undoRedo.UndoRedoMannager;
 	
 	import view.element.ElementBase;
+	import view.element.imgElement.ImgElement;
 	import view.elementSelector.ElementSelector;
 
 	/**
@@ -143,7 +144,10 @@ package commands
 					ifNeedRender = true;// 文本，页面元素最终需要重绘
 				}
 			}
-			
+			else if (element is ImgElement)//防止对图片进行重复渲染
+			{
+				ifNeedRender = false;
+			}
 			
 			//element.clearHoverEffect();
 			if (render || ifNeedRender)

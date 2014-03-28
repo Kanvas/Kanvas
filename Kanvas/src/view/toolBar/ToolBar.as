@@ -2,7 +2,6 @@ package view.toolBar
 {
 	import com.kvs.ui.FiUI;
 	import com.kvs.ui.button.IconBtn;
-	import com.kvs.ui.button.LabelBtn;
 	import com.kvs.utils.XMLConfigKit.StyleManager;
 	import com.kvs.utils.XMLConfigKit.XMLVOMapper;
 	import com.kvs.utils.XMLConfigKit.style.Style;
@@ -202,7 +201,8 @@ package view.toolBar
 			{
 				try
 				{
-					ToolBarCustomFunc[evt.currentTarget.callBack]();
+					var fun:String = evt.currentTarget.callBack;
+					ToolBarCustomFunc[fun]();
 				}
 				catch (e:Error)
 				{

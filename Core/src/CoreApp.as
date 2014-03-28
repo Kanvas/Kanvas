@@ -236,16 +236,6 @@ package
 			
 		/**
 		 */		
-		public function importZipData(byte:ByteArray):void
-		{
-			resetLib();
-			
-			facade.coreProxy.importZipData(byte);
-			autoZoom();
-		}
-		
-		/**
-		 */		
 		public function exportZipData():ByteArray
 		{
 			resetLib();
@@ -530,7 +520,8 @@ package
 			facade.startApp(this);
 		}
 		
-		
+		/**
+		 */		
 		private function updateCanvasPositionEnterFrame(e:Event):void
 		{
 			if (stage.stageWidth != 0 && stage.stageHeight != 0)
@@ -692,6 +683,8 @@ package
 			return __customButtonData;
 		}
 		
+		/**
+		 */		
 		public function set customButtonData(value:XML):void
 		{
 			__customButtonData = value;
@@ -708,6 +701,6 @@ package
 		/**
 		 * 是否为AIR桌面程序，此属性在客户端中设置为true。
 		 */
-		public var air:Boolean;
+		public static var isAIR:Boolean;
 	}
 }

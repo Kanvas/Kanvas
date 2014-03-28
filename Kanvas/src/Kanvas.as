@@ -74,12 +74,10 @@ package
 				toolBar.setCustomButton(kvsCore.customButtonData, kvsCore.customButtonJS);
 			else
 				kvsCore.addEventListener(KVSEvent.SET_CUSTOM_DATA, setCustomData, false, 0, true);
-			
-			// 数据测试用
-			dataTest = new DataTest(toolBar, shapePanel, kvsCore);
 		}
 		
-		
+		/**
+		 */		
 		private function setCustomData(evt:KVSEvent):void
 		{
 			toolBar.setCustomButton(kvsCore.customButtonData, kvsCore.customButtonJS);
@@ -93,10 +91,6 @@ package
 			// 初始化默认样式
 			kvsCore.changeTheme('White');
 		}
-		
-		/**
-		 */		
-		protected var dataTest:DataTest;
 		
 		/**
 		 */		
@@ -215,7 +209,7 @@ package
 		/**
 		 * 核心core初始化完毕
 		 */		
-		private function kvsReadyHandler(evt:KVSEvent):void
+		protected function kvsReadyHandler(evt:KVSEvent):void
 		{
 			pagePanel.initPageManager();
 			
@@ -224,7 +218,7 @@ package
 		
 		/**
 		 */		
-		private var api:KanvasAPI;
+		protected var api:KanvasAPI;
 		
 		/**
 		 * 默认用js的api，air端需要指定为air自己的api

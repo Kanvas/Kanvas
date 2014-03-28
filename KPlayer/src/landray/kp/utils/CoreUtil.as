@@ -11,6 +11,7 @@ package landray.kp.utils
 	import flash.display.BitmapData;
 	import flash.display.Shape;
 	import flash.display.Sprite;
+	import flash.utils.ByteArray;
 	
 	import model.vo.BgVO;
 	import model.vo.ElementVO;
@@ -58,7 +59,7 @@ package landray.kp.utils
 			return StyleManager.setColor(value);
 		}
 		
-		public static function imageLibGetData(value:uint):BitmapData
+		public static function imageLibGetData(value:uint):ByteArray
 		{
 			return ImgLib.getData(value);
 		}

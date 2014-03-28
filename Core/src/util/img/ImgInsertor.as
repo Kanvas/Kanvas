@@ -87,14 +87,15 @@ package util.img
 		
 		/**
 		 */		
-		public function loadImg(url:String, imgID:uint):void
+		public function loadImg(url:String):void
 		{
 			if (isLoading == false)
 			{
-				this.imgID = imgID;
-				
 				imgLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, imgloadedFromServer);
 				imgLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, loadImgErrorFormServer);
+				
+				if (url.indexOf("http") != 0)
+					url = IMG_DOMAIN_URL + url;
 				
 				imgLoader.load(new URLRequest(url));
 				isLoading = true;
@@ -102,16 +103,37 @@ package util.img
 		}
 		
 		/**
+		 * 加载图片的二进制数据，此方法用于客户端中，打开文件时，图片原始数据存在于IMGLib中的情况
+		 */		
+		public function loadImgBytes(bytes:ByteArray):void
+		{
+			isLoading = true;
+			
+			imgLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, imageLoaedFromLocal);
+			imgLoader.loadBytes(bytes);
+		}
+		
+		/**
+		 * 从本地加载图片
+		 */		
+		private function imageLoaedFromLocal(evt:Event):void
+		{
+			this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_LOADED, (imgLoader.content as Bitmap).bitmapData));
+			
+			imgLoader.unload();
+			isLoading = false;
+			
+			imgLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imageLoaedFromLocal);
+		}
+		
+		/**
 		 * 从服务器根据url地址加载到图片
 		 */		
 		private function imgloadedFromServer(evt:Event):void
 		{
-			//this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_LOADED_FROM_SERVER, bmd, imgID));
+			this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_LOADED, (imgLoader.content as Bitmap).bitmapData));
 			
-			//ImgLib.register(imgID.toString(), imgLoader.content.);
-			
-			//imgLoader.unload();
-			
+			imgLoader.unload();
 			isLoading = false;
 			
 			imgLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imgloadedFromServer);
@@ -201,8 +223,6 @@ package util.img
 			imgLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, bmdLoadedFromLocalHandler);
 			
 			this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_LOADED_TO_LOCAL, (imgLoader.content as Bitmap).bitmapData, imgID));
-			imgLoader.unload();
-			
 			sendImgDataToServer();
 		}
 		
@@ -236,6 +256,7 @@ package util.img
 		public function close():void
 		{
 			lastSelectedImageURL = null;
+			
 			try 
 			{
 				imgUpLoader.close();
@@ -275,13 +296,14 @@ package util.img
 			imgUpLoader.removeEventListener(Event.COMPLETE, imgUploadHandler);
 			imgUpLoader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, imgUploadSecurityError);
 			
-			//ImgLib.register(imgID.toString(), fileReference.data);
-			
 			var imgURL:String;
 			if (imgUpLoader.data)
 				imgURL = imgUpLoader.data.toString();
 				
-			//this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_UPLOADED_TO_SERVER, bitmapData, imgID, imgURL));
+			this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_UPLOADED_TO_SERVER, (imgLoader.content as Bitmap).bitmapData, imgID, imgURL));
+			
+			imgLoader.unload();
+			fileReference.data.clear();
 		}
 			
 		/**

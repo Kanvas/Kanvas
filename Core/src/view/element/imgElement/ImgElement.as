@@ -164,12 +164,7 @@ package view.element.imgElement
 			{
 				currLoadState.render();
 			}
-			else if (ImgLib.ifHasData(imgVO.imgID))// 资源包导入方式会用到，从资源库中获取数据
-			{
-				imgVO.sourceData = ImgLib.getData(imgVO.imgID);
-				toNomalState();
-			}
-			else if (imgVO.url != "null" && RexUtil.ifHasText(imgVO.url))// 再次编辑时从服务器载入图片
+			else if (imgVO.url != "null" && RexUtil.ifHasText(imgVO.url))// 再次编辑时从服务器载入图片, 或者从内存中加载图片
 			{
 				currLoadState.loadingImg();
 			}
