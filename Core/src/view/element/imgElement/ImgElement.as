@@ -91,6 +91,8 @@ package view.element.imgElement
 		public function toNomalState():void
 		{
 			currLoadState = normalState;
+			
+			initBmp(imgVO.sourceData);
 			currLoadState.render();
 		}
 		
@@ -139,24 +141,19 @@ package view.element.imgElement
 			// 图片插入时
 			if (imgVO.sourceData)
 			{
-				initBmp(imgVO.sourceData);
 				currLoadState.render();
-			}
-			else if (ImgLib.ifHasData(imgVO.imgID))// 资源包导入方式会用到，从资源库中获取数据
-			{
-				imgVO.sourceData = ImgLib.getData(imgVO.imgID);
-				initBmp(imgVO.sourceData);
-				toNomalState();
 			}
 			else if (imgVO.url != "null" && RexUtil.ifHasText(imgVO.url))// 再次编辑时从服务器载入图片, 或者从内存中加载图片
 			{
 				currLoadState.loadingImg();
+				
 			}
 		}
 		
 		private var rendered:Boolean;
 		
-		
+		/**
+		 */		
 		internal function createLoading():void
 		{
 			if(!loading) 
@@ -188,6 +185,8 @@ package view.element.imgElement
 			createLoading();
 		}
 		
+		/**
+		 */		
 		private function initBmp(bmd:BitmapData):void
 		{
 			if (bmd)
