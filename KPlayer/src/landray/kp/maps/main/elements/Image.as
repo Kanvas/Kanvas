@@ -34,12 +34,17 @@ package landray.kp.maps.main.elements
 		 */		
 		public function showBmp(smooth:Boolean = true):void
 		{
-			if (bmpDispl && contains(bmpDispl)) removeChild(bmpDispl);
 			if (bmpLarge && bmpSmall)
 			{
-				bmpDispl = (width <= minSize || height <= minSize) ? bmpSmall : bmpLarge;
+				var tmpDispl:Bitmap = (width <= minSize || height <= minSize) ? bmpSmall : bmpLarge;
+				if (tmpDispl != bmpDispl)
+				{
+					if (bmpDispl && contains(bmpDispl)) 
+						removeChild(bmpDispl);
+					bmpDispl = tmpDispl;
+					addChild(bmpDispl);
+				}
 				bmpDispl.smoothing = smooth;
-				addChild(bmpDispl);
 			}
 		}
 		

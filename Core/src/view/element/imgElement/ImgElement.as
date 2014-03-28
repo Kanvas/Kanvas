@@ -3,6 +3,7 @@ package view.element.imgElement
 	import com.kvs.utils.RexUtil;
 	import com.kvs.utils.graphic.BitmapUtil;
 	
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Shape;
 	import flash.geom.Matrix;
@@ -32,53 +33,30 @@ package view.element.imgElement
 			autoGroupChangable = false;
 			
 			// 图片加载状态初始化
-			this.loadingState = new LoadingState(this);
-			this.normalState = new NormalState(this);
-			this.currLoadState = loadingState;
+			loadingState = new LoadingState(this);
+			normalState = new NormalState(this);
+			currLoadState = loadingState;
+		}
+		
+		public function showBmp(smooth:Boolean = true):void
+		{
+			if (bmpLarge && bmpSmall)
+			{
+				var tmpDispl:Bitmap = (width <= minSize || height <= minSize) ? bmpSmall : bmpLarge;
+				if (tmpDispl != bmpDispl)
+				{
+					if (bmpDispl && contains(bmpDispl)) 
+						removeChild(bmpDispl);
+					bmpDispl = tmpDispl;
+					addChild(bmpDispl);
+				}
+				bmpDispl.smoothing = smooth;
+			}
 		}
 		
 		override public function updateView(check:Boolean=true):void
 		{
 			super.updateView(check);
-			checkBmdRender();
-		}
-		
-		private function checkBmdRender():void
-		{
-			if (rendered)
-			{
-				if (super.width > minSize && super.height > minSize)
-				{
-					if (lastWidth<= minSize || lastHeight<= minSize) 
-						renderBmdNeeded = true;
-				}
-				else
-				{
-					if (lastWidth > minSize && lastHeight > minSize) 
-						renderBmdNeeded = true;
-				}
-				lastWidth  = super.width;
-				lastHeight = super.height;
-				if (renderBmdNeeded)
-					drawBmd();
-			}
-			
-		}
-		
-		private var renderBmdNeeded:Boolean;
-		private var lastWidth:Number;
-		private var lastHeight:Number;
-		private var minSize:Number = 20;
-		
-		override public function set scaleX(value:Number):void
-		{
-			super.scaleX = value;
-			checkBmdRender();
-		}
-		
-		override public function set scaleY(value:Number):void
-		{
-			super.scaleY = value;
 			checkBmdRender();
 		}
 		
@@ -157,16 +135,17 @@ package view.element.imgElement
 		{
 			rendered = true;
 			super.render();
-			renderBmdNeeded = false;
 			
 			// 图片插入时
 			if (imgVO.sourceData)
 			{
+				initBmp(imgVO.sourceData);
 				currLoadState.render();
 			}
 			else if (ImgLib.ifHasData(imgVO.imgID))// 资源包导入方式会用到，从资源库中获取数据
 			{
 				imgVO.sourceData = ImgLib.getData(imgVO.imgID);
+				initBmp(imgVO.sourceData);
 				toNomalState();
 			}
 			else if (imgVO.url != "null" && RexUtil.ifHasText(imgVO.url))// 再次编辑时从服务器载入图片
@@ -177,39 +156,14 @@ package view.element.imgElement
 		
 		private var rendered:Boolean;
 		
-		/**
-		 * 画布缩放的过程中，关闭位图平滑， 画布缩放／移动结束后，开启平滑
-		 */		
-		public function drawBmd(ifSmooth:Boolean = false):void
+		
+		internal function createLoading():void
 		{
-			if (imgVO.sourceData)
-			{
-				if(!smallImgData)
-				{
-					var ow:Number = imgVO.sourceData.width;
-					var oh:Number = imgVO.sourceData.height;
-					if (ow > minSize && oh > minSize)
-					{
-						var ss:Number = (ow > oh) ? minSize / oh : minSize / ow;
-						smallImgData = new BitmapData(ow * ss, oh * ss, true, 0);
-						var matrix:Matrix = new Matrix();
-						matrix.scale(ss, ss);
-						smallImgData.draw(imgVO.sourceData, matrix, null, null, null, ifSmooth);
-					}
-				}
-				
-				graphics.clear();
-				var bmd:BitmapData = (smallImgData && (super.width <= minSize || super.height <= minSize)) ? smallImgData : imgVO.sourceData;
-				
-				BitmapUtil.drawBitmapDataToShape(bmd, shape as Shape, 
-					vo.width, vo.height, - vo.width / 2, - vo.height / 2, ifSmooth);
-				
-				removeLoading();
-			}
+			if(!loading) 
+				addChild(loading = new Loading);
+			loading.play();
 		}
 		
-		/**
-		 */		
 		internal function removeLoading():void
 		{
 			if (loading) 
@@ -224,18 +178,64 @@ package view.element.imgElement
 		
 		/**
 		 */		
-		internal function drawIMGProxy():void
+		internal function drawLoading():void
 		{
-			this.graphics.clear();
-			this.graphics.beginFill(0x555555, 0.3);
-			this.graphics.drawRect( - vo.width / 2, - vo.height / 2, vo.width, vo.height);
-			this.graphics.endFill();
+			graphics.clear();
+			graphics.beginFill(0x555555, 0.3);
+			graphics.drawRect( - vo.width / 2, - vo.height / 2, vo.width, vo.height);
+			graphics.endFill();
 			
-			if (!loading) 
-				addChild(loading = new Loading);
-			
-			loading.play();
+			createLoading();
 		}
+		
+		private function initBmp(bmd:BitmapData):void
+		{
+			if (bmd)
+			{
+				bmdLarge = bmd;
+				bmpLarge = new Bitmap(bmdLarge);
+				bmpLarge.width  =  vo.width;
+				bmpLarge.height =  vo.height;
+				bmpLarge.x = -.5 * vo.width;
+				bmpLarge.y = -.5 * vo.height;
+				if(!bmdSmall)
+				{
+					var ow:Number = bmdLarge.width;
+					var oh:Number = bmdLarge.height;
+					if (ow > minSize && oh > minSize)
+					{
+						var ss:Number = (ow > oh) ? minSize / oh : minSize / ow;
+						bmdSmall = new BitmapData(ow * ss, oh * ss, true, 0);
+						var matrix:Matrix = new Matrix;
+						matrix.scale(ss, ss);
+						bmdSmall.draw(bmdLarge, matrix, null, null, null, true);
+					}
+					else
+					{
+						bmdSmall = bmdLarge;
+					}
+					bmpSmall = new Bitmap(bmdSmall);
+					bmpSmall.width  =  vo.width;
+					bmpSmall.height =  vo.height;
+					bmpSmall.x = -.5 * vo.width;
+					bmpSmall.y = -.5 * vo.height;
+				}
+			}
+		}
+		
+		private function checkBmdRender():void
+		{
+			var renderBmdNeeded:Boolean = (width > minSize && height > minSize)
+				? (lastWidth<= minSize || lastHeight<= minSize)
+				: (lastWidth > minSize && lastHeight > minSize);
+			lastWidth  = width;
+			lastHeight = height;
+			if (renderBmdNeeded) 
+			{
+				showBmp();
+			}
+		}
+		
 		
 		/**
 		 * 
@@ -244,18 +244,14 @@ package view.element.imgElement
 		 */		
 		override public function get scaledWidth():Number
 		{
-			var w:Number = vo.width * vo.scale;		
-			
-			return 	w;
+			return vo.width * vo.scale;		
 		}
 		
 		/**
 		 */		
 		override public function get scaledHeight():Number
 		{
-			var h:Number = vo.height * vo.scale;
-			
-			return h;		
+			return vo.height * vo.scale;
 		}
 		
 		/**
@@ -267,6 +263,14 @@ package view.element.imgElement
 		
 		private var loading:Loading;
 		
-		private var smallImgData:BitmapData;
+		private var lastWidth :Number;
+		private var lastHeight:Number;
+		private var minSize   :Number = 20;
+		
+		private var bmdLarge:BitmapData;
+		private var bmdSmall:BitmapData;
+		private var bmpLarge:Bitmap;
+		private var bmpSmall:Bitmap;
+		private var bmpDispl:Bitmap;
 	}
 }

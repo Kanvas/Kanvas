@@ -146,18 +146,21 @@ package view.interact.autoGroup
 		public function scale(scaleRad:Number, curElement:ElementBase):void
 		{
 			if (enabled == false) return;
-			var xDis:Number; 
-			var yDis:Number;
-			
-			for each(var element:ElementBase in _elements)
+			if (!(curElement is ImgElement))
 			{
-				element.scaleX = element.scaleY = element.vo.scale * scaleRad;
+				var xDis:Number; 
+				var yDis:Number;
 				
-				xDis = element.vo.x - curElement.x;
-				yDis = element.vo.y - curElement.y;
-				
-				element.x = curElement.x + xDis * scaleRad;
-				element.y = curElement.y + yDis * scaleRad;
+				for each(var element:ElementBase in _elements)
+				{
+					element.scaleX = element.scaleY = element.vo.scale * scaleRad;
+					
+					xDis = element.vo.x - curElement.x;
+					yDis = element.vo.y - curElement.y;
+					
+					element.x = curElement.x + xDis * scaleRad;
+					element.y = curElement.y + yDis * scaleRad;
+				}
 			}
 		}
 		

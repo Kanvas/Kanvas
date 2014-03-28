@@ -35,8 +35,7 @@ package view.element.imgElement
 			if (element.imgVO.sourceData)
 			{
 				element.graphics.clear();
-				element.shape.visible = true;
-				element.drawBmd();
+				element.showBmp();
 			}
 		}
 	}
