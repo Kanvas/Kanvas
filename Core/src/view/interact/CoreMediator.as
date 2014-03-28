@@ -745,7 +745,7 @@ package view.interact
 			{
 				if (element is ImgElement)
 				{
-					(element as ImgElement).drawBmd(false);
+					(element as ImgElement).showBmp(false);
 				}
 			}
 		}
@@ -786,7 +786,7 @@ package view.interact
 			{
 				if (element is ImgElement)
 				{
-					(element as ImgElement).drawBmd(true);
+					(element as ImgElement).showBmp(true);
 				}
 			}
 		}

@@ -362,9 +362,7 @@ package view.element
 				__rotation = value;
 				cos = Math.cos(MathUtil.angleToRadian(rotation));
 				sin = Math.sin(MathUtil.angleToRadian(rotation));
-				if (parent)
-					value += parent.rotation;
-				super.rotation = value;
+				updateView();
 			}
 		}
 		private var __rotation:Number;
@@ -382,9 +380,7 @@ package view.element
 			if (__scaleX!= value)
 			{
 				__scaleX = value;
-				if (parent)
-					value *= parent.scaleX;
-				super.scaleX = value;
+				updateView();
 			}
 		}
 		
@@ -400,9 +396,7 @@ package view.element
 			if (__scaleY!= value)
 			{
 				__scaleY = value;
-				if (parent)
-					value *= parent.scaleY;
-				super.scaleY = value;
+				updateView();
 			}
 		}
 		

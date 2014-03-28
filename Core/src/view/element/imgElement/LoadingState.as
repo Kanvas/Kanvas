@@ -18,8 +18,7 @@ package view.element.imgElement
 		 */		
 		override public function render():void
 		{
-			element.shape.visible = false;
-			element.drawIMGProxy();
+			element.drawLoading();
 		}
 		
 		/**
