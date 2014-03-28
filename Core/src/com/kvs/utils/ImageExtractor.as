@@ -2,7 +2,9 @@ package com.kvs.utils
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.JPEGEncoderOptions;
 	import flash.display.Loader;
+	import flash.display.PNGEncoderOptions;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
@@ -16,13 +18,13 @@ package com.kvs.utils
 	public class ImageExtractor extends EventDispatcher
 	{
 		/**
-		 * 
+		 * 图片优化处理类，传入一个二进制字节流，通过监听事件方式，获取优化后的图片字节流与位图数据。
 		 * 
 		 * @param $bytes 传入的图片字节流数据。
-		 * @param limit 尺寸限制，值为宽度*高度，超过该尺寸的图片，会被缩小至该尺寸以下。
-		 * 
+		 * @param $limit 尺寸限制，值为宽度*高度，超过该尺寸的图片，会被缩小至该尺寸以下。
+		 * @param $quality 如果是jpg，该属性为jpg图片质量。
 		 */
-		public function ImageExtractor($bytes:ByteArray, $limit:Number = 4194304)
+		public function ImageExtractor($bytes:ByteArray, $limit:Number = 4194304, $quality:Number = 80)
 		{
 			super();
 			if ($bytes)
@@ -31,11 +33,12 @@ package com.kvs.utils
 				throw new ArgumentError("参数$bytes不能为空。", 2007);
 		}
 		
-		private function initialize($bytes:ByteArray, $limit:Number = 4194304):void
+		private function initialize($bytes:ByteArray, $limit:Number = 4194304, $quality:Number = 80):void
 		{
-			tempo = new ByteArray;
+			limit   = $limit;
+			quality = $quality;
+			tempo   = new ByteArray;
 			$bytes.readBytes(tempo);
-			limit = $limit;
 			if (tempo.length > 2)
 				analyse();
 			else
@@ -74,10 +77,10 @@ package com.kvs.utils
 		private function analizePNG():void
 		{
 			tempo.position = 16;
-			__type = "png";
 			__originalWidth  = tempo.readUnsignedInt();
 			__originalHeight = tempo.readUnsignedInt();
 		}
+		
 		private function analizeJPG():void
 		{
 			var index:uint = 0;
@@ -129,7 +132,6 @@ package com.kvs.utils
 						if (index >= fl) 
 						{
 							// Matched SOF0
-							__type = "jpg";
 							__originalHeight = tempo.readUnsignedShort();
 							__originalWidth  = tempo.readUnsignedShort();
 							break;
@@ -163,7 +165,7 @@ package com.kvs.utils
 		private function transform():void
 		{
 			loader = new Loader;
-			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, defaultHandler);
+			loader.contentLoaderInfo.addEventListener(Event.INIT, defaultHandler);
 			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, defaultHandler);
 			loader.loadBytes(tempo);
 		}
@@ -172,7 +174,7 @@ package com.kvs.utils
 		{
 			loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, defaultHandler);
 			loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, defaultHandler);
-			if (e.type == Event.COMPLETE)
+			if (e.type == Event.INIT)
 			{
 				var bmd:BitmapData = Bitmap(loader.content).bitmapData;
 				if (width == originalWidth && height == originalHeight)
@@ -185,11 +187,25 @@ package com.kvs.utils
 					var matrix:Matrix = new Matrix;
 					matrix.scale(width / originalWidth, height / originalHeight);
 					__bitmapData.draw(bmd, matrix, null, null, null, true);
+					decodeBmd();
 				}
 			}
 			dispatchEvent(e);
 		}
 		
+		private function decodeBmd():void
+		{
+			if (type == "jpg")
+			{
+				var jpgEncoderOptions:JPEGEncoderOptions = new JPEGEncoderOptions(quality);
+				__bytes = bitmapData.encode(bitmapData.rect, jpgEncoderOptions);
+			}
+			else if (type == "png")
+			{
+				var pngEncoderOptions:PNGEncoderOptions = new PNGEncoderOptions;
+				__bytes = bitmapData.encode(bitmapData.rect, pngEncoderOptions);
+			}
+		}
 		
 		
 		/**
@@ -246,6 +262,9 @@ package com.kvs.utils
 		}
 		private var __bitmapData:BitmapData;
 		
+		/**
+		 * 字节流数据
+		 */
 		public function get bytes():ByteArray
 		{
 			return  __bytes;
@@ -254,12 +273,14 @@ package com.kvs.utils
 		
 		private var limit:Number;
 		
+		private var quality:Number;
+		
 		private var loader:Loader;
 		
 		private var tempo:ByteArray;
 		
 		/**
-		 * 
+		 * 支持的最大图片尺寸，宽与高的乘积，目前最大支持4096*4096 。
 		 */
 		public  static const MAX_SUPPORTED_SIZE:Number = 16777216;
 		

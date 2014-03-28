@@ -1,12 +1,11 @@
 package view.ui
 {
-	import com.adobe.images.JPGEncoder;
-	import com.adobe.images.PNGEncoder;
 	import com.kvs.utils.MathUtil;
 	import com.kvs.utils.graphic.BitmapUtil;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.JPEGEncoderOptions;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
@@ -105,7 +104,8 @@ package view.ui
 				for (i = 0; i < l; i++)
 				{
 					bmd = BitmapUtil.getBitmapData(shapes[i]);
-					var dat:ByteArray  = PNGEncoder.encode(bmd);
+					var jpgEncodeOptions:JPEGEncoderOptions = new JPEGEncoderOptions;
+					var dat:ByteArray  = bmd.encode(bmd.rect, jpgEncodeOptions);
 					bytes.position = offset;
 					bytes.writeBytes(dat, 0, dat.length);
 					var s:int = offset;
