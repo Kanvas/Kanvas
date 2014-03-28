@@ -16,7 +16,6 @@ package view.interact
 	
 	import modules.pages.PageManager;
 	import modules.pages.PageUtil;
-	import modules.threads.MultiThread;
 	
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
@@ -514,8 +513,6 @@ package view.interact
 		
 		public var pageManager:PageManager;
 		
-		public var multiThread:MultiThread;
-		
 		/**
 		 * 属性控制器 , 快捷属性编辑, 工具条，型变控制都由其负责
 		 */		
@@ -596,7 +593,6 @@ package view.interact
 			coreApp.addEventListener(KVSEvent.UPATE_BOUND, renderBoundHandler);
 			
 			pageManager = new PageManager(this);
-			multiThread = new MultiThread(this);
 		}
 		
 		/**

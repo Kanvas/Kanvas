@@ -1,10 +1,10 @@
 package 
 {
-	import com.adobe.images.PNGEncoder;
 	import com.kvs.utils.Base64;
 	import com.kvs.utils.ExternalUtil;
 	
 	import flash.display.BitmapData;
+	import flash.display.JPEGEncoderOptions;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.MouseEvent;
@@ -273,7 +273,8 @@ package
 			var str:String = "";
 			if (bmd)
 			{
-				var bytes:ByteArray = PNGEncoder.encode(bmd);
+				var jpegEncoderOptions:JPEGEncoderOptions = new JPEGEncoderOptions;
+				var bytes:ByteArray = bmd.encode(bmd.rect, jpegEncoderOptions);
 				//bytes.compress();
 				str = Base64.encodeByteArray(bytes);
 			}
