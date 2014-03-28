@@ -177,7 +177,8 @@ package model
 		{
 			// 创建与删除
 			registerCommand(Command.CREATE_SHAPE, CreateShapeCMD);
-			registerCommand(Command.INSERT_IMAGE, InserImageCMD);
+			
+			registerCommand(Command.INSERT_IMAGE, inserImgCommad);
 			
 			registerCommand(Command.PRE_CREATE_TEXT, PreCreateTextCMD);
 			registerCommand(Command.CREATE_TEXT, CreateTextCMD);
@@ -201,10 +202,6 @@ package model
 			
 			registerCommand(Command.SElECT_ELEMENT, SelectElementCMD);
 			registerCommand(Command.UN_SELECT_ELEMENT, UnSelectElementCMD);
-			
-			//registerCommand(Command.MOVE_ELEMENT, MoveElementCMD);
-			//registerCommand(Command.SCALE_ELEMENT, ScaleElementCMD);
-			//registerCommand(Command.ROLL_ELEMENT, RollElementCMD);
 			
 			registerCommand(Command.CHANGE_THEME, SetThemeCMD);
 			
@@ -231,6 +228,11 @@ package model
 			
 			
 		}
+		
+		/**
+		 * 桌面和web插入图片的方式不同，需要不同的command来处理 
+		 */		
+		public static var inserImgCommad:Class = InserImageCMD;
 	}
 }
 

@@ -2,7 +2,7 @@ package view.toolBar
 {
 	public final class ToolBarCustomFunc
 	{
-		public static var importData:Function;
-		public static var exportData:Function;
+		public static var openFile:Function;
+		public static var saveFile:Function;
 	}
 }

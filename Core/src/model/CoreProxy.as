@@ -2,6 +2,7 @@ package model
 {
 	import com.adobe.images.PNGEncoder;
 	import com.kvs.utils.Map;
+	import com.kvs.utils.PerformaceTest;
 	import com.kvs.utils.RexUtil;
 	import com.kvs.utils.XMLConfigKit.StyleManager;
 	import com.kvs.utils.XMLConfigKit.XMLVOLib;
@@ -231,8 +232,6 @@ package model
 			
 			var bmd:BitmapData = coreApp.thumbManager.getShotCut(ConfigInitor.THUMB_WIDTH, ConfigInitor.THUMB_HEIGHT);
 			
-			
-			
 			if (bmd)
 			{
 				//缩略图
@@ -247,31 +246,11 @@ package model
 				zipOut.closeEntry();
 			}
 			
-			if(!coreApp.air)
-			{
-				var pageBytes:ByteArray = coreApp.thumbManager.getPageBytes(pageW, pageH);
-				var jpgs:Vector.<ByteArray> = coreApp.thumbManager.resolvePageData(pageBytes);
-				
-				if (jpgs)
-				{
-					for (var i:int = 0; i < jpgs.length; i++)
-					{
-						fileData.clear();
-						fileData.writeBytes(jpgs[i], fileData.position, jpgs[i].bytesAvailable);
-						
-						ze = new ZipEntry("pages/" + i + ".jpg");
-						zipOut.putNextEntry(ze);
-						zipOut.write(fileData);
-						zipOut.closeEntry();
-					}
-				}
-			}
-			
 			// 添加图片资源数据
 			for each (var imgID:uint in imgIDs)
 			{
 				fileData.clear();
-				imgDataBytes = PNGEncoder.encode(ImgLib.getData(imgID));//以png格式存储图片
+				imgDataBytes = ImgLib.getData(imgID);
 				fileData.writeBytes(imgDataBytes, fileData.position, imgDataBytes.bytesAvailable);
 				
 				ze = new ZipEntry(imgID.toString() + '.png');
@@ -280,50 +259,11 @@ package model
 				zipOut.closeEntry();
 			}
 			
-			
 			// end the zip
 			zipOut.finish();
 			
 			return zipOut.byteArray;
 		}
-		
-		/**
-		 */		
-		public function importZipData(byte:ByteArray):void
-		{
-			var entry:ZipEntry;
-			var data:ByteArray;
-			var zipFile:ZipFile = new ZipFile(byte);
-			
-			// xml文件
-			entry = zipFile.getEntry('kvs.xml');
-			data = zipFile.getInput(entry);
-			
-			var s:String = data.toString();			
-			var xml:XML = XML(s);
-			
-			var index:uint = zipFile.entries.indexOf(entry);
-			zipFile.entries.splice(index, 1);
-			
-			// 图片资源
-			var imgEnties:Array = zipFile.entries;
-			var imgID:String;
-			for each (entry in imgEnties)
-			{
-				data = zipFile.getInput(entry);
-				
-				imgID = entry.name.split('.')[0].toString();
-				
-				if (uint(imgID) != 0)
-					ImgLib.register(imgID, PNGDecoder.decodeImage(data));
-			}
-			
-			importData(xml);
-		}
-		
-		/**
-		 */		
-		private var zipFile:ZipFile;
 		
 		/**
 		 * 数据导出
@@ -458,15 +398,12 @@ package model
 			ElementCreator.setID(bgVO.imgID);
 			
 			//背景图片加载
-			if (RexUtil.ifHasText(bgVO.imgURL) && bgVO.imgURL != 'null')
-			{
-				bgImgLoader.addEventListener(ImgInsertEvent.IMG_LOADED_FROM_SERVER, initializeBgImgLoaded);
-				bgImgLoader.loadImg(bgVO.imgURL, bgVO.imgID);
-			}
-			else if (ImgLib.ifHasData(bgVO.imgID))//从资源包种获取图片
-			{
-				renderBgImg(ImgLib.getData(bgVO.imgID));
-			}
+			bgImgLoader.addEventListener(ImgInsertEvent.IMG_LOADED, initializeBgImgLoaded);
+			if (ImgLib.ifHasData(bgVO.imgID))//从资源包种获取图片
+				bgImgLoader.loadImgBytes(ImgLib.getData(bgVO.imgID));
+			else if (RexUtil.ifHasText(bgVO.imgURL) && bgVO.imgURL != 'null')
+				bgImgLoader.loadImg(bgVO.imgURL);
+			
 		}
 		
 		/**
@@ -526,21 +463,11 @@ package model
 		 */		
 		private function initializeBgImgLoaded(evt:ImgInsertEvent):void
 		{
-			bgImgLoader.removeEventListener(ImgInsertEvent.IMG_LOADED_FROM_SERVER, initializeBgImgLoaded);
-			(evt.bitmapData);
+			bgImgLoader.removeEventListener(ImgInsertEvent.IMG_LOADED, initializeBgImgLoaded);
 			
+			bgVO.imgData = evt.bitmapData;
 			CoreFacade.coreMediator.coreApp.drawBGImg(evt.bitmapData);
 			coreApp.bgImgUpdated(evt.bitmapData);
-		}
-		
-		/**
-		 */		
-		private function renderBgImg(img:BitmapData):void
-		{
-			bgVO.imgData = img;
-			
-			CoreFacade.coreMediator.coreApp.drawBGImg(img);
-			coreApp.bgImgUpdated(img);
 		}
 		
 		/**

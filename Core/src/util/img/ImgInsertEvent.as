@@ -13,9 +13,9 @@ package util.img
 		public static const IMG_LOADED_TO_LOCAL:String = 'imgLoadedToLocal';
 		
 		/**
-		 * 图片从服务器加载成功
+		 * 图片从服务器／内存中加载成功
 		 */		
-		public static const IMG_LOADED_FROM_SERVER:String = 'imgLoadedFromServer';
+		public static const IMG_LOADED:String = 'imgLoaded';
 		
 		/**
 		 * 图片已上传至服务器

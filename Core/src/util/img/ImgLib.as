@@ -3,6 +3,7 @@ package util.img
 	import com.kvs.utils.Map;
 	
 	import flash.display.BitmapData;
+	import flash.utils.ByteArray;
 
 	/**
 	 * 图片数据存储库，根据ID管理图片数据
@@ -19,7 +20,7 @@ package util.img
 		
 		/**
 		 */		
-		public static function register(id:String, imgData:BitmapData):void
+		public static function register(id:String, imgData:ByteArray):void
 		{
 			//预览图不需要
 			if (id != PRE_IMG && uint(id) != 0)
@@ -43,9 +44,9 @@ package util.img
 		
 		/**
 		 */		
-		public static function getData(id:uint):BitmapData
+		public static function getData(id:uint):ByteArray
 		{
-			return imgMap.getValue(id) as BitmapData;		
+			return imgMap.getValue(id) as ByteArray;		
 		}
 		
 		/**

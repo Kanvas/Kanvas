@@ -148,7 +148,7 @@ package view.element.imgElement
 				initBmp(imgVO.sourceData);
 				toNomalState();
 			}
-			else if (imgVO.url != "null" && RexUtil.ifHasText(imgVO.url))// 再次编辑时从服务器载入图片
+			else if (imgVO.url != "null" && RexUtil.ifHasText(imgVO.url))// 再次编辑时从服务器载入图片, 或者从内存中加载图片
 			{
 				currLoadState.loadingImg();
 			}

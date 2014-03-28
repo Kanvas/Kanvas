@@ -236,16 +236,6 @@ package
 			
 		/**
 		 */		
-		public function importZipData(byte:ByteArray):void
-		{
-			resetLib();
-			
-			facade.coreProxy.importZipData(byte);
-			autoZoom();
-		}
-		
-		/**
-		 */		
 		public function exportZipData():ByteArray
 		{
 			resetLib();
@@ -457,18 +447,9 @@ package
 			
 			new ConfigInitor(this);
 			
-			//testImage();
-			
 			// 加载嵌入子体
 			//FlowTextManager.loadFont("./FontLib.swf");
 		}
-		
-		/*private function testImage():void
-		{
-			var vo:ElementVO = new ElementVO;
-			var image:TestImgElement = new TestImgElement(vo);
-			CoreFacade.addElement(image);
-		}*/
 		
 		/**
 		 */		
@@ -480,11 +461,6 @@ package
 		/**
 		 */		
 		private var xmlLib:XMLVOLib = new XMLVOLib;
-		
-		/**
-		 * 供JS调用的API
-		 */		
-		private var apiForJS:APIForJS;
 		
 		/**
 		 * UI 构成初始化
@@ -544,7 +520,8 @@ package
 			facade.startApp(this);
 		}
 		
-		
+		/**
+		 */		
 		private function updateCanvasPositionEnterFrame(e:Event):void
 		{
 			if (stage.stageWidth != 0 && stage.stageHeight != 0)
@@ -568,14 +545,12 @@ package
 		 */	
 		public function ready():void
 		{
-			this.dispatchEvent(new KVSEvent(KVSEvent.READY));
-			
 			// 撤销开启关闭消息监听与发送, UI根据此消息决定撤销按钮可否被点击;
 			UndoRedoMannager.onEnable(enableFallback);
 			UndoRedoMannager.onDisable(disableFallback);
 			UndoRedoMannager.ifReady = true;
 			
-			apiForJS = new APIForJS(this);
+			this.dispatchEvent(new KVSEvent(KVSEvent.READY));
 		}
 
 		/**
@@ -708,6 +683,8 @@ package
 			return __customButtonData;
 		}
 		
+		/**
+		 */		
 		public function set customButtonData(value:XML):void
 		{
 			__customButtonData = value;
@@ -724,6 +701,6 @@ package
 		/**
 		 * 是否为AIR桌面程序，此属性在客户端中设置为true。
 		 */
-		public var air:Boolean;
+		public static var isAIR:Boolean;
 	}
 }

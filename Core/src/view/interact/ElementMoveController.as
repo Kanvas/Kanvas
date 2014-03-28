@@ -110,6 +110,9 @@ package view.interact
 				if (! isNaN(align.y))
 					point.y = curMovingElement.y + align.y;
 			}
+			
+			if (curMovingElement == null) return;
+			
 			curMovingElement.x = point.x;
 			curMovingElement.y = point.y;
 			

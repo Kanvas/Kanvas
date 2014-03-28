@@ -1,5 +1,7 @@
 package
 {
+	import commands.InserImageCMD;
+	
 	import flash.desktop.Clipboard;
 	import flash.desktop.ClipboardFormats;
 	import flash.desktop.NativeApplication;
@@ -13,6 +15,8 @@ package
 	import flash.filesystem.FileStream;
 	import flash.utils.ByteArray;
 	
+	import model.CoreFacade;
+	
 	import view.toolBar.ToolBarCustomFunc;
 	
 	/**
@@ -23,19 +27,61 @@ package
 		public function KanvasAIR()
 		{
 			super();
+			
+			this.apiClass = APIForAIR;
+			
+			CoreApp.isAIR = true;
+			CoreFacade.inserImgCommad = InsertIMGFromAIR;
 		}
 		
+		/**
+		 */		
 		override protected function init():void
 		{
 			super.init();
-			kvsCore.air = true;
-			ToolBarCustomFunc.importData = dataTest.importData;
-			ToolBarCustomFunc.exportData = dataTest.exportData;
-			kvsCore.customButtonJS = false;
-			kvsCore.customButtonData = customButtonData;
+			
 			registFileRef();
 		}
 		
+		/**
+		 * 
+		 */		
+		override protected function kvsReadyHandler(evt:KVSEvent):void 
+		{
+			super.kvsReadyHandler(evt);
+			
+			ToolBarCustomFunc.openFile = airAPI.openFile;
+			ToolBarCustomFunc.saveFile = airAPI.saveFile;
+			
+			kvsCore.customButtonJS = false;
+			kvsCore.customButtonData = customButtonData;
+		}
+		
+		/**
+		 */		
+		private function get airAPI():APIForAIR
+		{
+			return api as APIForAIR;
+		}
+		
+		
+		
+		
+		/*********************************************
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 拖拽，双击方式开启文件
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * ********************************************/
+		
+		/**
+		 */		
 		private function registFileRef():void
 		{
 			addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER, onDragIn);
@@ -56,41 +102,48 @@ package
 			}
 		}
 		
+		/**
+		 */		
 		private function onDragDrop(e:NativeDragEvent):void
 		{
 			var filesArray:Array = e.clipboard.getData(ClipboardFormats.FILE_LIST_FORMAT) as Array;
 			if (filesArray.length)
 			{
 				var f:File = filesArray[0];
-				var fs:FileStream = new FileStream(); 
-				fs.addEventListener(Event.COMPLETE, onComplete); 
-				fs.openAsync(f, FileMode.READ); 
+				
+				if (f.extension == "kvs")
+				{
+					airAPI.openFile(f);
+				}
+				else if (f.extension == "jpg" || f.extension == "png")
+				{
+					
+				}
+				else
+				{
+					
+				}
 			}
 		}
 		
+		/**
+		 * 双击方式开启文件
+		 */		
 		private function onInvoke( event:InvokeEvent ):void 
 		{ 
 			if (event.arguments.length > 0) 
 			{ 
 				var f:File = new File(event.arguments[0]); 
-				var fs:FileStream = new FileStream(); 
-				fs.addEventListener(Event.COMPLETE, onComplete); 
-				fs.openAsync(f, FileMode.READ); 
+				airAPI.openFile(f);
 			} 
 		} 
-		private function onComplete( event:Event ):void 
-		{ 
-			var fs:FileStream = event.target as FileStream; 
-			var bs:ByteArray  = new ByteArray;
-			fs.readBytes(bs);
-			kvsCore.importZipData(bs);
-			fs.close(); 
-		}
 		
+		/**
+		 */		
 		private var customButtonData:XML = 
 			<buttons>
-				<button label='打开' tip='打开文件' callBack='importData'/>
-				<button label='保存' tip='保存文件' callBack='exportData'/>
+				<button label='打开' tip='打开文件' callBack='openFile'/>
+				<button label='保存' tip='保存文件' callBack='saveFile'/>
 			</buttons>;
 	}
 }

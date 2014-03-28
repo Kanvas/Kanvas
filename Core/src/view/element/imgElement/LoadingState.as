@@ -6,6 +6,7 @@ package view.element.imgElement
 	
 	import util.img.ImgInsertEvent;
 	import util.img.ImgInsertor;
+	import util.img.ImgLib;
 
 	public class LoadingState extends ImgLoadStateBase
 	{
@@ -22,20 +23,28 @@ package view.element.imgElement
 		}
 		
 		/**
+		 * 这里加载图片分两种情况，web方式从服务器端加载
+		 * 
+		 * 直接从内存中加载，此情况用于air客户端打开文件的场景
 		 */		
 		override public function loadingImg():void
 		{
-			imgLoader.addEventListener(ImgInsertEvent.IMG_LOADED_FROM_SERVER, imgLoaded, false, 0, true);
+			imgLoader.addEventListener(ImgInsertEvent.IMG_LOADED, imgLoaded, false, 0, true);
 			imgLoader.addEventListener(ImgInsertEvent.IMG_LOADED_ERROR, imgLoadError, false, 0, true);
 			
-			imgLoader.loadImg(element.imgVO.url, element.imgVO.imgID, element.imgVO.width, element.imgVO.height);
+			if (ImgLib.ifHasData(element.imgVO.imgID))
+				imgLoader.loadImgBytes(ImgLib.getData(element.imgVO.imgID));
+			else
+				imgLoader.loadImg(element.imgVO.url);
 			
 			render();
 		}
 		
+		/**
+		 */		
 		private function imgLoadError(evt:ImgInsertEvent):void
 		{
-			imgLoader.removeEventListener(ImgInsertEvent.IMG_LOADED_TO_LOCAL, imgLoaded);
+			imgLoader.removeEventListener(ImgInsertEvent.IMG_LOADED, imgLoaded);
 			imgLoader.removeEventListener(ImgInsertEvent.IMG_LOADED_ERROR, imgLoadError);
 			imgLoader = null;
 			
@@ -60,7 +69,7 @@ package view.element.imgElement
 		{
 			element.imgVO.sourceData = evt.bitmapData;
 			
-			imgLoader.removeEventListener(ImgInsertEvent.IMG_LOADED_TO_LOCAL, imgLoaded);
+			imgLoader.removeEventListener(ImgInsertEvent.IMG_LOADED, imgLoaded);
 			imgLoader.removeEventListener(ImgInsertEvent.IMG_LOADED_ERROR, imgLoadError);
 			imgLoader = null;
 			
