@@ -165,7 +165,7 @@ package com.kvs.utils
 		private function transform():void
 		{
 			loader = new Loader;
-			loader.contentLoaderInfo.addEventListener(Event.INIT, defaultHandler);
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, defaultHandler);
 			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, defaultHandler);
 			loader.loadBytes(tempo);
 		}
@@ -174,7 +174,7 @@ package com.kvs.utils
 		{
 			loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, defaultHandler);
 			loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, defaultHandler);
-			if (e.type == Event.INIT)
+			if (e.type == Event.COMPLETE)
 			{
 				var bmd:BitmapData = Bitmap(loader.content).bitmapData;
 				if (width == originalWidth && height == originalHeight)
@@ -190,6 +190,7 @@ package com.kvs.utils
 					decodeBmd();
 				}
 			}
+			
 			dispatchEvent(e);
 		}
 		

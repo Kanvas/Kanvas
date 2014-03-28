@@ -2,6 +2,7 @@ package util.img
 {
 	import com.adobe.images.PNGEncoder;
 	import com.greensock.loading.ImageLoader;
+	import com.kvs.utils.ImageExtractor;
 	import com.kvs.utils.system.OS;
 	
 	import flash.display.Bitmap;
@@ -212,17 +213,18 @@ package util.img
 			//OS.memoryGc();
 			fileReference.removeEventListener(Event.COMPLETE, onFileLoaded);
 			
-			imgLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, bmdLoadedFromLocalHandler);
-			imgLoader.loadBytes(fileReference.data);
+			
+			imageExtractor.addEventListener(Event.COMPLETE, bmdLoadedFromLocalHandler);
+			imageExtractor = new ImageExtractor(fileReference.data);
 		}
 		
 		/**
 		 */		
 		private function bmdLoadedFromLocalHandler(evt:Event):void
 		{
-			imgLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, bmdLoadedFromLocalHandler);
+			imageExtractor.removeEventListener(Event.COMPLETE, bmdLoadedFromLocalHandler);
 			
-			this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_LOADED_TO_LOCAL, (imgLoader.content as Bitmap).bitmapData, imgID));
+			this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_LOADED_TO_LOCAL, imageExtractor.bitmapData, imgID));
 			sendImgDataToServer();
 		}
 		
@@ -243,7 +245,7 @@ package util.img
 				var req:URLRequest = new URLRequest(IMG_UPLOAD_URL);
 				req.method = URLRequestMethod.POST;
 				req.contentType = "application/octet-stream";  
-				req.data = fileReference.data;
+				req.data = imageExtractor.bytes;
 				
 				//发送图片数据流质服务器
 				imgUpLoader.load(req);
@@ -331,6 +333,11 @@ package util.img
 		/**
 		 */		
 		private var imgLoader:Loader = new Loader;
+		
+		/**
+		 * 负责图片压缩优化 
+		 */		
+		private var imageExtractor:ImageExtractor;
 		
 		/**
 		 */		

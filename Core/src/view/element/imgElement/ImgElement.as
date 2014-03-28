@@ -146,7 +146,10 @@ package view.element.imgElement
 			else if (imgVO.url != "null" && RexUtil.ifHasText(imgVO.url))// 再次编辑时从服务器载入图片, 或者从内存中加载图片
 			{
 				currLoadState.loadingImg();
-				
+			}
+			else if (CoreApp.isAIR)
+			{
+				currLoadState.loadingImg();
 			}
 		}
 		
