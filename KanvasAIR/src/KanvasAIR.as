@@ -9,6 +9,7 @@ package
 	import flash.desktop.NativeDragManager;
 	import flash.events.Event;
 	import flash.events.InvokeEvent;
+	import flash.events.KeyboardEvent;
 	import flash.events.NativeDragEvent;
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
@@ -131,6 +132,9 @@ package
 		 */		
 		private function onInvoke( event:InvokeEvent ):void 
 		{ 
+			//先窗口最大化
+			NativeApplication.nativeApplication.activeWindow.maximize();
+			
 			if (event.arguments.length > 0) 
 			{ 
 				var f:File = new File(event.arguments[0]); 

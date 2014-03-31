@@ -26,8 +26,6 @@ package
 		public function APIForAIR(core:CoreApp)
 		{
 			super(core);
-			
-			
 		}
 		
 		/**
@@ -104,47 +102,64 @@ package
 		{
 			if (file)
 			{
-				
-				PerformaceTest.start("save");
-				
-				var writer:ZipFileWriter = new ZipFileWriter();
-				writer.openAsync(this.file);
-				
-				// file info
-				var fileData:ByteArray = new ByteArray();
-				fileData.writeUTFBytes(this.getXMLData());
-				writer.addBytes(fileData,"kvs.xml");
-				//fileData.clear();
-				
-				//图片相关
-				var imgIDs:Array = ImgLib.imgKeys;
-				var imgDataBytes:ByteArray;
-				
-				//缩略图
-				var bmd:BitmapData = core.thumbManager.getShotCut(ConfigInitor.THUMB_WIDTH, ConfigInitor.THUMB_HEIGHT);
-				if (bmd)
-				{
-					imgDataBytes = PNGEncoder.encode(bmd);
-					writer.addBytes(imgDataBytes,"preview.png");
-				}
-				
-				// 添加图片资源数据
-				for each (var imgID:uint in imgIDs)
-				{
-					//imgDataBytes.clear();
-					imgDataBytes = ImgLib.getData(imgID);
-					writer.addBytes(imgDataBytes,imgID.toString() + '.png');
-				}
-				
-				writer.close();
-				
-				PerformaceTest.end("save");
+				writeFile();
 			}
 			else
 			{
-				//file = new File;
-				//file.save();
+				file = new File;
+				file.addEventListener(Event.SELECT, selectFileForSave);
+				file.browseForSave("保存kanvas文件");
 			}
+		}
+		
+		/**
+		 */		
+		private function selectFileForSave(evt:Event):void
+		{
+			file.removeEventListener(Event.SELECT, selectFileForSave);
+				
+			file = new File(file.nativePath + ".kvs")
+			writeFile();
+		}
+		
+		/**
+		 */		
+		private function writeFile():void
+		{
+			PerformaceTest.start("save");
+			
+			var writer:ZipFileWriter = new ZipFileWriter();
+			writer.openAsync(this.file);
+			
+			// file info
+			var fileData:ByteArray = new ByteArray();
+			fileData.writeUTFBytes(this.getXMLData());
+			writer.addBytes(fileData,"kvs.xml");
+			//fileData.clear();
+			
+			//图片相关
+			var imgIDs:Array = ImgLib.imgKeys;
+			var imgDataBytes:ByteArray;
+			
+			//缩略图
+			var bmd:BitmapData = core.thumbManager.getShotCut(ConfigInitor.THUMB_WIDTH, ConfigInitor.THUMB_HEIGHT);
+			if (bmd)
+			{
+				imgDataBytes = PNGEncoder.encode(bmd);
+				writer.addBytes(imgDataBytes,"preview.png");
+			}
+			
+			// 添加图片资源数据
+			for each (var imgID:uint in imgIDs)
+			{
+				//imgDataBytes.clear();
+				imgDataBytes = ImgLib.getData(imgID);
+				writer.addBytes(imgDataBytes,imgID.toString() + '.png');
+			}
+			
+			writer.close();
+			
+			PerformaceTest.end("save");
 		}
 	}
 }

@@ -40,7 +40,6 @@ package
 			
 			file.browse([new FileFilter("Images", "*.jpg;*.png")]);
 			file.addEventListener(Event.SELECT, fileSelected);
-			
 		}
 		
 		/**
@@ -54,27 +53,22 @@ package
 			filestream.readBytes(bytes, 0, file.size);
 				
 			imgExtractor = new ImageExtractor(bytes);
-			imageLoader.addEventListener(ImgInsertEvent.IMG_LOADED, imgLoaded);
-			imageLoader.loadImgBytes(bytes);
+			imgExtractor.addEventListener(Event.COMPLETE, imgLoaded);
 		}
 		
 		/**
 		 */		
-		private function imgLoaded(evt:ImgInsertEvent):void
+		private function imgLoaded(evt:Event):void
 		{
-			var bmd:BitmapData = evt.bitmapData;
+			var bmd:BitmapData = imgExtractor.bitmapData;
 			var imgID:uint = ImgLib.imgID;
 			
-			createImg(evt.bitmapData, imgID);
+			createImg(bmd, imgID);
 			
 			ImgLib.register(imgID.toString(), imgExtractor.bytes);
 				
 			imgElement.toNomalState();
 		}
-		
-		/**
-		 */		
-		private var imageLoader:ImgInsertor = new ImgInsertor;
 		
 		/**
 		 */		

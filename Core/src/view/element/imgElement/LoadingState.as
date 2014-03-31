@@ -73,6 +73,8 @@ package view.element.imgElement
 			imgLoader.removeEventListener(ImgInsertEvent.IMG_LOADED_ERROR, imgLoadError);
 			imgLoader = null;
 			
+			element.removeLoading();
+			
 			element.toNomalState();
 		}
 		

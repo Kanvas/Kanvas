@@ -194,6 +194,7 @@ package com.kvs.utils
 					encodeBmd();
 				}
 			}
+			
 			dispatchEvent(e);
 		}
 		
