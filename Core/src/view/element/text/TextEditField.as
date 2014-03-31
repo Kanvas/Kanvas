@@ -7,6 +7,7 @@ package view.element.text
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
+	import flash.text.engine.BreakOpportunity;
 	import flash.text.engine.CFFHinting;
 	
 	import flashx.textLayout.container.TextContainerManager;
@@ -323,6 +324,7 @@ package view.element.text
 			textLayoutFormat = new TextLayoutFormat;
 			textLayoutFormat.cffHinting = CFFHinting.NONE;
 			textLayoutFormat.textAlign = TextAlign.LEFT;
+			textLayoutFormat.breakOpportunity = BreakOpportunity.AUTO;
 			
 			textManager.hostFormat = textLayoutFormat;
 		}
