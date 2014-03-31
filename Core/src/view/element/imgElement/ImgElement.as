@@ -1,5 +1,6 @@
 package view.element.imgElement
 {
+	import com.kvs.utils.PerformaceTest;
 	import com.kvs.utils.RexUtil;
 	import com.kvs.utils.graphic.BitmapUtil;
 	
@@ -29,7 +30,6 @@ package view.element.imgElement
 			super(vo);
 			xmlData = <img/>;
 			
-			shape.visible = false;
 			autoGroupChangable = false;
 			
 			// 图片加载状态初始化
@@ -38,29 +38,21 @@ package view.element.imgElement
 			currLoadState = loadingState;
 		}
 		
-		public function showBmp(smooth:Boolean = true):void
+		public function showBmp():void
 		{
 			if (bmpLarge && bmpSmall)
 			{
 				var tmpDispl:Bitmap = (width <= minSize || height <= minSize) ? bmpSmall : bmpLarge;
 				if (tmpDispl != bmpDispl)
 				{
-					if (bmpDispl && contains(bmpDispl)) 
-						removeChild(bmpDispl);
+					if (bmpDispl) bmpDispl.visible = false;
 					bmpDispl = tmpDispl;
-					addChild(bmpDispl);
+					bmpDispl.visible = true;
 				}
-				bmpDispl.smoothing = smooth;
+				if (bmpDispl.smoothing!= smooth)
+					bmpDispl.smoothing = smooth;
 			}
 		}
-		
-		override public function updateView(check:Boolean=true):void
-		{
-			super.updateView(check);
-			checkBmdRender();
-		}
-		
-		
 		
 		
 		
@@ -91,7 +83,7 @@ package view.element.imgElement
 		public function toNomalState():void
 		{
 			currLoadState = normalState;
-			
+			removeLoading();
 			initBmp(imgVO.sourceData);
 			currLoadState.render();
 		}
@@ -140,14 +132,9 @@ package view.element.imgElement
 			
 			// 图片插入时
 			if (imgVO.sourceData)
-			{
 				currLoadState.render();
-			}
 			else if (imgVO.url != "null" && RexUtil.ifHasText(imgVO.url))// 再次编辑时从服务器载入图片, 或者从内存中加载图片
-			{
 				currLoadState.loadingImg();
-				
-			}
 		}
 		
 		private var rendered:Boolean;
@@ -193,10 +180,13 @@ package view.element.imgElement
 			{
 				bmdLarge = bmd;
 				bmpLarge = new Bitmap(bmdLarge);
+				bmpLarge.visible = false;
 				bmpLarge.width  =  vo.width;
 				bmpLarge.height =  vo.height;
 				bmpLarge.x = -.5 * vo.width;
 				bmpLarge.y = -.5 * vo.height;
+				bmpLarge.smoothing = true;
+				addChild(bmpLarge);
 				if(!bmdSmall)
 				{
 					var ow:Number = bmdLarge.width;
@@ -214,27 +204,53 @@ package view.element.imgElement
 						bmdSmall = bmdLarge;
 					}
 					bmpSmall = new Bitmap(bmdSmall);
+					bmpSmall.visible = false;
 					bmpSmall.width  =  vo.width;
 					bmpSmall.height =  vo.height;
 					bmpSmall.x = -.5 * vo.width;
 					bmpSmall.y = -.5 * vo.height;
+					bmpSmall.smoothing = true;
+					addChild(bmpSmall);
 				}
 			}
 		}
 		
-		private function checkBmdRender():void
+		public function checkBmdRender():void
 		{
 			var renderBmdNeeded:Boolean = (width > minSize && height > minSize)
 				? (lastWidth<= minSize || lastHeight<= minSize)
 				: (lastWidth > minSize && lastHeight > minSize);
 			lastWidth  = width;
 			lastHeight = height;
-			if (renderBmdNeeded) 
-			{
-				showBmp();
-			}
+			if (renderBmdNeeded) showBmp();
 		}
 		
+		public function get smooth():Boolean
+		{
+			return __smooth;
+		}
+		
+		public function set smooth(value:Boolean):void
+		{
+			if (__smooth!= value)
+			{
+				__smooth = value;
+				if (bmpSmall && bmpLarge)
+				{
+					if (smooth)
+					{
+						bmpSmall.visible = (width < minSize || height < minSize);
+						bmpLarge.visible = !bmpSmall.visible;
+					}
+					else
+					{
+						bmpLarge.visible = false;
+						bmpSmall.visible = true;
+					}
+				}
+			}
+		}
+		private var __smooth:Boolean = true;
 		
 		/**
 		 * 
@@ -264,7 +280,7 @@ package view.element.imgElement
 		
 		private var lastWidth :Number;
 		private var lastHeight:Number;
-		private var minSize   :Number = 20;
+		private var minSize   :Number = 400;
 		
 		private var bmdLarge:BitmapData;
 		private var bmdSmall:BitmapData;

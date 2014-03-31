@@ -208,18 +208,18 @@ package view.element
 			if (isNaN(s))
 				s = vo.scale;
 			
-			numShape.width = numShape.height = vo.height / 5;
+			numShape.width = numShape.height = vo.height * .5;
 			var temSize:Number = numShape.width * s * parent.scaleX;
 			
 			if (temSize > maxNumSize)
 			{
 				var size:Number = maxNumSize / s / parent.scaleX;
 				
-				numShape.width = size;
+				numShape.width  = size;
 				numShape.height = size;
 			}
 			
-			numShape.x = - vo.width / 2 - numShape.width / 2;
+			numShape.x = - vo.width * .5 - numShape.width * .5;
 			numShape.y = - numShape.height;
 		}
 		
@@ -236,12 +236,12 @@ package view.element
 			
 			numLabel.text = ((vo as PageVO).index + 1).toString();
 			numLabel.render();
-			numLabel.x = - numLabel.width / 2;
-			numLabel.y = - numLabel.height / 2;
+			numLabel.x = - numLabel.width  * .5;
+			numLabel.y = - numLabel.height * .5;
 				
 			numShape.graphics.lineStyle(1, 0, 0.8);
 			numShape.graphics.beginFill(0x555555, .8);
-			numShape.graphics.drawCircle(0, 0, size / 2);
+			numShape.graphics.drawCircle(0, 0, size * .5);
 			numShape.graphics.endFill();
 		}
 		

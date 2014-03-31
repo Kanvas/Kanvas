@@ -1,6 +1,7 @@
 package view.element.text
 {
 	import com.kvs.ui.label.TextDrawer;
+	import com.kvs.utils.PerformaceTest;
 	import com.kvs.utils.XMLConfigKit.style.elements.TextFormatStyle;
 	
 	import flash.display.BitmapData;
@@ -227,10 +228,13 @@ package view.element.text
 		 */		
 		public function checkTextBm(canvasScale:Number):void
 		{
-			var w:Number = textManager.compositionWidth;
-			var h:Number = textManager.compositionHeight;
-			var bound:Rectangle = textManager.getContentBounds();
-			textDrawer.checkTextBm(graphics, textCanvas, textVO.scale * canvasScale, 0, 0, bound.width, bound.height);
+			if (visible)
+			{
+				var w:Number = textManager.compositionWidth;
+				var h:Number = textManager.compositionHeight;
+				var bound:Rectangle = textManager.getContentBounds();
+				textDrawer.checkTextBm(graphics, textCanvas, textVO.scale * canvasScale, 0, 0, bound.width, bound.height);
+			}
 		}
 		
 		/**

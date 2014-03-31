@@ -87,13 +87,18 @@ package view.ui
 			__boundDiagonalDistance = RectangleUtil.getDiagonalDistance(bound);
 			
 			fitBgBitmapToBound();
-			
+			synBgImageToCanvas();
 			dispatchEvent(new KVSEvent(KVSEvent.UPATE_BOUND));
 		}
 		
 		/**
 		 */		
 		private var __bound:Rectangle;
+		
+		public function get stageBound():Rectangle
+		{
+			return null;
+		}
 		
 		public function get boundDiagonalDistance():Number
 		{

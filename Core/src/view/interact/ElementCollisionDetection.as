@@ -2,6 +2,7 @@ package view.interact
 {
 	//import com.kvs.utils.HitTest;
 	
+	import com.kvs.utils.PerformaceTest;
 	import com.kvs.utils.RectangleUtil;
 	
 	import flash.display.DisplayObject;
@@ -105,7 +106,7 @@ package view.interact
 			var h:Number = stage.height;
 			var minLineInteractSizeSquare:Number = minInteractSize * minInteractSize * .25;
 			var maxLineInteractSizeSquare:Number = w * w;
-			
+			//PerformaceTest.start("ElementCollisionDetection.updateAfterZoomMove()")
 			for each (var element:ElementBase in elements)
 			{
 				if (element.visible)
@@ -136,6 +137,7 @@ package view.interact
 					}
 				}
 			}
+			//PerformaceTest.end("ElementCollisionDetection.updateAfterZoomMove()")
 		}
 		
 		/**

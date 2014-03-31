@@ -1,5 +1,7 @@
 package view.interact
 {
+	import com.kvs.utils.PerformaceTest;
+	
 	import commands.Command;
 	
 	import consts.ConstsTip;
@@ -29,14 +31,8 @@ package view.interact
 	import view.element.text.TextEditField;
 	import view.elementSelector.ElementSelector;
 	import view.interact.autoGroup.AutoGroupController;
-	import view.interact.interactMode.EditMode;
-	import view.interact.interactMode.ModeBase;
-	import view.interact.interactMode.PrevMode;
-	import view.interact.interactMode.SelectedMode;
-	import view.interact.interactMode.UnSelectedMode;
-	import view.interact.keyboard.DisKeyboardState;
-	import view.interact.keyboard.EnableKeyboardSate;
-	import view.interact.keyboard.KeyboardStateBase;
+	import view.interact.interactMode.*;
+	import view.interact.keyboard.*;
 	import view.interact.multiSelect.MultiSelectControl;
 	import view.interact.multiSelect.TemGroupElement;
 	import view.interact.zoomMove.ZoomMoveControl;
@@ -741,7 +737,7 @@ package view.interact
 			{
 				if (element is ImgElement)
 				{
-					(element as ImgElement).showBmp(false);
+					(element as ImgElement).smooth = false
 				}
 			}
 		}
@@ -750,27 +746,36 @@ package view.interact
 		 */		
 		public function flashTrek():void
 		{
-			currentMode.updateSelector();
-			collisionDetection.updateAfterZoomMove();
+			if (currentMode != preMode) 
+			{
+				currentMode.updateSelector();
+				collisionDetection.updateAfterZoomMove();
+				
+				coreApp.updatePastPoint();
+			}
+		
 			
 			//检测，重绘文本， 以达到像素精度不失真
+			//PerformaceTest.start("CoreMediator.flashTrek()")
 			var elements:Vector.<ElementBase> = CoreFacade.coreProxy.elements;
 			for each (var element:ElementBase in elements)
 			{
-				if (element is TextEditField && element.visible)
+				if (element.visible)
 				{
-					(element as TextEditField).checkTextBm(canvas.scaleX);
-				}
-				
-				//刷新页面编号尺寸，防止太大
-				if (element.visible && element is PageElement)
-				{
-					(element as PageElement).layoutPageNum();
+					if (element is TextEditField)
+					{
+						(element as TextEditField).checkTextBm(canvas.scaleX);
+					}
+					//刷新页面编号尺寸，防止太大
+					else if (element is PageElement)
+					{
+						(element as PageElement).layoutPageNum();
+					}
 				}
 			}
-			
+			//PerformaceTest.end("CoreMediator.flashTrek()")
 			//mainUI.drawBgInteractorShape();
-			coreApp.updatePastPoint();
+			
 		}
 		
 		/**
@@ -782,7 +787,7 @@ package view.interact
 			{
 				if (element is ImgElement)
 				{
-					(element as ImgElement).showBmp(true);
+					(element as ImgElement).smooth = true;
 				}
 			}
 		}

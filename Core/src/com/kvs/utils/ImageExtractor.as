@@ -76,7 +76,8 @@ package com.kvs.utils
 		
 		private function analizePNG():void
 		{
-			tempo.position = 16;
+			tempo.readUnsignedInt();
+			tempo.readUTFBytes(4);
 			__originalWidth  = tempo.readUnsignedInt();
 			__originalHeight = tempo.readUnsignedInt();
 		}
@@ -121,7 +122,10 @@ package com.kvs.utils
 						jump = 0;
 						index = 0;
 					}
-					else break;
+					else 
+					{
+						break;
+					}
 				} 
 				else 
 				{
@@ -145,9 +149,9 @@ package com.kvs.utils
 		private function process():void
 		{
 			var size:Number = originalWidth * originalHeight;
-			if (size > MAX_SUPPORTED_SIZE)
+			if (size > MAX_SUPPORTED_SIZE || originalWidth > MAX_SUPPORTED_WIDTH || originalHeight > MAX_SUPPORTED_WIDTH)
 			{
-				throw new Error("图片像素尺寸超过了支持的最大尺寸，支持的尺寸宽*高在16777216以下！");;
+				throw new Error("图片像素尺寸 " + originalWidth + " * " + originalHeight + " 超过了支持的最大尺寸，支持的尺寸宽*高在16777216以下，且宽度和高度高度都必须在8000以下！");;
 			}
 			else
 			{
@@ -165,7 +169,7 @@ package com.kvs.utils
 		private function transform():void
 		{
 			loader = new Loader;
-			loader.contentLoaderInfo.addEventListener(Event.INIT, defaultHandler);
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, defaultHandler);
 			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, defaultHandler);
 			loader.loadBytes(tempo);
 		}
@@ -174,7 +178,7 @@ package com.kvs.utils
 		{
 			loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, defaultHandler);
 			loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, defaultHandler);
-			if (e.type == Event.INIT)
+			if (e.type == Event.COMPLETE)
 			{
 				var bmd:BitmapData = Bitmap(loader.content).bitmapData;
 				if (width == originalWidth && height == originalHeight)
@@ -187,24 +191,18 @@ package com.kvs.utils
 					var matrix:Matrix = new Matrix;
 					matrix.scale(width / originalWidth, height / originalHeight);
 					__bitmapData.draw(bmd, matrix, null, null, null, true);
-					decodeBmd();
+					encodeBmd();
 				}
 			}
 			dispatchEvent(e);
 		}
 		
-		private function decodeBmd():void
+		private function encodeBmd():void
 		{
 			if (type == "jpg")
-			{
-				var jpgEncoderOptions:JPEGEncoderOptions = new JPEGEncoderOptions(quality);
-				__bytes = bitmapData.encode(bitmapData.rect, jpgEncoderOptions);
-			}
+				__bytes = bitmapData.encode(bitmapData.rect, new JPEGEncoderOptions(quality));
 			else if (type == "png")
-			{
-				var pngEncoderOptions:PNGEncoderOptions = new PNGEncoderOptions;
-				__bytes = bitmapData.encode(bitmapData.rect, pngEncoderOptions);
-			}
+				__bytes = bitmapData.encode(bitmapData.rect, new PNGEncoderOptions);
 		}
 		
 		
@@ -282,7 +280,11 @@ package com.kvs.utils
 		/**
 		 * 支持的最大图片尺寸，宽与高的乘积，目前最大支持4096*4096 。
 		 */
-		public  static const MAX_SUPPORTED_SIZE:Number = 16777216;
+		public  static const MAX_SUPPORTED_SIZE  :Number = 16777216;
+		
+		public  static const MAX_SUPPORTED_WIDTH :Number = 8000;
+		
+		public  static const MAX_SUPPORTED_HEIGHT:Number = 8000;
 		
 		private static const PNG_SIG:Array = [0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A];
 		

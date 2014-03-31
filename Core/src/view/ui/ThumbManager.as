@@ -32,7 +32,7 @@ package view.ui
 	{
 		public function ThumbManager(app:CoreApp)
 		{
-			this.core = app;
+			core = app;
 		}
 		
 		/**

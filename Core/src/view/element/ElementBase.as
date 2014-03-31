@@ -3,6 +3,7 @@ package view.element
 	import com.kvs.ui.clickMove.ClickMoveControl;
 	import com.kvs.ui.clickMove.IClickMove;
 	import com.kvs.utils.MathUtil;
+	import com.kvs.utils.PerformaceTest;
 	import com.kvs.utils.RectangleUtil;
 	import com.kvs.utils.StageUtil;
 	import com.kvs.utils.ViewUtil;
@@ -440,6 +441,7 @@ package view.element
 		 */		
 		public function updateView(check:Boolean = true):void
 		{
+			//PerformaceTest.start("ElementBase.updateView()")
 			if (check && stage)
 			{
 				var rect:Rectangle = LayoutUtil.getItemRect(parent as Canvas, this);
@@ -473,6 +475,7 @@ package view.element
 				super.x = tmpX * prtCos - tmpY * prtSin + parent.x;
 				super.y = tmpX * prtSin + tmpY * prtCos + parent.y;
 			}
+			//PerformaceTest.end("ElementBase.updateView()");
 		}
 		
 		/**

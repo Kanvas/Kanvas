@@ -26,8 +26,7 @@ package com.kvs.ui.label
 		 */		
 		public function checkTextBm(shape:Graphics, textCanvas:Sprite, scale:Number = 1, tx:Number = 0, ty:Number = 0, w:Number = 1, h:Number = 1):void
 		{
-			if (scale < 0)
-				scale = -scale;
+			scale = Math.abs(scale);
 			try
 			{
 				if (textBMD)
@@ -84,8 +83,7 @@ package com.kvs.ui.label
 		 */		
 		public function checkVisible(shape:Graphics, textCanvas:Sprite, scale:Number = 1, tx:Number = 0, ty:Number = 0, w:Number = 1, h:Number = 1):void
 		{
-			if (scale < 0)
-				scale *= - 1;
+			scale = Math.abs(scale);
 			
 			if (scale <= 1.5 && scale >= 0.3)
 			{

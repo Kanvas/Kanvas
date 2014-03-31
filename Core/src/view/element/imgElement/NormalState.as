@@ -32,11 +32,7 @@ package view.element.imgElement
 		 */		
 		override public function render():void
 		{
-			if (element.imgVO.sourceData)
-			{
-				element.graphics.clear();
-				element.showBmp();
-			}
+			element.showBmp();
 		}
 	}
 }
