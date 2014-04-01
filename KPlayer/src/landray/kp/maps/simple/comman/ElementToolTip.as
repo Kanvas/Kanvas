@@ -43,7 +43,7 @@ package landray.kp.maps.simple.comman
 				element = BaseElement(e.target);
 				tipsVO.metaData = element;
 				
-				if (element.related)
+				if (element.tiped)
 				{
 					if (element.tips)
 					{
@@ -51,7 +51,6 @@ package landray.kp.maps.simple.comman
 						{
 							target.kp_internal::setToolTipMultiline(element.tipWidth);
 						}
-						trace("show Handler:", element.tipWidth)
 						showTips();
 					}
 					else

@@ -36,7 +36,8 @@ package landray.kp.maps.simple.elements
 		{
 			updateLayout();
 			
-			mouseEnabled = buttonMode = related;
+			mouseEnabled = (tiped || related);
+			buttonMode = related;
 			
 			if (vo.style) 
 			{
@@ -93,7 +94,12 @@ package landray.kp.maps.simple.elements
 		
 		public function get related():Boolean
 		{
-			return vo.property.toLocaleLowerCase() == "true"
+			return vo.property.toLocaleLowerCase() == "true";
+		}
+		
+		public function get tiped():Boolean
+		{
+			return vo.property.toLocaleLowerCase() == "tip";
 		}
 		
 		public function get tips():String
