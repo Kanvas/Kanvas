@@ -49,8 +49,12 @@ package
 	
 		private function initDebugger():void
 		{
-			if(!debugger)
-				addChild(debugger = new Debugger);
+			var debug:Boolean = (loaderInfo.parameters.debug) ? loaderInfo.parameters.debug == "true" : false;
+			if (debug)
+			{
+				if(!debugger)
+					addChild(debugger = new Debugger);
+			}
 		}
 		
 		/**
