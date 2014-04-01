@@ -21,7 +21,7 @@ package com.kvs.utils.system
 		public static function enlargeMemory():void
 		{
 			if (memoryIMG == null)
-				memoryIMG = new BitmapData(1000, 1000);
+				memoryIMG = new BitmapData(2048, 2048);
 		}
 		
 		/**
