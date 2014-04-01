@@ -118,6 +118,7 @@
 				}
 			};
 			
+			chart.debug = hasProp(arg.debug) ? arg.debug : false;
 			chart.width = hasProp(arg.width) ? arg.width : chartW;
 			chart.height = hasProp(arg.height) ? arg.height : chartH;
 			
@@ -127,6 +128,7 @@
 			// 从而便于将消息分发至对应的图表对象(JS)
 			var flashvars = {};
 			flashvars.id = chart.id;
+			flashvars.debug = chart.debug;
 			
 			initSWF(chart, flashvars, transparent);
 				

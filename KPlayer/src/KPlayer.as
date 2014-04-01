@@ -30,7 +30,7 @@ package
 		 */
 		private function initialize():void
 		{
-			//initDebugger();
+			initDebugger();
 			Debugger.debug("初始化");
 			
 			//从网页获取ID参数
@@ -45,8 +45,12 @@ package
 	
 		private function initDebugger():void
 		{
-			if(!debugger)
-				addChild(debugger = new Debugger);
+			var debug:Boolean = (loaderInfo.parameters.debug) ? loaderInfo.parameters.debug == "true" : false;
+			if (debug)
+			{
+				if(!debugger)
+					addChild(debugger = new Debugger);
+			}
 		}
 		
 		/**

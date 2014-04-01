@@ -8,10 +8,12 @@ package view.elementSelector.scaleRollControl
 	
 	import flash.display.Sprite;
 	
+	import view.element.GroupElement;
 	import view.element.PageElement;
 	import view.element.text.TextEditField;
 	import view.elementSelector.ControlPointBase;
 	import view.elementSelector.ElementSelector;
+	import view.interact.multiSelect.TemGroupElement;
 	
 	/**
 	 */	
@@ -43,20 +45,19 @@ package view.elementSelector.scaleRollControl
 		{
 			// 比例的增量
 			var scaleDis:Number = (selector.curRDis) / selector.rDis;
-			var scale:Number = selector.curScale * Math.abs(scaleDis);
+			var s:Number = selector.curScale * Math.abs(scaleDis);
 			//缩放自动对齐检测，如检测不到需要对齐的缩放值，返回NaN
-			var temp:Number = selector.coreMdt.autoAlignController.checkScale(selector.element, scale);
-			if (!isNaN(temp))
-				scale = temp;
-			selector.element.scale = scale;
+			scale = selector.coreMdt.autoAlignController.checkScale(selector.element, s);
 			
-			selector.coreMdt.autoGroupController.scale(selector.element.scale / selector.curScale, selector.element);
+			selector.element.scale = s;
+			
+			selector.coreMdt.autoGroupController.scale(selector.element.scale / selector.curScale, selector.element, group);
 			
 			selector.layoutInfo.update(false);
 			selector.render();
 			
 			if (selector.element is PageElement)
-				(selector.element as PageElement).layoutPageNum(scale);
+				(selector.element as PageElement).layoutPageNum(s);
 			
 		}
 		
@@ -82,12 +83,20 @@ package view.elementSelector.scaleRollControl
 			
 			lastMouseX = selector.coreMdt.coreApp.stage.mouseX;
 			lastMouseY = selector.coreMdt.coreApp.stage.mouseY;
+			
+			group = ((selector.element is TemGroupElement) || (selector.element is GroupElement));
 		}
 		
 		/**
 		 */			
 		public function stopMove():void
 		{
+			if (!isNaN(scale))
+			{
+				selector.element.scale = scale;
+				selector.coreMdt.autoGroupController.scale(selector.element.scale / selector.curScale, selector.element, group);
+			}
+			
 			var index:Vector.<int> = selector.coreMdt.autoLayerController.autoLayer(selector.element);
 			if (index)
 			{
@@ -113,5 +122,7 @@ package view.elementSelector.scaleRollControl
 		private var lastMouseX:Number;
 		private var lastMouseY:Number;
 		
+		private var scale:Number;
+		private var group:Boolean;
 	}
 }

@@ -11,7 +11,9 @@ package view.interact
 	import util.layout.LayoutTransformer;
 	
 	import view.element.ElementBase;
+	import view.element.GroupElement;
 	import view.elementSelector.ElementSelector;
+	import view.interact.multiSelect.TemGroupElement;
 
 	/**
 	 * 元素移动控制器
@@ -43,6 +45,8 @@ package view.interact
 			oldPropertyObj = {};
 			oldPropertyObj.x = element.x;
 			oldPropertyObj.y = element.y;
+			
+			group = ((curMovingElement is TemGroupElement) || (curMovingElement is GroupElement));
 		}
 		
 		private var selectorStartX:Number;
@@ -63,11 +67,6 @@ package view.interact
 			selector.y = selectorStartY + disY;
 			coreMdt.currentMode.drawShotFrame();
 			
-			//stageStartX = mainUI.stage.mouseX;
-			//stageStartY = mainUI.stage.mouseY;
-			
-			//coreMdt.moveSelector(disX, disY);
-			
 			// 元素的移动是基于选择其的位置的
 			var elementPoint:Point = LayoutUtil.stagePointToElementPoint(selector.x, selector.y, selector.coreMdt.canvas);
 			curMovingElement.x = point.x = elementPoint.x;
@@ -75,15 +74,6 @@ package view.interact
 			
 			
 			align = coreMdt.autoAlignController.checkPosition(curMovingElement);
-			/*if (temp)
-			{
-				if (! isNaN(temp.x))
-					point.x = curMovingElement.x + temp.x;
-				if (! isNaN(temp.y))
-					point.y = curMovingElement.y + temp.y;
-			}
-			curMovingElement.x = point.x;
-			curMovingElement.y = point.y;*/
 			
 			var selectorPoint:Point = LayoutUtil.elementPointToStagePoint(curMovingElement.x, curMovingElement.y, coreMdt.canvas);
 			selector.x = selectorPoint.x;
@@ -92,7 +82,7 @@ package view.interact
 			if (curMovingElement.autoGroupChangable)
 			{
 				coreMdt.autoGroupController.move(curMovingElement.x - curMovingElement.vo.x, 
-														curMovingElement.y - curMovingElement.vo.y);
+												 curMovingElement.y - curMovingElement.vo.y, group);
 			}
 		}
 		
@@ -105,16 +95,19 @@ package view.interact
 			
 			if (align)
 			{
+				if (curMovingElement == null) return;
 				if (! isNaN(align.x))
 					point.x = curMovingElement.x + align.x;
 				if (! isNaN(align.y))
 					point.y = curMovingElement.y + align.y;
+				if (curMovingElement.autoGroupChangable)
+				{
+					coreMdt.autoGroupController.move(curMovingElement.x - curMovingElement.vo.x, 
+													 curMovingElement.y - curMovingElement.vo.y, group);
+				}
+				curMovingElement.x = point.x;
+				curMovingElement.y = point.y;
 			}
-			
-			if (curMovingElement == null) return;
-			
-			curMovingElement.x = point.x;
-			curMovingElement.y = point.y;
 			
 			coreMdt.autoAlignController.clear();
 			
@@ -146,8 +139,6 @@ package view.interact
 				if (coreMdt.createNewShapeMouseUped && coreMdt.createNewShapeTweenOver)
 					coreMdt.sendNotification(Command.SElECT_ELEMENT, curMovingElement);
 			}
-			
-			
 		}
 		
 		
@@ -207,5 +198,7 @@ package view.interact
 		private var point:Point = new Point;
 		private var align:Point;
 		private var oldPropertyObj:Object;
+		
+		private var group:Boolean;
 	}
 }

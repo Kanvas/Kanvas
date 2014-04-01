@@ -47,7 +47,7 @@ package commands
 			var yOff:Number = newGroup.vo.y - pastElement.vo.y;
 			
 			CoreFacade.coreMediator.checkAutoGroup(newGroup);
-			CoreFacade.coreMediator.autoGroupController.moveTo(xOff, yOff); 
+			CoreFacade.coreMediator.autoGroupController.moveTo(xOff, yOff, true); 
 			
 			
 			//将所有子元件加入到kanvas中-------------------------------------------------------------------------------

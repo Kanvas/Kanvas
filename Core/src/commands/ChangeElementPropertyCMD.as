@@ -12,8 +12,10 @@ package commands
 	import util.undoRedo.UndoRedoMannager;
 	
 	import view.element.ElementBase;
+	import view.element.GroupElement;
 	import view.element.imgElement.ImgElement;
 	import view.elementSelector.ElementSelector;
+	import view.interact.multiSelect.TemGroupElement;
 
 	/**
 	 * 改变元件的属性
@@ -90,9 +92,8 @@ package commands
 		private function setProperty(obj:Object, render:Boolean = false):void
 		{
 			var ifNeedRender:Boolean = true;
-			
+			var group:Boolean = ((element is TemGroupElement) || (element is GroupElement));
 			var page:Boolean = (element.vo is PageVO);
-			var thumb:Boolean;
 			
 			for (var propertyName:String in obj) 
 			{
@@ -108,7 +109,7 @@ package commands
 						{
 							if (page && !thumb && thumbPropertyNames[propertyName]) 
 							{
-								thumb = true;
+								var thumb:Boolean = true;
 								PageUtil.registUpdateThumbVO(PageVO(element.vo));
 							}
 							element.vo[propertyName] = obj[propertyName];
@@ -121,7 +122,7 @@ package commands
 				}
 			}
 			
-			if (element.autoGroupChangable && autoGroupEnabled)
+			if ((element.autoGroupChangable && autoGroupEnabled) || group)
 			{
 				CoreFacade.coreMediator.autoGroupController.resetElements(groupElements);
 				
@@ -130,17 +131,17 @@ package commands
 				
 				if (obj["x"] != undefined && obj["y"] != undefined)
 				{
-					CoreFacade.coreMediator.autoGroupController.moveTo(newObj.x - oldObj.x, newObj.y - oldObj.y);
+					CoreFacade.coreMediator.autoGroupController.moveTo(newObj.x - oldObj.x, newObj.y - oldObj.y, group);
 					ifNeedRender = false;
 				}
 				if (obj["rotation"] != undefined)
 				{
-					CoreFacade.coreMediator.autoGroupController.rollTo(newObj.rotation - oldObj.rotation, element);
+					CoreFacade.coreMediator.autoGroupController.rollTo(newObj.rotation - oldObj.rotation, element, group);
 					ifNeedRender = false;
 				}
 				if (obj["scale"] != undefined)
 				{
-					CoreFacade.coreMediator.autoGroupController.scaleTo(newObj.scale / oldObj.scale, element);
+					CoreFacade.coreMediator.autoGroupController.scaleTo(newObj.scale / oldObj.scale, element, group);
 					ifNeedRender = true;// 文本，页面元素最终需要重绘
 				}
 			}

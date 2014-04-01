@@ -75,7 +75,7 @@ package commands
 			//复制元素与原始元素坐标差
 			var xOff:Number = newGroup.vo.x - pastElement.vo.x;
 			var yOff:Number = newGroup.vo.y - pastElement.vo.y;
-			CoreFacade.coreMediator.autoGroupController.moveTo(xOff, yOff); 
+			CoreFacade.coreMediator.autoGroupController.moveTo(xOff, yOff, true); 
 			
 			
 			
