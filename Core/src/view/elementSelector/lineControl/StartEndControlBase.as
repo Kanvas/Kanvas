@@ -108,8 +108,8 @@ package view.elementSelector.lineControl
 		{
 		}
 		
-		private var lastMouseX:Number;
-		private var lastMouseY:Number;
+		protected var lastMouseX:Number;
+		protected var lastMouseY:Number;
 		
 		/**
 		 */		
@@ -128,8 +128,12 @@ package view.elementSelector.lineControl
 		protected var endY:Number = 0;
 		
 		/**
+		 */
+		protected var rotation:Number;
+		
+		/**
 		 */		
-		private var oldObj:Object;
+		protected var oldObj:Object;
 		
 	}
 }

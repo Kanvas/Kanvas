@@ -2,13 +2,16 @@ package view.elementSelector.scaleRollControl
 {
 	import com.kvs.ui.clickMove.ClickMoveControl;
 	import com.kvs.ui.clickMove.IClickMove;
+	import com.kvs.utils.MathUtil;
 	
 	import commands.Command;
 	
 	import flash.display.Sprite;
 	
+	import view.element.GroupElement;
 	import view.elementSelector.ControlPointBase;
 	import view.elementSelector.ElementSelector;
+	import view.interact.multiSelect.TemGroupElement;
 	
 	/**
 	 * 图形旋转控制
@@ -42,23 +45,31 @@ package view.elementSelector.scaleRollControl
 			rote = Math.ceil(rote);
 			
 			//旋转自动对齐检测，如检测不到需要对齐的角度，返回NaN
-			var rotation:Number = selector.coreMdt.autoAlignController.checkRotation(selector.element, rote);
-			if (!isNaN(rotation))
-				rote = rotation;
-			
-			dis = rote - oldRotation;
+			rotation = MathUtil.modRotation(selector.coreMdt.autoAlignController.checkRotation(selector.element, rote));
 			
 			selector.element.vo.rotation = rote;
 			selector.element.rotation = rote;
 			selector.rote();
 			
-			selector.coreMdt.autoGroupController.roll(dis, selector.element);
+			selector.coreMdt.autoGroupController.roll(dis, selector.element, group);
 		}
 		
 		/**
 		 */		
 		public function stopMove():void
 		{
+			if (!isNaN(rotation))
+			{
+				selector.element.vo.rotation = rotation;
+				selector.element.rotation = rotation;
+				selector.rote();
+				
+				var dis:Number = rotation - oldRotation;
+				
+				selector.coreMdt.autoGroupController.roll(dis, selector.element, group);
+			}
+			
+			
 			var index:Vector.<int> = selector.coreMdt.autoLayerController.autoLayer(selector.element);
 			if (index)
 			{
@@ -102,6 +113,8 @@ package view.elementSelector.scaleRollControl
 			
 			lastMouseX = selector.coreMdt.mainUI.stage.mouseX;
 			lastMouseY = selector.coreMdt.mainUI.stage.mouseY;
+			
+			group = ((selector.element is TemGroupElement) || (selector.element is GroupElement));
 		}
 		
 		private var lastMouseX:Number;
@@ -115,5 +128,8 @@ package view.elementSelector.scaleRollControl
 		 */		
 		private var oldRotation:Number = 0;
 		
+		private var rotation:Number;
+		
+		private var group:Boolean;
 	}
 }

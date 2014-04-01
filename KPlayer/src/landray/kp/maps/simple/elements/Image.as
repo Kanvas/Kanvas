@@ -33,6 +33,7 @@ package landray.kp.maps.simple.elements
 			
 			if (CoreUtil.ifHasText(imgVO.url))// 再次编辑时从服务器载入图片
 			{
+				Debugger.debug("Image loadImg:"+imgVO.url)
 				imgLoader = new ImgInsertor;
 				imgLoader.addEventListener(ImgInsertEvent.IMG_LOADED_FROM_SERVER, imgLoaded, false, 0, true);
 				imgLoader.addEventListener(ImgInsertEvent.IMG_LOADED_ERROR, imgLoadError, false, 0, true);
@@ -67,6 +68,7 @@ package landray.kp.maps.simple.elements
 		 */		
 		private function imgLoadError(evt:ImgInsertEvent):void
 		{
+			Debugger.debug("Image imgLoadError:"+imgVO.url)
 			imgLoader.removeEventListener(ImgInsertEvent.IMG_LOADED_TO_LOCAL, imgLoaded);
 			imgLoader.removeEventListener(ImgInsertEvent.IMG_LOADED_ERROR, imgLoadError);
 			imgLoader = null;

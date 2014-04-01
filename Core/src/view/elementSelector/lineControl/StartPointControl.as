@@ -1,5 +1,7 @@
 package view.elementSelector.lineControl
 {
+	import commands.Command;
+	
 	import fl.controls.SelectableList;
 	
 	import view.elementSelector.ControlPointBase;
@@ -23,8 +25,13 @@ package view.elementSelector.lineControl
 			
 			super.moveOff(xOff, yOff);
 			
-			var rotation:Number = selector.coreMdt.autoAlignController.checkRotation(selector.element, selector.element.rotation);
-			if (! isNaN(rotation))
+			rotation = selector.coreMdt.autoAlignController.checkRotation(selector.element, selector.element.rotation);
+			
+		}
+		
+		override public function stopMove():void
+		{
+			if (!isNaN(rotation))
 			{
 				vo.rotation = rotation;
 				var rad:Number = vo.rotation / 180 * Math.PI;
@@ -35,7 +42,8 @@ package view.elementSelector.lineControl
 				selector.element.render();
 				selector.update();
 			}
-		
+			
+			super.stopMove();
 		}
 	}
 	

@@ -137,15 +137,18 @@ package util.textFlow
 					{
 						//多行文本
 						
-						var stringToTextFlow:ITextImporter = TextConverter.getImporter(TextConverter.TEXT_LAYOUT_FORMAT);
+						var stringToTextFlow:ITextImporter = TextConverter.getImporter(TextConverter.PLAIN_TEXT_FORMAT);
 						
 						multyLineTextFlow = stringToTextFlow.importToFlow(text);
-						multyLineTextFlow.hostFormat = txtManager.hostFormat;
-						
-						staticTextFlowFactory.compositionBounds = readyBound;
-						
-						staticTextFlowFactory.createTextLines(recycleTextLine, multyLineTextFlow);
-						mesuredBound = staticTextFlowFactory.getContentBounds();
+						if (multyLineTextFlow)
+						{
+							multyLineTextFlow.hostFormat = txtManager.hostFormat;
+							
+							staticTextFlowFactory.compositionBounds = readyBound;
+							
+							staticTextFlowFactory.createTextLines(recycleTextLine, multyLineTextFlow);
+							mesuredBound = staticTextFlowFactory.getContentBounds();
+						}
 					}
 					else
 					{

@@ -33,7 +33,7 @@ package
 		 */
 		private function initialize():void
 		{
-			//initDebugger();
+			initDebugger();
 			Debugger.debug("初始化");
 			
 			//从网页获取ID参数

@@ -8,7 +8,9 @@ package view.interact
 	import util.layout.LayoutTransformer;
 	
 	import view.element.ElementBase;
+	import view.element.GroupElement;
 	import view.elementSelector.ElementSelector;
+	import view.interact.multiSelect.TemGroupElement;
 
 	/**
 	 * 元素移动控制器
@@ -40,6 +42,8 @@ package view.interact
 			oldPropertyObj = {};
 			oldPropertyObj.x = element.x;
 			oldPropertyObj.y = element.y;
+			
+			group = ((selector.element is TemGroupElement) || (selector.element is GroupElement));
 		}
 		
 		private var selectorStartX:Number;
@@ -69,25 +73,20 @@ package view.interact
 			curMovingElement.y = point.y = layoutTransformer.stageYToElementY(selector.y);
 			
 			
-			var temp:Point = coreMdt.autoAlignController.checkPosition(curMovingElement);
-			if (temp)
-			{
-				if (! isNaN(temp.x))
-					point.x = curMovingElement.x + temp.x;
-				if (! isNaN(temp.y))
-					point.y = curMovingElement.y + temp.y;
-			}
+			
 			curMovingElement.x = point.x;
 			curMovingElement.y = point.y;
 			
 			selector.x = layoutTransformer.elementXToStageX(curMovingElement.x);
 			selector.y = layoutTransformer.elementYToStageY(curMovingElement.y);
 			
+			align = coreMdt.autoAlignController.checkPosition(curMovingElement);
+			
 			//curMovingElement.x = layoutTransformer.stageXToElementX(selector.x);
 			//curMovingElement.y = layoutTransformer.stageYToElementY(selector.y);
 			
 			coreMdt.autoGroupController.moveElement(curMovingElement.x - curMovingElement.vo.x, 
-													curMovingElement.y - curMovingElement.vo.y);
+													curMovingElement.y - curMovingElement.vo.y, group);
 		}
 		
 		/**
@@ -95,6 +94,22 @@ package view.interact
 		public function stopMove():void
 		{
 			mainUI.stage.removeEventListener(MouseEvent.MOUSE_MOVE, movingElementHandler);
+			
+			if (align)
+			{
+				if (! isNaN(align.x))
+					point.x = curMovingElement.x + align.x;
+				if (! isNaN(align.y))
+					point.y = curMovingElement.y + align.y;
+				curMovingElement.x = point.x;
+				curMovingElement.y = point.y;
+				
+				selector.x = layoutTransformer.elementXToStageX(curMovingElement.x);
+				selector.y = layoutTransformer.elementYToStageY(curMovingElement.y);
+				coreMdt.autoGroupController.moveElement(curMovingElement.x - curMovingElement.vo.x, 
+														curMovingElement.y - curMovingElement.vo.y, group);
+			}
+			
 			coreMdt.currentMode.moveElementEnd();
 			
 			coreMdt.autoAlignController.clear();
@@ -185,5 +200,8 @@ package view.interact
 		
 		private var point:Point = new Point;
 		private var oldPropertyObj:Object;
+		private var align:Point;
+		
+		private var group:Boolean;
 	}
 }

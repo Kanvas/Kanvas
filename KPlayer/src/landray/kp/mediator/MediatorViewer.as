@@ -22,6 +22,7 @@ package landray.kp.mediator
 	import util.img.ImgInsertEvent;
 	import util.img.ImgInsertor;
 	
+	import view.ui.Debugger;
 	import view.ui.IMainUIMediator;
 	
 	/**
@@ -179,12 +180,14 @@ package landray.kp.mediator
 		 */
 		kp_internal function setBackground(value:BgVO):void
 		{
-			if (CoreUtil.ifHasText(value.imgURL)) 
+			Debugger.debug("backgoundimgURL:", value.imgURL);
+			if (CoreUtil.ifHasText(value.imgURL) && value.imgURL != "null" && value.imgURL != "undefined" && value.imgURL != " ") 
 			{
+				Debugger.debug("begin load:" + value.imgURL);
 				loader = new ImgInsertor;
 				loader.addEventListener(ImgInsertEvent.IMG_LOADED_FROM_SERVER, loaded, false, 0, true);
 				loader.loadImg(value.imgURL, value.imgID);
-			} 
+			}
 			else if (CoreUtil.imageLibHasData(value.imgID)) 
 			{
 				viewer.drawBGImg(CoreUtil.imageLibGetData(value.imgID));

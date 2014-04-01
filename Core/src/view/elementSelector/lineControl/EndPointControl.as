@@ -26,7 +26,13 @@ package view.elementSelector.lineControl
 			
 			super.moveOff(xOff, yOff);
 			
-			var rotation:Number = selector.coreMdt.autoAlignController.checkRotation(selector.element, selector.element.rotation);
+			rotation = selector.coreMdt.autoAlignController.checkRotation(selector.element, selector.element.rotation);
+			
+			
+		}
+		
+		override public function stopMove():void
+		{
 			if (! isNaN(rotation))
 			{
 				vo.rotation = rotation;
@@ -35,6 +41,7 @@ package view.elementSelector.lineControl
 				selector.update();
 			}
 			
+			super.stopMove();
 		}
 	}
 }

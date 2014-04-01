@@ -3,6 +3,7 @@ package com.kvs.ui.label
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
 	import flash.text.TextFormat;
+	import flash.text.engine.BreakOpportunity;
 	import flash.text.engine.CFFHinting;
 	import flash.text.engine.FontLookup;
 	
@@ -35,6 +36,7 @@ package com.kvs.ui.label
 			_textLayoutFormat.cffHinting = CFFHinting.NONE;
 			_textLayoutFormat.textAlign = TextAlign.LEFT;
 			_textLayoutFormat.fontLookup = FontLookup.EMBEDDED_CFF;
+			_textLayoutFormat.breakOpportunity = BreakOpportunity.AUTO;
 			
 			_textManager.hostFormat = _textLayoutFormat;
 		}

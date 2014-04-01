@@ -10,7 +10,6 @@ package view.editor.text
 	import model.ConfigInitor;
 	
 	import view.elementSelector.ControlPointBase;
-	import view.elementSelector.scaleRollControl.ScalePoint;
 
 	/**
 	 * 文本输入框的型变控制器

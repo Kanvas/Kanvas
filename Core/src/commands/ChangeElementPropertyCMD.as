@@ -9,7 +9,9 @@ package commands
 	import util.undoRedo.UndoRedoMannager;
 	
 	import view.element.ElementBase;
+	import view.element.GroupElement;
 	import view.elementSelector.ElementSelector;
+	import view.interact.multiSelect.TemGroupElement;
 
 	/**
 	 * 改变元件的属性
@@ -105,8 +107,9 @@ package commands
 			}
 		
 
-			if (autoGroupEnabled)
+			if (autoGroupEnabled || (element is TemGroupElement) || (element is GroupElement))
 			{
+				var group:Boolean = ((element is TemGroupElement) || (element is GroupElement));
 				CoreFacade.coreMediator.autoGroupController.resetElements(groupElements);
 				
 				var newObj:Object = obj;
@@ -114,17 +117,17 @@ package commands
 				
 				if (obj["x"] != undefined && obj["y"] != undefined)
 				{
-					CoreFacade.coreMediator.autoGroupController.moveTo(newObj.x - oldObj.x, newObj.y - oldObj.y);
+					CoreFacade.coreMediator.autoGroupController.moveTo(newObj.x - oldObj.x, newObj.y - oldObj.y, group);
 					ifNeedRender = false;
 				}
 				if (obj["rotation"] != undefined)
 				{
-					CoreFacade.coreMediator.autoGroupController.rollTo(newObj.rotation - oldObj.rotation, element);
+					CoreFacade.coreMediator.autoGroupController.rollTo(newObj.rotation - oldObj.rotation, element, group);
 					ifNeedRender = false;
 				}
 				if (obj["scale"] != undefined)
 				{
-					CoreFacade.coreMediator.autoGroupController.scaleTo(newObj.scale / oldObj.scale, element);
+					CoreFacade.coreMediator.autoGroupController.scaleTo(newObj.scale / oldObj.scale, element, group);
 					ifNeedRender = false;
 				}
 				

@@ -41,6 +41,15 @@ package view.elementSelector.sizeControl
 		
 		override public function stopMove():void
 		{
+			if (point && ! isNaN(point.x) && ! isNaN(point.y))
+			{
+				holder.element.vo.height = Point.distance(orign, point) / holder.element.scale;
+				var center:Point = Point.interpolate(orign, point, .5);
+				holder.element.vo.x = center.x;
+				holder.element.vo.y = center.y;
+				holder.element.render();
+				updateHolderLayout();
+			}
 			super.stopMove();
 			
 			var index:Vector.<int> = holder.coreMdt.autoLayerController.autoLayer(holder.element);
@@ -83,17 +92,9 @@ package view.elementSelector.sizeControl
 			holder.element.render();
 			
 			var currPoint:Point = (oppsite) ? holder.element.bottomCenter : holder.element.topCenter;
-			var origPoint:Point = (oppsite) ? topCenter : bottomCenter;
+			orign = (oppsite) ? topCenter : bottomCenter;
 			
-			var point:Point = holder.coreMdt.autoAlignController.checkPosition(holder.element, currPoint, "y");
-			if (point && ! isNaN(point.x) && ! isNaN(point.y))
-			{
-				holder.element.vo.height = Point.distance(origPoint, point) / holder.element.scale;
-				var center:Point = Point.interpolate(origPoint, point, .5);
-				holder.element.vo.x = center.x;
-				holder.element.vo.y = center.y;
-				holder.element.render();
-			}
+			point = holder.coreMdt.autoAlignController.checkPosition(holder.element, currPoint, "y");
 			
 			// 更新型变框布局
 			updateHolderLayout();
@@ -106,6 +107,10 @@ package view.elementSelector.sizeControl
 		
 		private var lastMouseX:Number;
 		private var lastMouseY:Number;
+		
+		private var point:Point;
+		private var orign:Point;
+		
 	}
 	
 }

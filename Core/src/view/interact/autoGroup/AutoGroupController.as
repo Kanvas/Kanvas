@@ -103,112 +103,120 @@ package view.interact.autoGroup
 		/**
 		 * 拖动元素和粘贴临时组合时触发，将智能组合中的元素平移
 		 */		
-		public function moveElement(xOff:Number, yOff:Number):void
+		public function moveElement(xOff:Number, yOff:Number, group:Boolean = false):void
 		{
-			if (enabled == false) return;
-			for each(var element:ElementBase in _elements)
+			if (enabled || group) 
 			{
-				element.x = element.vo.x + xOff;
-				element.y = element.vo.y + yOff;
+				for each(var element:ElementBase in _elements)
+				{
+					element.x = element.vo.x + xOff;
+					element.y = element.vo.y + yOff;
+				}
 			}
 		}
 		
 		/**
 		 * 移动元素结束时触发
 		 */		
-		public function moveTo(xOff:Number, yOff:Number):void
+		public function moveTo(xOff:Number, yOff:Number, group:Boolean = false):void
 		{
-			if (enabled == false) return;
-			var point:Point = new Point();
-			
-			for each(var element:ElementBase in _elements)
+			if (enabled || group) 
 			{
-				point.x = element.vo.x + xOff;
-				point.y = element.vo.y + yOff;
+				var point:Point = new Point();
 				
-				element.moveTo(point);
+				for each(var element:ElementBase in _elements)
+				{
+					point.x = element.vo.x + xOff;
+					point.y = element.vo.y + yOff;
+					
+					element.moveTo(point);
+				}
 			}
 		}
 		
 		/**
 		 * 缩放当前元素过程时，缩放智能组合
 		 */		
-		public function scale(scaleRad:Number, curElement:ElementBase):void
+		public function scale(scaleRad:Number, curElement:ElementBase, group:Boolean = false):void
 		{
-			if (enabled == false) return;
-			var xDis:Number; 
-			var yDis:Number;
-			
-			for each(var element:ElementBase in _elements)
+			if (enabled || group) 
 			{
-				element.scaleX = element.scaleY = element.scale * scaleRad;
+				var xDis:Number; 
+				var yDis:Number;
 				
-				xDis = element.vo.x - curElement.x;
-				yDis = element.vo.y - curElement.y;
-				
-				element.x = curElement.x + xDis * scaleRad;
-				element.y = curElement.y + yDis * scaleRad;
-				
+				for each(var element:ElementBase in _elements)
+				{
+					element.scaleX = element.scaleY = element.scale * scaleRad;
+					
+					element.x = curElement.x + (element.vo.x - curElement.x) * scaleRad;
+					element.y = curElement.y + (element.vo.y - curElement.y) * scaleRad;
+				}
 			}
 		}
 		
 		/**
 		 * 缩放当前元素结束时，缩放智能组合
 		 */		
-		public function scaleTo(scaleRad:Number, curElement:ElementBase):void
+		public function scaleTo(scaleRad:Number, curElement:ElementBase, group:Boolean = false):void
 		{
-			if (enabled == false) return;
-			var xDis:Number; 
-			var yDis:Number;
-			
-			for each(var element:ElementBase in _elements)
+			if (enabled || group) 
 			{
-				element.vo.scale = element.scale * scaleRad;
+				var xDis:Number; 
+				var yDis:Number;
 				
-				xDis = element.vo.x - curElement.x;
-				yDis = element.vo.y - curElement.y;
-				
-				element.moveTo(new Point(curElement.x + xDis * scaleRad, curElement.y + yDis * scaleRad));
+				for each(var element:ElementBase in _elements)
+				{
+					element.vo.scale = element.scale * scaleRad;
+					
+					xDis = element.vo.x - curElement.x;
+					yDis = element.vo.y - curElement.y;
+					
+					element.moveTo(new Point(curElement.x + xDis * scaleRad, curElement.y + yDis * scaleRad));
+				}
 			}
 		}
 		
 		/**
 		 */		
-		public function roll(dis:Number, curElement:ElementBase):void
+		public function roll(dis:Number, curElement:ElementBase, group:Boolean = false):void
 		{
-			if (enabled == false) return;
-			var r:Number;
-			var rad:Number;
-			for each(var element:ElementBase in _elements)
+			if (enabled || group) 
 			{
-				element.rotation = element.vo.rotation + dis;
-				r = getR(curElement, element);
-				
-				//转化为弧度
-				rad = (getRad(curElement, element) + dis) * Math.PI / 180;
-				
-				element.x = curElement.x + r * Math.cos(rad);
-				element.y = curElement.y + r * Math.sin(rad);
+				var r:Number;
+				var rad:Number;
+				for each(var element:ElementBase in _elements)
+				{
+					element.rotation = element.vo.rotation + dis;
+					r = getR(curElement, element);
+					
+					//转化为弧度
+					rad = (getRad(curElement, element) + dis) * Math.PI / 180;
+					
+					element.x = curElement.x + r * Math.cos(rad);
+					element.y = curElement.y + r * Math.sin(rad);
+				}
 			}
 		}
 		
 		/**
 		 */		
-		public function rollTo(dis:Number, curElement:ElementBase):void
+		public function rollTo(dis:Number, curElement:ElementBase, group:Boolean = false):void
 		{
-			if (enabled == false) return;
-			var r:Number;
-			var rad:Number;
-			
-			for each(var element:ElementBase in _elements)
+			if (enabled || group) 
 			{
-				r = getR(curElement, element);
-				rad = (getRad(curElement, element) + dis) * Math.PI / 180;
+				var r:Number;
+				var rad:Number;
 				
-				element.rotation = element.vo.rotation = element.vo.rotation + dis;
-				
-				element.x = element.vo.x = curElement.x + r * Math.cos(rad);
-				element.y = element.vo.y = curElement.y + r * Math.sin(rad);
+				for each(var element:ElementBase in _elements)
+				{
+					r = getR(curElement, element);
+					rad = (getRad(curElement, element) + dis) * Math.PI / 180;
+					
+					element.rotation = element.vo.rotation = element.vo.rotation + dis;
+					
+					element.x = element.vo.x = curElement.x + r * Math.cos(rad);
+					element.y = element.vo.y = curElement.y + r * Math.sin(rad);
+				}
 			}
 		}
 		

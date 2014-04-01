@@ -8,6 +8,7 @@ package view.interact
 	import util.CoreUtil;
 	
 	import view.element.ElementBase;
+	import view.element.imgElement.ImgElement;
 	import view.element.shapes.LineElement;
 	import view.element.text.TextEditField;
 	import view.interact.autoGroup.AutoGroupController;
@@ -45,7 +46,7 @@ package view.interact
 		{
 			if (autoGroupControl.enabled == false) return;
 			//当前选择是文本的话不进行智能组合
-			if (curElement is IAutoGroupElement && !(curElement is TextEditField))
+			if (curElement is IAutoGroupElement && !(curElement is TextEditField) && !(curElement is ImgElement))
 			{
 				//中心点碰撞
 				var ifHit:Boolean;
