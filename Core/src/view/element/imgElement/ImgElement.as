@@ -82,6 +82,7 @@ package view.element.imgElement
 		 */		
 		public function toNomalState():void
 		{
+			graphics.clear();
 			currLoadState = normalState;
 			removeLoading();
 			initBmp(imgVO.sourceData);

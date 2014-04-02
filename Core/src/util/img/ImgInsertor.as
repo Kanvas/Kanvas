@@ -214,8 +214,8 @@ package util.img
 			fileReference.removeEventListener(Event.COMPLETE, onFileLoaded);
 			
 			
-			imageExtractor.addEventListener(Event.COMPLETE, bmdLoadedFromLocalHandler);
 			imageExtractor = new ImageExtractor(fileReference.data);
+			imageExtractor.addEventListener(Event.COMPLETE, bmdLoadedFromLocalHandler);
 		}
 		
 		/**

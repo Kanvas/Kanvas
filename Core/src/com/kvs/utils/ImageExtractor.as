@@ -76,15 +76,13 @@ package com.kvs.utils
 		
 		private function analizePNG():void
 		{
-			/*for (var i:uint = 0; i<PNG_SIG.length; i++) 
+			for (var i:uint = 0; i<PNG_SIG.length; i++) 
 			{
 				if (tempo.readUnsignedByte() != PNG_SIG[i]) 
 					throw new Error("PNG图片文件错误.");
 			}
-			
 			tempo.readUnsignedInt();
-			tempo.readUTFBytes(4);*/
-			tempo.position = 16;
+			tempo.readUTFBytes(4);
 			__originalWidth  = tempo.readUnsignedInt();
 			__originalHeight = tempo.readUnsignedInt();
 		}
@@ -167,7 +165,10 @@ package com.kvs.utils
 				__height = scale * originalHeight;
 				
 				if (scale == 1)
+				{
 					__bytes = tempo;
+					__bytes.position = 0;
+				}
 				
 				transform();
 			}
@@ -200,6 +201,7 @@ package com.kvs.utils
 					__bitmapData.draw(bmd, matrix, null, null, null, true);
 					encodeBmd();
 				}
+				bytes.position = 0;
 			}
 			
 			dispatchEvent(e);
