@@ -186,5 +186,10 @@ package com.kvs.ui.label
 			}
 				
 		}
+		
+		public function get bound():Rectangle
+		{
+			return textManager.getContentBounds();
+		}
 	}
 }

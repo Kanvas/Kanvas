@@ -145,8 +145,8 @@ package com.kvs.ui.toolTips
 				StyleManager.drawRect(this.bg, style, tooltipHolder.tooltips[0].metaData);
 				//StyleManager.setEffects(bg, style);
 				
-				labelsContainer.x = - labelsContainer.width / 2;
-				labelsContainer.y = labelsContainer.height / 2;
+				labelsContainer.x = - labelsContainer.width  / 2;
+				labelsContainer.y =   labelsContainer.height / 2;
 			}
 			else// 饼图的tips直接以holder为载�
 			{
@@ -177,7 +177,7 @@ package com.kvs.ui.toolTips
 			var bm:Bitmap;
 			var labelY:Number = 0;
 			
-			for each (var tooltipItem:TooltipDataItem  in tooltipHolder.tooltips)
+			for each (var tooltipItem:TooltipDataItem in tooltipHolder.tooltips)
 			{
 				// 可以独立设置tooltip的样�
 				if (tooltipItem.style)
@@ -195,7 +195,7 @@ package com.kvs.ui.toolTips
 				styleSheet.setStyle("p", pStyle);
 				label.styleSheet = styleSheet;
 				label.htmlText = '<p>' +  RexUtil.replaceFieldBraceValue(this.style.text.value, tooltipItem.metaData) + '</p>'; 
-				label.width = label.textWidth;
+				label.width  = label.textWidth;
 				label.height = label.textHeight;
 				
 				StyleManager.setEffects(label, this.style.text as Text, tooltipItem.metaData);

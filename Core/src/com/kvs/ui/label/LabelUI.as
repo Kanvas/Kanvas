@@ -7,6 +7,7 @@ package com.kvs.ui.label
 	import com.kvs.utils.XMLConfigKit.style.Text;
 	
 	import flash.display.Sprite;
+	import flash.geom.Rectangle;
 	
 	/**
 	 */	
@@ -74,8 +75,11 @@ package com.kvs.ui.label
 				
 				textField.fixWidth = Math.max(minLabelWidth, maxLabelWidth - labelStyle.paddingLeft - labelStyle.paddingRight);
 				
+				
+				
 				textField.text = text;
 				textField.renderLabel(labelStyle.getTextFormat(mdata));
+				
 			}
 			else
 			{
@@ -88,10 +92,14 @@ package com.kvs.ui.label
 			
 			StyleManager.setEffects(textField, labelStyle.text as Text, mdata);
 			
+			var bound:Rectangle = textField.bound;
+			var w:Number = bound.width  + labelStyle.paddingLeft + labelStyle.paddingRight;
+			var h:Number = bound.height + labelStyle.paddingTop  + labelStyle.paddingBottom;
+			
 			// 绘制背景
 			this.graphics.clear();
 			StyleManager.setShapeStyle(labelStyle, this.graphics, this.mdata);
-			this.graphics.drawRoundRect(0, 0, this.width, this.height, labelStyle.radius, labelStyle.radius);
+			this.graphics.drawRoundRect(0, 0, w, h, labelStyle.radius, labelStyle.radius);
 			this.graphics.endFill();
 			
 			textField.x = labelStyle.paddingLeft;

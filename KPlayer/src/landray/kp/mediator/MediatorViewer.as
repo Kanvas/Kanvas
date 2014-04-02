@@ -134,10 +134,13 @@ package landray.kp.mediator
 		 */
 		private function mouseWheel(e:MouseEvent):void
 		{
-			if (e.delta > 0)
-				viewer.kp_internal::controller.zoomIn();
-			else if (e.delta < 0)
-				viewer.kp_internal::controller.zoomOut();
+			if (viewer.stage.displayState == StageDisplayState.FULL_SCREEN)
+			{
+				if (e.delta > 0)
+					viewer.kp_internal::controller.zoomIn();
+				else if (e.delta < 0)
+					viewer.kp_internal::controller.zoomOut();
+			}
 		}
 		
 		/**

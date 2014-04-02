@@ -30,6 +30,7 @@ package
 	import view.interact.zoomMove.ZoomMoveControl;
 	import view.ui.BgColorFlasher;
 	import view.ui.Bubble;
+	import view.ui.Debugger;
 	import view.ui.MainUIBase;
 	import view.ui.ThumbManager;
 
@@ -269,10 +270,12 @@ package
 			var temp:Array = [];
 			for each (var element:ElementBase in CoreFacade.coreProxy.elements)
 			{
-				if (element.vo.property && element.vo.property.toLocaleLowerCase() == "true")
+				if (element.vo.property && (
+					element.vo.property.toLocaleLowerCase() == "true" || 
+					element.vo.property.toLocaleLowerCase() == "tip"))
 					temp.push(element.vo.id);
 			}
-			
+			Debugger.debug("propertyList:"+temp);
 			return temp.join(",");
 		}
 		

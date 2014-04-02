@@ -5,6 +5,8 @@ package landray.kp.command
 	import landray.kp.maps.simple.GraphSimple;
 	import landray.kp.utils.CoreUtil;
 	import landray.kp.view.Graph;
+	
+	import view.ui.Debugger;
 
 	public final class Command3CreateGraph extends _InernalCommand
 	{
@@ -39,6 +41,7 @@ package landray.kp.command
 			
 			if (provider.dataXML)
 			{
+				Debugger.debug("data:\n"+provider.dataXML);
 				try 
 				{
 					config.kp_internal::theme = provider.dataXML.header[0].@styleID;

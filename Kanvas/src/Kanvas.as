@@ -38,7 +38,6 @@ package
 		{
 			this.resetLib();
 			
-			//addChild(new Debugger);
 			
 			kvsCore.externalUI = uiContainer;
 			addChild(kvsCore);
@@ -78,7 +77,7 @@ package
 			// 数据测试用
 			dataTest = new DataTest(this.toolBar, shapePanel, kvsCore);
 			
-			//addChild(debugger);
+			//addChild(new Debugger);
 		}
 		
 		
