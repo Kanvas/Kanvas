@@ -24,27 +24,47 @@ package view.element
 		override public function exportData():XML
 		{
 			xmlData = <group/>;
-			xmlData = super.exportData();
+			super.exportData();
 			
-			var element:ElementBase;
-			for each(element in childElements)
+			for each(var element:ElementBase in childElements)
 				xmlData.appendChild(<{element.vo.type} id={element.vo.id}/>);
 				
 			return xmlData;
+		}
+		
+		override public function toShotcut(renderable:Boolean=false):void
+		{
+			super.toShotcut(renderable);
+			graphics.clear();
+		}
+		
+		override public function toPreview(renderable:Boolean=false):void
+		{
+			super.toPreview(renderable);
+			if (currentState is ElementSelected)
+			{
+				StyleManager.drawRect(this, vo.style, vo);
+			}
+			else
+			{
+				graphics.beginFill(0, 0);
+				graphics.drawRect(vo.style.tx, vo.style.ty, vo.style.width, vo.style.height);
+				graphics.endFill();
+			}
 		}
 		
 		/**
 		 */		
 		override public function copy():void
 		{
-			this.dispatchEvent(new ElementEvent(ElementEvent.COPY_GROUP, this));
+			dispatchEvent(new ElementEvent(ElementEvent.COPY_GROUP, this));
 		}
 		
 		/**
 		 */		
 		override public function paste():void
 		{
-			this.dispatchEvent(new ElementEvent(ElementEvent.PAST_GROUP, this));
+			dispatchEvent(new ElementEvent(ElementEvent.PAST_GROUP, this));
 		}
 		
 		/**
@@ -86,11 +106,11 @@ package view.element
 			super.render();
 			
 			// 中心点为注册点
-			vo.style.tx = - vo.width / 2;
-			vo.style.ty = - vo.height / 2;
+			vo.style.tx = - width  * .5;
+			vo.style.ty = - height * .5;
 			
-			vo.style.width = vo.width;
-			vo.style.height = vo.height;
+			vo.style.width  = width;
+			vo.style.height = height;
 			
 			graphics.clear();
 			if (currentState is ElementSelected)
@@ -99,9 +119,9 @@ package view.element
 			}
 			else
 			{
-				this.graphics.beginFill(0, 0);
-				this.graphics.drawRect(vo.style.tx, vo.style.ty, vo.style.width, vo.style.height);
-				this.graphics.endFill();
+				graphics.beginFill(0, 0);
+				graphics.drawRect(vo.style.tx, vo.style.ty, vo.style.width, vo.style.height);
+				graphics.endFill();
 			}
 		}
 		
@@ -121,9 +141,9 @@ package view.element
 		override public function toUnSelectedState():void
 		{
 			graphics.clear();
-			this.graphics.beginFill(0, 0);
-			this.graphics.drawRect(vo.style.tx, vo.style.ty, vo.style.width, vo.style.height);
-			this.graphics.endFill();
+			graphics.beginFill(0, 0);
+			graphics.drawRect(vo.style.tx, vo.style.ty, vo.style.width, vo.style.height);
+			graphics.endFill();
 			
 			super.toUnSelectedState();
 		}
@@ -167,6 +187,5 @@ package view.element
 		{
 			_childElements = value;
 		}
-
 	}
 }

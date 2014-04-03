@@ -1,8 +1,6 @@
 package commands
 {
 	import model.CoreFacade;
-	
-	import view.element.PageElement;
 	import model.vo.PageVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
@@ -10,6 +8,7 @@ package commands
 	import util.undoRedo.UndoRedoMannager;
 	
 	import view.element.ElementBase;
+	import view.element.PageElement;
 	
 	/**
 	 * 删除临时组合里的子元素
@@ -29,19 +28,20 @@ package commands
 			
 			groupElements = CoreFacade.coreMediator.autoGroupController.elements;
 			groupElementIndexs = new Vector.<int>;
-			//CoreFacade.coreMediator.autoGroupController.
 			
 			groupLength = groupElements.length;
 			
 			for (var i:int = 0; i < groupLength; i++)
 			{
 				var item:ElementBase = groupElements[i];
-				groupElementIndexs[i] = item.index;
-				CoreFacade.removeElement(item);
 				if (item is PageElement)
 					CoreFacade.coreMediator.pageManager.removePage(item.vo as PageVO);
+				else
+					CoreFacade.coreMediator.pageManager.registOverlappingPageVOs(item);
+				groupElementIndexs[i] = item.index;
+				CoreFacade.removeElement(item);
 			}
-			
+			v = CoreFacade.coreMediator.pageManager.refreshVOThumbs();
 			UndoRedoMannager.register(this);
 		}
 		
@@ -59,6 +59,7 @@ package commands
 					CoreFacade.coreMediator.pageManager.addPageAt(pageVO, pageVO.index);
 				}
 			}
+			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 		}
 		
 		/**
@@ -71,6 +72,7 @@ package commands
 				if (item is PageElement)
 					CoreFacade.coreMediator.pageManager.removePage(item.vo as PageVO);
 			}
+			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 		}
 		
 		/**
@@ -82,5 +84,7 @@ package commands
 		private var groupElements:Vector.<ElementBase>;
 		private var groupElementIndexs:Vector.<int>;
 		private var groupLength:int;
+		
+		private var v:Vector.<PageVO>;
 	}
 }

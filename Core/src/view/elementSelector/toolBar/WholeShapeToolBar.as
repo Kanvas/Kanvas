@@ -56,14 +56,12 @@ package view.elementSelector.toolBar
 		 */		
 		override public function styleSelected(styleBtn:StyleBtn):void
 		{
-			element.vo.styleID = styleBtn.data.toString();
-			StyleUtil.applyStyleToElement(element.vo);
-			element.render();
+			var styleID:String = styleBtn.data.toString();
 			
 			toolBar.curStyleBtn.selected = false;
 			toolBar.resetToolbar();
 			
-			toolBar.selector.coreMdt.sendNotification(Command.CHANGE_ELEMENT_STYLE, toolBar.curStyleBtn.data);
+			toolBar.selector.coreMdt.sendNotification(Command.CHANGE_ELEMENT_STYLE, styleID);
 		}
 		
 		/**

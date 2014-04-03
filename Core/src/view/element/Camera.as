@@ -69,15 +69,15 @@ package view.element
 			// 中心点为注册点
 			if (vo.style)
 			{
-				vo.style.tx = - vo.width / 2;
-				vo.style.ty = - vo.height / 2;
+				vo.style.tx = - width  * .5;
+				vo.style.ty = - height * .5;
 				
-				vo.style.width = vo.width;
-				vo.style.height = vo.height;
+				vo.style.width  = width;
+				vo.style.height = height;
 				
-				var left:Number = vo.style.tx;
-				var top:Number = vo.style.ty;
-				var right:Number = vo.style.tx + vo.style.width;
+				var left  :Number = vo.style.tx;
+				var top   :Number = vo.style.ty;
+				var right :Number = vo.style.tx + vo.style.width;
 				var bottom:Number = vo.style.ty + vo.style.height;
 				
 				drawInteract(left, top, right - left, bottom - top);
@@ -109,7 +109,7 @@ package view.element
 				
 				maskShape.x = vo.style.tx;
 				maskShape.y = vo.style.ty;
-				maskShape.width = vo.style.width;
+				maskShape.width  = vo.style.width;
 				maskShape.height = vo.style.height;
 			}
 		}

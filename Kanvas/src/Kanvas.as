@@ -89,7 +89,7 @@ package
 		private function coreInitCompleteHandler(evt:KVSEvent):void
 		{
 			// 初始化默认样式
-			kvsCore.changeTheme('White');
+			kvsCore.changeTheme('White', false);
 		}
 		
 		/**

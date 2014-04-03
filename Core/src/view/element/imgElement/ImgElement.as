@@ -42,7 +42,7 @@ package view.element.imgElement
 		{
 			if (bmpLarge && bmpSmall)
 			{
-				var tmpDispl:Bitmap = (width <= minSize || height <= minSize) ? bmpSmall : bmpLarge;
+				var tmpDispl:Bitmap = (stageWidth <= minSize || stageHeight <= minSize) ? bmpSmall : bmpLarge;
 				if (tmpDispl != bmpDispl)
 				{
 					if (bmpDispl) bmpDispl.visible = false;
@@ -220,7 +220,7 @@ package view.element.imgElement
 		
 		public function checkBmdRender():void
 		{
-			var renderBmdNeeded:Boolean = (width > minSize && height > minSize)
+			var renderBmdNeeded:Boolean = (stageWidth > minSize && stageHeight > minSize)
 				? (lastWidth<= minSize || lastHeight<= minSize)
 				: (lastWidth > minSize && lastHeight > minSize);
 			lastWidth  = width;
@@ -242,7 +242,7 @@ package view.element.imgElement
 				{
 					if (smooth)
 					{
-						bmpSmall.visible = (width < minSize || height < minSize);
+						bmpSmall.visible = (stageWidth < minSize || stageHeight < minSize);
 						bmpLarge.visible = !bmpSmall.visible;
 					}
 					else
@@ -254,6 +254,16 @@ package view.element.imgElement
 			}
 		}
 		private var __smooth:Boolean = true;
+		
+		public function get stageWidth():Number
+		{
+			return scaledWidth  * ((parent) ? parent.scaleX : 1);
+		}
+		
+		public function get stageHeight():Number
+		{
+			return scaledHeight * ((parent) ? parent.scaleX : 1);
+		}
 		
 		/**
 		 * 

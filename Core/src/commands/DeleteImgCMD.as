@@ -1,6 +1,7 @@
 package commands
 {
 	import model.CoreFacade;
+	import model.vo.PageVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	
@@ -32,15 +33,18 @@ package commands
 		{
 			sendNotification(Command.UN_SELECT_ELEMENT);
 			
-			imgElement = notification.getBody() as ImgElement;
+			element = notification.getBody() as ImgElement;
 			
+			elementIndex = element.index;
 			
-			elementIndex = CoreFacade.getElementIndex(imgElement);
-			CoreFacade.removeElement(imgElement);
+			CoreFacade.coreMediator.pageManager.registOverlappingPageVOs(element);
 			
+			CoreFacade.removeElement(element);
+			
+			v = CoreFacade.coreMediator.pageManager.refreshVOThumbs();
 			// 判断如果系统中不再含有此图片ID的图片元素，则从图片库中删除此元素
-			if (ifImgShared == false)
-				//ImgLib.unRegister(imgElement.imgVO.imgID);
+			/*if (ifImgShared == false)
+				ImgLib.unRegister(element.imgVO.imgID);*/
 			
 			UndoRedoMannager.register(this);
 		}
@@ -49,19 +53,21 @@ package commands
 		 */		
 		override public function undoHandler():void
 		{
-			CoreFacade.addElementAt(imgElement, elementIndex);
+			CoreFacade.addElementAt(element, elementIndex);
+			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 			//ImgLib.register(imgElement.imgVO.imgID.toString(), imgElement.imgVO.sourceData);
 		}
 		
 		override public function redoHandler():void
 		{
-			CoreFacade.removeElement(imgElement);
+			CoreFacade.removeElement(element);
+			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 			//ImgLib.unRegister(imgElement.imgVO.imgID);
 		}
 		
 		/**
 		 */		
-		private var imgElement:ImgElement;
+		private var element:ImgElement;
 		
 		private var elementIndex:int;
 		
@@ -72,7 +78,7 @@ package commands
 			var isImgShared:Boolean = false;
 			for each (var element:ElementBase in CoreFacade.coreProxy.elements)
 			{
-				if (element is ImgElement && (element as ImgElement).imgVO.imgID == this.imgElement.imgVO.imgID)
+				if (element is ImgElement && (element as ImgElement).imgVO.imgID == this.element.imgVO.imgID)
 				{
 					isImgShared = true;
 					break;
@@ -81,5 +87,7 @@ package commands
 			
 			return isImgShared;
 		}
+		
+		private var v:Vector.<PageVO>;
 	}
 }

@@ -93,8 +93,11 @@ package commands
 				CoreFacade.addElement(groupElements[i]);
 				if (groupElements[i] is PageElement)
 					CoreFacade.coreMediator.pageManager.addPage(groupElements[i].vo as PageVO);
+				if (groupElements[i].screenshot)
+					CoreFacade.coreMediator.pageManager.registOverlappingPageVOs(groupElements[i]);
 			}
 				
+			v = CoreFacade.coreMediator.pageManager.refreshVOThumbs();
 			
 			sendNotification(Command.SElECT_ELEMENT, newGroup);
 			UndoRedoMannager.register(this);
@@ -112,6 +115,8 @@ package commands
 			}
 			
 			CoreFacade.removeElement(newGroup);
+			
+			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 		}
 		
 		override public function redoHandler():void
@@ -128,6 +133,8 @@ package commands
 				}
 			}
 			
+			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
+			
 			sendNotification(Command.SElECT_ELEMENT, newGroup);
 		}
 		
@@ -136,5 +143,7 @@ package commands
 		private var newGroup:TemGroupElement;
 		private var groupElements:Vector.<ElementBase>;
 		private var length:int;
+		
+		private var v:Vector.<PageVO>;
 	}
 }

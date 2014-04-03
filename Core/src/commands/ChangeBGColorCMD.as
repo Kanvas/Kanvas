@@ -1,6 +1,7 @@
 package commands
 {
 	import model.CoreFacade;
+	import model.vo.PageVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	
@@ -26,28 +27,11 @@ package commands
 			
 			oldColorIndex = CoreFacade.coreProxy.bgColorIndex;
 			
-			setColor(newColorIndex);
+			setColor(newColorIndex, true);
 			
 			UndoRedoMannager.register(this);
 		}
 		
-		/**
-		 */		
-		private function setColor(index:uint):void
-		{
-			CoreFacade.coreProxy.bgColorIndex = index;
-			CoreFacade.coreProxy.updateBgColor();
-			
-			sendNotification(Command.RENDER_BG_COLOR);
-			
-			(CoreFacade.coreMediator.coreApp as CoreApp).bgColorUpdated(CoreFacade.coreProxy.bgColorIndex);
-		}
-		
-		/**
-		 */		
-		private var oldColorIndex:uint = 0;
-		
-		private var newColorIndex:uint = 0;
 		
 		/**
 		 */		
@@ -60,6 +44,35 @@ package commands
 		{
 			setColor(newColorIndex);
 		}
+		/**
+		 */		
+		private function setColor(index:uint, exec:Boolean = false):void
+		{
+			CoreFacade.coreProxy.bgColorIndex = index;
+			CoreFacade.coreProxy.updateBgColor();
+			
+			sendNotification(Command.RENDER_BG_COLOR);
+			
+			CoreFacade.coreMediator.coreApp.bgColorUpdated(CoreFacade.coreProxy.bgColorIndex);
+			
+			if (exec)
+			{
+				for each (var vo:PageVO in CoreFacade.coreMediator.pageManager.pages)
+					CoreFacade.coreMediator.pageManager.registUpdateThumbVO(vo);
+				v = CoreFacade.coreMediator.pageManager.refreshVOThumbs();
+			}
+			else
+			{
+				CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
+			}
+		}
 		
+		/**
+		 */		
+		private var oldColorIndex:uint = 0;
+		
+		private var newColorIndex:uint = 0;
+		
+		private var v:Vector.<PageVO>;
 	}
 }

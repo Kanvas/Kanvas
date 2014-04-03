@@ -1,6 +1,7 @@
 package commands
 {
 	import model.CoreFacade;
+	import model.vo.PageVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	
@@ -24,10 +25,11 @@ package commands
 		{
 			sendNotification(Command.UN_SELECT_ELEMENT);
 			
-			textLabel = notification.getBody() as TextEditField;
-			elementIndex = CoreFacade.getElementIndex(textLabel);
-			
-			CoreFacade.removeElement(textLabel);
+			element = notification.getBody() as TextEditField;
+			elementIndex = CoreFacade.getElementIndex(element);
+			CoreFacade.coreMediator.pageManager.registOverlappingPageVOs(element);
+			CoreFacade.removeElement(element);
+			v = CoreFacade.coreMediator.pageManager.refreshVOThumbs();
 			
 			UndoRedoMannager.register(this);
 		}
@@ -36,22 +38,28 @@ package commands
 		 */		
 		override public function undoHandler():void
 		{
-			CoreFacade.addElementAt(textLabel, elementIndex);
+			CoreFacade.addElementAt(element, elementIndex);
 			
 			// 文本被删除时可能处于编辑状态， 所以撤销后需要重绘一下
 			// 编辑状态的文本看不到，本身没有绘制
-			textLabel.render();
+			element.render();
+			
+			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 		}
 		
 		override public function redoHandler():void
 		{
-			CoreFacade.removeElement(textLabel);
+			CoreFacade.removeElement(element);
+			
+			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 		}
 		
 		/**
 		 */		
-		private var textLabel:TextEditField;
+		private var element:TextEditField;
 		
 		private var elementIndex:int;
+		
+		private var v:Vector.<PageVO>;
 	}
 }

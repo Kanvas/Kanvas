@@ -137,7 +137,10 @@ package view.interact
 				coreMdt.createNewShape = false;
 				coreMdt.createNewShapeMouseUped = true;
 				if (coreMdt.createNewShapeMouseUped && coreMdt.createNewShapeTweenOver)
+				{
+					coreMdt.pageManager.refreshPageThumbsByElement(curMovingElement);
 					coreMdt.sendNotification(Command.SElECT_ELEMENT, curMovingElement);
+				}
 			}
 		}
 		

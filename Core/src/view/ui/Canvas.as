@@ -100,7 +100,6 @@ package view.ui
 		{
 			if(!previewState)
 			{
-				//PerformaceTest.start("Canvas.toShotcutState()");
 				previewState = true;
 				previewX = x;
 				previewY = y;
@@ -130,7 +129,6 @@ package view.ui
 					vector.push(item);
 					item.toShotcut(renderable);
 				}
-				//PerformaceTest.end("Canvas.toShotcutState()");
 			}
 		}
 		

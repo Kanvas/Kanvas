@@ -36,25 +36,27 @@ package commands
 			if (!pastElement)
 				return;
 			
-			newElement = pastElement.clone();
+			element = pastElement.clone();
 			
 			// 为新元素创建，添加偏移
 			var dis:Number = CoreFacade.coreMediator.layoutTransformer.stageDisToCanvasDis(10);
 			CoreApp.PAST_LOC.x += dis;
 			CoreApp.PAST_LOC.y += dis;
 			
-			newElement.vo.x = CoreApp.PAST_LOC.x; 
-			newElement.vo.y = CoreApp.PAST_LOC.y;
+			element.vo.x = CoreApp.PAST_LOC.x; 
+			element.vo.y = CoreApp.PAST_LOC.y;
 			
 			//复制元素与原始元素坐标差
-			var xOff:Number = newElement.vo.x - pastElement.vo.x;
-			var yOff:Number = newElement.vo.y - pastElement.vo.y;
+			var xOff:Number = element.vo.x - pastElement.vo.x;
+			var yOff:Number = element.vo.y - pastElement.vo.y;
 			
-			(newElement is Camera) ? CoreFacade.addElementAt(newElement, 1) : CoreFacade.addElement(newElement);
-			if (newElement is PageElement)
-				CoreFacade.coreMediator.pageManager.addPage(newElement.vo as PageVO);
-			elementIndex = newElement.index;
+			(element is Camera) ? CoreFacade.addElementAt(element, 1) : CoreFacade.addElement(element);
+			if (element is PageElement)
+				CoreFacade.coreMediator.pageManager.addPage(element.vo as PageVO);
+			elementIndex = element.index;
 			
+			if (element.screenshot)
+				CoreFacade.coreMediator.pageManager.registOverlappingPageVOs(element);
 			
 			autoGroupEnabled = CoreFacade.coreMediator.autoGroupController.enabled;
 			if (autoGroupEnabled)
@@ -67,10 +69,14 @@ package commands
 				{
 					if (groupElements[i] is PageElement)
 						CoreFacade.coreMediator.pageManager.addPage(groupElements[i].vo as PageVO);
+					if (groupElements[i].screenshot)
+						CoreFacade.coreMediator.pageManager.registOverlappingPageVOs(groupElements[i]);
 				}
 			}
 			
-			sendNotification(Command.SElECT_ELEMENT, newElement);
+			v = CoreFacade.coreMediator.pageManager.refreshVOThumbs();
+			
+			sendNotification(Command.SElECT_ELEMENT, element);
 			UndoRedoMannager.register(this);
 		}
 		
@@ -89,17 +95,19 @@ package commands
 				}
 			}
 			
-			CoreFacade.removeElement(newElement);
-			if (newElement is PageElement)
-				CoreFacade.coreMediator.pageManager.removePage(newElement.vo as PageVO);
+			CoreFacade.removeElement(element);
+			if (element is PageElement)
+				CoreFacade.coreMediator.pageManager.removePage(element.vo as PageVO);
+			
+			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 		}
 		
 		override public function redoHandler():void
 		{
-			CoreFacade.addElementAt(newElement, elementIndex);
-			if (newElement is PageElement)
+			CoreFacade.addElementAt(element, elementIndex);
+			if (element is PageElement)
 			{
-				var pageVO:PageVO = newElement.vo as PageVO;
+				var pageVO:PageVO = element.vo as PageVO;
 				CoreFacade.coreMediator.pageManager.addPageAt(pageVO, pageVO.index);
 			}
 			if (autoGroupEnabled)
@@ -114,6 +122,8 @@ package commands
 					}
 				}
 			}
+			
+			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 		}
 		
 		/**
@@ -126,8 +136,10 @@ package commands
 		
 		/**
 		 */		
-		private var newElement:ElementBase;
+		private var element:ElementBase;
 		
 		private var autoGroupEnabled:Boolean;
+		
+		private var v:Vector.<PageVO>;
 	}
 }

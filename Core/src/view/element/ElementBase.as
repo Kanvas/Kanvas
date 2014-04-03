@@ -433,9 +433,29 @@ package view.element
 			}
 		}
 		
-		/**
-		 */		
 		private var __y:Number = 0;
+		
+		override public function get width():Number
+		{
+			return __width;
+		}
+		
+		override public function set width(value:Number):void
+		{
+			__width = value;
+		}
+		private var __width:Number = 0;
+		
+		override public function get height():Number
+		{
+			return __height;
+		}
+		
+		override public function set height(value:Number):void
+		{
+			__height = value;
+		}
+		private var __height:Number = 0;
 		
 		/**
 		 */		
@@ -591,8 +611,8 @@ package view.element
 			newVO.colorIndex = vo.colorIndex;
 			newVO.thickness = vo.thickness;
 			
-			newVO.x = this.vo.x;
-			newVO.y = this.vo.y;
+			newVO.x = vo.x;
+			newVO.y = vo.y;
 			newVO.width = vo.width;
 			newVO.height = vo.height;
 			newVO.scale = vo.scale;
@@ -926,11 +946,14 @@ package view.element
 		 */
 		public function updateLayout():void
 		{
-			this.x = vo.x;
-			this.y = vo.y;
+			x = vo.x;
+			y = vo.y;
 			
-			this.rotation = vo.rotation;
-			this.scaleX = this.scaleY = vo.scale;
+			width  = vo.width;
+			height = vo.height;
+			
+			scaleX = scaleY = vo.scale;
+			rotation = vo.rotation;
 		}
 		
 		/**
@@ -963,7 +986,7 @@ package view.element
 		{
 			bg.graphics.clear();
 			bg.graphics.beginFill(0x000000, 0);
-			bg.graphics.drawRect(- vo.width / 2, - vo.height / 2, vo.width, vo.height);
+			bg.graphics.drawRect(- width / 2, - height / 2, width, height);
 			bg.graphics.endFill();
 		}
 		

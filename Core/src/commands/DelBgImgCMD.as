@@ -4,6 +4,7 @@ package commands
 	
 	import model.CoreFacade;
 	import model.CoreProxy;
+	import model.vo.PageVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	
@@ -37,7 +38,7 @@ package commands
 			newImgObj.imgData = null;
 			newImgObj.imgURL  = null;
 			
-			updateBgImg(newImgObj);
+			setBgImg(newImgObj, true);
 			
 			//CoreFacade.coreMediator.mainUI.canvas.hideLoading();
 			
@@ -47,16 +48,16 @@ package commands
 		
 		override public function undoHandler():void
 		{
-			updateBgImg(oldImgObj);
+			setBgImg(oldImgObj);
 		}
 		
 		
 		override public function redoHandler():void
 		{
-			updateBgImg(newImgObj);
+			setBgImg(newImgObj);
 		}
 		
-		private function updateBgImg(obj:Object):void
+		private function setBgImg(obj:Object, exec:Boolean = false):void
 		{
 			//分配背景图片的ID
 			CoreFacade.coreProxy.bgVO.imgID   = obj.imgID;
@@ -65,6 +66,17 @@ package commands
 			
 			CoreFacade.coreMediator.coreApp.drawBGImg(obj.imgData);
 			(CoreFacade.coreMediator.coreApp as CoreApp).bgImgUpdated(obj.imgData);
+			
+			if (exec)
+			{
+				for each (var vo:PageVO in CoreFacade.coreMediator.pageManager.pages)
+					CoreFacade.coreMediator.pageManager.registUpdateThumbVO(vo);
+				v = CoreFacade.coreMediator.pageManager.refreshVOThumbs();
+			}
+			else
+			{
+				CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
+			}
 		}
 		
 		/**
@@ -76,5 +88,7 @@ package commands
 		private var newImgObj:Object;
 		
 		private var imgInsertor:ImgInsertor;
+		
+		private var v:Vector.<PageVO>;
 	}
 }

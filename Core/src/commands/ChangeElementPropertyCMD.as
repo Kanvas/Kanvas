@@ -1,11 +1,7 @@
 package commands
 {
-	import com.kvs.utils.XMLConfigKit.XMLVOMapper;
-	
 	import model.CoreFacade;
 	import model.vo.PageVO;
-	
-	import modules.pages.PageUtil;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	
@@ -13,6 +9,7 @@ package commands
 	
 	import view.element.ElementBase;
 	import view.element.GroupElement;
+	import view.element.PageElement;
 	import view.element.imgElement.ImgElement;
 	import view.elementSelector.ElementSelector;
 	import view.interact.multiSelect.TemGroupElement;
@@ -71,7 +68,7 @@ package commands
 				
 				autoGroupEnabled = CoreFacade.coreMediator.autoGroupController.enabled;
 				
-				setProperty(newPropertyObj, false);
+				setProperty(newPropertyObj, true);
 				
 				UndoRedoMannager.register(this);
 			}
@@ -80,20 +77,34 @@ package commands
 		override public function undoHandler():void
 		{
 			element.clearHoverEffect();
-			setProperty(oldPropertyObj, true);
+			setProperty(oldPropertyObj);
 		}
 		
 		override public function redoHandler():void
 		{
 			element.clearHoverEffect();
-			setProperty(newPropertyObj, true);
+			setProperty(newPropertyObj);
 		}
 		
-		private function setProperty(obj:Object, render:Boolean = false):void
+		/**
+		 * 
+		 * @param obj
+		 * @param exec 是否是执行，而不是撤销与重做。
+		 * 
+		 */
+		private function setProperty(obj:Object, exec:Boolean = false):void
 		{
-			var ifNeedRender:Boolean = true;
 			var group:Boolean = ((element is TemGroupElement) || (element is GroupElement));
-			var page:Boolean = (element.vo is PageVO);
+			
+			//变化前检测需要刷新的pages
+			if (exec)
+			{
+				if(!(element is PageElement))
+				{
+					reset(element);
+					CoreFacade.coreMediator.pageManager.registOverlappingPageVOs(element);
+				}
+			}
 			
 			for (var propertyName:String in obj) 
 			{
@@ -103,17 +114,11 @@ package commands
 					{
 						CoreFacade.coreMediator.autoLayerController.swapElements(obj["indexChangeElement"], obj[propertyName]);
 					}
+					else if (propertyName == "indexChangeElement") { }
 					else
 					{
 						if (element.vo.hasOwnProperty(propertyName))
-						{
-							if (page && !thumb && thumbPropertyNames[propertyName]) 
-							{
-								var thumb:Boolean = true;
-								PageUtil.registUpdateThumbVO(PageVO(element.vo));
-							}
 							element.vo[propertyName] = obj[propertyName];
-						}
 					}
 				}
 				catch (e:Error)
@@ -129,34 +134,96 @@ package commands
 				var newObj:Object = obj;
 				var oldObj:Object = (obj == newPropertyObj) ? oldPropertyObj : newPropertyObj;
 				
+				//变化前检测需要刷新的pages
+				if (exec)
+				{
+					for each (var item:ElementBase in CoreFacade.coreMediator.autoGroupController.elements)
+					{
+						if(!(item is PageElement))
+						{
+							resetGroupItem(item);
+							CoreFacade.coreMediator.pageManager.registOverlappingPageVOs(item);
+						}
+					}
+				}
+				
 				if (obj["x"] != undefined && obj["y"] != undefined)
 				{
 					CoreFacade.coreMediator.autoGroupController.moveTo(newObj.x - oldObj.x, newObj.y - oldObj.y, group);
-					ifNeedRender = false;
 				}
 				if (obj["rotation"] != undefined)
 				{
 					CoreFacade.coreMediator.autoGroupController.rollTo(newObj.rotation - oldObj.rotation, element, group);
-					ifNeedRender = false;
 				}
 				if (obj["scale"] != undefined)
 				{
 					CoreFacade.coreMediator.autoGroupController.scaleTo(newObj.scale / oldObj.scale, element, group);
-					ifNeedRender = true;// 文本，页面元素最终需要重绘
 				}
-			}
-			else if (element is ImgElement)//防止对图片进行重复渲染
-			{
-				ifNeedRender = false;
+				
+				//变化后检测需要刷新的pages
+				if (exec)
+				{
+					for each (item in CoreFacade.coreMediator.autoGroupController.elements)
+					{
+						if (item is PageElement)
+							CoreFacade.coreMediator.pageManager.registUpdateThumbVO(item.vo as PageVO);
+						else
+							CoreFacade.coreMediator.pageManager.registOverlappingPageVOs(item);
+					}
+				}
+				
 			}
 			
-			//element.clearHoverEffect();
-			if (render || ifNeedRender)
-				element.render();
+			
+			element.render();
 			
 			selector.update();
 			
-			PageUtil.refreshVOThumbs();
+			//变化后检测需要刷新的pages
+			if (exec)
+			{
+				if (element is PageElement)
+					CoreFacade.coreMediator.pageManager.registUpdateThumbVO(element.vo as PageVO);
+				else
+					CoreFacade.coreMediator.pageManager.registOverlappingPageVOs(element);
+				v = CoreFacade.coreMediator.pageManager.refreshVOThumbs();
+			}
+			else
+			{
+				CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
+			}
+		}
+		
+		private function reset(item:ElementBase):void
+		{
+			for (var propertyName:String in oldPropertyObj) 
+			{
+				if (propertyName == "index") { }
+				else if (propertyName == "indexChangeElement") { }
+				else
+				{
+					if (item.hasOwnProperty(propertyName))
+					{
+						item[propertyName] = oldPropertyObj[propertyName];
+					}
+					else
+					{
+						item.vo[propertyName] = oldPropertyObj[propertyName];
+					}
+					item.render();
+				}
+			}
+		}
+		
+		private function resetGroupItem(item:ElementBase):void
+		{
+			for (var propertyName:String in oldPropertyObj) 
+			{
+				if (thumbPropertyNames[propertyName])
+				{
+					item[propertyName] = item.vo[propertyName];
+				}
+			}
 		}
 		
 		/**
@@ -182,6 +249,8 @@ package commands
 		/**
 		 */		
 		private var selector:ElementSelector;
+		
+		private var v:Vector.<PageVO>;
 		
 		private static const thumbPropertyNames:Object = 
 		{

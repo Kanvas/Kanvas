@@ -9,10 +9,8 @@ package commands
 	import model.CoreProxy;
 	import model.ElementProxy;
 	import model.vo.ElementVO;
-	import model.vo.ShapeVO;
-	
-	import view.element.PageElement;
 	import model.vo.PageVO;
+	import model.vo.ShapeVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	
@@ -24,6 +22,7 @@ package commands
 	
 	import view.element.Camera;
 	import view.element.ElementBase;
+	import view.element.PageElement;
 	
 	/**
 	 * 创建形状
@@ -66,37 +65,41 @@ package commands
 				(elementVO as ShapeVO).radius = elementProxy.radius;
 			
 			// UI 初始化
-			shapeElement = ElementCreator.getElementUI(elementVO) as ElementBase;
+			element = ElementCreator.getElementUI(elementVO) as ElementBase;
 			
 			// 新创建图形的比例总是与画布比例互补，保证任何时候创建的图形看起来是标准大小
 			elementVO.scale = layoutTransformer.compensateScale;
-			(shapeElement is Camera) ? CoreFacade.addElementAt(shapeElement, 1) : CoreFacade.addElement(shapeElement);
+			(element is Camera) ? CoreFacade.addElementAt(element, 1) : CoreFacade.addElement(element);
 			
 			//放置拖动创建时 当前原件未被指定 
-			CoreFacade.coreMediator.currentElement = shapeElement;
+			CoreFacade.coreMediator.currentElement = element;
 			
 			//开始缓动，将此设为false当播放完毕且鼠标弹起时进入选择状态
 			CoreFacade.coreMediator.createNewShapeTweenOver = false;
 			
 			// 图形创建时 添加动画效果
-			TweenLite.from(shapeElement, elementProxy.flashTime, {alpha: 0, scaleX : 0, scaleY : 0, ease: Back.easeOut, onComplete: shapeCreated});
+			TweenLite.from(element, elementProxy.flashTime, {alpha: 0, scaleX : 0, scaleY : 0, ease: Back.easeOut, onComplete: shapeCreated});
 			
-			if (shapeElement is PageElement)
+			/*if (shapeElement is PageElement)
 			{
 				CoreFacade.coreMediator.pageManager.addPage(shapeElement.vo as PageVO);
-			}
+			}*/
 		}
 		
 		/**
 		 */		
 		private function shapeCreated():void
 		{
-			CoreFacade.coreMediator.autoLayerController.autoLayer(shapeElement);
-			elementIndex = CoreFacade.getElementIndex(shapeElement);
+			CoreFacade.coreMediator.autoLayerController.autoLayer(element);
+			elementIndex = element.index;
 			//动画完毕
 			CoreFacade.coreMediator.createNewShapeTweenOver = true;
 			if (CoreFacade.coreMediator.createNewShapeTweenOver && CoreFacade.coreMediator.createNewShapeMouseUped)
-				sendNotification(Command.SElECT_ELEMENT, shapeElement);
+			{
+				if (element.screenshot)
+					CoreFacade.coreMediator.pageManager.refreshPageThumbsByElement(element);
+				sendNotification(Command.SElECT_ELEMENT, element);
+			}
 			
 			UndoRedoMannager.register(this);
 			
@@ -107,27 +110,19 @@ package commands
 		 */		
 		override public function undoHandler():void
 		{
-			CoreFacade.removeElement(shapeElement);
-			
-			if (shapeElement is PageElement)
-			{
-				pageIndex = (shapeElement.vo as PageVO).index;
-				CoreFacade.coreMediator.pageManager.removePage(shapeElement.vo as PageVO);
-			}
+			CoreFacade.removeElement(element);
+			CoreFacade.coreMediator.pageManager.refreshPageThumbsByElement(element);
 		}
 		
 		override public function redoHandler():void
 		{
-			CoreFacade.addElementAt(shapeElement, elementIndex);
-			if (shapeElement is PageElement)
-			{
-				CoreFacade.coreMediator.pageManager.addPageAt(shapeElement.vo as PageVO, pageIndex);
-			}
+			CoreFacade.addElementAt(element, elementIndex);
+			CoreFacade.coreMediator.pageManager.refreshPageThumbsByElement(element);
 		}
 		
 		/**
 		 */		
-		private var shapeElement:ElementBase;
+		private var element:ElementBase;
 		
 		private var elementIndex:int;
 		

@@ -67,7 +67,7 @@ package
 			
 			ImgLib.register(imgID.toString(), imgExtractor.bytes);
 				
-			imgElement.toNomalState();
+			element.toNomalState();
 		}
 		
 		/**

@@ -31,6 +31,18 @@ package view.interact.multiSelect
 			control = multiSelectControl;
 		}
 		
+		override public function toShotcut(renderable:Boolean=false):void
+		{
+			super.toShotcut(renderable);
+			graphics.clear();
+		}
+		
+		override public function toPreview(renderable:Boolean=false):void
+		{
+			super.toPreview(renderable);
+			StyleManager.drawRect(this, vo.style, vo);
+		}
+		
 		/**
 		 * 复制出一个新的自己, 同时替换之前的临时组合，
 		 */		

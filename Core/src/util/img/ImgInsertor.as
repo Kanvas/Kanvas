@@ -238,7 +238,7 @@ package util.img
 			//服务地址没有配置时，直接显示图片
 			if (IMG_UPLOAD_URL == null)
 			{
-				imgOK();
+				imgOK(imageExtractor.bitmapData);
 			}
 			else
 			{
@@ -274,7 +274,7 @@ package util.img
 		 */		
 		private function imgUploadHandler(evt:Event):void
 		{
-			imgOK();
+			imgOK((imgLoader.content as Bitmap).bitmapData);
 		}
 		
 		/**
@@ -292,7 +292,7 @@ package util.img
 		
 		/**
 		 */		
-		private function imgOK():void
+		private function imgOK(bmd:BitmapData = null):void
 		{
 			imgUpLoader.removeEventListener(IOErrorEvent.IO_ERROR, imgUploadError);
 			imgUpLoader.removeEventListener(Event.COMPLETE, imgUploadHandler);
@@ -302,7 +302,7 @@ package util.img
 			if (imgUpLoader.data)
 				imgURL = imgUpLoader.data.toString();
 				
-			this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_UPLOADED_TO_SERVER, (imgLoader.content as Bitmap).bitmapData, imgID, imgURL));
+			dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_UPLOADED_TO_SERVER, bmd, imgID, imgURL));
 			
 			imgLoader.unload();
 			fileReference.data.clear();

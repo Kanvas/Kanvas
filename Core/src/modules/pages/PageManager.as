@@ -1,14 +1,28 @@
 package modules.pages
 {
+	import com.kvs.utils.MathUtil;
+	import com.kvs.utils.RectangleUtil;
+	import com.kvs.utils.graphic.BitmapUtil;
+	
 	import commands.Command;
 	
+	import flash.display.BitmapData;
 	import flash.events.EventDispatcher;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+	import model.CoreFacade;
+	import model.CoreProxy;
 	import model.ElementProxy;
 	import model.vo.PageVO;
 	
+	import util.CoreUtil;
+	import util.LayoutUtil;
+	
+	import view.element.ElementBase;
+	import view.element.PageElement;
 	import view.interact.CoreMediator;
+	import view.ui.MainUIBase;
 
 	[Event(name="pageAdded", type="modules.pages.PageEvent")]
 	
@@ -24,7 +38,6 @@ package modules.pages
 		
 		public function PageManager($coreMdt:CoreMediator)
 		{
-			coreMdt = $coreMdt;
 			pageQuene = new PageQuene;
 			pageQuene.addEventListener(PageEvent.PAGE_ADDED, defaultHandler);
 			pageQuene.addEventListener(PageEvent.PAGE_DELETED, defaultHandler);
@@ -39,11 +52,15 @@ package modules.pages
 			var bound:Rectangle = coreMdt.coreApp.bound;
 			var proxy:ElementProxy = new ElementProxy;
 			
+			
+			
 			proxy.x = (bound.left + bound.right) * .5;
 			proxy.y = (bound.top + bound.bottom) * .5;
 			proxy.rotation = - coreMdt.canvas.rotation;
 			proxy.width = bound.width ;
 			proxy.height = bound.height;
+			if (proxy.height / proxy.width < .75) proxy.width = proxy.height / .75;
+			else if (proxy.height / proxy.width > .75) proxy.height = proxy.width * .75;
 			proxy.index = (index > 0 && index < length) ? index : length;
 			proxy.ifSelectedAfterCreate = false;
 			
@@ -207,6 +224,151 @@ package modules.pages
 		
 		private var pageQuene:PageQuene;
 		
-		private var coreMdt:CoreMediator;
+		public function notifyPageVOUpdateThumb(vo:PageVO):void
+		{
+			if (vo)
+				vo.dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, vo));
+		}
+		
+		public function registOverlappingPageVOs(current:ElementBase):void
+		{
+			if (current.screenshot)
+			{
+				var elements:Vector.<ElementBase> = proxy.elements;
+				if (elements)
+				{
+					var currentRect:Rectangle = LayoutUtil.getItemRect(coreMdt.canvas, current, false, true, false);
+					for each(var element:ElementBase in elements)
+					{
+						if (element is PageElement)
+						{
+							var elementRect:Rectangle = LayoutUtil.getItemRect(coreMdt.canvas, element, false, true, false);
+							if (RectangleUtil.rectOverlapping(currentRect, elementRect))
+								registUpdateThumbVO(element.vo as PageVO);
+						}
+					}
+				}
+			}
+		}
+		
+		public function registUpdateThumbVO(vo:PageVO):void
+		{
+			if (refreshed)
+			{
+				refreshed = false;
+				updateThumbVOS.length = 0;
+			}
+			if (vo)
+			{
+				if (updateThumbVOS.indexOf(vo) == -1)
+				{
+					vo.thumbUpdatable = false;
+					updateThumbVOS.push(vo);
+				}
+			}
+		}
+		
+		public function refreshVOThumbs(pageVOs:Vector.<PageVO> = null):Vector.<PageVO>
+		{
+			refreshed = true;
+			if (pageVOs)
+			{
+				for each (var vo:PageVO in pageVOs)
+					registUpdateThumbVO(vo);
+			}
+			for each (vo in updateThumbVOS)
+			{
+				vo.thumbUpdatable = true;
+				vo.dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, vo));
+			}
+			return (pageVOs) ? null : updateThumbVOS.concat();
+		}
+		
+		private static var refreshed:Boolean = false;
+		
+		private static const updateThumbVOS:Vector.<PageVO> = new Vector.<PageVO>;
+		
+		public function refreshPageThumbsByElement(element:ElementBase):Vector.<PageVO>
+		{
+			if (element.screenshot)
+			{
+				var vector:Vector.<PageVO> = getOverlappingPages(element);
+				for each (var vo:PageVO in vector)
+					registUpdateThumbVO(vo);
+				
+			}
+			return refreshVOThumbs();
+		}
+		
+		public function getOverlappingPages(current:ElementBase):Vector.<PageVO>
+		{
+			if (current.screenshot)
+			{
+				var elements:Vector.<ElementBase> = proxy.elements;
+				var vector:Vector.<PageVO> = new Vector.<PageVO>;
+				if (elements)
+				{
+					var currentRect:Rectangle = LayoutUtil.getItemRect(coreMdt.canvas, current, false, true, false);
+					for each(var element:ElementBase in elements)
+					{
+						if (element is PageElement)
+						{
+							var elementRect:Rectangle = LayoutUtil.getItemRect(coreMdt.canvas, element, false, true, false);
+							if (RectangleUtil.rectOverlapping(currentRect, elementRect))
+							{
+								vector.push(element.vo as PageVO);
+							}
+						}
+					}
+				}
+			}
+			return vector;
+		}
+		
+		public function getThumbByPageVO(pageVO:PageVO, w:Number, h:Number, mainUI:MainUIBase, color:uint = 0xFFFFFF, smooth:Boolean = false):BitmapData
+		{
+			//scale
+			var vw:Number = w;
+			var vh:Number = h;
+			var pw:Number = pageVO.scale * pageVO.width;
+			var ph:Number = pageVO.scale * pageVO.height;
+			var scale:Number = ((vw / vh) > (pw / ph)) ? vh / ph : vw / pw;
+			var rotation:Number = -pageVO.rotation;
+			var radian  :Number = MathUtil.angleToRadian(pageVO.rotation);
+			var cos:Number = Math.cos(radian);
+			var sin:Number = Math.sin(radian);
+			
+			//算出pageVO的左上角point
+			var tp:Point = new Point;
+			tp.x = - .5 * pageVO.scale * pageVO.width;
+			tp.y = - .5 * pageVO.scale * pageVO.height;
+			
+			var rx:Number = tp.x * cos - tp.y * sin;
+			var ry:Number = tp.x * sin + tp.y * cos;
+			
+			tp.x = rx + pageVO.x;
+			tp.y = ry + pageVO.y;
+			LayoutUtil.convertPointCanvas2Stage(tp, -(vw - pw * scale) * .5, -(vh - ph * scale) * .5, scale, rotation);
+			
+			var rect:Rectangle = new Rectangle(0, 0, w, h);
+			mainUI.canvas.toShotcutState(-tp.x, -tp.y, scale, rotation, rect);
+			mainUI.synBgImageToCanvas();
+			
+			var bmd:BitmapData = BitmapUtil.drawWithSize(mainUI.canvas, w, h, false, color, null, smooth);
+			mainUI.canvas.toPreviewState();
+			mainUI.synBgImageToCanvas();
+			
+			return bmd;
+		}
+		
+		private function get proxy():CoreProxy
+		{
+			return CoreFacade.coreProxy;
+		}
+		
+		private function get coreMdt():CoreMediator
+		{
+			return CoreFacade.coreMediator;
+		}
 	}
 }

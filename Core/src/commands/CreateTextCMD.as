@@ -4,6 +4,7 @@ package commands
 	import flash.geom.Point;
 	
 	import model.CoreFacade;
+	import model.vo.PageVO;
 	import model.vo.TextVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
@@ -43,6 +44,8 @@ package commands
 			
 			CoreFacade.addElement(textField);
 			
+			v = CoreFacade.coreMediator.pageManager.refreshPageThumbsByElement(textField);
+			
 			UndoRedoMannager.register(this);
 		}
 		
@@ -53,11 +56,17 @@ package commands
 			sendNotification(Command.UN_SELECT_ELEMENT);
 			
 			CoreFacade.removeElement(textField);
+			
+			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 		}
 		
 		override public function redoHandler():void
 		{
 			CoreFacade.addElement(textField);
+			
+			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 		}
+		
+		private var v:Vector.<PageVO>;
 	}
 }

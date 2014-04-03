@@ -1,6 +1,7 @@
 package commands
 {
 	import model.CoreFacade;
+	import model.vo.PageVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	
@@ -28,6 +29,8 @@ package commands
 			oldColorObj = notification.getBody();
 			newColorObj = {color:element.vo.color, colorIndex:element.vo.colorIndex};
 			
+			changColor(newColorObj, true);
+			
 			UndoRedoMannager.register(this);
 		}
 		
@@ -35,18 +38,25 @@ package commands
 		 */		
 		override public function undoHandler():void
 		{
-			element.vo.color = oldColorObj.color;
-			element.vo.colorIndex = oldColorObj.colorIndex;
-			element.render();
+			changColor(oldColorObj);
 		}
 		
 		/**
 		 */		
 		override public function redoHandler():void
 		{
-			element.vo.color = newColorObj.color;
-			element.vo.colorIndex = newColorObj.colorIndex;
+			changColor(newColorObj);
+		}
+		
+		private function changColor(obj:Object, exec:Boolean = false):void
+		{
+			element.vo.color = obj.color;
+			element.vo.colorIndex = obj.colorIndex;
 			element.render();
+			if (exec)
+				v = CoreFacade.coreMediator.pageManager.refreshPageThumbsByElement(element);
+			else
+				CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 		}
 		
 		/**
@@ -60,5 +70,7 @@ package commands
 		/**
 		 */	
 		private var newColorObj:Object;
+		
+		private var v:Vector.<PageVO>;
 	}
 }

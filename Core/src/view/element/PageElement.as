@@ -90,7 +90,7 @@ package view.element
 			
 			graphics.clear();
 			graphics.beginFill(0, 0);
-			graphics.drawRect(- vo.width  / 2, - vo.height / 2, vo.width, vo.height);
+			graphics.drawRect(- width * .5, - height * .5, width, height);
 			graphics.endFill();
 			
 			numShape.visible = false;
@@ -128,18 +128,18 @@ package view.element
 			{
 				graphics.clear();
 				
-				vo.style.tx = - vo.width  / 2;
-				vo.style.ty = - vo.height / 2;
+				vo.style.tx = - width  * .5;
+				vo.style.ty = - height * .5;
 				
-				vo.style.width  = vo.width;
-				vo.style.height = vo.height;
+				vo.style.width  = width;
+				vo.style.height = height;
 				
 				var left  :Number = vo.style.tx;
 				var top   :Number = vo.style.ty;
 				var right :Number = vo.style.tx + vo.style.width;
 				var bottom:Number = vo.style.ty + vo.style.height;
 				
-				var frameSize:Number = vo.height / 16;
+				var frameSize:Number = height / 16;
 				
 				//防止边框画布缩放后看着太细
 				//if (frameSize * vo.scale * parent.scaleX < 2)
@@ -183,9 +183,7 @@ package view.element
 		{
 			if (clickMoveControl.clickTarget == numShape)
 			{
-				var evt:PageEvent = new PageEvent(PageEvent.PAGE_NUM_CLICKED, vo as PageVO, true);
-				this.dispatchEvent(evt);
-				
+				dispatchEvent(new PageEvent(PageEvent.PAGE_NUM_CLICKED, vo as PageVO, true));
 				pageVO.dispatchEvent(new PageEvent(PageEvent.PAGE_SELECTED, pageVO, false));
 			}
 			else
@@ -208,7 +206,7 @@ package view.element
 			if (isNaN(s))
 				s = vo.scale;
 			
-			numShape.width = numShape.height = vo.height * .5;
+			numShape.width = numShape.height = height * .5;
 			var temSize:Number = numShape.width * s * parent.scaleX;
 			
 			if (temSize > maxNumSize)
@@ -219,7 +217,7 @@ package view.element
 				numShape.height = size;
 			}
 			
-			numShape.x = - vo.width * .5 - numShape.width * .5;
+			numShape.x = - width * .5 - numShape.width * .5;
 			numShape.y = - numShape.height;
 		}
 		
@@ -234,7 +232,7 @@ package view.element
 		{
 			numShape.graphics.clear();
 			
-			numLabel.text = ((vo as PageVO).index + 1).toString();
+			numLabel.text = (pageVO.index + 1).toString();
 			numLabel.render();
 			numLabel.x = - numLabel.width  * .5;
 			numLabel.y = - numLabel.height * .5;

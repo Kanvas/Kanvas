@@ -1,6 +1,7 @@
 package commands
 {
 	import com.greensock.TweenLite;
+	import com.greensock.easing.Back;
 	
 	import flash.display.BitmapData;
 	import flash.geom.Point;
@@ -43,7 +44,6 @@ package commands
 		{
 			var layoutTransformer:LayoutTransformer = CoreFacade.coreMediator.layoutTransformer;
 			
-			
 			// 元素ID与图片资源ID单独管理
 			var imgVO:ImgVO = new ImgVO();
 			imgVO.id = ElementCreator.id;
@@ -74,31 +74,36 @@ package commands
 			imgVO.x = p.x;
 			imgVO.y = p.y;
 			
-			imgElement = new ImgElement(imgVO);
-			CoreFacade.addElement(imgElement);
+			element = new ImgElement(imgVO);
+			CoreFacade.addElement(element);
 			
-			elementIndex = CoreFacade.getElementIndex(imgElement);
+			elementIndex = CoreFacade.getElementIndex(element);
 			
-			this.sendNotification(Command.SElECT_ELEMENT, imgElement);
+			this.sendNotification(Command.SElECT_ELEMENT, element);
 			
 			// 图形创建时 添加动画效果
-			TweenLite.from(imgElement, 0.3, {alpha: 0, scaleX : 0, scaleY : 0});
+			TweenLite.from(element, 0.3, {alpha: 0, scaleX : 0, scaleY : 0, ease: Back.easeOut, onComplete: created});
 			
 			UndoRedoMannager.register(this);
+		}
+		
+		private function created():void
+		{
+			CoreFacade.coreMediator.pageManager.refreshPageThumbsByElement(element);
 		}
 		
 		/**
 		 */		 
 		override public function undoHandler():void
 		{
-			CoreFacade.removeElement(imgElement);
+			CoreFacade.removeElement(element);
 		}
 		
 		/**
 		 */		
 		override public function redoHandler():void
 		{
-			CoreFacade.addElementAt(imgElement, elementIndex);
+			CoreFacade.addElementAt(element, elementIndex);
 		}
 		
 		/**
@@ -111,6 +116,6 @@ package commands
 		
 		/**
 		 */		
-		protected var imgElement:ImgElement;
+		protected var element:ImgElement;
 	}
 }

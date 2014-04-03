@@ -27,10 +27,10 @@ package commands
 		{
 			sendNotification(Command.UN_SELECT_ELEMENT);
 			
-			shape = notification.getBody() as ElementBase;
-			elementIndex = CoreFacade.getElementIndex(shape);
-			CoreFacade.removeElement(shape);
-			
+			element = notification.getBody() as ElementBase;
+			elementIndex = CoreFacade.getElementIndex(element);
+			CoreFacade.coreMediator.pageManager.registOverlappingPageVOs(element);
+			CoreFacade.removeElement(element);
 			
 			elementIndexArray = [];
 			groupElements = CoreFacade.coreMediator.autoGroupController.elements;
@@ -46,8 +46,12 @@ package commands
 					CoreFacade.removeElement(item);
 					if (item is PageElement)
 						CoreFacade.coreMediator.pageManager.removePage(item.vo as PageVO);
+					else
+						CoreFacade.coreMediator.pageManager.registOverlappingPageVOs(item);
 				}
 			}
+			
+			v = CoreFacade.coreMediator.pageManager.refreshVOThumbs();
 			
 			UndoRedoMannager.register(this);
 		}
@@ -74,12 +78,14 @@ package commands
 				}
 			}
 			
-			CoreFacade.addElementAt(shape, elementIndex);
+			CoreFacade.addElementAt(element, elementIndex);
+			
+			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 		}
 		
 		override public function redoHandler():void
 		{
-			CoreFacade.removeElement(shape);
+			CoreFacade.removeElement(element);
 			
 			if (autoGroupEnabled)
 			{
@@ -90,11 +96,13 @@ package commands
 						CoreFacade.coreMediator.pageManager.removePage(item.vo as PageVO);
 				}
 			}
+			
+			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 		}
 		
 		/**
 		 */		
-		private var shape:ElementBase;
+		private var element:ElementBase;
 		
 		private var elementIndex:int;
 		
@@ -103,5 +111,7 @@ package commands
 		private var groupElements:Vector.<ElementBase>;
 		
 		private var autoGroupEnabled:Boolean;
+		
+		private var v:Vector.<PageVO>;
 	}
 }

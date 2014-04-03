@@ -53,7 +53,7 @@ package model.vo
 		{
 			_x = value;
 		}
-		private var _x:Number = 0;
+		protected var _x:Number = 0;
 		
 		/**
 		 */		
@@ -65,11 +65,7 @@ package model.vo
 		{
 			_y = value;
 		}
-		private var _y:Number = 0;
-		
-		/**
-		 */		
-		private var _height:Number = 50;
+		protected var _y:Number = 0;
 		
 		/**
 		 * 原始尺寸， 通常此值由系统设定，不改动；只有图形型变时
@@ -93,7 +89,7 @@ package model.vo
 		
 		/**
 		 */		
-		private var _width:Number = 50;
+		protected var _height:Number = 50;
 		
 		/**
 		 */
@@ -109,6 +105,10 @@ package model.vo
 		{
 			_width = value;
 		}
+		
+		/**
+		 */		
+		protected var _width:Number = 50;
 		
 		
 		/**
@@ -130,7 +130,7 @@ package model.vo
 			_scale = value;
 		}
 		
-		private var _scale:Number = 1;
+		protected var _scale:Number = 1;
 		
 		/**
 		 * 旋转角度，0~360范围取值
@@ -148,7 +148,7 @@ package model.vo
 			_rotation = value;
 		}
 		
-		private var _rotation:Number = 0;
+		protected var _rotation:Number = 0;
 		
 		
 		
@@ -186,7 +186,7 @@ package model.vo
 		
 		/**
 		 */
-		private var _styleID:String = null;
+		protected var _styleID:String = null;
 		
 		/**
 		 * 样式类型，配合样式ID，用来获取样式文件
@@ -211,7 +211,7 @@ package model.vo
 		/**
 		 * 在未给元素应用样式之前是无法渲染的, 默认无样式
 		 */		
-		private var _style:Style;
+		protected var _style:Style;
 		
 		/**
 		 * 自定义颜色值
@@ -232,7 +232,7 @@ package model.vo
 		/**
 		 * 内填充颜色
 		 */
-		private var _color:Object = 0x728F1C;
+		protected var _color:Object = 0x728F1C;
 		
 		/**
 		 * 颜色序号， 每一套样式风格都会给不同类型的
@@ -248,6 +248,15 @@ package model.vo
 		/**
 		 * 边框的粗细
 		 */		
-		public var thickness:Number = 6;
+		public function set thickness(value:Number):void
+		{
+			_thickness = value;
+		}
+		
+		public function get thickness():Number
+		{
+			return _thickness;
+		}
+		protected var _thickness:Number = 6;
 	}
 }

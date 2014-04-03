@@ -4,7 +4,11 @@ package view.elementSelector.sizeControl
 	import com.kvs.ui.clickMove.IClickMove;
 	
 	import model.vo.ElementVO;
+	import model.vo.PageVO;
 	
+	import modules.pages.PageUtil;
+	
+	import view.element.PageElement;
 	import view.elementSelector.ElementSelector;
 	
 	/**
@@ -46,6 +50,9 @@ package view.elementSelector.sizeControl
 			
 			oldX = holder.x;
 			oldY = holder.y;
+			
+			if (holder.element.vo is PageVO)
+				holder.coreMdt.pageManager.registUpdateThumbVO(PageVO(holder.element.vo));
 		}
 		
 		/**

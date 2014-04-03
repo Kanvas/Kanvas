@@ -3,6 +3,7 @@ package commands
 	import flash.display.DisplayObjectContainer;
 	
 	import model.CoreFacade;
+	import model.vo.PageVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	
@@ -20,41 +21,33 @@ package commands
 		{
 			element = CoreFacade.coreMediator.currentElement;
 			parent  = element.parent;
-			
-			jump     = notification.getBody().jump;
-			oldLayer = int(notification.getBody().index);
-			newLayer = parent.getChildIndex(element);
+			oldLayer = element.index;
+			newLayer = int(notification.getBody());
+			setLayer(newLayer, true);
 			
 			UndoRedoMannager.register(this);
 		}
 		
 		override public function undoHandler():void
 		{
-			if (jump)
-			{
-				if (parent && element)
-					parent.setChildIndex(element, oldLayer);
-			}
-			else
-			{
-				if (parent && element) 
-					parent.swapChildrenAt(newLayer, oldLayer);
-			}
-			
+			setLayer(oldLayer);
 			
 		}
 		
 		override public function redoHandler():void
 		{
-			if (jump)
+			setLayer(newLayer);
+		}
+		
+		private function setLayer(layer:int, exec:Boolean = false):void
+		{
+			if (parent && element)
 			{
-				if (parent && element)
-					parent.setChildIndex(element, newLayer);
-			}
-			else
-			{
-				if (parent && element) 
-					parent.swapChildrenAt(oldLayer, newLayer);
+				parent.setChildIndex(element, layer);
+				if (exec)
+					v = CoreFacade.coreMediator.pageManager.refreshPageThumbsByElement(element);
+				else
+					CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 			}
 		}
 		
@@ -64,8 +57,9 @@ package commands
 		
 		private var oldLayer:int;
 		private var newLayer:int;
-		private var jump:Boolean;
 		
 		private var parent:DisplayObjectContainer;
+		
+		private var v:Vector.<PageVO>;
 	}
 }

@@ -3,6 +3,7 @@ package commands
 	import flash.geom.Rectangle;
 	
 	import model.CoreFacade;
+	import model.vo.PageVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	
@@ -51,7 +52,6 @@ package commands
 		
 		private function imgLocalHandler(evt:ImgInsertEvent):void
 		{
-			
 			imgInsertor.removeEventListener(ImgInsertEvent.IMG_LOADED_TO_LOCAL, imgLocalHandler);
 			if (imgInsertor.chooseSameImage)
 			{
@@ -65,13 +65,6 @@ package commands
 					handler();
 					handler = null;
 				}
-				/*var w:Number = imgInsertor.bitmapData.width;
-				var h:Number = imgInsertor.bitmapData.height;
-				var x:Number = - w * .5;
-				var y:Number = - h * .5;
-				//var rect:Rectangle = new Rectangle(x, y, w, h);
-				//CoreFacade.coreMediator.mainUI.canvas.showLoading(rect);
-				*/
 			}
 		}
 		
@@ -94,23 +87,23 @@ package commands
 			
 			//CoreFacade.coreMediator.mainUI.canvas.hideLoading();
 			
-			updateBgImg(newImgObj);
+			setBgImg(newImgObj, true);
 			
 			UndoRedoMannager.register(this);
 		}
 		
 		override public function undoHandler():void
 		{
-			updateBgImg(oldImgObj);
+			setBgImg(oldImgObj);
 		}
 		
 		override public function redoHandler():void
 		{
-			updateBgImg(newImgObj);
+			setBgImg(newImgObj);
 		}
 		
 		
-		private function updateBgImg(obj:Object):void
+		private function setBgImg(obj:Object, exec:Boolean = false):void
 		{
 			//分配背景图片的ID
 			CoreFacade.coreProxy.bgVO.imgID   = obj.imgID;
@@ -119,6 +112,17 @@ package commands
 			
 			CoreFacade.coreMediator.coreApp.drawBGImg   (obj.imgData);
 			(CoreFacade.coreMediator.coreApp as CoreApp).bgImgUpdated(obj.imgData);
+			
+			if (exec)
+			{
+				for each (var vo:PageVO in CoreFacade.coreMediator.pageManager.pages)
+					CoreFacade.coreMediator.pageManager.registUpdateThumbVO(vo);
+				v = CoreFacade.coreMediator.pageManager.refreshVOThumbs();
+			}
+			else
+			{
+				CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
+			}
 		}
 		
 		private var handler:Function;
@@ -135,5 +139,7 @@ package commands
 		private var imgInsertor:ImgInsertor;
 		
 		private var imgID:uint;
+		
+		private var v:Vector.<PageVO>;
 	}
 }

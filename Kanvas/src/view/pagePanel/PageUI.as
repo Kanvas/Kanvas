@@ -117,7 +117,7 @@ package view.pagePanel
 		 */		
 		private function updateThumb(evt:PageEvent = null):void
 		{
-			pageVO.bitmapData = PageUtil.getThumbByPageVO(pageVO, 720, 540, mainUI, CoreFacade.coreProxy.bgColor, true);
+			pageVO.bitmapData = CoreFacade.coreMediator.pageManager.getThumbByPageVO(pageVO, 960, 720, mainUI, CoreFacade.coreProxy.bgColor, true);
 			if (bmp && con.contains(bmp)) con.removeChild(bmp);
 			con.addChild(bmp = new Bitmap(pageVO.bitmapData));
 			bmp.x = leftGutter;
@@ -138,7 +138,7 @@ package view.pagePanel
 		 */		
 		private function delHander(evt:MouseEvent):void
 		{
-			pageVO.dispatchEvent(new PageEvent(PageEvent.DELETE_PAGE_FROM_UI, this.pageVO));
+			pageVO.dispatchEvent(new PageEvent(PageEvent.DELETE_PAGE_FROM_UI, pageVO));
 		}
 		
 		/**

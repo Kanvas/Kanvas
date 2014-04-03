@@ -132,10 +132,6 @@ package view.interact.autoGroup
 				
 				for each(var element:ElementBase in _elements)
 				{
-					var page:Boolean = (element.vo is PageVO);
-					if (page)
-						PageUtil.registUpdateThumbVO(PageVO(element.vo));
-					
 					point.x = element.vo.x + xOff;
 					point.y = element.vo.y + yOff;
 					
@@ -182,12 +178,7 @@ package view.interact.autoGroup
 				
 				for each(var element:ElementBase in _elements)
 				{
-					var page:Boolean = (element.vo is PageVO);
-					if (page)
-						PageUtil.registUpdateThumbVO(PageVO(element.vo));
-					
 					element.scaleX = element.scaleY = element.vo.scale *= scaleRad;
-					
 					
 					xDis = element.vo.x - curElement.x;
 					yDis = element.vo.y - curElement.y;
@@ -223,10 +214,6 @@ package view.interact.autoGroup
 			{
 				for each(var element:ElementBase in _elements)
 				{
-					var page:Boolean = (element.vo is PageVO);
-					if (page)
-						PageUtil.registUpdateThumbVO(PageVO(element.vo));
-					
 					element.rotation = element.vo.rotation += dis;
 					tempRollPoint.setTo(element.vo.x, element.vo.y);
 					PointUtil.rotate(tempRollPoint, MathUtil.angleToRadian(dis), curElement.middleCenter);

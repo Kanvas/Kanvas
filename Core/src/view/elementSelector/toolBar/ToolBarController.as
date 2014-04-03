@@ -92,17 +92,9 @@
 		 */		
 		private function upLayerHandler(evt:MouseEvent):void
 		{
-			var p:DisplayObjectContainer = selector.element.parent;
-			var index:uint = p.getChildIndex(selector.element);
-			var oldLayerObj:Object = {};
-			oldLayerObj.index = index;
-			oldLayerObj.jump = false;
-			
-			if (index < p.numChildren - 1) 
-			{
-				p.swapChildrenAt(index, index + 1);
-				selector.coreMdt.sendNotification(Command.CHANGE_ELEMENT_LAYER, oldLayerObj);
-			}
+			var index:uint = selector.element.index;
+			if (index < selector.coreMdt.canvas.numChildren - 1) 
+				setLayer(index + 1);
 		}
 		
 		/**
@@ -110,17 +102,9 @@
 		 */		
 		private function downLayerHandler(evtg:MouseEvent):void
 		{
-			var p:DisplayObjectContainer = selector.element.parent;
-			var index:uint = p.getChildIndex(selector.element);
-			var oldLayerObj:Object = {};
-			oldLayerObj.index = index;
-			oldLayerObj.jump = false;
-			
+			var index:uint = selector.element.index;
 			if (index > 1) 
-			{
-				p.swapChildrenAt(index, index - 1);
-				selector.coreMdt.sendNotification(Command.CHANGE_ELEMENT_LAYER, oldLayerObj);
-			}
+				setLayer(index - 1);
 		}
 		
 		/**
@@ -129,33 +113,18 @@
 		private function topLayer(evt:MouseEvent):void
 		{
 			var p:DisplayObjectContainer = selector.element.parent;
-			var index:int = p.getChildIndex(selector.element);
-			var oldLayerObj:Object = {};
-			oldLayerObj.index = index;
-			oldLayerObj.jump = true;
-			
+			var index:uint = selector.element.index;
 			if (index < p.numChildren - 1)
-			{
-				p.setChildIndex(selector.element, p.numChildren - 1);
-				selector.coreMdt.sendNotification(Command.CHANGE_ELEMENT_LAYER, oldLayerObj);
-			}
+				setLayer(p.numChildren - 1);
 		}
 		
 		/**
 		 */		
 		private function bottomLayer(evt:MouseEvent):void
 		{
-			var p:DisplayObjectContainer = selector.element.parent;
-			var index:uint = p.getChildIndex(selector.element);
-			var oldLayerObj:Object = {};
-			oldLayerObj.index = index;
-			oldLayerObj.jump = true;
-			
+			var index:uint = selector.element.index;
 			if (index > 1)
-			{
-				p.setChildIndex(selector.element, 1);
-				selector.coreMdt.sendNotification(Command.CHANGE_ELEMENT_LAYER, oldLayerObj);
-			}
+				setLayer(1);
 		}
 		
 		/**
@@ -166,6 +135,10 @@
 		}
 		
 		
+		private function setLayer(index:int):void
+		{
+			selector.coreMdt.sendNotification(Command.CHANGE_ELEMENT_LAYER, index);
+		}
 		
 		
 		
@@ -193,11 +166,11 @@
 			
 			curStyleBtn.selected = true;
 			
-			this.renderBG();
+			renderBG();
 			
-			this.addEventListener(MouseEvent.CLICK, colorSelectHandler, false, 0, true);
-			this.addEventListener(MouseEvent.MOUSE_OVER, previewColorHandler, false, 0, true);
-			this.addEventListener(MouseEvent.ROLL_OUT, resetColorHandler, false, 0, true);
+			addEventListener(MouseEvent.CLICK, colorSelectHandler, false, 0, true);
+			addEventListener(MouseEvent.MOUSE_OVER, previewColorHandler, false, 0, true);
+			addEventListener(MouseEvent.ROLL_OUT, resetColorHandler, false, 0, true);
 			
 			isColorPanelOpened = true;
 		}
@@ -217,9 +190,9 @@
 		{
 			if (isColorPanelOpened)
 			{
-				this.removeEventListener(MouseEvent.CLICK, colorSelectHandler);
-				this.removeEventListener(MouseEvent.MOUSE_OVER, previewColorHandler);
-				this.removeEventListener(MouseEvent.ROLL_OUT, resetColorHandler);
+				removeEventListener(MouseEvent.CLICK, colorSelectHandler);
+				removeEventListener(MouseEvent.MOUSE_OVER, previewColorHandler);
+				removeEventListener(MouseEvent.ROLL_OUT, resetColorHandler);
 					
 				isColorPanelOpened = false;
 			}

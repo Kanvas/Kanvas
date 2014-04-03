@@ -2,6 +2,7 @@ package commands
 {
 	import model.CoreFacade;
 	import model.CoreProxy;
+	import model.vo.PageVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	
@@ -26,8 +27,10 @@ package commands
 		{
 			element = CoreFacade.coreMediator.currentElement;
 			
-			oldStyleID = notification.getBody().toString();
-			newStyleID = element.vo.styleID;
+			oldStyleID = element.vo.styleID;
+			newStyleID = notification.getBody().toString();
+			
+			setStyle(newStyleID, true);
 			
 			UndoRedoMannager.register(this);
 		}
@@ -36,18 +39,26 @@ package commands
 		 */		
 		override public function undoHandler():void
 		{
-			element.vo.styleID = oldStyleID;
-			StyleUtil.applyStyleToElement(element.vo);
-			element.render();
+			setStyle(oldStyleID);
 		}
 		
 		/**
 		 */		
 		override public function redoHandler():void
 		{
-			element.vo.styleID = newStyleID;
+			setStyle(newStyleID);
+		}
+		
+		private function setStyle(id:String, exec:Boolean = false):void
+		{
+			element.vo.styleID = id;
 			StyleUtil.applyStyleToElement(element.vo);
 			element.render();
+			
+			if (exec)
+				v = CoreFacade.coreMediator.pageManager.refreshPageThumbsByElement(element);
+			else
+				CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 		}
 		
 		private var oldStyleID:String;
@@ -57,5 +68,6 @@ package commands
 		 */		
 		private var element:ElementBase;
 		
+		private var v:Vector.<PageVO>;
 	}
 }

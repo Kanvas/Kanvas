@@ -1,7 +1,5 @@
 package view.interact
 {
-	import com.kvs.utils.PerformaceTest;
-	
 	import commands.Command;
 	
 	import consts.ConstsTip;
@@ -17,7 +15,6 @@ package view.interact
 	import model.vo.PageVO;
 	
 	import modules.pages.PageManager;
-	import modules.pages.PageUtil;
 	
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
@@ -956,7 +953,7 @@ package view.interact
 				if (pageVO)
 				{
 					pageVO.thumbUpdatable = true;
-					PageUtil.notifyPageVOUpdateThumb(pageVO);
+					pageManager.notifyPageVOUpdateThumb(pageVO);
 				}
 				
 			}

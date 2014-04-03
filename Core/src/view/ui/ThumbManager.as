@@ -56,8 +56,10 @@ package view.ui
 				var tp:Point = new Point(rect.x, rect.y);
 				LayoutUtil.convertPointCanvas2Stage(tp, -(vw - cw * scale) * .5, -(vh - ch * scale) * .5, scale, rotation);
 				canvas.toShotcutState(-tp.x, -tp.y, scale, 0);
+				core.synBgImageToCanvas();
 				var bmd:BitmapData = BitmapUtil.drawWithSize(canvas, vw, vh, false, CoreFacade.coreProxy.bgColor);
 				canvas.toPreviewState();
+				core.synBgImageToCanvas();
 			}
 			else
 			{
@@ -91,7 +93,7 @@ package view.ui
 					}
 					var page:PageVO = manager.pages[i];
 					
-					var bmd:BitmapData = PageUtil.getThumbByPageVO(page, w, h, core, CoreFacade.coreProxy.bgColor);
+					var bmd:BitmapData = manager.getThumbByPageVO(page, w, h, core, CoreFacade.coreProxy.bgColor);
 					
 					/*if (bmd)
 						

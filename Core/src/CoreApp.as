@@ -358,9 +358,9 @@ package
 		/**
 		 * 改变整体风格样式
 		 */		
-		public function changeTheme(value:String):void
+		public function changeTheme(value:String, redoable:Boolean = true):void
 		{
-			facade.sendNotification(Command.CHANGE_THEME, value);
+			facade.sendNotification(Command.CHANGE_THEME, {theme:value,redoable:redoable});
 		}
 		
 		/**

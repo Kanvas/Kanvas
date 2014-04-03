@@ -1,5 +1,6 @@
 package view.element.shapes
 {
+	import com.kvs.utils.MathUtil;
 	import com.kvs.utils.ViewUtil;
 	import com.kvs.utils.XMLConfigKit.StyleManager;
 	import com.kvs.utils.XMLConfigKit.style.Style;
@@ -42,25 +43,16 @@ package view.element.shapes
 		{
 			var scale:Number = selector.layoutInfo.transformer.canvasScale * vo.scale;
 			
-			var x:Number = selector.mouseX;
-			var y:Number = selector.mouseY;
+			var w:Number = width  * .5;
+			var h:Number = height * .5;
 			
-			if (y < - vo.height / 2 * scale)
-				y = - vo.height / 2 * scale;
+			var x:Number = MathUtil.clamp(selector.mouseX, - w * scale, w * scale);
+			var y:Number = MathUtil.clamp(selector.mouseY, - h * scale, 0);
 			
-			if (y > 0)
-				y = 0;
-			
-			if (x < - vo.width / 2 * scale)
-				x = - vo.width / 2 * scale;
-			
-			if (x > vo.width / 2 * scale)
-				x = vo.width / 2 * scale;
-			
-			arrowVO.arrowWidth = (vo.width / 2 * scale - x) / scale;
+			arrowVO.arrowWidth  = (w * scale - x) / scale;
 			arrowVO.trailHeight = - y * 2 / scale;
 			
-			this.render();
+			render();
 			selector.render();
 		}
 		
@@ -68,10 +60,9 @@ package view.element.shapes
 		 */		
 		public function layoutCustomPoint(selector:ElementSelector, style:Style):void
 		{
-			selector.customPointControl.x = (vo.width / 2 - arrowVO.arrowWidth) * style.scale;
-			selector.customPointControl.y = - arrowVO.trailHeight / 2 * style.scale;
+			selector.customPointControl.x = (width * .5 - arrowVO.arrowWidth) * style.scale;
+			selector.customPointControl.y = - arrowVO.trailHeight * .5 * style.scale;
 		}
-		
 		
 		public function get propertyNameArray():Array
 		{
@@ -84,11 +75,11 @@ package view.element.shapes
 		 */		
 		override public function clone():ElementBase
 		{
-			var arrowVO:ArrowVO = new ArrowVO;
-			arrowVO.arrowWidth = this.arrowVO.arrowWidth;
-			arrowVO.trailHeight = this.arrowVO.trailHeight;
+			var newVO:ArrowVO = new ArrowVO;
+			newVO.arrowWidth  = arrowVO.arrowWidth;
+			newVO.trailHeight = arrowVO.trailHeight;
 			
-			return new Arrow(cloneVO(arrowVO) as ArrowVO);
+			return new Arrow(cloneVO(newVO) as ArrowVO);
 		}
 		
 		/**
@@ -108,17 +99,19 @@ package view.element.shapes
 			StyleManager.setShapeStyle(vo.style, graphics, vo);
 			
 			// 从箭头的顶点开始绘制，顺时针绕一圈
-			graphics.moveTo(vo.width / 2, 0);
-			graphics.lineTo(vo.width / 2 - arrowVO.arrowWidth, vo.height / 2);
-			graphics.lineTo(vo.width / 2 - arrowVO.arrowWidth, arrowVO.trailHeight / 2);
-			graphics.lineTo( - vo.width / 2, arrowVO.trailHeight / 2);
+			var w:Number = width  * .5;
+			var h:Number = height * .5;
+			graphics.moveTo( w, 0);
+			graphics.lineTo( w -arrowVO.arrowWidth, h);
+			graphics.lineTo( w -arrowVO.arrowWidth, arrowVO.trailHeight * .5);
+			graphics.lineTo(-w, arrowVO.trailHeight * .5);
 			
 			//--------------------中轴线--------------------------------------------------------------
 			
-			graphics.lineTo( - vo.width / 2, - arrowVO.trailHeight / 2);
-			graphics.lineTo(vo.width / 2 - arrowVO.arrowWidth, - arrowVO.trailHeight / 2);
-			graphics.lineTo(vo.width / 2 - arrowVO.arrowWidth, - vo.height / 2);
-			graphics.lineTo(vo.width / 2, 0);
+			graphics.lineTo(-w,- arrowVO.trailHeight * .5);
+			graphics.lineTo( w - arrowVO.arrowWidth, - arrowVO.trailHeight * .5);
+			graphics.lineTo( w - arrowVO.arrowWidth, - h);
+			graphics.lineTo( w, 0);
 			
 			graphics.endFill();
 		}
@@ -161,6 +154,9 @@ package view.element.shapes
 			ViewUtil.show(selector.customPointControl);
 		}
 		
+		public var arrowWidth:Number = 0;
+		
+		public var trailHeight:Number = 0;
 	}
 	
 }

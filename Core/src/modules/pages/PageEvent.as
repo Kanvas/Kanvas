@@ -2,6 +2,7 @@ package modules.pages
 {
 	import flash.events.Event;
 	
+	import model.vo.ElementVO;
 	import model.vo.PageVO;
 	
 	/**
@@ -51,15 +52,14 @@ package modules.pages
 		
 		/**
 		 */		
-		public function PageEvent(type:String, $pageVO:PageVO = null, bubbles:Boolean = false, cancelable:Boolean = false)
+		public function PageEvent(type:String, $vo:ElementVO = null, bubbles:Boolean = false, cancelable:Boolean = false)
 		{
 			super(type, bubbles, cancelable);
-			__pageVO = $pageVO;
-		}
-		
-		public function get pageVO():PageVO
-		{
-			return __pageVO;
+			__vo = $vo;
+			if (vo is PageVO)
+			{
+				__pageVO = PageVO(vo);
+			}
 		}
 		
 		override public function clone():Event
@@ -67,8 +67,17 @@ package modules.pages
 			return new PageEvent(type, __pageVO, true);
 		}
 		
+		public function get pageVO():PageVO
+		{
+			return  __pageVO;
+		}
+		
 		private var __pageVO:PageVO;
 		
-		
+		public function get vo():ElementVO
+		{
+			return  __vo;
+		}
+		private var __vo:ElementVO;
 	}
 }

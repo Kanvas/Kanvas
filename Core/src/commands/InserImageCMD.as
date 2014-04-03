@@ -52,22 +52,8 @@ package commands
 		{
 			imgInsertor.removeEventListener(ImgInsertEvent.IMG_UPLOADED_TO_SERVER, imgUploadComplete);
 			
-			imgElement.imgVO.url = evt.imgURL;
-			imgElement.toNomalState();
-		}
-		
-		/**
-		 */		 
-		override public function undoHandler():void
-		{
-			CoreFacade.removeElement(imgElement);
-		}
-		
-		/**
-		 */		
-		override public function redoHandler():void
-		{
-			CoreFacade.addElementAt(imgElement, elementIndex);
+			element.imgVO.url = evt.imgURL;
+			element.toNomalState();
 		}
 		
 		/**

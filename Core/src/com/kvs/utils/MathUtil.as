@@ -108,6 +108,11 @@ package com.kvs.utils
 			return Math.ceil(value * factor) / factor; 
 		}
 		
+		public static function clamp(value:Number, min:Number, max:Number):Number
+		{
+			return Math.max(Math.min(value, max), min);
+		}
+		
 		/**
 		 * 按照保留小数点的位数向下取整
 		 */		

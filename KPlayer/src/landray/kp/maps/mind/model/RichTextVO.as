@@ -15,25 +15,6 @@ package landray.kp.maps.mind.model
 			height = 10;
 		}
 		
-		/**
-		 * 设置颜色值
-		 * @param value
-		 * 
-		 */
-		override public function set color(value:Object):void
-		{
-			_color = StyleManager.setColor(value);
-			
-		}
-		/**
-		 * @private
-		 */
-		override public function get color():Object
-		{
-			return _color;
-		}
-		private var _color:Object = 0x99cbfe;
-		
 		private var _label:LabelStyle = new LabelStyle;
 		/**
 		 */		
