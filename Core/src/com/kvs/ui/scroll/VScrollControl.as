@@ -41,7 +41,7 @@ package com.kvs.ui.scroll
 			
 			scrollBar.alpha = 0;
 			scrollBar.w = this.barWidth;
-			scrollBar.x = sourceView.viewWidth + (sourceView.scrollApp.w - sourceView.viewWidth - barWidth) / 2;
+			layoutScrollBarX();
 			
 			sourceView.scrollApp.addChild(scrollBar);
 			scrollBar.addEventListener(MouseEvent.MOUSE_DOWN, scrolBarDown, false, 0, true);
@@ -299,8 +299,23 @@ package com.kvs.ui.scroll
 			_barWidth = value;
 			
 			scrollBar.w = _barWidth;
-			scrollBar.x = sourceView.viewWidth + (sourceView.scrollApp.w - sourceView.viewWidth - barWidth) / 2;
+			layoutScrollBarX();
 		}
+		
+		/**
+		 */		
+		private function layoutScrollBarX():void
+		{
+			if (ifBarRight)
+				scrollBar.x = sourceView.viewWidth + barWidth * 2;
+			else
+				scrollBar.x = sourceView.viewWidth - barWidth * 2;
+		}
+		
+		/**
+		 * 滚动条默认在右方 
+		 */		
+		public var ifBarRight:Boolean = true;
 
 		/**
 		 */		

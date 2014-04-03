@@ -116,7 +116,7 @@ package view.pagePanel
 		 */		
 		public function get viewWidth():Number
 		{
-			return pagesPanel.w - 12;
+			return pagesPanel.w;
 		}
 		
 		public function get fullSize():Number

@@ -28,7 +28,6 @@ package
 	import view.element.ElementBase;
 	import view.element.imgElement.ImgElement;
 	import view.elementSelector.ElementHover;
-	import view.interact.zoomMove.ZoomMoveControl;
 	import view.ui.BgColorFlasher;
 	import view.ui.Bubble;
 	import view.ui.MainUIBase;
@@ -68,6 +67,8 @@ package
 				drawBgInteractorShape();
 				updatePastPoint();
 			}
+			
+			this.dispatchEvent(new Event(Event.RESIZE));
 		}
 		
 		/**

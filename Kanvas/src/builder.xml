@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="Kanvas Builder" basedir="." default="发布">
 	
-	<property name="FLEX_HOME" value="/Applications/Adobe Flash Builder 4.6/sdks/4.6.0" />
-	<property name="WORK_SPACE" value="/Users/wallenMac/Documents/Projects/Kanvas" />
+	<property name="FLEX_HOME" value="/Users/wanglei/projects/sdk" />
+	<property name="WORK_SPACE" value="/Users/wanglei/projects/kanvas" />
 	
-	<property name="VER" value="3.0.7" />
+	<property name="VER" value="4.0" />
 
 	<property name="controlFlowObfuscation" value="20"/>
 	<property name="dynamicCodeWrapping" value="1"/>
 	
 	<taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar" />
 
-	<taskdef name="protect" classpath="${FLEX_HOME}/secureSWF/secureSWF.jar"
+	<taskdef name="protect" classpath="${WORK_SPACE}/secureSWF/secureSWF.jar"
 	classname="secureSWF.ant.ProtectTask"/>
 
 	<!--发布-->

@@ -41,6 +41,7 @@ package
 			
 			kvsCore.externalUI = uiContainer;
 			kvsCore.addEventListener(KVSEvent.READY, kvsReadyHandler);
+		
 			addChild(kvsCore);
 			addChild(uiContainer);
 			

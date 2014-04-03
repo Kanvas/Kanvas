@@ -31,7 +31,7 @@ package
 		/**
 		 * 当前文件
 		 */		
-		private var file:File;
+		public var file:File;
 		
 		/**
 		 * 打开文件 

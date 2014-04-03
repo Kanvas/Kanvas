@@ -33,6 +33,8 @@ package
 			
 			CoreApp.isAIR = true;
 			CoreFacade.inserImgCommad = InsertIMGFromAIR;
+			kvsCore.addEventListener(Event.RESIZE, kvsResizeHandler);
+			
 		}
 		
 		/**
@@ -137,10 +139,24 @@ package
 			
 			if (event.arguments.length > 0) 
 			{ 
-				var f:File = new File(event.arguments[0]); 
-				airAPI.openFile(f);
+				var file:File = new File(event.arguments[0]); 
+				if (airAPI.file)
+					airAPI.openFile(file);
+				else
+					airAPI.file = file;
 			} 
 		} 
+		
+		/**
+		 */		
+		private function kvsResizeHandler(evt:Event):void
+		{
+			if (airAPI.file)
+			{
+				airAPI.openFile(airAPI.file);
+				kvsCore.removeEventListener(Event.RESIZE, kvsResizeHandler);
+			}
+		}
 		
 		/**
 		 */		
