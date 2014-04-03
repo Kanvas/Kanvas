@@ -34,7 +34,6 @@ package view.pagePanel
 			con.addChild(label);
 			con.addChild(imgShape);
 			
-			imgShape.filters = [new GlowFilter(0x555555, 0.5, 2, 2, 2, 3)];//添加一个阴影轮廓
 			con.addEventListener(MouseEvent.MOUSE_DOWN, downPage);
 			
 			deleteBtn = new IconBtn;
@@ -118,6 +117,7 @@ package view.pagePanel
 		private function updateThumb(evt:PageEvent = null):void
 		{
 			pageVO.bitmapData = PageUtil.getThumbByPageVO(pageVO, 720, 540, mainUI, CoreFacade.coreProxy.bgColor, true);
+			
 			if (bmp && con.contains(bmp)) con.removeChild(bmp);
 			con.addChild(bmp = new Bitmap(pageVO.bitmapData));
 			bmp.x = leftGutter;
@@ -181,12 +181,8 @@ package view.pagePanel
 				}
 			}
 			
-			
-			
-			
-			
 			deleteBtn.x = leftGutter + iconW;
-			deleteBtn.y = (currState.height - iconH) / 2;
+			deleteBtn.y = currState.height / 2;
 		}
 		
 		/**
@@ -194,19 +190,19 @@ package view.pagePanel
 		 */		
 		private function drawPageThumb():void
 		{
-			var ty:Number = (currState.height - iconH) / 2;
+			var off:uint = 0;
+			var ty:Number = (currState.height - iconH) / 2 - off;
 			
 			imgShape.graphics.clear();
-			imgShape.graphics.lineStyle(1, 0xEEEEEE);
-			imgShape.graphics.beginFill(0xFFFFFF);
-			imgShape.graphics.drawRect(leftGutter, ty, iconW, iconH);
+			imgShape.graphics.beginFill(0xeeeeee);
+			imgShape.graphics.drawRect(leftGutter - off, ty, iconW + off * 2, iconH + off * 2);
 			imgShape.graphics.endFill();
 		}
 		
 		/**
 		 * 左侧防止文字的间距 
 		 */		
-		private var leftGutter:uint = 35;
+		private var leftGutter:uint = 25;
 		
 		/**
 		 */		

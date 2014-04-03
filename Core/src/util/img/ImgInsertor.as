@@ -302,7 +302,7 @@ package util.img
 			if (imgUpLoader.data)
 				imgURL = imgUpLoader.data.toString();
 				
-			this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_UPLOADED_TO_SERVER, (imgLoader.content as Bitmap).bitmapData, imgID, imgURL));
+			this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_UPLOADED_TO_SERVER, imageExtractor.bitmapData, imgID, imgURL));
 			
 			imgLoader.unload();
 			fileReference.data.clear();

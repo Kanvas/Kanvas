@@ -112,11 +112,11 @@ package view.shapePanel
 			back_up;
 			back_over;
 			back_down;
-			backBtn.iconW = backBtn.iconH = 40;
+			backBtn.iconW = backBtn.iconH = 30;
 			backBtn.setIcons("back_up", "back_over", "back_down");
 			
-			backBtn.w = backBtn.h = 40;
-			backBtn.y = 5;
+			backBtn.w = backBtn.h = 30;
+			backBtn.y = 10;
 			backBtn.x = 0;
 			backBtn.alpha = 0;
 			backBtn.mouseEnabled = false;
@@ -211,7 +211,7 @@ package view.shapePanel
 				pagesContainer.mouseChildren = pagesContainer.mouseEnabled = false;
 				TweenLite.to(pagesContainer, 0.4, {x: - this.w, onComplete: completeNav});
 				TweenLite.to(backBtn, 0.3, {alpha: 1, x: 6, delay: 0.2, onComplete:backBtnShowed});
-				TweenLite.to(titleUI, 0.5, {x: 35});
+				TweenLite.to(titleUI, 0.5, {x: 20});
 				
 				scrollHolder.updateMask();
 				scrollHolder.update();

@@ -307,9 +307,9 @@ package com.kvs.ui.scroll
 		private function layoutScrollBarX():void
 		{
 			if (ifBarRight)
-				scrollBar.x = sourceView.viewWidth + barWidth * 2;
+				scrollBar.x = sourceView.viewWidth + barWidth;
 			else
-				scrollBar.x = sourceView.viewWidth - barWidth * 2;
+				scrollBar.x = - barWidth * 2;
 		}
 		
 		/**

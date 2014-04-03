@@ -146,7 +146,7 @@ package view.element
 					//frameSize = 2 / vo.scale / parent.scaleX;
 				
 				//从左上角开始绘制
-				StyleManager.setFillStyle(graphics, vo.style, vo);
+				StyleManager.setShapeStyle(vo.style, graphics, vo);
 				graphics.moveTo(left, top);
 				graphics.lineTo(left, bottom);
 				graphics.lineTo(left + frameSize * 2, bottom);

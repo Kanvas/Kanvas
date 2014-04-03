@@ -151,10 +151,11 @@ package view.ui
 		 */		
 		public function drawBGImg(bmd:BitmapData):void
 		{
+			if (bgImageBitmap) bgImageCanvas.removeChild(bgImageBitmap);
+			
 			// 图片数据为空时，仅删除背景图
 			if (bmd)
 			{
-				if (bgImageBitmap) bgImageCanvas.removeChild(bgImageBitmap);
 				bgImageBitmap = new Bitmap(bmd);
 				bgImageBitmap.x = -.5 * bgImageBitmap.width;
 				bgImageBitmap.y = -.5 * bgImageBitmap.height;

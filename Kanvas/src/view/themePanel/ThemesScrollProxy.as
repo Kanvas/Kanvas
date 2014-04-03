@@ -16,6 +16,7 @@ package view.themePanel
 		{
 			this.panel = panel;
 			vScrollControl = new VScrollControl(this);
+			vScrollControl.ifBarRight = false;
 			vScrollControl.barWidth = 6;
 		}
 		
@@ -59,7 +60,7 @@ package view.themePanel
 		{
 			maskRectangle.x = 0;
 			maskRectangle.y = panel.barHeight;
-			maskRectangle.width = panel.w - 10;
+			maskRectangle.width = panel.w;
 			maskRectangle.height = viewHeight;
 			
 			return maskRectangle;
