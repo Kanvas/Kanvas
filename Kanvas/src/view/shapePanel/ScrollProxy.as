@@ -20,6 +20,8 @@ package view.shapePanel
 		{
 			this.panel = shapePanel;
 			vScrollControl = new VScrollControl(this);
+			vScrollControl.ifBarRight = false;
+			vScrollControl.barWidth = 6;
 		}
 		
 		/**
@@ -58,8 +60,8 @@ package view.shapePanel
 		public function get maskRect():Rectangle
 		{
 			maskRectangle.x = 0;
-			maskRectangle.y = panel.barHeight + panel.currentPage.gutter - 2;
-			maskRectangle.width = panel.w - 10;
+			maskRectangle.y = panel.barHeight + panel.currentPage.gutter;
+			maskRectangle.width = panel.w;
 			maskRectangle.height = viewHeight;
 			
 			return maskRectangle;

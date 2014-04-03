@@ -174,8 +174,8 @@ package view.themePanel
 		private var deleteBtn  :IconBtn;
 		
 		private var hasImage:Boolean;
-		private var w:Number = 130;
-		private var h:Number = 90;
+		private var w:Number = 100;
+		private var h:Number = 80;
 		
 		/**
 		 */		

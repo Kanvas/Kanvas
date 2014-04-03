@@ -41,6 +41,7 @@ package
 			
 			kvsCore.externalUI = uiContainer;
 			kvsCore.addEventListener(KVSEvent.READY, kvsReadyHandler);
+		
 			addChild(kvsCore);
 			addChild(uiContainer);
 			
@@ -100,6 +101,7 @@ package
 			
 			// 图形面板初始化
 			shapePanel = new ShapePanel(this);
+			shapePanel.w = 130;
 			shapePanel.title = '图形创建';
 			shapePanel.ifShowExitBtn = true;
 			shapePanel.isOpen = false;
@@ -108,7 +110,7 @@ package
 			
 			// 样式面板初始化
 			themePanel = new ThemePanel(this);
-			themePanel.w = 160;
+			themePanel.w = 130;
 			themePanel.barHeight = 40;
 			themePanel.title = '风格样式';
 			themePanel.ifShowExitBtn = true;
@@ -158,20 +160,20 @@ package
 				themePanel.x = stage.stageWidth - themePanel.w;
 				shapePanel.x = stage.stageWidth;
 				
-				zoomToolBar.x = stage.stageWidth - themePanel.w - zoomToolBar.width - 5;
+				zoomToolBar.x = stage.stageWidth - themePanel.w - zoomToolBar.width - 20;
 			}
 			else if (shapePanel.isOpen)
 			{
 				shapePanel.x = stage.stageWidth - shapePanel.w;
 				themePanel.x = stage.stageWidth;
 				
-				zoomToolBar.x = stage.stageWidth - themePanel.w - zoomToolBar.width - 5;
+				zoomToolBar.x = stage.stageWidth - themePanel.w - zoomToolBar.width - 20;
 			}
 			else
 			{
 				shapePanel.x = stage.stageWidth;
 				themePanel.x = stage.stageWidth;
-				zoomToolBar.x = stage.stageWidth - zoomToolBar.width - 5;
+				zoomToolBar.x = stage.stageWidth - zoomToolBar.width - 20;
 			}
 			
 			//画布尺寸变化时调用此方法
@@ -318,8 +320,8 @@ package
 		 * 面板样式
 		 */		
 		private var panelBGStyleXML:XML = <style>
-											<border color='#eeeeee' alpha='1'/>
-											<fill color='#fafafa, #fafafa' alpha='1, 1' type='radial'/>
-										 </style>
+									<border color='#eeeeee' alpha='1'/>
+									<fill color='#eeeeee' alpha='0.8'/>
+								 </style>;
 	}
 }

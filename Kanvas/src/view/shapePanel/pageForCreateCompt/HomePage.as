@@ -20,7 +20,7 @@ package view.shapePanel.pageForCreateCompt
 		 */		
 		override protected function init():void
 		{
-			iconSize = 70;
+			iconSize = 46;
 			
 			super.init();
 			

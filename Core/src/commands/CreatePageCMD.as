@@ -39,14 +39,12 @@ package commands
 			var layoutTransformer:LayoutTransformer = CoreFacade.coreMediator.layoutTransformer;
 			
 			pageProxy.type = "page";
-			pageProxy.styleType = "border";
+			pageProxy.styleType = "shape";
 			pageProxy.styleID = "Page";
 			ifSelectedAfterCreate = pageProxy.ifSelectedAfterCreate;
 			
 			// VO 初始化
 			pageVO = ElementCreator.getElementVO(pageProxy.type) as PageVO;
-			
-			
 			
 			var point:Point = LayoutUtil.stagePointToElementPoint(pageProxy.x, pageProxy.y, layoutTransformer.canvas);
 			pageVO.x = point.x;

@@ -139,7 +139,7 @@ package view.themePanel
 			bgConfigArea.addChild(bgImgInertor);
 			
 			colorPanel = new ColorPanel(this);
-			colorPanel.panelWidth = 130;
+			colorPanel.panelWidth = 120;
 			colorPanel.iconWidth = 26;
 			colorPanel.iconHeight = 26;
 			colorPanel.x = colorPanel.y = 8;
@@ -200,8 +200,8 @@ package view.themePanel
 											</down>
 										</states>
 			
-			bgColorIcon.w = bgColorIcon.h = 26;
-			bgColorIcon.iconWidth = bgColorIcon.iconHeight = 22;
+			bgColorIcon.w = bgColorIcon.h = 20;
+			bgColorIcon.iconWidth = bgColorIcon.iconHeight = 18;
 			
 			bgColorIcon.addEventListener(MouseEvent.CLICK, colorBtnClickHandler);
 			bgConfigArea.addChild(bgColorIcon);
@@ -220,7 +220,7 @@ package view.themePanel
 									</style>
 			XMLVOMapper.fuck(panelBGStyleXML, panelBGStyle);
 			
-			var startX:uint = 20;
+			var startX:uint = 28;
 			var size:uint = 8;
 			
 			panelBGStyle.width = colorPanel.width - 1;
@@ -229,7 +229,6 @@ package view.themePanel
 			panelBGStyle.ty = 0;
 			
 			colorPanel.graphics.clear();
-			StyleManager.drawRect(colorPanel, panelBGStyle);
 			
 			StyleManager.setShapeStyle(panelBGStyle, colorPanel.graphics);
 			colorPanel.graphics.moveTo(startX, panelBGStyle.height + size);
@@ -237,6 +236,8 @@ package view.themePanel
 			colorPanel.graphics.lineTo(startX + size, panelBGStyle.height - 2);
 			colorPanel.graphics.lineTo(startX, panelBGStyle.height + size);
 			colorPanel.graphics.endFill();
+			
+			StyleManager.drawRect(colorPanel, panelBGStyle);
 		}
 		
 		
@@ -387,11 +388,6 @@ package view.themePanel
 		override protected function renderBG():void
 		{
 			super.renderBG();
-			
-			bgShape.graphics.lineStyle(1, 0xEEEEEE);
-			bgShape.graphics.beginFill(0xffffff);
-			bgShape.graphics.drawRect(0, barHeight, this.themePanelWidth, scrollProxy.viewHeight);
-			bgShape.graphics.endFill();
 		}
 		
 		/**
@@ -419,10 +415,10 @@ package view.themePanel
 				theme.setIcons(theme.icon, theme.icon, theme.icon);
 				
 				theme.w = themePanelWidth;
-				theme.h = 90
+				theme.h = 80
 					
-				theme.iconW = 110;
-				theme.iconH = 80;
+				theme.iconW = 90;
+				theme.iconH = 65.45;
 				
 				layouter.layout(theme);
 				themesContainer.addChild(theme);
@@ -450,7 +446,7 @@ package view.themePanel
 		 */		
 		internal function get themePanelWidth():Number
 		{
-			return this.w - 15;
+			return this.w;
 		}
 		
 		/**
@@ -495,11 +491,11 @@ package view.themePanel
 												<img/>
 											</normal>
 											<hover>
-												<fill color='#DDDDDD' alpha='1'/>
+												<fill color='#DDDDDD' alpha='0.8'/>
 												<img/>
 											</hover>
 											<down>
-												<fill color='#666666'/>
+												<fill color='#539fd8, #3c92e0' alpha='0.8, 0.8' angle='90'/>
 												<img/>
 											</down>
 										</states>

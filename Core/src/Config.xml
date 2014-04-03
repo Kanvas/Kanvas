@@ -6,7 +6,8 @@
 		<format id='Text' font='微软雅黑' size='${size}' color='${color}'/>
 		<fill id='Simple' color='${color}' alpha='0.9' angle='90' type='radial'/>
 		<border id='Simple' color='${color}' alpha='0.9' thickness='${thickness}' caps='round' pixelHinting='true'/>
-		<fill id="PageFrame" color='#666666' alpha='0.6'/>
+		<border id="PageFrame" color='#ededed' alpha='0.8' thickness='0'/>
+		<fill id="PageFill" color='#eeeeee, #eeeeee' alpha='0.6, 0.6' radioes='0,255' angle='90'/>
 		
 		<!--文本和背景颜色全局统一， 每套样式尽需指定颜色序号-->
 		<!--colors id='text'>
@@ -117,11 +118,9 @@
 				</style>
 			</border>
 			
-			<border styleID='Page'>
-				<style fill='PageFrame'>
-				</style>
-			</border>
-			
+			<shape styleID='Page'>
+				<style fill='PageFill' border='PageFrame'/>
+			</shape>
 			
 			<line styleID='Border'>
 				<style border='Simple'/>
@@ -240,10 +239,9 @@
 				</style>
 			</border>
 			
-			<border styleID='Page'>
-				<style fill='PageFrame'>
-				</style>
-			</border>
+			<shape styleID='Page'>
+				<style fill='PageFill' border='PageFrame'/>
+			</shape>
 			
 			<line styleID='Border'>
 				<style border='Simple'/>
@@ -362,10 +360,9 @@
 				</style>
 			</border>
 			
-			<border styleID='Page'>
-				<style fill='PageFrame'>
-				</style>
-			</border>
+			<shape styleID='Page'>
+				<style fill='PageFill' border='PageFrame'/>
+			</shape>
 			
 			<line styleID='Border'>
 				<style border='Simple'/>
@@ -485,10 +482,9 @@
 				</style>
 			</border>
 			
-			<border styleID='Page'>
-				<style fill='PageFrame'>
-				</style>
-			</border>
+			<shape styleID='Page'>
+				<style fill='PageFill' border='PageFrame'/>
+			</shape>
 			
 			<line styleID='Border'>
 				<style border='Simple'/>
@@ -608,10 +604,9 @@
 				</style>
 			</border>
 			
-			<border styleID='Page'>
-				<style fill='PageFrame'>
-				</style>
-			</border>
+			<shape styleID='Page'>
+				<style fill='PageFill' border='PageFrame'/>
+			</shape>
 			
 			<line styleID='Border'>
 				<style border='Simple'/>
@@ -732,10 +727,9 @@
 				</style>
 			</border>
 			
-			<border styleID='Page'>
-				<style fill='PageFrame'>
-				</style>
-			</border>
+			<shape styleID='Page'>
+				<style fill='PageFill' border='PageFrame'/>
+			</shape>
 			
 			<line styleID='Border'>
 				<style border='Simple'/>

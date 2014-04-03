@@ -1,9 +1,9 @@
 <pages>
-	<page id='home' title='图形类别'>
+	<page id='home' title='创建'>
 		<selector type='image' icon='image' tips='点击插入图片'/>
 		<selector type='shapePage' icon='shapes' tips='点击进入图形面板'/>
 	</page>
-	<page id='shapePage' title='图形与线条'>
+	<page id='shapePage' title='图形'>
 		<selector icon='circle'>
 			<shape type='circle' styleType='fill' styleID='Fill' width='120' height='120' />
 		</selector>

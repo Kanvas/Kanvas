@@ -141,10 +141,10 @@ package model
 			ElementCreator.registerElement('img', ImgElement, ImgVO);
 			ElementCreator.registerElement('hotspot', HotspotElement, ElementVO);
 			ElementCreator.registerElement('camera', Camera, ElementVO);
-			ElementCreator.registerElement("page", PageElement, PageVO);
 			ElementCreator.registerElement('group', GroupElement, GroupVO);
 			ElementCreator.registerElement('dashRect', DashRect, ShapeVO);
 			ElementCreator.registerElement('dialog', DialogUI, DialogVO);
+			ElementCreator.registerElement("page", PageElement, PageVO);
 		}
 		
 		/**

@@ -1,7 +1,6 @@
 package model.vo
 {
 	import flash.display.BitmapData;
-	import flash.events.Event;
 	
 	import modules.pages.PageEvent;
 	import modules.pages.PageQuene;
@@ -22,6 +21,8 @@ package model.vo
 		public function PageVO()
 		{
 			super();
+			
+			this.styleType = "shape";
 		}
 		
 		override public function set x(value:Number):void

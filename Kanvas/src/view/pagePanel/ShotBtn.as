@@ -3,6 +3,7 @@ package view.pagePanel
 	import com.kvs.ui.button.IconBtn;
 	import com.kvs.ui.clickMove.ClickMoveControl;
 	import com.kvs.ui.clickMove.IClickMove;
+	import com.kvs.utils.XMLConfigKit.StyleManager;
 	import com.kvs.utils.XMLConfigKit.style.elements.Img;
 	import com.kvs.utils.graphic.BitmapUtil;
 	
@@ -20,7 +21,7 @@ package view.pagePanel
 			super();
 			
 			this.pagePanel = pagesPanel;
-			this.dragMoveControl = new ClickMoveControl(this, shotSprite);
+			this.dragMoveControl = new ClickMoveControl(this, this);
 		}
 		
 		/**
@@ -64,45 +65,6 @@ package view.pagePanel
 		override protected function init():void
 		{
 			super.init();
-			
-			this.mouseChildren = true;
-			
-			frameBtn.w = frameBtn.iconW = w;
-			frameBtn.h = frameBtn.iconH = h;
-			
-			shot_frame_up;
-			shot_frame_over;
-			shot_frame_down;
-			frameBtn.setIcons('shot_frame_up', 'shot_frame_over', 'shot_frame_down');
-			frameBtn.mouseEnabled = false;
-			
-			frameBtn.addEventListener(MouseEvent.CLICK, frameClick);
-			addChild(frameBtn);
-			
-			addChild(shotSprite);
-			
-			this.addEventListener(MouseEvent.ROLL_OVER, showFrame);
-			this.addEventListener(MouseEvent.ROLL_OUT, hideFrame);
-		}
-		
-		/**
-		 */		
-		private function showFrame(evt:MouseEvent):void
-		{
-			if (frameBtn.selected == false)
-			{
-				CoreFacade.coreMediator.showCameraShot();
-			}
-		}
-		
-		/**
-		 */		
-		private function hideFrame(evt:MouseEvent):void
-		{
-			if (frameBtn.selected == false)
-			{
-				CoreFacade.coreMediator.hideCanmeraShot();
-			}
 		}
 		
 		/**
@@ -124,27 +86,13 @@ package view.pagePanel
 			if (isNaN(iconH))
 				iconH = img.height;
 			
-			shotSprite.graphics.clear();
-			shotSprite.x = (currState.width - iconW) / 2;
-			shotSprite.y = (currState.height - iconH) / 2;
-			BitmapUtil.drawBitmapDataToSprite(img.data, shotSprite, iconW, iconH, 0, 0, true);
-			shotSprite.graphics.endFill();
+			graphics.clear();
+			StyleManager.drawRect(this, this.currState, this);
+			
+			
+			BitmapUtil.drawBitmapDataToSprite(img.data, this, iconW, iconH, (currState.width - iconW) / 2, (currState.height - iconH) / 2, true);
+			graphics.endFill();
 		}
 		
-		/**
-		 */		
-		private function frameClick(evt:MouseEvent):void
-		{
-			frameBtn.selected = !frameBtn.selected;
-			frameBtn.mouseEnabled = true;
-		}
-		
-		/**
-		 */		
-		internal var shotSprite:Sprite = new Sprite;
-		
-		/**
-		 */		
-		internal var frameBtn:IconBtn = new IconBtn;
 	}
 }

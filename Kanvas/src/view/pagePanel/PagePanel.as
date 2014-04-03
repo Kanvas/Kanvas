@@ -35,7 +35,7 @@ package view.pagePanel
 			super();
 			
 			this.core = kvs;
-			this.w = 150;
+			this.w = 130;
 		}
 		
 		/**
@@ -144,7 +144,7 @@ package view.pagePanel
 		
 		/**
 		 */		
-		private var pageHeight:uint = 90;
+		private var pageHeight:uint = 80;
 		
 		/**
 		 */		
@@ -332,8 +332,8 @@ package view.pagePanel
 		 */		
 		internal function startCreatePageByDrag():void
 		{
-			var rect:Rectangle = this.addPageBtn.frameBtn.getRect(stage);
-			var bmd:BitmapData = BitmapUtil.getBitmapData(this.addPageBtn.frameBtn, true);
+			var rect:Rectangle = this.addPageBtn.getRect(stage);
+			var bmd:BitmapData = BitmapUtil.getBitmapData(this.addPageBtn, true);
 			
 			pageCreateIcon.graphics.clear();
 			BitmapUtil.drawBitmapDataToSprite(bmd, pageCreateIcon, bmd.width, bmd.height, 0, 0, true);
@@ -349,7 +349,6 @@ package view.pagePanel
 		 */		
 		private function outShapePanelHandler(evt:MouseEvent):void
 		{
-			
 			if (pageCreateIcon.x > this.w )
 			{
 				var rect:Rectangle = pageCreateIcon.getRect(stage);
@@ -547,8 +546,8 @@ package view.pagePanel
 		private function drawCurPageProxy():void
 		{
 		    pagesCtn.graphics.clear();
-			pagesCtn.graphics.beginFill(0x555555);
-			pagesCtn.graphics.drawRect(30, currentDragPageUI.pageVO.index * pageHeight + 10, 5, pageHeight - 20);
+			pagesCtn.graphics.beginFill(0x4295dd);
+			pagesCtn.graphics.drawRect(20, currentDragPageUI.pageVO.index * pageHeight + 10, 5, pageHeight - 20);
 			pagesCtn.graphics.endFill();
 		}
 		
@@ -626,13 +625,30 @@ package view.pagePanel
 			XMLVOMapper.fuck(bgStyleXML, bgStyle);
 			
 			addPageBtn = new ShotBtn(this);
+			addPageBtn.buttonMode = false;
 			addPageBtn.w = w - gutter * 2 - 4;
-			addPageBtn.h = 100;
-			addPageBtn.iconW = 80;
-			addPageBtn.iconH = 80;
+			addPageBtn.h = 30;
+			addPageBtn.iconW = 50;
+			addPageBtn.iconH = 50;
+			addPageBtn.tips = "按下或者拖动创建";
 			
 			shot_up;
 			shot_over;
+			addPageBtn.styleXML = <states>
+										<normal>
+											<fill color='#FFFFFF' alpha='1'/>
+											<img/>
+										</normal>
+										<hover>
+											<fill color='#dddddd' alpha='1'/>
+											<img/>
+										</hover>
+										<down>
+											<fill color='#cccccc' alpha='1'/>
+											<img/>
+										</down>
+									</states>
+				
 		    addPageBtn.setIcons('shot_up', 'shot_up', 'shot_up');
 			this.addChild(addPageBtn);
 			
@@ -736,10 +752,6 @@ package view.pagePanel
 			addPageBtn.x = (w - addPageBtn.w) / 2;
 			addPageBtn.y = h - addPageBtn.h - gutter;
 			
-			this.graphics.beginFill(0xffffff);
-			this.graphics.drawRect(0, 0, scrollProxy.viewWidth, scrollProxy.viewHeight);
-			this.graphics.endFill();
-			
 			scrollProxy.updateMask();
 			scrollProxy.update();
 		}
@@ -749,6 +761,7 @@ package view.pagePanel
 		 */		
 		public function render():void
 		{
+			graphics.clear();
 			bgStyle.width = w;
 			bgStyle.height = h;
 			StyleManager.drawRect(this, bgStyle);
@@ -787,15 +800,15 @@ package view.pagePanel
 		 */		
 		private var pageStyleXML:XML = <states>
 											<normal>
-												<fill color='#FFFFFF' alpha='1'/>
+												<fill color='#FFFFFF' alpha='0'/>
 												<img/>
 											</normal>
 											<hover>
-												<fill color='#DDDDDD' alpha='1'/>
+												<fill color='#DDDDDD' alpha='0.8'/>
 												<img/>
 											</hover>
 											<down>
-												<fill color='#666666'/>
+												<fill color='#539fd8, #3c92e0' alpha='0.8, 0.8' angle='90'/>
 												<img/>
 											</down>
 										</states>
