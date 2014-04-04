@@ -1,19 +1,14 @@
 package view.element.imgElement
 {
-	import com.kvs.utils.PerformaceTest;
 	import com.kvs.utils.RexUtil;
-	import com.kvs.utils.graphic.BitmapUtil;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.Shape;
 	import flash.geom.Matrix;
 	
 	import landray.kp.ui.Loading;
 	
 	import model.vo.ImgVO;
-	
-	import util.img.ImgLib;
 	
 	import view.element.ElementBase;
 	import view.element.ElementEvent;
@@ -87,6 +82,7 @@ package view.element.imgElement
 			removeLoading();
 			initBmp(imgVO.sourceData);
 			currLoadState.render();
+			dispatchEvent(new ElementEvent(ElementEvent.IMAGE_TO_RENDER));
 		}
 		
 		/**
@@ -255,15 +251,7 @@ package view.element.imgElement
 		}
 		private var __smooth:Boolean = true;
 		
-		public function get stageWidth():Number
-		{
-			return scaledWidth  * ((parent) ? parent.scaleX : 1);
-		}
 		
-		public function get stageHeight():Number
-		{
-			return scaledHeight * ((parent) ? parent.scaleX : 1);
-		}
 		
 		/**
 		 * 

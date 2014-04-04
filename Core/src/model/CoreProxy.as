@@ -34,6 +34,7 @@ package model
 	import util.zip.ZipOutput;
 	
 	import view.element.ElementBase;
+	import view.element.ElementEvent;
 	import view.element.GroupElement;
 	import view.element.PageElement;
 	import view.element.imgElement.ImgElement;
@@ -450,12 +451,22 @@ package model
 			
 			var element:ElementBase = ElementCreator.getElementUI(vo);
 			
+			if (element is ImgElement)
+			{
+				element.addEventListener(ElementEvent.IMAGE_TO_RENDER, imageToNormalHandler, false, 0, true);
+			}
+			
 			//虽然添加到了显示列表，但元素未渲染，因为未设定样式
 			CoreFacade.addElement(element);
 			
 			temElementMap.put(vo.id.toString(), element);
 			
 			return element;
+		}
+		
+		private function imageToNormalHandler(e:ElementEvent):void
+		{
+			CoreFacade.coreMediator.pageManager.refreshPageThumbsByElement(e.currentTarget as ElementBase);
 		}
 		
 		/**

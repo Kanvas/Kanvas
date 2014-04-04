@@ -7,6 +7,8 @@ package view.element.imgElement
 	import util.img.ImgInsertEvent;
 	import util.img.ImgInsertor;
 	import util.img.ImgLib;
+	
+	import view.element.ElementEvent;
 
 	public class LoadingState extends ImgLoadStateBase
 	{
@@ -61,6 +63,8 @@ package view.element.imgElement
 			BitmapUtil.drawBitmapDataToShape(new load_error, element.shape as Shape, iconSize, iconSize, - iconSize * 0.5, - iconSize * 0.5, true);
 			
 			element.removeLoading();
+			
+			element.dispatchEvent(new ElementEvent(ElementEvent.IMAGE_TO_RENDER));
 		}
 		
 		/**

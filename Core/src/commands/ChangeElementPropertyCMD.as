@@ -1,5 +1,7 @@
 package commands
 {
+	import com.kvs.utils.PerformaceTest;
+	
 	import model.CoreFacade;
 	import model.vo.PageVO;
 	
@@ -28,6 +30,7 @@ package commands
 		 */		
 		override public function execute(notification:INotification):void
 		{
+			
 			element  = CoreFacade.coreMediator.currentElement;
 			if (element)
 			{
@@ -127,6 +130,7 @@ package commands
 				}
 			}
 			
+			
 			if ((element.autoGroupChangable && autoGroupEnabled) || group)
 			{
 				CoreFacade.coreMediator.autoGroupController.resetElements(groupElements);
@@ -171,15 +175,14 @@ package commands
 							CoreFacade.coreMediator.pageManager.registOverlappingPageVOs(item);
 					}
 				}
-				
 			}
 			
-			
 			element.render();
-			
 			selector.update();
 			
+			
 			//变化后检测需要刷新的pages
+			///PerformaceTest.start("setProperty() element updatePageThumbs");
 			if (exec)
 			{
 				if (element is PageElement)
@@ -192,6 +195,7 @@ package commands
 			{
 				CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 			}
+			///PerformaceTest.end("setProperty() element updatePageThumbs");
 		}
 		
 		private function reset(item:ElementBase):void
@@ -210,7 +214,6 @@ package commands
 					{
 						item.vo[propertyName] = oldPropertyObj[propertyName];
 					}
-					item.render();
 				}
 			}
 		}

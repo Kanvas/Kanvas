@@ -1,6 +1,7 @@
 package modules.pages
 {
 	import com.kvs.utils.MathUtil;
+	import com.kvs.utils.PerformaceTest;
 	import com.kvs.utils.RectangleUtil;
 	import com.kvs.utils.graphic.BitmapUtil;
 	
@@ -276,7 +277,8 @@ package modules.pages
 				for each (var vo:PageVO in pageVOs)
 					registUpdateThumbVO(vo);
 			}
-			for each (vo in updateThumbVOS)
+			var tmp:Vector.<PageVO> = updateThumbVOS;
+			for each (vo in tmp)
 			{
 				vo.thumbUpdatable = true;
 				vo.dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, vo));
@@ -295,7 +297,6 @@ package modules.pages
 				var vector:Vector.<PageVO> = getOverlappingPages(element);
 				for each (var vo:PageVO in vector)
 					registUpdateThumbVO(vo);
-				
 			}
 			return refreshVOThumbs();
 		}
@@ -327,6 +328,7 @@ package modules.pages
 		
 		public function getThumbByPageVO(pageVO:PageVO, w:Number, h:Number, mainUI:MainUIBase, color:uint = 0xFFFFFF, smooth:Boolean = false):BitmapData
 		{
+			
 			//scale
 			var vw:Number = w;
 			var vh:Number = h;
@@ -357,7 +359,6 @@ package modules.pages
 			var bmd:BitmapData = BitmapUtil.drawWithSize(mainUI.canvas, w, h, false, color, null, smooth);
 			mainUI.canvas.toPreviewState();
 			mainUI.synBgImageToCanvas();
-			
 			return bmd;
 		}
 		

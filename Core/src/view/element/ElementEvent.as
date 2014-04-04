@@ -34,6 +34,9 @@ package view.element
 		public static const STOP_MOVE_TEM_GROUP:String = 'stopMoveTemGroup';
 		
 		
+		public static const IMAGE_TO_RENDER:String = "imageToRender";
+		
+		
 		
 		
 		//------------------------------------------------------------------------------

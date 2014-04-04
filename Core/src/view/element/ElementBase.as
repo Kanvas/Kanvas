@@ -586,6 +586,16 @@ package view.element
 			return h;
 		}
 		
+		public function get stageWidth():Number
+		{
+			return scaledWidth  * ((parent) ? parent.scaleX : 1);
+		}
+		
+		public function get stageHeight():Number
+		{
+			return scaledHeight * ((parent) ? parent.scaleX : 1);
+		}
+		
 		/**
 		 * 复制出一个新的自己
 		 */		

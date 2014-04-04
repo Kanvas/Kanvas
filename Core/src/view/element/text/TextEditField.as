@@ -56,10 +56,15 @@ package view.element.text
 			super.toShotcut(renderable);
 			if (renderable)
 			{
-				var bound:Rectangle = textManager.getContentBounds();
-				textDrawer.renderTextBMD(graphics, textCanvas, textVO.scale * parent.scaleX, 0, 0, bound.width, bound.height);
+				if (visible && stageWidth > minRenderSize && stageHeight > minRenderSize)
+				{
+					var bound:Rectangle = textManager.getContentBounds();
+					textDrawer.renderTextBMD(graphics, textCanvas, textVO.scale * parent.scaleX, 0, 0, bound.width, bound.height);
+				}
 			}
 		}
+		
+		private var minRenderSize:Number = 5;
 		
 		/**
 		 */		
@@ -69,8 +74,12 @@ package view.element.text
 			
 			if (renderable)
 			{
-				var bound:Rectangle = textManager.getContentBounds();
-				textDrawer.renderTextBMD(graphics, textCanvas, textVO.scale * parent.scaleX, 0, 0, bound.width, bound.height);
+				if (visible && stageWidth > minRenderSize && stageHeight > minRenderSize)
+				{
+					var bound:Rectangle = textManager.getContentBounds();
+					textDrawer.renderTextBMD(graphics, textCanvas, textVO.scale * parent.scaleX, 0, 0, bound.width, bound.height);
+				}
+				
 			}
 		}
 		
