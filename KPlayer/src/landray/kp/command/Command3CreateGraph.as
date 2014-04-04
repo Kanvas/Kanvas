@@ -2,9 +2,13 @@ package landray.kp.command
 {
 	import landray.kp.core.kp_internal;
 	import landray.kp.maps.main.Main;
+	import landray.kp.maps.main.elements.Element;
+	import landray.kp.maps.main.util.MainUtil;
 	import landray.kp.maps.mind.Mind;
 	import landray.kp.utils.CoreUtil;
 	import landray.kp.view.Graph;
+	
+	import model.vo.PageVO;
 
 	public final class Command3CreateGraph extends _InernalCommand
 	{
@@ -54,7 +58,7 @@ package landray.kp.command
 				try 
 				{
 					var xml:XML = provider.dataXML.main[0];
-					if (xml && xml.children()&&xml.children().length()) 
+					if (xml && xml.children() && xml.children().length()) 
 					{
 						var reference:Class = graphManager.getGraph(String(xml.name()));
 						var graph:Graph = new reference;
@@ -70,6 +74,12 @@ package landray.kp.command
 				try
 				{
 					pageManager.dataProvider = provider.dataXML.pages[0].children();
+					for each (var vo:PageVO in pageManager.pages)
+					{
+						var page:Element = MainUtil.getElementUI(vo);
+						page.render();
+						config.kp_internal::viewer.canvas.addChild(page);
+					}
 				}
 				catch (e:Error) {}
 				//resolve module
@@ -84,7 +94,6 @@ package landray.kp.command
 							graph = new reference;
 							graph.dataProvider = xml;
 							config.kp_internal::graphs.push(graph);
-							//config.kp_internal::viewer.canvas.addChild(graph);
 						}
 					}
 				}

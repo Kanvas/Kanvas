@@ -102,6 +102,11 @@ package landray.kp.manager
 		{
 			return quene.length;
 		}
+		
+		public function get pages():Vector.<PageVO>
+		{
+			return quene.pages;
+		}
 			
 		public function set dataProvider(value:Object):void
 		{

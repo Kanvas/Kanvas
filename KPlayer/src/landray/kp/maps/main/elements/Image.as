@@ -50,15 +50,19 @@ package landray.kp.maps.main.elements
 		
 		override public function render(scale:Number = 1):void
 		{
-			super.render();
-			
-			if (CoreUtil.ifHasText(imgVO.url))// 再次编辑时从服务器载入图片
+			if(!rendered)
 			{
-				loader = new ImgInsertor;
-				loader.addEventListener(ImgInsertEvent.IMG_LOADED, imgLoaded, false, 0, true);
-				loader.addEventListener(ImgInsertEvent.IMG_LOADED_ERROR, imgError, false, 0, true);
-				loader.loadImg(imgVO.url);
-				toLoadingState();
+				rendered = true;
+				super.render();
+				
+				if (CoreUtil.ifHasText(imgVO.url))// 再次编辑时从服务器载入图片
+				{
+					loader = new ImgInsertor;
+					loader.addEventListener(ImgInsertEvent.IMG_LOADED, imgLoaded, false, 0, true);
+					loader.addEventListener(ImgInsertEvent.IMG_LOADED_ERROR, imgError, false, 0, true);
+					loader.loadImg(imgVO.url);
+					toLoadingState();
+				}
 			}
 		}
 		

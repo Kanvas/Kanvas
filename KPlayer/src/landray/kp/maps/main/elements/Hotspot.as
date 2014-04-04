@@ -22,9 +22,13 @@ package landray.kp.maps.main.elements
 		 */
 		override public function render(scale:Number = 1):void
 		{
-			super.render();
-			
-			StyleManager.drawRect(this, vo.style, vo);
+			if(!rendered)
+			{
+				rendered = true;
+				super.render();
+				
+				StyleManager.drawRect(this, vo.style, vo);
+			}
 		}
 
 	}

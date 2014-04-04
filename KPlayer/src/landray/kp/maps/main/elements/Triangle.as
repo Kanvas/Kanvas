@@ -19,19 +19,23 @@ package landray.kp.maps.main.elements
 		 */
 		override public function render(scale:Number = 1):void
 		{
-			super.render();
-			
-			StyleManager.setShapeStyle( shapeVO.style, graphics, shapeVO );
-			
-			// 从等边三角形顶点开始绘制
-			var startX:Number =   shapeVO.radius + shapeVO.width * .5;
-			var startY:Number = - shapeVO.height * .5 ;
-			
-			graphics.moveTo(   startX, startY );
-			graphics.lineTo(   shapeVO.width * .5, shapeVO.height * .5 );
-			graphics.lineTo( - shapeVO.width * .5, shapeVO.height * .5 );
-			graphics.lineTo(   startX, startY );
-			graphics.endFill();
+			if(!rendered)
+			{
+				rendered = true;
+				super.render();
+				
+				StyleManager.setShapeStyle( shapeVO.style, graphics, shapeVO );
+				
+				// 从等边三角形顶点开始绘制
+				var startX:Number =   shapeVO.radius + shapeVO.width * .5;
+				var startY:Number = - shapeVO.height * .5 ;
+				
+				graphics.moveTo(   startX, startY );
+				graphics.lineTo(   shapeVO.width * .5, shapeVO.height * .5 );
+				graphics.lineTo( - shapeVO.width * .5, shapeVO.height * .5 );
+				graphics.lineTo(   startX, startY );
+				graphics.endFill();
+			}
 		}
 	}
 }

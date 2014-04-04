@@ -12,10 +12,14 @@ package landray.kp.maps.main.elements
 		}
 		override public function render(scale:Number = 1):void
 		{
-			super.render();
-			
-			vo.style.radius = rectVO.radius * 2;
-			StyleManager.drawRect( this, vo.style, vo );
+			if(!rendered)
+			{
+				rendered = true;
+				super.render();
+				
+				vo.style.radius = rectVO.radius * 2;
+				StyleManager.drawRect( this, vo.style, vo );
+			}
 		}
 		protected function get rectVO():ShapeVO
 		{

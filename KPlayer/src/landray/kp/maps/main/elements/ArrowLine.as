@@ -16,14 +16,17 @@ package landray.kp.maps.main.elements
 		 */		
 		override public function render(scale:Number = 1):void
 		{
-			super.render();
-			
-			
-			graphics.moveTo(lineVO.width * .5, 0);
-			graphics.lineTo(lineVO.width * .5 - 20, - 15);
-			
-			graphics.moveTo(lineVO.width * .5, 0);
-			graphics.lineTo(lineVO.width * .5 - 20, 15);
+			if(!rendered)
+			{
+				rendered = true;
+				super.render();
+				
+				graphics.moveTo(lineVO.width * .5, 0);
+				graphics.lineTo(lineVO.width * .5 - 20, - 15);
+				
+				graphics.moveTo(lineVO.width * .5, 0);
+				graphics.lineTo(lineVO.width * .5 - 20, 15);
+			}
 		}
 	}
 }

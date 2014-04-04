@@ -99,6 +99,11 @@ package landray.kp.maps.main.elements
 		//
 		//-----------------------------------------------------------
 		
+		public function get index():int
+		{
+			return (parent) ? parent.getChildIndex(this) : -1;
+		}
+		
 		public function get scaledWidth ():Number
 		{
 			var w:Number = vo.width * vo.scale;
@@ -425,5 +430,7 @@ package landray.kp.maps.main.elements
 		}
 		
 		private var _shape:Shape;
+		
+		protected var rendered:Boolean;
 	}
 }

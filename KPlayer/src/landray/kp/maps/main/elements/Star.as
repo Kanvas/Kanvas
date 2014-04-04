@@ -19,9 +19,13 @@ package landray.kp.maps.main.elements
 		 */
 		override public function render(scale:Number = 1):void
 		{
-			super.render();
-			
-			StyleManager.drawStar( this, vo.style, starVO.innerRadius, vo );
+			if(!rendered)
+			{
+				rendered = true;
+				super.render();
+				
+				StyleManager.drawStar( this, vo.style, starVO.innerRadius, vo );
+			}
 		}
 		
 		/**

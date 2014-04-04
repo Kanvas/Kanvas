@@ -19,6 +19,6 @@ package landray.kp.maps.main.elements
 		{
 			return vo as ShapeVO;
 		}
-	
+		
 	}
 }

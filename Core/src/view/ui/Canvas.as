@@ -138,7 +138,6 @@ package view.ui
 		{
 			if( previewState)
 			{
-				//PerformaceTest.start("Canvas.toPreviewState()");
 				previewState = false;
 				__x = previewX;
 				__y = previewY;
@@ -152,8 +151,6 @@ package view.ui
 					
 				previewItems.length = 0;
 				visibleItems.length = 0;
-				
-				//PerformaceTest.end("Canvas.toPreviewState()");
 			}
 		}
 		

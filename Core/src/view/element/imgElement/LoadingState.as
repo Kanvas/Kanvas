@@ -60,7 +60,7 @@ package view.element.imgElement
 			element.graphics.endFill();
 			
 			var iconSize:Number = (element.vo.width > element.vo.height) ? element.vo.height * 0.5 : element.vo.width * 0.5;
-			BitmapUtil.drawBitmapDataToShape(new load_error, element.shape as Shape, iconSize, iconSize, - iconSize * 0.5, - iconSize * 0.5, true);
+			BitmapUtil.drawBitmapDataToGraphics(new load_error, element.graphics, iconSize, iconSize, - iconSize * 0.5, - iconSize * 0.5, true);
 			
 			element.removeLoading();
 			

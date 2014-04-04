@@ -32,8 +32,11 @@ package view.interact.zoomMove
 		 */		
 		public function zoomElement(elementVO:ElementVO):void
 		{
-			var scene:Scene = PageUtil.getSceneFromVO(elementVO, mainUI);
-		    zoomRotateMoveTo(scene.scale, scene.rotation, scene.x, scene.y);
+			if (elementVO)
+			{
+				var scene:Scene = PageUtil.getSceneFromVO(elementVO, mainUI);
+				zoomRotateMoveTo(scene.scale, scene.rotation, scene.x, scene.y);
+			}
 		}
 		
 		

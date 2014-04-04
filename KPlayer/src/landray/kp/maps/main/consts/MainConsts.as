@@ -46,7 +46,8 @@ package landray.kp.maps.main.consts
 			hotspot        :landray.kp.maps.main.elements.Hotspot, 
 			dialog         :landray.kp.maps.main.elements.Dialog, 
 			dashRect       :landray.kp.maps.main.elements.DashRect, 
-			camera         :landray.kp.maps.main.elements.Camera
+			camera         :landray.kp.maps.main.elements.Camera,
+			page           :landray.kp.maps.main.elements.Page
 		};
 	}
 }

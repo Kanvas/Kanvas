@@ -41,10 +41,6 @@ package landray.kp.maps.main.elements
 			text.checkTextBm(textVO.scale * scale);
 		}
 		
-		/**
-		 */		
-		private var rendered:Boolean = false;
-		
 		private function get textVO():TextVO
 		{
 			return vo as TextVO;

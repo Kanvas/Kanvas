@@ -1,15 +1,11 @@
 package landray.kp.maps.main.util
 {
 	import landray.kp.core.KPConfig;
-	import landray.kp.core.kp_internal;
 	import landray.kp.maps.main.consts.MainConsts;
-	import landray.kp.maps.main.elements.Circle;
 	import landray.kp.maps.main.elements.Element;
 	import landray.kp.utils.CoreUtil;
 	
 	import model.vo.ElementVO;
-	import model.vo.ImgVO;
-	import model.vo.ShapeVO;
 	
 	public class MainUtil
 	{

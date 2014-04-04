@@ -5,6 +5,7 @@ package view.element.text
 	import com.kvs.utils.XMLConfigKit.style.elements.TextFormatStyle;
 	
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
 	import flash.text.engine.BreakOpportunity;

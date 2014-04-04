@@ -29,6 +29,8 @@ package view.ui
 		function set alpha(value:Number):void
 			
 		function get screenshot():Boolean
+			
+		function get index():int
 		
 		function updateView(check:Boolean = true):void
 		function toShotcut(renderable:Boolean = false):void

@@ -21,24 +21,28 @@ package landray.kp.maps.main.elements
 		 */
 		override public function render(scale:Number = 1):void
 		{
-			super.render();
-			
-			StyleManager.setShapeStyle( arrowVO.style, graphics, arrowVO );
-			
-			// 从箭头的顶点开始绘制，顺时针绕一圈
-			graphics.moveTo(   arrowVO.width * .5, 0 );
-			graphics.lineTo(   arrowVO.width * .5 -arrowVO.arrowWidth, arrowVO.height * .5 );
-			graphics.lineTo(   arrowVO.width * .5 -arrowVO.arrowWidth, arrowVO.trailHeight * .5 );
-			graphics.lineTo( - arrowVO.width * .5, arrowVO.trailHeight * .5 );
-			
-			//--------------------中轴线--------------------------------------------------------------
-			
-			graphics.lineTo( - arrowVO.width * .5,-arrowVO.trailHeight * .5 );
-			graphics.lineTo(   arrowVO.width * .5 -arrowVO.arrowWidth, -arrowVO.trailHeight * .5 );
-			graphics.lineTo(   arrowVO.width * .5 -arrowVO.arrowWidth, -arrowVO.height * .5 );
-			graphics.lineTo(   arrowVO.width * .5, 0 );
-			
-			graphics.endFill();
+			if(!rendered)
+			{
+				rendered = true;
+				super.render();
+				
+				StyleManager.setShapeStyle( arrowVO.style, graphics, arrowVO );
+				
+				// 从箭头的顶点开始绘制，顺时针绕一圈
+				graphics.moveTo(   arrowVO.width * .5, 0 );
+				graphics.lineTo(   arrowVO.width * .5 -arrowVO.arrowWidth, arrowVO.height * .5 );
+				graphics.lineTo(   arrowVO.width * .5 -arrowVO.arrowWidth, arrowVO.trailHeight * .5 );
+				graphics.lineTo( - arrowVO.width * .5, arrowVO.trailHeight * .5 );
+				
+				//--------------------中轴线--------------------------------------------------------------
+				
+				graphics.lineTo( - arrowVO.width * .5,-arrowVO.trailHeight * .5 );
+				graphics.lineTo(   arrowVO.width * .5 -arrowVO.arrowWidth, -arrowVO.trailHeight * .5 );
+				graphics.lineTo(   arrowVO.width * .5 -arrowVO.arrowWidth, -arrowVO.height * .5 );
+				graphics.lineTo(   arrowVO.width * .5, 0 );
+				
+				graphics.endFill();
+			}
 		}
 		
 		/**
@@ -47,7 +51,6 @@ package landray.kp.maps.main.elements
 		{
 			return vo as ArrowVO;
 		}
-		
 	}
 	
 }

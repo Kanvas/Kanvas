@@ -21,12 +21,16 @@ package landray.kp.maps.main.elements
 		 */		
 		override public function render(scale:Number = 1):void
 		{
-			super.render();
-			
-			graphics.clear();
-			StyleManager.setLineStyle(graphics, vo.style.getBorder, vo.style, vo);
-			graphics.moveTo(- lineVO.width / 2, 0);
-			graphics.curveTo(0, lineVO.arc * 2, lineVO.width / 2, 0);
+			if(!rendered)
+			{
+				rendered = true;
+				super.render();
+				
+				graphics.clear();
+				StyleManager.setLineStyle(graphics, vo.style.getBorder, vo.style, vo);
+				graphics.moveTo(- lineVO.width / 2, 0);
+				graphics.curveTo(0, lineVO.arc * 2, lineVO.width / 2, 0);
+			}
 		}
 		
 		override public function get topLeft():Point
@@ -118,6 +122,5 @@ package landray.kp.maps.main.elements
 		{
 			return vo as LineVO;
 		}
-		
 	}
 }

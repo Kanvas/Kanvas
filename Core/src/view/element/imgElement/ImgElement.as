@@ -4,6 +4,7 @@ package view.element.imgElement
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.geom.Matrix;
 	
 	import landray.kp.ui.Loading;
@@ -268,6 +269,11 @@ package view.element.imgElement
 		override public function get scaledHeight():Number
 		{
 			return vo.height * vo.scale;
+		}
+		
+		override public function get shape():DisplayObject
+		{
+			return this;
 		}
 		
 		/**

@@ -15,12 +15,15 @@ package landray.kp.maps.main.elements
 		 */
 		override public function render(scale:Number = 1):void
 		{
-			super.render();
-			
-			StyleManager.setShapeStyle( shapeVO.style, graphics, shapeVO );
-			graphics.drawEllipse( shapeVO.style.tx, shapeVO.style.ty, shapeVO.width, shapeVO.height );
-			graphics.endFill();
-			
+			if(!rendered)
+			{
+				rendered = true;
+				super.render();
+				
+				StyleManager.setShapeStyle( shapeVO.style, graphics, shapeVO );
+				graphics.drawEllipse( shapeVO.style.tx, shapeVO.style.ty, shapeVO.width, shapeVO.height );
+				graphics.endFill();
+			}
 		}
 	}
 }
