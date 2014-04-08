@@ -80,6 +80,10 @@ package commands
 				
 			imgVO.scale = layoutTransformer.compensateScale * imgScale;
 			
+			imgVO.x = layoutTransformer.stageXToElementX(layoutTransformer.canvas.stage.stageWidth  * .5);
+			imgVO.y = layoutTransformer.stageYToElementY(layoutTransformer.canvas.stage.stageHeight * .5);
+			
+			/*
 			//防止图片插入时遮盖到已有内容，需将其放置到已有内容边缘
 			var canvas:Canvas = CoreFacade.coreMediator.canvas;
 			canvas.clearBG();
@@ -87,7 +91,7 @@ package commands
 			
 			imgVO.x = bd.left + bd.width + imgVO.width * imgVO.scale / 2 + 20 / layoutTransformer.canvasScale;
 			imgVO.y = bd.top + (bd.height - imgVO.height * imgVO.scale) / 2 + imgVO.height * imgVO.scale / 2;
-			
+			*/
 			imgElement = new ImgElement(imgVO);
 			CoreFacade.addElement(imgElement);
 			
