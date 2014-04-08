@@ -1,6 +1,6 @@
 package
 {
-	import commands.InserImageCMD;
+	import com.kvs.ui.button.IconBtn;
 	
 	import flash.desktop.Clipboard;
 	import flash.desktop.ClipboardFormats;
@@ -9,16 +9,12 @@ package
 	import flash.desktop.NativeDragManager;
 	import flash.events.Event;
 	import flash.events.InvokeEvent;
-	import flash.events.KeyboardEvent;
+	import flash.events.MouseEvent;
 	import flash.events.NativeDragEvent;
 	import flash.filesystem.File;
-	import flash.filesystem.FileMode;
-	import flash.filesystem.FileStream;
-	import flash.utils.ByteArray;
 	
 	import model.CoreFacade;
 	
-	import view.toolBar.ToolBarCustomFunc;
 	
 	/**
 	 * 
@@ -29,12 +25,8 @@ package
 		{
 			super();
 			
-			this.apiClass = APIForAIR;
-			
 			CoreApp.isAIR = true;
 			CoreFacade.inserImgCommad = InsertIMGFromAIR;
-			kvsCore.addEventListener(Event.RESIZE, kvsResizeHandler);
-			
 		}
 		
 		/**
@@ -47,18 +39,50 @@ package
 		}
 		
 		/**
-		 * 
 		 */		
 		override protected function kvsReadyHandler(evt:KVSEvent):void 
 		{
 			super.kvsReadyHandler(evt);
 			
-			ToolBarCustomFunc.openFile = airAPI.openFile;
-			ToolBarCustomFunc.saveFile = airAPI.saveFile;
+			this.api = new APIForAIR(kvsCore);
 			
-			kvsCore.customButtonJS = false;
-			kvsCore.customButtonData = customButtonData;
+			save_up;
+			save_over;
+			save_down;
+			saveBtn.iconW = saveBtn.iconH = 30;
+			saveBtn.w = saveBtn.h = 30;
+			saveBtn.setIcons("save_up", "save_over", "save_down");
+			saveBtn.tips = '保存';
+			saveBtn.addEventListener(MouseEvent.MOUSE_DOWN, saveHandler);
+			
+			//
+			var btns:Vector.<IconBtn> = new Vector.<IconBtn>;
+			btns.push(saveBtn);
+			toolBar.addCustomButtons(btns);
+			
+			kvsCore.addEventListener(KVSEvent.DATA_CHANGED, dataChanged);
 		}
+		
+		/**
+		 */		
+		private function dataChanged(evt:KVSEvent):void
+		{
+			this.saveBtn.selected = false;
+		}
+		
+		/**
+		 */		
+		private function saveHandler(evt:MouseEvent):void
+		{
+			saveBtn.selected = true;
+			
+			airAPI.saveFile();
+		}
+		
+		/**
+		 * 暂存按钮 
+		 */		
+		private var saveBtn:IconBtn = new IconBtn;
 		
 		/**
 		 */		
@@ -95,6 +119,8 @@ package
 				NativeApplication.nativeApplication.setAsDefaultApplication("kvs");
 		}
 		
+		/**
+		 */		
 		private function onDragIn(e:NativeDragEvent):void
 		{
 			var filesInClip:Clipboard = e.clipboard;
@@ -140,10 +166,16 @@ package
 			if (event.arguments.length > 0) 
 			{ 
 				var file:File = new File(event.arguments[0]); 
+				
 				if (airAPI.file)
+				{
 					airAPI.openFile(file);
+				}
 				else
+				{
 					airAPI.file = file;
+					kvsCore.addEventListener(Event.RESIZE, kvsResizeHandler);
+				}
 			} 
 		} 
 		
@@ -158,12 +190,5 @@ package
 			}
 		}
 		
-		/**
-		 */		
-		private var customButtonData:XML = 
-			<buttons>
-				<button label='打开' tip='打开文件' callBack='openFile'/>
-				<button label='保存' tip='保存文件' callBack='saveFile'/>
-			</buttons>;
 	}
 }

@@ -29,42 +29,8 @@
 			<shape type='star' styleType='fill' styleID='Fill' width='200' height='200' />
 		</selector>
 		
-		<!------------------------------------------------------------------------------------------->
 		
-		<!--selector icon='circle_shape'>
-			<shape type='circle' styleType='shape' styleID='A' width='120' height='120' />
-		</selector>
 		
-		<selector icon='rect_shape'>
-			<shape type='rect' styleType='shape' styleID='A' width='120' height='120' radius='10'/>
-		</selector-->
-		
-		<!------------------------------------------------------------------------------------------->
-		
-		<selector icon='circleFrame'>
-			<shape type='circle' styleType='border' styleID='Border' width='120' height='120' />
-		</selector>
-		<selector icon='rectFrame'>
-			<shape type='rect' styleType='border' styleID='Border' width='120' height='120' radius='10'/>
-		</selector>
-		<selector icon='diamondFrame'>
-			<shape type='diamond' styleType='border' styleID='Border' width='120' height='120' />
-		</selector>
-		<selector icon='triangleFrame'>
-			<shape type='triangle' styleType='border' styleID='Border' width='120' height='120' />
-		</selector>
-		<selector icon='stepTriangleFrame'>
-			<shape type='stepTriangle' styleType='border' styleID='Border' width='120' height='120' />
-		</selector>
-		<selector icon='arrowFrame'>
-			<shape type='arrow' styleType='border' styleID='Border' width='120' height='120'/>
-		</selector>
-		<selector icon='doubleArrowFrame'>
-			<shape type='doubleArrow' styleType='border' styleID='Border' width='200' height='120' />
-		</selector>
-		<selector icon='starFrame'>
-			<shape type='star' styleType='border' styleID='Border' width='200' height='200' />
-		</selector>
 		
 		<!------------------------------------------------------------------------------------------->
 		
@@ -94,6 +60,34 @@
 		<selector icon='dialog'>
 			<shape type='dialog' styleType='fill' styleID='Dialog' width='120' height='100' radius='10'/>
 		</selector>
+		
+		<!--  -->
+		
+		<selector icon='circleFrame'>
+			<shape type='circle' styleType='border' styleID='Border' width='120' height='120' />
+		</selector>
+		<selector icon='rectFrame'>
+			<shape type='rect' styleType='border' styleID='Border' width='120' height='120' radius='10'/>
+		</selector>
+		<selector icon='diamondFrame'>
+			<shape type='diamond' styleType='border' styleID='Border' width='120' height='120' />
+		</selector>
+		<selector icon='triangleFrame'>
+			<shape type='triangle' styleType='border' styleID='Border' width='120' height='120' />
+		</selector>
+		<selector icon='stepTriangleFrame'>
+			<shape type='stepTriangle' styleType='border' styleID='Border' width='120' height='120' />
+		</selector>
+		<selector icon='arrowFrame'>
+			<shape type='arrow' styleType='border' styleID='Border' width='120' height='120'/>
+		</selector>
+		<selector icon='doubleArrowFrame'>
+			<shape type='doubleArrow' styleType='border' styleID='Border' width='200' height='120' />
+		</selector>
+		<selector icon='starFrame'>
+			<shape type='star' styleType='border' styleID='Border' width='200' height='200' />
+		</selector>
+		
 	</page>
 	<page id='smartArt' title='小组件'>
 		<selector type='circle' icon='addIcon' />

@@ -83,6 +83,8 @@ package commands
 			}
 			
 			return result;
+			
+			this.dataChanged();
 		}
 		
 		/**

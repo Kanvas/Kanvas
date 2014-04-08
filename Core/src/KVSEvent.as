@@ -40,13 +40,14 @@ package
 		public static const LINK_CLICKED:String = 'linkClicked';
 		
 		/**
-		 */		
-		public static const SET_CUSTOM_DATA:String = "setCustomData";
-		
-		/**
 		 * 更新画布镜头区域后触发
 		 */		
 		public static const UPATE_BOUND:String = 'updateBound';
+		
+		/**
+		 * 数据发生了改变，kanvas需要保存数据了 
+		 */		
+		public static const DATA_CHANGED:String = "dataChanged";
 		
 		/**
 		 */		

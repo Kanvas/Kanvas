@@ -1,14 +1,16 @@
 package commands
 {
 	import model.CoreFacade;
-	
-	import view.element.PageElement;
 	import model.vo.PageVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	
 	import util.undoRedo.UndoRedoMannager;
+	
+	import view.element.PageElement;
 
+	/**
+	 */	
 	public final class DeletePageCMD extends Command
 	{
 		public function DeletePageCMD()
@@ -16,10 +18,12 @@ package commands
 			super();
 		}
 		
+		/**
+		 */		
 		override public function execute(notification:INotification):void
 		{
 			sendNotification(Command.UN_SELECT_ELEMENT);
-			trace("DeletePageCMD.excute()")
+			
 			page = notification.getBody() as PageElement;
 			pageVO = page.vo as PageVO;
 			index1 = CoreFacade.getElementIndex(page);
@@ -29,18 +33,24 @@ package commands
 			CoreFacade.coreMediator.pageManager.removePage(pageVO);
 			
 			UndoRedoMannager.register(this);
+			
+			this.dataChanged();
 		}
 		
 		override public function undoHandler():void
 		{
 			CoreFacade.addElementAt(page, index1);
 			CoreFacade.coreMediator.pageManager.addPageAt(pageVO, index2);
+			
+			this.dataChanged();
 		}
 		
 		override public function redoHandler():void
 		{
 			CoreFacade.removeElement(page);
 			CoreFacade.coreMediator.pageManager.removePage(pageVO);
+			
+			this.dataChanged();
 		}
 		
 		private var page:PageElement;

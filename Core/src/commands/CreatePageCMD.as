@@ -4,13 +4,9 @@ package commands
 	import com.greensock.easing.Back;
 	
 	import flash.geom.Point;
-	import flash.utils.Proxy;
 	
 	import model.CoreFacade;
 	import model.ElementProxy;
-	import model.vo.ElementVO;
-	
-	import view.element.PageElement;
 	import model.vo.PageVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
@@ -23,6 +19,8 @@ package commands
 	
 	import view.element.ElementBase;
 
+	/**
+	 */	
 	public final class CreatePageCMD extends Command
 	{
 		public function CreatePageCMD()
@@ -74,6 +72,8 @@ package commands
 			
 			// 图形创建时 添加动画效果
 			TweenLite.from(page, pageProxy.flashTime, {alpha: 0, scaleX : 0, scaleY : 0, ease: Back.easeOut, onComplete: shapeCreated});
+			
+			this.dataChanged();
 		}
 		
 		/**
@@ -107,12 +107,16 @@ package commands
 		{
 			CoreFacade.removeElement(page);
 			CoreFacade.coreMediator.pageManager.removePage(page.vo as PageVO);
+			
+			this.dataChanged();
 		}
 		
 		override public function redoHandler():void
 		{
 			CoreFacade.addElementAt(page, index1);
 			CoreFacade.coreMediator.pageManager.addPageAt(page.vo as PageVO, index2);
+			
+			this.dataChanged();
 		}
 		
 		/**

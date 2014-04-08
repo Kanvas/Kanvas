@@ -32,6 +32,8 @@ package commands
 			v = CoreFacade.coreMediator.pageManager.refreshVOThumbs();
 			
 			UndoRedoMannager.register(this);
+			
+			this.dataChanged();
 		}
 		
 		/**
@@ -45,6 +47,8 @@ package commands
 			element.render();
 			
 			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
+			
+			this.dataChanged();
 		}
 		
 		override public function redoHandler():void
@@ -52,6 +56,8 @@ package commands
 			CoreFacade.removeElement(element);
 			
 			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
+			
+			this.dataChanged();
 		}
 		
 		/**

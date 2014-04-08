@@ -1,19 +1,14 @@
 package commands
 {
-	import flash.geom.Rectangle;
-	
 	import model.CoreFacade;
 	import model.vo.PageVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	
-	import util.ElementCreator;
 	import util.img.ImgInsertEvent;
 	import util.img.ImgInsertor;
 	import util.img.ImgLib;
 	import util.undoRedo.UndoRedoMannager;
-	
-	import view.interact.CoreMediator;
 
 	/**
 	 */	
@@ -92,17 +87,22 @@ package commands
 			UndoRedoMannager.register(this);
 		}
 		
+		/**
+		 */		
 		override public function undoHandler():void
 		{
 			setBgImg(oldImgObj);
 		}
 		
+		/**
+		 */		
 		override public function redoHandler():void
 		{
 			setBgImg(newImgObj);
 		}
 		
-		
+		/**
+		 */		
 		private function setBgImg(obj:Object, exec:Boolean = false):void
 		{
 			//分配背景图片的ID
@@ -110,7 +110,7 @@ package commands
 			CoreFacade.coreProxy.bgVO.imgData = obj.imgData;
 			CoreFacade.coreProxy.bgVO.imgURL  = obj.imgURL;
 			
-			CoreFacade.coreMediator.coreApp.drawBGImg   (obj.imgData);
+			CoreFacade.coreMediator.coreApp.drawBGImg(obj.imgData);
 			(CoreFacade.coreMediator.coreApp as CoreApp).bgImgUpdated(obj.imgData);
 			
 			if (exec)
@@ -123,6 +123,8 @@ package commands
 			{
 				CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 			}
+			
+			this.dataChanged();
 		}
 		
 		private var handler:Function;

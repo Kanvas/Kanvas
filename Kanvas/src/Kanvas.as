@@ -1,8 +1,8 @@
 package
 {
 	import com.kvs.ui.Panel;
+	import com.kvs.ui.button.IconBtn;
 	import com.kvs.ui.toolTips.ToolTipsManager;
-	import com.kvs.utils.PerformaceTest;
 	import com.kvs.utils.StageUtil;
 	import com.kvs.utils.XMLConfigKit.App;
 	
@@ -22,7 +22,7 @@ package
 	import view.toolBar.ZoomToolBar;
 	
 	/**
-	 * 
+	 * kanvas的主UI，包含工具条，页面与图形创建面板
 	 */	
 	public class Kanvas extends App
 	{
@@ -36,8 +36,6 @@ package
 		protected function init():void
 		{
 			this.resetLib();
-			
-			PerformaceTest.ifRun = true;
 			
 			kvsCore.externalUI = uiContainer;
 			kvsCore.addEventListener(KVSEvent.READY, kvsReadyHandler);
@@ -69,19 +67,6 @@ package
 			
 			if (CoreFacade.coreMediator.zoomMoveControl)
 				zoomToolBar.controller = CoreFacade.coreMediator.zoomMoveControl;
-			
-			//自定义按钮
-			if (kvsCore.customButtonData)
-				toolBar.setCustomButton(kvsCore.customButtonData, kvsCore.customButtonJS);
-			else
-				kvsCore.addEventListener(KVSEvent.SET_CUSTOM_DATA, setCustomData, false, 0, true);
-		}
-		
-		/**
-		 */		
-		private function setCustomData(evt:KVSEvent):void
-		{
-			toolBar.setCustomButton(kvsCore.customButtonData, kvsCore.customButtonJS);
 		}
 		
 		/**
@@ -127,7 +112,6 @@ package
 		 */		
 		private function stageResizeHandler(evt:Event):void
 		{
-			//Debugger.debug("resize:"+stage.stageWidth, stage.stageHeight)
 			if (stage.stageWidth && stage.stageHeight)
 			{
 				preLayout();
@@ -214,18 +198,12 @@ package
 		protected function kvsReadyHandler(evt:KVSEvent):void
 		{
 			pagePanel.initPageManager();
-			
-			api = new apiClass(kvsCore);
 		}
 		
 		/**
+		 * web版与桌面版的接口不同
 		 */		
 		protected var api:KanvasAPI;
-		
-		/**
-		 * 默认用js的api，air端需要指定为air自己的api
-		 */		
-		public var apiClass:Class = APIForJS;
 		
 		/**
 		 * 装载工具条，面板的容器

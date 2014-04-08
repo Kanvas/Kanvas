@@ -1,8 +1,6 @@
 package commands
 {
 	
-	import model.CoreFacade;
-	
 	import org.puremvc.as3.interfaces.INotification;
 	
 	import util.img.ImgInsertEvent;

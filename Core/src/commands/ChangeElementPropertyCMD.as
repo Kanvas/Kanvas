@@ -196,6 +196,8 @@ package commands
 				CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 			}
 			///PerformaceTest.end("setProperty() element updatePageThumbs");
+			
+			this.dataChanged();
 		}
 		
 		private function reset(item:ElementBase):void

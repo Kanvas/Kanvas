@@ -1,7 +1,6 @@
 package commands
 {
 	
-	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import model.CoreFacade;

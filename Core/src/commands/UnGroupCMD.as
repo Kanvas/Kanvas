@@ -1,7 +1,6 @@
 package commands
 {
 	import model.CoreFacade;
-	import model.CoreProxy;
 	import model.vo.ElementVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
@@ -55,6 +54,8 @@ package commands
 			
 			
 			UndoRedoMannager.register(this);
+			
+			this.dataChanged();
 		}
 		
 		/**
@@ -81,6 +82,8 @@ package commands
 			
 			CoreFacade.coreMediator.checkAutoGroup(group);
 			sendNotification(Command.SElECT_ELEMENT, group);
+			
+			this.dataChanged();
 		}
 		
 		/**
@@ -99,6 +102,8 @@ package commands
 			CoreFacade.removeElement(group);
 			
 			sendNotification(Command.SElECT_ELEMENT, temGroup);
+			
+			this.dataChanged();
 		}
 	}
 }

@@ -1,15 +1,11 @@
 package commands
 {
-	import flash.display.BitmapData;
-	
 	import model.CoreFacade;
-	import model.CoreProxy;
 	import model.vo.PageVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	
 	import util.img.ImgInsertor;
-	import util.img.ImgLib;
 
 	/**
 	 */	
@@ -41,17 +37,17 @@ package commands
 			setBgImg(newImgObj, true);
 			
 			//CoreFacade.coreMediator.mainUI.canvas.hideLoading();
-			
-			
 		}
 		
-		
+		/**
+		 */		
 		override public function undoHandler():void
 		{
 			setBgImg(oldImgObj);
 		}
 		
-		
+		/**
+		 */		
 		override public function redoHandler():void
 		{
 			setBgImg(newImgObj);
@@ -77,6 +73,8 @@ package commands
 			{
 				CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 			}
+			
+			this.dataChanged();
 		}
 		
 		/**

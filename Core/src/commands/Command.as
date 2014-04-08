@@ -1,5 +1,7 @@
 package commands
 {
+	import model.CoreFacade;
+	
 	import org.puremvc.as3.patterns.command.SimpleCommand;
 	
 	import util.undoRedo.ICommand;
@@ -237,6 +239,14 @@ package commands
 		 */		
 		public function Command()
 		{
+		}
+		
+		/**
+		 * 有些命令关系到数据变动，需告知外部以便保存数据
+		 */		
+		protected function dataChanged():void
+		{
+			CoreFacade.coreMediator.mainUI.dispatchEvent(new KVSEvent(KVSEvent.DATA_CHANGED));
 		}
 		
 		/**
