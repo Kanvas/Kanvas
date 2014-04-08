@@ -6,6 +6,7 @@ package commands
 	import org.puremvc.as3.interfaces.INotification;
 	
 	import util.img.ImgInsertor;
+	import util.undoRedo.UndoRedoMannager;
 
 	/**
 	 */	
@@ -36,7 +37,7 @@ package commands
 			
 			setBgImg(newImgObj, true);
 			
-			//CoreFacade.coreMediator.mainUI.canvas.hideLoading();
+			UndoRedoMannager.register(this);
 		}
 		
 		/**

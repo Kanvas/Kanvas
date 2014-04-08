@@ -62,21 +62,12 @@ package
 			mainNavControl = new NavControl(this);
 			
 			// 核心core开始初始化
-			kvsCore.addEventListener(KVSEvent.READY, coreInitCompleteHandler, false, 0, true);
 			kvsCore.startInit();
 			
 			if (CoreFacade.coreMediator.zoomMoveControl)
 				zoomToolBar.controller = CoreFacade.coreMediator.zoomMoveControl;
 		}
 		
-		/**
-		 * 核心Core初始化完毕
-		 */		
-		private function coreInitCompleteHandler(evt:KVSEvent):void
-		{
-			// 初始化默认样式
-			kvsCore.changeTheme('White', false);
-		}
 		
 		/**
 		 */		
@@ -197,6 +188,7 @@ package
 		 */		
 		protected function kvsReadyHandler(evt:KVSEvent):void
 		{
+			kvsCore.changeTheme('White', false);
 			pagePanel.initPageManager();
 		}
 		
