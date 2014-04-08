@@ -9,6 +9,7 @@ package
 	import com.kvs.utils.PerformaceTest;
 	
 	import flash.display.BitmapData;
+	import flash.display.PNGEncoderOptions;
 	import flash.events.Event;
 	import flash.filesystem.File;
 	import flash.net.FileFilter;
@@ -91,7 +92,7 @@ package
 			}
 			
 			this.setXMLData(xml);
-			
+			reader.close();
 			PerformaceTest.end();
 		}
 		
@@ -129,6 +130,7 @@ package
 			PerformaceTest.start("save");
 			
 			var writer:ZipFileWriter = new ZipFileWriter();
+			
 			writer.openAsync(this.file);
 			
 			// file info
@@ -145,7 +147,7 @@ package
 			var bmd:BitmapData = core.thumbManager.getShotCut(ConfigInitor.THUMB_WIDTH, ConfigInitor.THUMB_HEIGHT);
 			if (bmd)
 			{
-				imgDataBytes = PNGEncoder.encode(bmd);
+				imgDataBytes = bmd.encode(bmd.rect, new PNGEncoderOptions);
 				writer.addBytes(imgDataBytes,"preview.png");
 			}
 			
@@ -156,6 +158,17 @@ package
 				imgDataBytes = ImgLib.getData(imgID);
 				writer.addBytes(imgDataBytes,imgID.toString() + '.png');
 			}
+			
+			/*var pageData:ByteArray = core.thumbManager.getPageBytes(960, 720);
+			if (pageData)
+			{
+				var vector:Vector.<ByteArray> = core.thumbManager.resolvePageData(pageData);
+				var flag:int = 1;
+				for each (var bytes:ByteArray in vector)
+				{
+					writer.addBytes(bytes, "pages/" + (flag++) + ".jpg");
+				}
+			}*/
 			
 			writer.close();
 			
