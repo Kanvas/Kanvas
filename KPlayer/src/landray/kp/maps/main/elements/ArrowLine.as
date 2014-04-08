@@ -20,11 +20,14 @@ package landray.kp.maps.main.elements
 			{
 				super.render();
 				
-				graphics.moveTo(lineVO.width * .5, 0);
-				graphics.lineTo(lineVO.width * .5 - 20, - 15);
+				var rad:Number = Math.PI - Math.atan2(lineVO.arc * 2, lineVO.width / 2);
+				var r:uint = 5 * lineVO.thickness;
 				
-				graphics.moveTo(lineVO.width * .5, 0);
-				graphics.lineTo(lineVO.width * .5 - 20, 15);
+				graphics.moveTo(lineVO.width / 2, 0);
+				graphics.lineTo(lineVO.width / 2 + Math.cos(rad + Math.PI / 4) * r, Math.sin(rad + Math.PI / 4) * r);
+				
+				graphics.moveTo(lineVO.width / 2, 0);
+				graphics.lineTo(lineVO.width / 2 + Math.cos(rad - Math.PI / 4) * r, Math.sin(rad - Math.PI / 4) * r);
 			}
 		}
 	}
