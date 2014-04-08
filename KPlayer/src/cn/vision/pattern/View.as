@@ -3,7 +3,7 @@ package cn.vision.pattern
 	import cn.vision.core.UI;
 	import cn.vision.core.vs;
 	
-	public class View extends UI
+	public class View
 	{
 		public function View()
 		{

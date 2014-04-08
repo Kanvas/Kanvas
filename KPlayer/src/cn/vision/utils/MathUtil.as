@@ -16,7 +16,7 @@ package cn.vision.utils
 	{
 		
 		/**
-		 * Conver degree to radian.
+		 * Conver angle to radian.
 		 * 
 		 * @param angle Angle to be converted.
 		 * @return Radian converted.
@@ -24,11 +24,11 @@ package cn.vision.utils
 		 */
 		public static function angleToRadian(angle:Number):Number
 		{
-			return angle * Math.PI / 180;
+			return ConstsMath.PI_MOD_ANGLE * angle;
 		}
 		
 		/**
-		 * Convert radian to degree.
+		 * Convert radian to angle.
 		 * 
 		 * @param radian Radian to be converted.
 		 * @return Angle converted.
@@ -36,7 +36,7 @@ package cn.vision.utils
 		 */
 		public static function radianToAngle(radian:Number):Number
 		{
-			return radian * 180 / Math.PI;
+			return ConstsMath.ANGLE_MOD_PI * radian;
 		}
 		
 		/**
@@ -49,11 +49,11 @@ package cn.vision.utils
 		public static function moduloAngle(angle:Number):Number
 		{
 			angle = angle % 360;
-			return (angle >= 0) ? angle : angle + 360;
+			return (angle < 0) ? 360 + angle : angle;
 		}
 		
 		/**
-		 * Determine whether two numbers are close.
+		 * Determine whether two numbers are equal.
 		 * 
 		 * @param value1
 		 * @param value2
@@ -61,23 +61,14 @@ package cn.vision.utils
 		 * @return Boolean
 		 * 
 		 */
-		public static function close(value1:Number, value2:Number, accuracy:int = 0):Boolean
+		public static function equal(a:Number, b:Number, accuracy:uint = 0):Boolean
 		{
-			var result:Boolean;
-			if (accuracy == 0)
-			{
-				result = (value1 == value2);
-			}
-			else
-			{
-				var factor:Number = Math.pow(10, accuracy);
-				result = (Math.floor(value1 * factor) == Math.floor(value2 * factor));
-			}
-			return result;
+			var f:Number = Math.pow(10, accuracy);
+			return (f == 1) ? (a == b) : (Math.floor(a * f) == Math.floor(b * f));
 		}
 		
 		/**
-		 * Returns the 2 logarithm of the parameter val.
+		 * Returns the 2 logarithm of the parameter value.
 		 * 
 		 * @param value
 		 * @return Number

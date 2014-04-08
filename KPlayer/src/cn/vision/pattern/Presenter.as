@@ -24,10 +24,7 @@ package cn.vision.pattern
 			setup.apply(this, $args);
 		}
 		
-		protected function setup(...$args):void
-		{
-			
-		}
+		protected function setup(...$args):void { }
 		
 		public function get container():DisplayObjectContainer
 		{
