@@ -159,7 +159,7 @@ package view.element.shapes
 			return vo.scale *(  .5 * vo.height + ((lineVO.arc>= 0) ? lineVO.arc : 0));
 		}
 		
-		override public function get scaledHeight():Number
+		/*override public function get scaledHeight():Number
 		{
 			var h:Number = (vo.height + Math.abs(lineVO.arc * 2)) * vo.scale;
 			
@@ -175,7 +175,7 @@ package view.element.shapes
 			if(vo.style && vo.style.getBorder)
 				h = h + vo.thickness * scale;
 			return h;
-		}
+		}*/
 		
 		
 		/**
