@@ -14,7 +14,6 @@ package landray.kp.maps.main.elements
 		{
 			if(!rendered)
 			{
-				rendered = true;
 				super.render();
 				graphics.beginFill(0, 0);
 				graphics.drawRect(vo.style.tx, vo.style.ty, vo.style.width, vo.style.height);

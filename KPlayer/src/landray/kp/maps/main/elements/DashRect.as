@@ -31,9 +31,9 @@ package landray.kp.maps.main.elements
 				vo.style.height = vo.height;
 				vo.style.radius = rectVO.radius * 2;
 				
-				this.graphics.beginFill(0, 0);
-				this.graphics.drawRoundRect(vo.style.tx, vo.style.ty, vo.style.width, vo.style.height, vo.style.radius);
-				this.graphics.endFill();
+				graphics.beginFill(0, 0);
+				graphics.drawRoundRect(vo.style.tx, vo.style.ty, vo.style.width, vo.style.height, vo.style.radius);
+				graphics.endFill();
 				
 				var thickness:uint = vo.thickness;
 				if (thickness > 3)

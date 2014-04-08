@@ -14,7 +14,6 @@ package landray.kp.maps.main.elements
 		{
 			if(!rendered)
 			{
-				rendered = true;
 				super.render();
 				
 				vo.style.radius = rectVO.radius * 2;

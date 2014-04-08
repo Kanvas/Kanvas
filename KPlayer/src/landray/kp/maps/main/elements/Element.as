@@ -49,18 +49,22 @@ package landray.kp.maps.main.elements
 		
 		public function render(scale:Number = 1):void
 		{
-			mouseEnabled = buttonMode = related;
-			updateLayout();
-			
-			if (vo.style) 
+			if(!rendered)
 			{
-				// 中心点为注册点
-				vo.style.tx =　-　vo.width  * .5;
-				vo.style.ty =　-　vo.height * .5;
-				vo.style.width  = vo.width;
-				vo.style.height = vo.height;
+				rendered = true;
+				mouseEnabled = buttonMode = related;
+				updateLayout();
+				
+				if (vo.style) 
+				{
+					// 中心点为注册点
+					vo.style.tx =　-　vo.width  * .5;
+					vo.style.ty =　-　vo.height * .5;
+					vo.style.width  = vo.width;
+					vo.style.height = vo.height;
+				}
+				graphics.clear();
 			}
-			graphics.clear();
 		}
 		
 		/**

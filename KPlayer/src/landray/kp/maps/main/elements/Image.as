@@ -52,7 +52,6 @@ package landray.kp.maps.main.elements
 		{
 			if(!rendered)
 			{
-				rendered = true;
 				super.render();
 				
 				if (CoreUtil.ifHasText(imgVO.url))// 再次编辑时从服务器载入图片

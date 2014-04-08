@@ -18,7 +18,6 @@ package landray.kp.maps.main.elements
 		{
 			if(!rendered)
 			{
-				rendered = true;
 				super.render();
 				
 				graphics.moveTo( lineVO.width * .5, 0 );

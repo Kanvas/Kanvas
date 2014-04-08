@@ -24,7 +24,6 @@ package landray.kp.maps.main.elements
 		{
 			if(!rendered)
 			{
-				rendered = true;
 				super.render();
 				
 				text.text = textVO.text;

@@ -21,7 +21,6 @@ package landray.kp.maps.main.elements
 		{
 			if(!rendered)
 			{
-				rendered = true;
 				super.render();
 				
 				StyleManager.setShapeStyle( shapeVO.style, graphics, shapeVO );

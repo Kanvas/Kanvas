@@ -13,7 +13,6 @@ package landray.kp.maps.main.elements
 		{
 			if(!rendered)
 			{
-				rendered = true;
 				super.render();
 				
 				graphics.beginFill(0, 0);

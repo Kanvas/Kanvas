@@ -23,10 +23,8 @@ package landray.kp.maps.main.elements
 		{
 			if(!rendered)
 			{
-				rendered = true;
 				super.render();
 				
-				graphics.clear();
 				StyleManager.setLineStyle(graphics, vo.style.getBorder, vo.style, vo);
 				graphics.moveTo(- lineVO.width / 2, 0);
 				graphics.curveTo(0, lineVO.arc * 2, lineVO.width / 2, 0);
@@ -106,15 +104,6 @@ package landray.kp.maps.main.elements
 			return vo.scale *(  .5 * vo.height + ((lineVO.arc>= 0) ? lineVO.arc : 0));
 		}
 		
-		override public function get scaledHeight():Number
-		{
-			var h:Number = (vo.height + Math.abs(lineVO.arc * 2)) * vo.scale;
-			
-			if(vo.style && vo.style.getBorder)
-				h = h + vo.thickness * vo.scale;
-			
-			return h;
-		}
 		
 		/**
 		 */		
