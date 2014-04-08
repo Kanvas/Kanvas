@@ -48,6 +48,8 @@ package commands
 			changColor(newColorObj);
 		}
 		
+		/**
+		 */		
 		private function changColor(obj:Object, exec:Boolean = false):void
 		{
 			element.vo.color = obj.color;
@@ -57,6 +59,8 @@ package commands
 				v = CoreFacade.coreMediator.pageManager.refreshPageThumbsByElement(element);
 			else
 				CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
+			
+			this.dataChanged();
 		}
 		
 		/**

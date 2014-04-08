@@ -11,6 +11,8 @@ package commands
 	
 	import view.element.ElementBase;
 
+	/**
+	 */	
 	public final class ChangeElementLayerCMD extends Command
 	{
 		public function ChangeElementLayerCMD()
@@ -39,6 +41,8 @@ package commands
 			setLayer(newLayer);
 		}
 		
+		/**
+		 */		
 		private function setLayer(layer:int, exec:Boolean = false):void
 		{
 			if (parent && element)
@@ -49,6 +53,8 @@ package commands
 				else
 					CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 			}
+			
+			this.dataChanged();
 		}
 		
 		/**

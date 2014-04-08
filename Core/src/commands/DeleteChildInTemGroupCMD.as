@@ -41,8 +41,11 @@ package commands
 				groupElementIndexs[i] = item.index;
 				CoreFacade.removeElement(item);
 			}
+			
 			v = CoreFacade.coreMediator.pageManager.refreshVOThumbs();
 			UndoRedoMannager.register(this);
+			
+			this.dataChanged();
 		}
 		
 		/**
@@ -59,7 +62,10 @@ package commands
 					CoreFacade.coreMediator.pageManager.addPageAt(pageVO, pageVO.index);
 				}
 			}
+			
 			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
+			
+			this.dataChanged();
 		}
 		
 		/**
@@ -72,7 +78,10 @@ package commands
 				if (item is PageElement)
 					CoreFacade.coreMediator.pageManager.removePage(item.vo as PageVO);
 			}
+			
 			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
+			
+			this.dataChanged();
 		}
 		
 		/**

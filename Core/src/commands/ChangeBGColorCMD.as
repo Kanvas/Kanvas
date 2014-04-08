@@ -32,7 +32,6 @@ package commands
 			UndoRedoMannager.register(this);
 		}
 		
-		
 		/**
 		 */		
 		override public function undoHandler():void
@@ -65,6 +64,8 @@ package commands
 			{
 				CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 			}
+			
+			this.dataChanged();
 		}
 		
 		/**

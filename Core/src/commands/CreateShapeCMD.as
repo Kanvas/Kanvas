@@ -80,10 +80,7 @@ package commands
 			// 图形创建时 添加动画效果
 			TweenLite.from(element, elementProxy.flashTime, {alpha: 0, scaleX : 0, scaleY : 0, ease: Back.easeOut, onComplete: shapeCreated});
 			
-			/*if (shapeElement is PageElement)
-			{
-				CoreFacade.coreMediator.pageManager.addPage(shapeElement.vo as PageVO);
-			}*/
+			this.dataChanged();
 		}
 		
 		/**
@@ -102,8 +99,6 @@ package commands
 			}
 			
 			UndoRedoMannager.register(this);
-			
-			
 		}
 		
 		/**
@@ -112,12 +107,16 @@ package commands
 		{
 			CoreFacade.removeElement(element);
 			CoreFacade.coreMediator.pageManager.refreshPageThumbsByElement(element);
+			
+			this.dataChanged();
 		}
 		
 		override public function redoHandler():void
 		{
 			CoreFacade.addElementAt(element, elementIndex);
 			CoreFacade.coreMediator.pageManager.refreshPageThumbsByElement(element);
+			
+			this.dataChanged();
 		}
 		
 		/**

@@ -1,4 +1,4 @@
-package 
+package  
 {
 	import com.kvs.utils.Base64;
 	import com.kvs.utils.ExternalUtil;
@@ -88,8 +88,6 @@ package
 			ExternalUtil.addCallback("onWebMouseWheel", onWebMouseWheel);
 			
 			ExternalUtil.addCallback("getShotCut", getShotCut);
-			
-			ExternalUtil.addCallback("setCustomButton", setCustomButton);
 			
 			//通知网页端，Flash初始化OK
 			ExternalUtil.call('KANVAS.ready', appID);
@@ -222,18 +220,6 @@ package
 			}
 			
 			return str;
-		}
-		
-		private function setCustomButton(data:String):void
-		{
-			try 
-			{
-				core.customButtonData = XML(data);
-			}
-			catch(e:Error)
-			{
-				ExternalUtil.call("alert", "传入的自定义按钮XML语法不正确:"+data);
-			}
 		}
 		
 		/**

@@ -49,6 +49,8 @@ package commands
 			setStyle(newStyleID);
 		}
 		
+		/**
+		 */		
 		private function setStyle(id:String, exec:Boolean = false):void
 		{
 			element.vo.styleID = id;
@@ -59,6 +61,8 @@ package commands
 				v = CoreFacade.coreMediator.pageManager.refreshPageThumbsByElement(element);
 			else
 				CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
+			
+			this.dataChanged();
 		}
 		
 		private var oldStyleID:String;

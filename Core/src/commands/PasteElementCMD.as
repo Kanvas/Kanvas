@@ -1,7 +1,6 @@
 package commands
 {
 	import model.CoreFacade;
-	import model.CoreProxy;
 	import model.vo.PageVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
@@ -11,7 +10,6 @@ package commands
 	import view.element.Camera;
 	import view.element.ElementBase;
 	import view.element.PageElement;
-	import view.element.imgElement.ImgElement;
 	
 	/**
 	 * 粘贴元素
@@ -78,6 +76,8 @@ package commands
 			
 			sendNotification(Command.SElECT_ELEMENT, element);
 			UndoRedoMannager.register(this);
+			
+			this.dataChanged();
 		}
 		
 		/**
@@ -100,8 +100,12 @@ package commands
 				CoreFacade.coreMediator.pageManager.removePage(element.vo as PageVO);
 			
 			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
+			
+			this.dataChanged();
 		}
 		
+		/**
+		 */		
 		override public function redoHandler():void
 		{
 			CoreFacade.addElementAt(element, elementIndex);
@@ -124,6 +128,8 @@ package commands
 			}
 			
 			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
+			
+			this.dataChanged();
 		}
 		
 		/**

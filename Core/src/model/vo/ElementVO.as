@@ -52,6 +52,8 @@ package model.vo
 		public function set x(value:Number):void
 		{
 			_x = value;
+			
+			
 		}
 		protected var _x:Number = 0;
 		

@@ -85,6 +85,8 @@ package commands
 			TweenLite.from(element, 0.3, {alpha: 0, scaleX : 0, scaleY : 0, ease: Back.easeOut, onComplete: created});
 			
 			UndoRedoMannager.register(this);
+			
+			this.dataChanged();
 		}
 		
 		private function created():void
@@ -97,6 +99,8 @@ package commands
 		override public function undoHandler():void
 		{
 			CoreFacade.removeElement(element);
+			
+			this.dataChanged();
 		}
 		
 		/**
@@ -104,6 +108,8 @@ package commands
 		override public function redoHandler():void
 		{
 			CoreFacade.addElementAt(element, elementIndex);
+			
+			this.dataChanged();
 		}
 		
 		/**

@@ -1,8 +1,6 @@
 package commands
 {
 	
-	import flash.geom.Point;
-	
 	import model.CoreFacade;
 	import model.vo.PageVO;
 	import model.vo.TextVO;
@@ -13,7 +11,6 @@ package commands
 	import util.undoRedo.UndoRedoMannager;
 	
 	import view.element.text.TextEditField;
-	import view.interact.CoreMediator;
 	
 	/**
 	 * 创建文本框
@@ -47,6 +44,8 @@ package commands
 			v = CoreFacade.coreMediator.pageManager.refreshPageThumbsByElement(textField);
 			
 			UndoRedoMannager.register(this);
+			
+			this.dataChanged();
 		}
 		
 		/**
@@ -58,6 +57,8 @@ package commands
 			CoreFacade.removeElement(textField);
 			
 			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
+			
+			this.dataChanged();
 		}
 		
 		override public function redoHandler():void
@@ -65,6 +66,8 @@ package commands
 			CoreFacade.addElement(textField);
 			
 			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
+			
+			this.dataChanged();
 		}
 		
 		private var v:Vector.<PageVO>;

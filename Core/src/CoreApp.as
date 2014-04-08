@@ -675,30 +675,6 @@ package
 		
 		private var __facade:CoreFacade;
 		
-		
-		/**
-		 * 自定义按钮XML
-		 */
-		public function get customButtonData():XML
-		{
-			return __customButtonData;
-		}
-		
-		/**
-		 */		
-		public function set customButtonData(value:XML):void
-		{
-			__customButtonData = value;
-			dispatchEvent(new KVSEvent(KVSEvent.SET_CUSTOM_DATA));
-		}
-		
-		private var __customButtonData:XML;
-		
-		/**
-		 * 传入的自定义按钮是否调用js。
-		 */
-		public var customButtonJS:Boolean = true;
-		
 		/**
 		 * 是否为AIR桌面程序，此属性在客户端中设置为true。
 		 */

@@ -23,6 +23,12 @@
 				<include name="Kanvas.js" />
 			</fileset>
 		</copy>
+
+		<copy overwrite="true" todir="/Users/wanglei/Sites/Kanvas/web">
+			<fileset dir="${WORK_SPACE}/Kanvas/src">
+				<include name="Kanvas.js" />
+			</fileset>
+		</copy>
 		
 		<copy overwrite="true" todir="${WORK_SPACE}/release">
 					<fileset dir="${WORK_SPACE}/Kanvas/bin-debug">
@@ -52,11 +58,12 @@
 	</target>
 
 	<target name="Kanvas">
-		<mxmlc file="${WORK_SPACE}/Kanvas/src/Kanvas.as" output="${WORK_SPACE}/release/Kanvas.swf" 
+		<mxmlc file="${WORK_SPACE}/KanvasWeb/src/KanvasWeb.as" output="${WORK_SPACE}/release/Kanvas.swf" 
 			actionscript-file-encoding="UTF-8" keep-generated-actionscript="false" incremental="false"
 			static-link-runtime-shared-libraries="true">
 			<load-config filename="${FLEX_HOME}/frameworks/flex-config.xml"/>
 			<source-path path-element="${FLEX_HOME}/frameworks"/>
+			<source-path path-element="${WORK_SPACE}/Kanvas/src"/>
 			<source-path path-element="${WORK_SPACE}/Core/src"/>
 				
 			<library-path dir="${WORK_SPACE}/Kanvas/libs" includes="*.swc" />
@@ -103,6 +110,11 @@
 				publicOnly="false" rename="true"/>
 		</protect>
 		
+		<copy overwrite="true" todir="/Users/wanglei/Sites/Kanvas/web">
+			<fileset dir="${WORK_SPACE}/release">
+				<include name="Kanvas.swf" />
+			</fileset>
+		</copy>
 	</target>
 
 	<target name="KPlayer">
@@ -141,6 +153,12 @@
 				publicOnly="false" rename="true"/>
 			
 		</protect>
+
+		<copy overwrite="true" todir="/Users/wanglei/Sites/Kanvas/web">
+			<fileset dir="${WORK_SPACE}/release">
+				<include name="KPlayer.swf" />
+			</fileset>
+		</copy>
 	</target>
 	
 	<target name="fresh release dir" >

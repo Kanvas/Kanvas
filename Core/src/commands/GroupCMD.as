@@ -1,7 +1,6 @@
 package commands
 {
 	import model.CoreFacade;
-	import model.CoreProxy;
 	import model.vo.ElementVO;
 	import model.vo.GroupVO;
 	
@@ -54,6 +53,8 @@ package commands
 			initRoup();
 			
 			UndoRedoMannager.register(this);
+			
+			this.dataChanged();
 		}
 		
 		/**
@@ -110,6 +111,8 @@ package commands
 			CoreFacade.removeElement(group);
 			
 			sendNotification(Command.SElECT_ELEMENT, temGroup);
+			
+			this.dataChanged();
 		}
 		
 		/**
@@ -118,6 +121,8 @@ package commands
 		{
 			sendNotification(Command.UN_SELECT_ELEMENT);
 			initRoup();
+			
+			this.dataChanged();
 		}
 		
 		/**

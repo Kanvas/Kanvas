@@ -5,7 +5,6 @@ package commands
 	
 	import org.puremvc.as3.interfaces.INotification;
 	
-	import util.img.ImgLib;
 	import util.undoRedo.UndoRedoMannager;
 	
 	import view.element.ElementBase;
@@ -47,6 +46,8 @@ package commands
 				ImgLib.unRegister(element.imgVO.imgID);*/
 			
 			UndoRedoMannager.register(this);
+			
+			this.dataChanged();
 		}
 		
 		/**
@@ -56,6 +57,8 @@ package commands
 			CoreFacade.addElementAt(element, elementIndex);
 			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 			//ImgLib.register(imgElement.imgVO.imgID.toString(), imgElement.imgVO.sourceData);
+			
+			this.dataChanged();
 		}
 		
 		override public function redoHandler():void
@@ -63,6 +66,8 @@ package commands
 			CoreFacade.removeElement(element);
 			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 			//ImgLib.unRegister(imgElement.imgVO.imgID);
+			
+			this.dataChanged();
 		}
 		
 		/**

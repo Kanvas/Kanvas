@@ -70,8 +70,12 @@ package commands
 			
 			sendNotification(Command.SElECT_ELEMENT, newGroup);
 			UndoRedoMannager.register(this);
+			
+			this.dataChanged();
 		}
 		
+		/**
+		 */		
 		override public function undoHandler():void
 		{
 			sendNotification(Command.UN_SELECT_ELEMENT);
@@ -86,8 +90,12 @@ package commands
 			CoreFacade.removeElement(newGroup);
 			
 			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
+			
+			this.dataChanged();
 		}
 		
+		/**
+		 */		
 		override public function redoHandler():void
 		{
 			CoreFacade.addElement(newGroup);
@@ -105,6 +113,8 @@ package commands
 			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 			
 			sendNotification(Command.SElECT_ELEMENT, newGroup);
+			
+			this.dataChanged();
 		}
 		
 		/**

@@ -1,8 +1,6 @@
 package commands
 {
 	import model.CoreFacade;
-	
-	import view.element.PageElement;
 	import model.vo.PageVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
@@ -10,6 +8,7 @@ package commands
 	import util.undoRedo.UndoRedoMannager;
 	
 	import view.element.ElementBase;
+	import view.element.PageElement;
 
 	/**
 	 * 图形删除指令, 负责删除图形，线条和图片
@@ -54,9 +53,9 @@ package commands
 			v = CoreFacade.coreMediator.pageManager.refreshVOThumbs();
 			
 			UndoRedoMannager.register(this);
+			
+			this.dataChanged();
 		}
-		
-		
 		
 		/**
 		 */		
@@ -81,8 +80,11 @@ package commands
 			CoreFacade.addElementAt(element, elementIndex);
 			
 			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
+			this.dataChanged();
 		}
 		
+		/**
+		 */		
 		override public function redoHandler():void
 		{
 			CoreFacade.removeElement(element);
@@ -98,6 +100,8 @@ package commands
 			}
 			
 			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
+			
+			this.dataChanged();
 		}
 		
 		/**

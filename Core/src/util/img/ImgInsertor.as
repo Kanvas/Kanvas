@@ -274,7 +274,7 @@ package util.img
 		 */		
 		private function imgUploadHandler(evt:Event):void
 		{
-			imgOK((imgLoader.content as Bitmap).bitmapData);
+			imgOK(imageExtractor.bitmapData);
 		}
 		
 		/**

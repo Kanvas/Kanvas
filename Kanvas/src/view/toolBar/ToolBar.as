@@ -11,7 +11,6 @@ package view.toolBar
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	import flash.external.ExternalInterface;
 
 	/**
 	 * 工具条
@@ -140,75 +139,36 @@ package view.toolBar
 			centerBtnsC.x = (w - centerBtnsC.width) / 2;
 			centerBtnsC.y = (h - centerBtnsC.height) / 2;
 			
-			customButtonContainer.x = w - customButtonContainer.width - 10;
-			
+			layoutCustomBtnC();
 		}
 		
 		/**
 		 */		
-		public function setCustomButton(value:XML, js:Boolean = true):void
+		public function addCustomButtons(btns:Vector.<IconBtn>):void
 		{
-			if (value)
+			while (customButtonContainer.numChildren)
+				customButtonContainer.removeChildAt(0);
+			
+			for (var i:int = 0;i < btns.length; i ++)
 			{
-				while (customButtonContainer.numChildren) 
-					customButtonContainer.removeChildAt(0);
+				var btn:IconBtn = btns[i];	
+				if (i == 0)
+					btn.x = 0;
+				else
+					btn.x = customButtonContainer.width + customBtnGap;
 				
-				var list:XMLList = value.children();
-				var length:int = list.length();
-				
-				for (var i:int = 0; i < length; i++)
-				{
-					var button:CustomLabelBtn = new CustomLabelBtn;
-					button.text = list[i].@label;
-					button.tips = list[i].@tip;
-					button.js = js;
-					
-					if (list[i].@callBack && list[i].@callBack != "" && list[i].@callBack != " ")
-						button.callBack.push(list[i].@callBack);
-					
-					if (list[i].param)
-					{
-						for each (var param:XML in list[i].param)
-						{
-							button.callBack.push(param.toString());
-						}
-					}
-					
-					button.bgStyleXML = customBtn_bgStyle;
-					button.labelStyleXML = customBtn_labelStyle;
-					
-					button.w = customBtnW;
-					button.h = customBtnH;
-					
-					button.x = (customBtnW + customBtnGap) * i;
-					button.y = (h - customBtnH) * .5;
-					
-					button.addEventListener(MouseEvent.CLICK, customButtonClick);
-					customButtonContainer.addChild(button);
-				}
-				
-				updateLayout();
+				customButtonContainer.addChild(btn);
 			}
+			
+			layoutCustomBtnC();
 		}
 		
-		private function customButtonClick(evt:MouseEvent):void
+		/**
+		 */		
+		private function layoutCustomBtnC():void
 		{
-			if (evt.currentTarget.js)
-			{
-				ExternalInterface.call.apply(null, evt.currentTarget.callBack);
-			}
-			else
-			{
-				try
-				{
-					var fun:String = evt.currentTarget.callBack;
-					ToolBarCustomFunc[fun]();
-				}
-				catch (e:Error)
-				{
-					trace(e.getStackTrace());
-				}
-			}
+			customButtonContainer.x = w - customButtonContainer.width - 10;
+			customButtonContainer.y = (h - customButtonContainer.height) / 2;
 		}
 		
 		/**
@@ -219,7 +179,7 @@ package view.toolBar
 		/**
 		 * 自定义按钮之间的间距
 		 */		
-		private var customBtnGap:uint = 5;
+		private var customBtnGap:uint = 8;
 		
 		/**
 		 */		
@@ -251,6 +211,9 @@ package view.toolBar
 		 */		
 		private var bgShape:Shape = new Shape;
 		
+		/**
+		 * 自定义按钮的容器，自定义按钮由外部定义，位于工具条的右侧 
+		 */		
 		private var customButtonContainer:Sprite;
 		
 		
@@ -264,35 +227,6 @@ package view.toolBar
 		//
 		//
 		//---------------------------------------------------
-			
-		/**
-		 * 自定义按钮文字样式配置文件 
-		 */		
-		private const customBtn_labelStyle:XML = <label vAlign="center">
-									                <format color='#FFFFFF' font='华文细黑' size='12' letterSpacing="3"/>
-									            </label>;
-		
-		/**
-		 * 自定义按钮的背样式配置文件 
-		 */		
-		private const customBtn_bgStyle:XML = <states>
-												<normal>
-													<border color="#eeeeee" alpha='1'/>
-													<fill color='#0082B4' alpha='1'/>
-												</normal>
-												<hover>
-													<border color="#eeeeee" alpha='1'/>
-													<fill color='#309AD6' alpha='1' angle="90"/>
-												</hover>
-												<down>
-													<border color="#eeeeee" alpha='1'/>
-													<fill color='#555555' alpha='1' angle="90"/>
-												</down>
-											</states>;
-		
-		private const customBtnW:Number = 70;
-		
-		private const customBtnH:Number = 27;
 		
 		/**
 		 * 背景样式
