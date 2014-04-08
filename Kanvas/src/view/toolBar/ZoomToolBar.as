@@ -33,7 +33,6 @@ package view.toolBar
 		 */
 		private function initialize():void
 		{
-			
 			addChild(subContainer = new Sprite).alpha = 0;
 			
 			visible = false;

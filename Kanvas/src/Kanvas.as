@@ -1,7 +1,6 @@
 package
 {
 	import com.kvs.ui.Panel;
-	import com.kvs.ui.button.IconBtn;
 	import com.kvs.ui.toolTips.ToolTipsManager;
 	import com.kvs.utils.StageUtil;
 	import com.kvs.utils.XMLConfigKit.App;
@@ -44,13 +43,13 @@ package
 			addChild(uiContainer);
 			
 			initPanels();
+			uiContainer.addChild(zoomToolBar);//zoombar在这里加载是为了防止布局时因为zoombar没有初始化导致的位置偏差
 			preLayout();
 			
 			uiContainer.addChild(pagePanel);
 			uiContainer.addChild(themePanel);
 			uiContainer.addChild(shapePanel);
 			uiContainer.addChild(toolBar);
-			uiContainer.addChild(zoomToolBar);
 			
 			stage.addEventListener(Event.RESIZE, stageResizeHandler, false, 0, true);
 			
@@ -154,6 +153,7 @@ package
 			//画布尺寸变化时调用此方法
 			updateKvsContenBound();
 		}
+		
 		
 		/**
 		 * 尺寸缩放，面板开始／关闭时，更新画布内容区域，此区域作为画布内容自适应，内容范围检测等事务
