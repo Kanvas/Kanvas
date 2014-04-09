@@ -17,10 +17,16 @@
             var kvs = new Kanvas({id: 'demo', width: '100%', height: '100%'});
 			
 			kvs.onReady(function(){
-				kvs.setImgUploadServer('http://192.168.5.39/service/imageupload.php');
-				kvs.setImgDomainServer('http://192.168.5.39/');
+				kvs.setImgUploadServer('http://www.kanvas.cn/service/imageupload.php');
+				kvs.setImgDomainServer('http://www.kanvas.cn/');
 				importData();
 			});
+
+            function saveData() {
+
+                kvs.getPageImgData("http://www.kanvas.cn/service/pageimg.php?docid=" + "b8effccf96f9f407fc65f440d8bbd31e");
+               
+            };
 		
 			
 			function getData(){

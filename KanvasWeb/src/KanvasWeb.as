@@ -39,7 +39,6 @@ package
 			saveBtn.setIcons("save_up", "save_over", "save_down");
 			saveBtn.tips = '保存';
 			saveBtn.addEventListener(MouseEvent.MOUSE_DOWN, saveHandler);
-			ExternalUtil.addCallback("saveComplete", saveComplete);
 			
 			ok_up;
 			ok_over;
@@ -58,20 +57,20 @@ package
 		}
 		
 		/**
-		 * 数据保存成功
-		 */		
-		private function saveComplete():void
-		{
-			saveBtn.selected = false;
-		}
-		
-		/**
 		 */		
 		private function saveHandler(evt:MouseEvent):void
 		{
 			saveBtn.selected = true;
 			
-			ExternalUtil.call("saveData");
+			//ExternalUtil.call("saveData");
+		}
+		
+		/**
+		 * 数据保存成功
+		 */		
+		private function saveComplete():void
+		{
+			saveBtn.selected = false;
 		}
 		
 		/**
@@ -82,7 +81,7 @@ package
 			this.mouseChildren = this.mouseEnabled = false;
 			this.kvsCore.alpha = 0.6;
 			
-			ExternalUtil.call("saveDataAndExit");
+			ExternalUtil.call("");
 		}
 		
 		/**

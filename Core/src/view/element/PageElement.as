@@ -263,6 +263,8 @@ package view.element
 		{
 			var newVO:PageVO = new PageVO;
 			newVO.index = pageVO.index + 1;
+			newVO.type = pageVO.type;
+			
 			return new PageElement(cloneVO(newVO) as PageVO);
 		}
 		

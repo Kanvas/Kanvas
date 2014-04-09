@@ -91,6 +91,7 @@ package
 		
 		private function uploadPageData(e:Event):void
 		{
+			trace(e.target.data);
 			e.target.removeEventListener(Event.COMPLETE, uploadPageData);
 			e.target.removeEventListener(IOErrorEvent.IO_ERROR, uploadPageData);
 		}
