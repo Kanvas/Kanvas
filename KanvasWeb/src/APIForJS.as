@@ -2,6 +2,7 @@ package
 {
 	import com.kvs.utils.Base64;
 	import com.kvs.utils.ExternalUtil;
+	import com.kvs.utils.net.Post;
 	
 	import flash.display.BitmapData;
 	import flash.display.JPEGEncoderOptions;
@@ -14,7 +15,11 @@ package
 	import flash.net.URLRequestMethod;
 	import flash.utils.ByteArray;
 	
+	import model.ConfigInitor;
+	
 	import util.img.ImgInsertor;
+	
+	import view.ui.Bubble;
 
 	/**
 	 * JS与kanvas核心core之间的API管理
@@ -38,9 +43,6 @@ package
 			datalLoader.addEventListener(Event.COMPLETE, dataLoaded);
 			datalLoader.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
 			
-			dataUpLoader.dataFormat =  URLLoaderDataFormat.BINARY;
-			dataUpLoader.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
-			dataUpLoader.addEventListener(Event.COMPLETE, dataUploadedHandler);
 				
 			//基本编辑指令
 			ExternalUtil.addCallback('copy', copy);
@@ -88,6 +90,8 @@ package
 			ExternalUtil.addCallback("onWebMouseWheel", onWebMouseWheel);
 			
 			ExternalUtil.addCallback("getShotCut", getShotCut);
+			
+			ExternalUtil.addCallback("initDataServer", initDataServer);
 			
 			//通知网页端，Flash初始化OK
 			ExternalUtil.call('KANVAS.ready', appID);
@@ -144,6 +148,13 @@ package
 		//----------------------------------------------------
 		
 		
+		private function initDataServer(url:String, docID:String, thumbW:Number, thumbH:Number):void
+		{
+			ConfigInitor.SERVER_URL   = url;
+			ConfigInitor.DOC_ID       = docID;
+			ConfigInitor.THUMB_WIDTH  = thumbW;
+			ConfigInitor.THUMB_HEIGHT = thumbH;
+		}
 		
 		/**
 		 * 上传至服务器端的图片不会随着客户端的删除操作而删除，而是保存数据时
@@ -225,16 +236,33 @@ package
 		/**
 		 * 上传数据至服务器
 		 */		
-		private function saveDataToServer(url:String):void
+		public function saveDataToServer($handler:Function = null):void
 		{
-			var req:URLRequest = new URLRequest(url);
-			var dat:ByteArray = new ByteArray;
+			handler = $handler;
+			var bmd:BitmapData = core.thumbManager.getShotCut(ConfigInitor.THUMB_WIDTH, ConfigInitor.THUMB_HEIGHT);
+			if (bmd)
+			{
+				var jpegEncoderOptions:JPEGEncoderOptions = new JPEGEncoderOptions;
+				var bytes:ByteArray = bmd.encode(bmd.rect, jpegEncoderOptions);
+			}
+			var pages:ByteArray = core.thumbManager.getPageBytes();
+			var data:Object = {};
+			data.docid  = ConfigInitor.DOC_ID;
+			data.thumbW = ConfigInitor.THUMB_WIDTH .toString();
+			data.thumbH = ConfigInitor.THUMB_HEIGHT.toString();
+			data.thumbData = bytes;
+			data.data = Base64.encode(getXMLData());
+			if (pages) data.pageImgData = pages;
+			if (dataUpLoader)
+			{
+				dataUpLoader.removeEventListener(Event.COMPLETE, dataUploadedHandler);
+				dataUpLoader.removeEventListener(IOErrorEvent.IO_ERROR, upIOErrorHandler);
+			}
+			dataUpLoader = new Post(ConfigInitor.SERVER_URL, data);
+			dataUpLoader.addEventListener(Event.COMPLETE, dataUploadedHandler);
+			dataUpLoader.addEventListener(IOErrorEvent.IO_ERROR, upIOErrorHandler);
+			dataUpLoader.sendfile();
 			
-			dat.writeUTFBytes(getXMLData());
-			dat.compress();
-			
-			req.data = dat;
-			datalLoader.load(req);
 		}
 		
 		/**
@@ -242,13 +270,29 @@ package
 		 */		
 		private function dataUploadedHandler(evt:Event):void
 		{
-			
+			if (handler!= null)
+			{
+				handler();
+				handler = null;
+			}
 		}
+		
+		private function upIOErrorHandler(evt:IOErrorEvent):void
+		{
+			if (handler!= null)
+			{
+				handler(false);
+				handler = null;
+			}
+			Bubble.show("保存失败，连接服务端或数据出错！");
+		}
+		
+		private var handler:Function;
 											 
 		/**
 		 * 数据上传器，负责将数据发送至服务器
 		 */		
-		private var dataUpLoader:URLLoader = new URLLoader;
+		private var dataUpLoader:Post;
 		
 		/**
 		 */		
