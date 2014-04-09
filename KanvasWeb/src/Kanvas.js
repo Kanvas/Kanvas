@@ -654,7 +654,7 @@
 				var params = {};
 	            params.quality = "high";
 	            params.allowscriptaccess = "*";
-	            params.allowFullScreenInteractive = "true";
+	            //params.allowFullScreenInteractive = "true"; 这行要被注释掉
 	            params.allowFullScreen = "true";
 	            
 	            //kplayer的此属性为true，是为了防止悬浮div被遮盖；
