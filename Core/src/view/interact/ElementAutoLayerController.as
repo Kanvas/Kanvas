@@ -1,6 +1,8 @@
 package view.interact
 {
 	
+	import com.kvs.utils.RectangleUtil;
+	
 	import flash.geom.Rectangle;
 	
 	import model.CoreFacade;
@@ -9,7 +11,6 @@ package view.interact
 	
 	import view.element.ElementBase;
 	import view.element.GroupElement;
-	import view.element.shapes.LineElement;
 	import view.interact.multiSelect.TemGroupElement;
 
 	public final class ElementAutoLayerController
@@ -42,8 +43,8 @@ package view.interact
 					//当前元素放入层级比较队列
 					_indexChangeElement.push(current);
 					_indexChangeElement.sort(sortOnElementIndex);
-					/*for each (element in _indexChangeElement)
-						trace(element, element.index);*/
+					for each (element in _indexChangeElement)
+						trace(element, element.index);
 					layer = new Vector.<int>;
 					for each (element in _indexChangeElement)
 						layer.push(element.index);
@@ -51,7 +52,7 @@ package view.interact
 					var length:int = layer.length;
 					//获得一个重新比较后的顺序数组order
 					var order:Vector.<int> = getOrderBySize(_indexChangeElement);
-					//trace(order);
+					trace(order);
 					//重新排列元素
 					swapElements(_indexChangeElement, order);
 				}
@@ -115,6 +116,7 @@ package view.interact
 				layerBefore.push(item.index);
 
 			itemsAfter.sort(sortOnElementLayer);
+			//sortOnElementLayer2(itemsAfter);
 			
 			var length:int = itemsAfter.length;
 			for (var i:int = 0; i < length; i++)
@@ -133,14 +135,41 @@ package view.interact
 				return 1;
 		}
 		
+		/*private function sortOnElementLayer2(vector:Vector.<ElementBase>):Vector.<ElementBase>
+		{
+			var l0:int = vector.length;
+			var l1:int = l0 - 1;
+			for (var i:int = 0; i < l1; i++)
+			{
+				for (var j:int = i + 1; j < l0; j++)
+				{
+					if (overlappingElement(vector[i], vector[j]))
+					{
+						var aw:Number = vector[i].scaledWidth;
+						var bw:Number = vector[j].scaledWidth;
+						var ah:Number = vector[i].scaledHeight;
+						var bh:Number = vector[j].scaledHeight;
+						if (aw < bw && ah < bh)
+						{
+							var t:ElementBase = vector[i];
+							vector[i] = vector[j];
+							vector[j] = t;
+						}
+					}
+				}
+			}
+			return vector;
+		}*/
+		
 		private function sortOnElementLayer(a:ElementBase, b:ElementBase):int
 		{
-			var aw:Number = (a is LineElement) ? a.scaledWidth * .5 : a.scaledWidth;
-			var bw:Number = (b is LineElement) ? b.scaledWidth * .5 : b.scaledWidth;
-			var ah:Number = a.scaledHeight;
-			var bh:Number = b.scaledHeight;
-			if (ifInElement(a, b))
+			
+			if (overlappingElement(a, b))
 			{
+				var aw:Number = a.scaledWidth;
+				var bw:Number = b.scaledWidth;
+				var ah:Number = a.scaledHeight;
+				var bh:Number = b.scaledHeight;
 				if (aw > bw && ah > bh)
 					return -1;
 				else if (aw < bw && ah < bh)
@@ -162,19 +191,17 @@ package view.interact
 				if (! (current is TemGroupElement) && ! (current is GroupElement) && ! current.grouped && 
 					! (element is TemGroupElement) && ! (element is GroupElement) && ! element.grouped)
 				{
-					result = ifInElement(element, current);
+					result = overlappingElement(element, current);
 				}
 			}
 			return result;
 		}
 		
-		private function ifInElement(element:ElementBase, hitElement:ElementBase):Boolean
+		private function overlappingElement(element:ElementBase, hitElement:ElementBase):Boolean
 		{
 			var erect:Rectangle = LayoutUtil.getItemRect(coreMdt.canvas, element);
 			var hrect:Rectangle = LayoutUtil.getItemRect(coreMdt.canvas, hitElement);
-			
-			return ((erect.left > hrect.left && erect.right < hrect.right && erect.top > hrect.top && erect.bottom < hrect.bottom) || 
-				(erect.left < hrect.left && erect.right > hrect.right && erect.top < hrect.top && erect.bottom > hrect.bottom));
+			return RectangleUtil.rectOverlapping(erect, hrect);
 		}
 		
 		public var enabled:Boolean = true;
