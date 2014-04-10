@@ -61,14 +61,12 @@ package
 		private function saveHandler(evt:MouseEvent):void
 		{
 			saveBtn.selected = true;
-			
-			//ExternalUtil.call("saveData");
+			jsapi.saveDataToServer(saveComplete);
 		}
 		
 		/**
-		 * 数据保存成功
 		 */		
-		private function saveComplete():void
+		private function saveComplete(success:Boolean = true):void
 		{
 			saveBtn.selected = false;
 		}
@@ -78,10 +76,30 @@ package
 		private function exitHandler(evt:MouseEvent):void
 		{
 			exitBtn.selected = true;
+			
+			jsapi.saveDataToServer(exitComplete);
+			
 			this.mouseChildren = this.mouseEnabled = false;
 			this.kvsCore.alpha = 0.6;
+		}
+		
+		/**
+		 */		
+		private function exitComplete(success:Boolean = true):void
+		{
+			if (success)
+			{
+				ExternalUtil.call("KANVAS.saveExit", jsapi.appID);
+			}
 			
-			ExternalUtil.call("");
+			exitBtn.selected = false;
+			this.mouseChildren = this.mouseEnabled = true;
+			this.kvsCore.alpha = 1;
+		}
+		
+		private function get jsapi():APIForJS
+		{
+			return api as APIForJS;
 		}
 		
 		/**

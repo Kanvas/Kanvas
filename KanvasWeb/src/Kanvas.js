@@ -20,6 +20,7 @@
 	KANVAS.event.LINK_CLICKED = 'linkClicked';
 	KANVAS.event.LINK_OVERED = "linkOvered";
 	KANVAS.event.UNSELECTED = "unselected";
+	KANVAS.event.SAVE_EXIT = "saveExit";
 	
 	KANVAS.navigatorType = {};
 	KANVAS.navigatorType.IE = "ie";
@@ -75,7 +76,13 @@
 		getChartByID(id).linkOvered(value);
 	};
 	
-	
+	KANVAS.saveExit = function(id) {
+		var chart = getChartByID(id);
+		if (chart.swf == null)
+			chart.swf = document.getElementById(chart.id);
+		
+		chart.saveExit();
+	};
 	
 	
 	
@@ -260,12 +267,21 @@
 		that.onLinkBtnClicked = function(callback) {
 			return this.addEventListener(KANVAS.event.LINK_BTN_CLICKED, callback);
 		};
-		
+
 		//
 		that.linkBtnClicked = function(value) {
 			this.dispatchEvent({type: KANVAS.event.LINK_BTN_CLICKED, target: this, data: value});
 		};
+
+		that.onSaveExit = function(callback) {
+			return this.addEventListener(KANVAS.event.SAVE_EXIT, callback);
+		};
 		
+
+		that.saveExit = function() {
+			this.dispatchEvent({type: KANVAS.event.SAVE_EXIT, target: this});
+		};
+
 		//设置图片接收服务，插入图片时会将图片数据发送至此服务，成功后服务端返回图片的URL至客户端
 		that.setImgUploadServer = function(url) {
 			if (this.ifReady){
@@ -379,6 +395,12 @@
 		that.setCustomButton = function(data) {
 			if (this.ifReady) {
 				this.swf.setCustomButton(data);
+			};
+		};
+		
+		that.initDataServer = function(url, docID, thumbW, thumbH) {
+			if (this.ifReady) {
+				this.swf.initDataServer(url, docID, thumbW, thumbH);
 			};
 		};
 		

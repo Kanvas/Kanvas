@@ -16,12 +16,16 @@ package model
 		/**
 		 * 缩略图的宽度 
 		 */		
-		public static const THUMB_WIDTH:uint = 400;
+		public static var THUMB_WIDTH:uint = 400;
 		
 		/**
 		 * 缩略图的高度 
 		 */		
-		public static const THUMB_HEIGHT:uint = 300;
+		public static var THUMB_HEIGHT:uint = 300;
+		
+		public static var SERVER_URL:String = "";
+		
+		public static var DOC_ID:String = "";
 		
 		
 		/**

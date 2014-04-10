@@ -260,6 +260,20 @@ package model
 				zipOut.closeEntry();
 			}
 			
+			var pageData:ByteArray = coreApp.thumbManager.getPageBytes(960, 720);
+			if (pageData)
+			{
+				var vector:Vector.<ByteArray> = coreApp.thumbManager.resolvePageData(pageData);
+				var flag:int = 1;
+				for each (var bytes:ByteArray in vector)
+				{
+					ze = new ZipEntry("pages/" + flag + ".jpg");
+					zipOut.putNextEntry(ze);
+					zipOut.write(bytes);
+					zipOut.closeEntry();
+				}
+			}
+			
 			// end the zip
 			zipOut.finish();
 			

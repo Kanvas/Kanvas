@@ -19,13 +19,13 @@
 		depends="fresh release dir, Kanvas, KPlayer, KanvasLoader">
 
 		<copy overwrite="true" todir="${WORK_SPACE}/release">
-			<fileset dir="${WORK_SPACE}/Kanvas/src">
+			<fileset dir="${WORK_SPACE}/KanvasWeb/src">
 				<include name="Kanvas.js" />
 			</fileset>
 		</copy>
 
 		<copy overwrite="true" todir="/Users/wanglei/Sites/Kanvas/web">
-			<fileset dir="${WORK_SPACE}/Kanvas/src">
+			<fileset dir="${WORK_SPACE}/KanvasWeb/src">
 				<include name="Kanvas.js" />
 			</fileset>
 		</copy>
@@ -115,6 +115,8 @@
 				<include name="Kanvas.swf" />
 			</fileset>
 		</copy>
+		
+		<rename src="/Users/wanglei/Sites/Kanvas/web/Kanvas.swf" dest="/Users/wanglei/Sites/Kanvas/web/KanvasWeb.swf"/>
 	</target>
 
 	<target name="KPlayer">

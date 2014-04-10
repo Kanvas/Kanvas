@@ -19,6 +19,15 @@
 			kvs.onReady(function(){
 				kvs.setImgUploadServer('http://www.kanvas.cn/service/imageupload.php');
 				kvs.setImgDomainServer('http://www.kanvas.cn/');
+
+                kvs.initDataServer("http://www.kanvas.cn/service/savedata.php", "b8effccf96f9f407fc65f440d8bbd31e", 283 * 3, 150 * 3);
+
+                kvs.onSaveExit(function(e){
+
+                    alert();
+    
+                });
+                
 				importData();
 			});
 
