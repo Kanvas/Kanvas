@@ -87,8 +87,15 @@ package commands
 		 */		
 		private function shapeCreated():void
 		{
-			CoreFacade.coreMediator.autoLayerController.autoLayer(element);
-			elementIndex = element.index;
+			oldIndex = CoreFacade.coreMediator.autoLayerController.autoLayer(element);
+			if (oldIndex)
+			{
+				indexChangeElements = CoreFacade.coreMediator.autoLayerController.indexChangeElement;
+				newIndex = new Vector.<int>;
+				var length:int = indexChangeElements.length;
+				for (var i:int = 0; i <　length; i++)
+					newIndex[i] = indexChangeElements[i].index;
+			}
 			//动画完毕
 			CoreFacade.coreMediator.createNewShapeTweenOver = true;
 			if (CoreFacade.coreMediator.createNewShapeTweenOver && CoreFacade.coreMediator.createNewShapeMouseUped)
@@ -105,6 +112,8 @@ package commands
 		 */		
 		override public function undoHandler():void
 		{
+			if (indexChangeElements)
+				CoreFacade.coreMediator.autoLayerController.swapElements(indexChangeElements, oldIndex);
 			CoreFacade.removeElement(element);
 			CoreFacade.coreMediator.pageManager.refreshPageThumbsByElement(element);
 			
@@ -113,7 +122,9 @@ package commands
 		
 		override public function redoHandler():void
 		{
-			CoreFacade.addElementAt(element, elementIndex);
+			CoreFacade.addElement(element);
+			if (indexChangeElements)
+				CoreFacade.coreMediator.autoLayerController.swapElements(indexChangeElements, newIndex);
 			CoreFacade.coreMediator.pageManager.refreshPageThumbsByElement(element);
 			
 			this.dataChanged();
@@ -123,7 +134,11 @@ package commands
 		 */		
 		private var element:ElementBase;
 		
-		private var elementIndex:int;
+		private var oldIndex:Vector.<int>;
+		
+		private var newIndex:Vector.<int>;
+		
+		private var indexChangeElements:Vector.<ElementBase>
 		
 		private var pageIndex:int;
 	}

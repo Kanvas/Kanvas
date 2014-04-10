@@ -43,8 +43,8 @@ package view.interact
 					//当前元素放入层级比较队列
 					_indexChangeElement.push(current);
 					_indexChangeElement.sort(sortOnElementIndex);
-					for each (element in _indexChangeElement)
-						trace(element, element.index);
+					/*for each (element in _indexChangeElement)
+						trace(element, element.index);*/
 					layer = new Vector.<int>;
 					for each (element in _indexChangeElement)
 						layer.push(element.index);
@@ -52,7 +52,7 @@ package view.interact
 					var length:int = layer.length;
 					//获得一个重新比较后的顺序数组order
 					var order:Vector.<int> = getOrderBySize(_indexChangeElement);
-					trace(order);
+					//trace(order);
 					//重新排列元素
 					swapElements(_indexChangeElement, order);
 				}
