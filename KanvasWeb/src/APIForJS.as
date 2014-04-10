@@ -4,6 +4,7 @@ package
 	import com.kvs.utils.ExternalUtil;
 	import com.kvs.utils.net.Post;
 	
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.JPEGEncoderOptions;
 	import flash.events.Event;
@@ -100,7 +101,7 @@ package
 		
 		/**
 		 */		
-		private var appID:String;
+		public var appID:String;
 		
 		
 		
@@ -147,7 +148,9 @@ package
 		//
 		//----------------------------------------------------
 		
-		
+		/**
+		 * 
+		 */		
 		private function initDataServer(url:String, docID:String, thumbW:Number, thumbH:Number):void
 		{
 			ConfigInitor.SERVER_URL   = url;
@@ -239,12 +242,14 @@ package
 		public function saveDataToServer($handler:Function = null):void
 		{
 			handler = $handler;
+			
 			var bmd:BitmapData = core.thumbManager.getShotCut(ConfigInitor.THUMB_WIDTH, ConfigInitor.THUMB_HEIGHT);
 			if (bmd)
 			{
 				var jpegEncoderOptions:JPEGEncoderOptions = new JPEGEncoderOptions;
 				var bytes:ByteArray = bmd.encode(bmd.rect, jpegEncoderOptions);
 			}
+			
 			var pages:ByteArray = core.thumbManager.getPageBytes();
 			var data:Object = {};
 			data.docid  = ConfigInitor.DOC_ID;
@@ -252,17 +257,19 @@ package
 			data.thumbH = ConfigInitor.THUMB_HEIGHT.toString();
 			data.thumbData = bytes;
 			data.data = Base64.encode(getXMLData());
+			
 			if (pages) data.pageImgData = pages;
+			
 			if (dataUpLoader)
 			{
 				dataUpLoader.removeEventListener(Event.COMPLETE, dataUploadedHandler);
 				dataUpLoader.removeEventListener(IOErrorEvent.IO_ERROR, upIOErrorHandler);
 			}
+			
 			dataUpLoader = new Post(ConfigInitor.SERVER_URL, data);
 			dataUpLoader.addEventListener(Event.COMPLETE, dataUploadedHandler);
 			dataUpLoader.addEventListener(IOErrorEvent.IO_ERROR, upIOErrorHandler);
 			dataUpLoader.sendfile();
-			
 		}
 		
 		/**
@@ -284,6 +291,7 @@ package
 				handler(false);
 				handler = null;
 			}
+			
 			Bubble.show("保存失败，连接服务端或数据出错！");
 		}
 		

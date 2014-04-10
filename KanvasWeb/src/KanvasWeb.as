@@ -50,7 +50,6 @@ package
 			saveBtn.setIcons("save_up", "save_over", "save_down");
 			saveBtn.tips = '保存';
 			saveBtn.addEventListener(MouseEvent.MOUSE_DOWN, saveHandler);
-			//ExternalUtil.addCallback("saveComplete", saveComplete);
 			
 			ok_up;
 			ok_over;
@@ -69,33 +68,18 @@ package
 		}
 		
 		/**
-		 * 数据保存成功
-		 */		
-		private function saveComplete(success:Boolean = true):void
-		{
-			saveBtn.selected = false;
-		}
-		
-		/**
 		 */		
 		private function saveHandler(evt:MouseEvent):void
 		{
 			saveBtn.selected = true;
-			
 			jsapi.saveDataToServer(saveComplete);
-			
-			//ExternalUtil.call("saveData");
 		}
 		
-		private function exitComplete(success:Boolean = true):void
+		/**
+		 */		
+		private function saveComplete(success:Boolean = true):void
 		{
-			if (success)
-			{
-				ExternalUtil.call("KANVAS.saveExit");
-			}
-			exitBtn.selected = false;
-			this.mouseChildren = this.mouseEnabled = true;
-			this.kvsCore.alpha = 1;
+			saveBtn.selected = false;
 		}
 		
 		/**
@@ -108,8 +92,20 @@ package
 			
 			this.mouseChildren = this.mouseEnabled = false;
 			this.kvsCore.alpha = 0.6;
+		}
+		
+		/**
+		 */		
+		private function exitComplete(success:Boolean = true):void
+		{
+			if (success)
+			{
+				ExternalUtil.call("KANVAS.saveExit", jsapi.appID);
+			}
 			
-			
+			exitBtn.selected = false;
+			this.mouseChildren = this.mouseEnabled = true;
+			this.kvsCore.alpha = 1;
 		}
 		
 		private function get jsapi():APIForJS

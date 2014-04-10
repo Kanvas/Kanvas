@@ -90,9 +90,9 @@ package com.kvs.utils.net
 				{
 					body.writeUTFBytes("--" + Post.getBoundary());
 					body.writeUTFBytes(Post.HTTP_SEPARATOR);
-					body.writeUTFBytes("Content-Disposition: form-data; name=\"" + key + "\"; filename=\"" + "ficharts.jpg" + "\"");
+					body.writeUTFBytes("Content-Disposition: form-data; name=\"" + key + "\"");
 					body.writeUTFBytes(Post.HTTP_SEPARATOR);
-					body.writeUTFBytes("Content-Type: image/png");
+					body.writeUTFBytes("Content-Type: application/octet-stream");
 					body.writeUTFBytes(Post.HTTP_SEPARATOR);
 					body.writeUTFBytes(Post.HTTP_SEPARATOR);
 					body.writeBytes(this.data[key], 0, this.data[key].length);
@@ -122,6 +122,7 @@ package com.kvs.utils.net
 		private function complete(e:Event):void
 		{
 			result = e.target.data;
+			trace(result);
 			this.dispatchEvent(e);
 		}
 		

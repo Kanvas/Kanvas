@@ -23,6 +23,7 @@ package model.vo
 			super();
 			
 			this.styleType = "shape";
+			this.type = "page";
 		}
 		
 		override public function set x(value:Number):void

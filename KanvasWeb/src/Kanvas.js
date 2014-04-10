@@ -267,16 +267,21 @@
 		that.onLinkBtnClicked = function(callback) {
 			return this.addEventListener(KANVAS.event.LINK_BTN_CLICKED, callback);
 		};
-		
+
 		//
 		that.linkBtnClicked = function(value) {
 			this.dispatchEvent({type: KANVAS.event.LINK_BTN_CLICKED, target: this, data: value});
 		};
+
+		that.onSaveExit = function(callback) {
+			return this.addEventListener(KANVAS.event.SAVE_EXIT, callback);
+		};
 		
+
 		that.saveExit = function() {
 			this.dispatchEvent({type: KANVAS.event.SAVE_EXIT, target: this});
 		};
-		
+
 		//设置图片接收服务，插入图片时会将图片数据发送至此服务，成功后服务端返回图片的URL至客户端
 		that.setImgUploadServer = function(url) {
 			if (this.ifReady){
@@ -671,7 +676,7 @@
 				var params = {};
 	            params.quality = "high";
 	            params.allowscriptaccess = "*";
-	            params.allowFullScreenInteractive = "true";
+	            //params.allowFullScreenInteractive = "true"; 这行要被注释掉
 	            params.allowFullScreen = "true";
 	            
 	            //kplayer的此属性为true，是为了防止悬浮div被遮盖；
