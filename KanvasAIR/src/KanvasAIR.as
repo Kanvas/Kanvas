@@ -2,6 +2,9 @@ package
 {
 	import com.kvs.ui.button.IconBtn;
 	
+	import commands.ChangeBgImgAIR;
+	import commands.InsertIMGFromAIR;
+	
 	import flash.desktop.Clipboard;
 	import flash.desktop.ClipboardFormats;
 	import flash.desktop.NativeApplication;
@@ -26,7 +29,13 @@ package
 			super();
 			
 			CoreApp.isAIR = true;
+			initCommands();
+		}
+		
+		private function initCommands():void
+		{
 			CoreFacade.inserImgCommad = InsertIMGFromAIR;
+			CoreFacade.insertBgCommand = ChangeBgImgAIR;
 		}
 		
 		/**

@@ -7,8 +7,11 @@ package modules.pages
 	
 	import commands.Command;
 	
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.Sprite;
 	import flash.events.EventDispatcher;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
@@ -352,11 +355,31 @@ package modules.pages
 			tp.y = ry + pageVO.y;
 			LayoutUtil.convertPointCanvas2Stage(tp, -(vw - pw * scale) * .5, -(vh - ph * scale) * .5, scale, rotation);
 			
-			var rect:Rectangle = new Rectangle(0, 0, w, h);
+			//移至居中再截图
+			var offsetX:Number = .5 * (w - mainUI.stage.stageWidth);
+			var offsetY:Number = .5 * (h - mainUI.stage.stageHeight);
+			
+			tp.offset(offsetX, offsetY);
+			
+			var rect:Rectangle = new Rectangle(-offsetX, -offsetY, w, h);
 			mainUI.canvas.toShotcutState(-tp.x, -tp.y, scale, rotation, rect);
 			mainUI.synBgImageToCanvas();
 			
-			var bmd:BitmapData = BitmapUtil.drawWithSize(mainUI.canvas, w, h, false, color, null, smooth);
+			var mat:Matrix = new Matrix;
+			mat.scale(mainUI.bgImageCanvas.scaleX, mainUI.bgImageCanvas.scaleY);
+			mat.rotate(mainUI.bgImageCanvas.rotation);
+			mat.translate(mainUI.bgImageCanvas.x + offsetX, mainUI.bgImageCanvas.y + offsetY);
+			var bg:BitmapData = BitmapUtil.drawWithSize(mainUI.bgImageCanvas, w, h, false, color, mat, smooth);
+			mat = new Matrix;
+			mat.translate(offsetX, offsetY);
+			var im:BitmapData = BitmapUtil.drawWithSize(mainUI.canvas, w, h, true, color, mat, smooth);
+			var sp:Sprite = new Sprite;
+			sp.addChild(new Bitmap(bg));
+			sp.addChild(new Bitmap(im));
+			//mainUI.parent.addChild(sp);
+			var bmd:BitmapData = new BitmapData(w, h, false, color);
+			bmd.draw(sp, null, null, null, null, true);
+			
 			mainUI.canvas.toPreviewState();
 			mainUI.synBgImageToCanvas();
 			return bmd;

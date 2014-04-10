@@ -3,8 +3,12 @@ package
 	import com.kvs.ui.button.IconBtn;
 	import com.kvs.utils.ExternalUtil;
 	
+	import commands.*;
+	
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	
+	import model.CoreFacade;
 	
 	/**
 	 * 网页版的kanvas
@@ -14,8 +18,15 @@ package
 		public function KanvasWeb()
 		{
 			super();
+			initCommands();
 		}
 		
+		
+		private function initCommands():void
+		{
+			CoreFacade.inserImgCommad = InserImageCMD;
+			CoreFacade.insertBgCommand = ChangeBgImgCMD;
+		}
 		/**
 		 */		 
 		override protected function kvsReadyHandler(evt:KVSEvent):void

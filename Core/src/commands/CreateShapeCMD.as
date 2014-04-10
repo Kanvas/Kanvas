@@ -138,7 +138,7 @@ package commands
 		
 		private var newIndex:Vector.<int>;
 		
-		private var indexChangeElements:Vector.<ElementBase>
+		private var indexChangeElements:Vector.<ElementBase>;
 		
 		private var pageIndex:int;
 	}

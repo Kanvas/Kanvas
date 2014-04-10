@@ -209,7 +209,7 @@ package model
 			registerCommand(Command.CHANGE_BG_COLOR, ChangeBGColorCMD);
 			registerCommand(Command.RENDER_BG_COLOR, RenderBgColorCMD);
 			
-			registerCommand(Command.CHANGE_BG_IMG, ChangeBgImgCMD);
+			registerCommand(Command.CHANGE_BG_IMG, insertBgCommand);
 			
 			registerCommand(Command.CHANGE_ELEMENT_COLOR, ChangeElementColorCMD);
 			registerCommand(Command.CHANGE_ELEMENT_LAYER, ChangeElementLayerCMD);
@@ -232,7 +232,9 @@ package model
 		/**
 		 * 桌面和web插入图片的方式不同，需要不同的command来处理 
 		 */		
-		public static var inserImgCommad:Class = InserImageCMD;
+		public static var inserImgCommad:Class;
+		
+		public static var insertBgCommand:Class;
 	}
 }
 

@@ -111,6 +111,7 @@ package view.ui
 				__scaleX = __scaleY = $scale;
 				__rotation = $rotation;
 				
+				page 
 				
 				for each (var item:ICanvasLayout in items)
 				{

@@ -181,7 +181,7 @@ package view.ui
 		
 		/**
 		 */		
-		private var bgImageCanvas:Sprite;
+		public var bgImageCanvas:Sprite;
 		private var bgImageBitmap:Bitmap;
 	}
 }
