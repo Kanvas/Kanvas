@@ -372,7 +372,7 @@ package modules.pages
 			var bg:BitmapData = BitmapUtil.drawWithSize(mainUI.bgImageCanvas, w, h, false, color, mat, smooth);
 			mat = new Matrix;
 			mat.translate(offsetX, offsetY);
-			var im:BitmapData = BitmapUtil.drawWithSize(mainUI.canvas, w, h, true, color, mat, smooth);
+			var im:BitmapData = BitmapUtil.drawWithSize(mainUI.canvas, w, h, true, 0, mat, smooth);
 			var sp:Sprite = new Sprite;
 			sp.addChild(new Bitmap(bg));
 			sp.addChild(new Bitmap(im));

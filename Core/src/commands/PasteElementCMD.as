@@ -31,8 +31,7 @@ package commands
 			
 			var pastElement:ElementBase = CoreFacade.coreMediator.getElementForPaste();
 			
-			if (!pastElement)
-				return;
+			if(!pastElement) return;
 			
 			element = pastElement.clone();
 			
