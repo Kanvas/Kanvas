@@ -1,4 +1,4 @@
-package cn.vision.managers
+package cn.vision.pattern.managers
 {
 	import cn.vision.core.VSEventDispatcher;
 	import cn.vision.events.EventManager;

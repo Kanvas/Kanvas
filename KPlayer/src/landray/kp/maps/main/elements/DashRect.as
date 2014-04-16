@@ -14,7 +14,7 @@ package landray.kp.maps.main.elements
 			dl = new DashLine(this, 1, 5);
 		}
 		
-		override public function render(scale:Number = 1):void
+		override public function render():void
 		{
 			if(!rendered)
 			{

@@ -1,7 +1,7 @@
 package landray.kp.command
 {
 	import cn.vision.events.EventManager;
-	import cn.vision.managers.ManagerModel;
+	import cn.vision.pattern.managers.ManagerModel;
 	import cn.vision.utils.LogUtil;
 	
 	import landray.kp.model.*;

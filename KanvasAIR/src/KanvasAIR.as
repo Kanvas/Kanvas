@@ -43,8 +43,9 @@ package
 		override protected function init():void
 		{
 			super.init();
-			
 			registFileRef();
+			addChild(updater = new AIRUpdater);
+			updater.update(AIR_CLIENT_URL, "check");
 		}
 		
 		/**
@@ -164,6 +165,12 @@ package
 			}
 		}
 		
+		override protected function stageResizeHandler(evt:Event):void
+		{
+			super.stageResizeHandler(evt);
+			updater.render();
+		}
+		
 		/**
 		 * 双击方式开启文件
 		 */		
@@ -199,5 +206,8 @@ package
 			}
 		}
 		
+		private var updater:AIRUpdater;
+		
+		public static const AIR_CLIENT_URL:String = "http://www.kanvas.cn/client/KanvasAIR.air";
 	}
 }

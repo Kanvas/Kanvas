@@ -9,15 +9,18 @@ package landray.kp.maps.main.elements
 			super($vo);
 		}
 		
-		override public function render(scale:Number = 1):void
+		override public function render():void
 		{
 			if(!rendered)
 			{
 				super.render();
+				if (vo.style)
+				{
+					graphics.beginFill(0, 0);
+					graphics.drawRect(vo.style.tx, vo.style.ty, vo.style.width, vo.style.height);
+					graphics.endFill();
+				}
 				
-				graphics.beginFill(0, 0);
-				graphics.drawRect(vo.style.tx, vo.style.ty, vo.style.width, vo.style.height);
-				graphics.endFill();
 			}
 		}
 	}

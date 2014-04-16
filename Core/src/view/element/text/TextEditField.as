@@ -1,9 +1,9 @@
 package view.element.text
 {
 	import com.kvs.ui.label.TextDrawer;
-	import com.kvs.utils.PerformaceTest;
 	import com.kvs.utils.XMLConfigKit.style.elements.TextFormatStyle;
 	
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
@@ -59,8 +59,8 @@ package view.element.text
 			{
 				if (visible && stageWidth > minRenderSize && stageHeight > minRenderSize)
 				{
-					var bound:Rectangle = textManager.getContentBounds();
-					textDrawer.renderTextBMD(graphics, textCanvas, textVO.scale * parent.scaleX, 0, 0, bound.width, bound.height);
+					shape.visible = false;
+					textCanvas.visible = true;
 				}
 			}
 		}
@@ -73,15 +73,14 @@ package view.element.text
 		{
 			super.toPreview(renderable);
 			
-			if (renderable)
+			/*if (renderable)
 			{
 				if (visible && stageWidth > minRenderSize && stageHeight > minRenderSize)
 				{
-					var bound:Rectangle = textManager.getContentBounds();
-					textDrawer.renderTextBMD(graphics, textCanvas, textVO.scale * parent.scaleX, 0, 0, bound.width, bound.height);
+					checkTextBm();
 				}
 				
-			}
+			}*/
 		}
 		
 		/**
@@ -221,60 +220,32 @@ package view.element.text
 		 */
 		override public function render():void
 		{
-			if (textBMD)
-			{
-				textBMD.dispose();
-				textBMD = null;
-			}
-			
 			FlowTextManager.renderTextVOLabel(this, textVO);
 			renderAfterLabelRender();
-			var bound:Rectangle = textManager.getContentBounds();
-			textDrawer.renderTextBMD(graphics, textCanvas, textVO.scale * parent.scaleX, 0, 0, bound.width, bound.height);
-			textDrawer.checkVisible(graphics, textCanvas, textVO.scale * parent.scaleX, 0, 0, bound.width, bound.height);
+			checkTextBm();
 		}
 		
 		/**
 		 * 检测截图是否满足要求
 		 */		
-		public function checkTextBm(canvasScale:Number):void
+		public function checkTextBm():void
 		{
 			if (visible)
 			{
-				var w:Number = textManager.compositionWidth;
-				var h:Number = textManager.compositionHeight;
-				var bound:Rectangle = textManager.getContentBounds();
-				textDrawer.checkTextBm(graphics, textCanvas, textVO.scale * canvasScale, 0, 0, bound.width, bound.height);
+				textDrawer.checkTextBm(graphics, textCanvas, textVO.scale * parent.scaleX);
 			}
 		}
 		
-		/**
-		 * 截图时不会恰好截取满足要求的尺寸，而是要多放大一些，这样截图计算就会少一点
-		 * 
-		 * 借以提升性能； 
-		 */		
-		private var scaleMultiple:Number = 2;
-		
-		/**
-		 * 最大截图宽高乘积 
-		 */		
-		private var imgMaxSize:uint = 500000000;
-		
-		/**
-		 */		
-		private var textBMD:BitmapData;
 		
 		/**
 		 */		
 		public function afterReRender():void
 		{
-			textVO.width = textManager.compositionWidth;
+			textVO.width  = textManager.compositionWidth;
 			textVO.height = textManager.compositionHeight;
 			
 			renderAfterLabelRender();
-			var bound:Rectangle = textManager.getContentBounds();
-			textDrawer.renderTextBMD(graphics, textCanvas, textVO.scale * parent.scaleX, 0, 0, bound.width, bound.height);
-			textDrawer.checkVisible(graphics, textCanvas, textVO.scale * parent.scaleX, 0, 0, bound.width, bound.height);
+			checkTextBm();
 		}
 		
 		/**
@@ -312,8 +283,8 @@ package view.element.text
 		 */		
 		private function renderAfterLabelRender():void
 		{
-			textCanvas.x = - textVO.width / 2;
-			textCanvas.y = - textVO.height / 2;
+			textCanvas.x = - textVO.width  * .5;
+			textCanvas.y = - textVO.height * .5;
 			
 			super.render();
 		}
@@ -325,8 +296,7 @@ package view.element.text
 		{
 			super.preRender();
 			
-			textCanvas = new Sprite;
-			addChild(textCanvas);
+			addChild(textCanvas = new Sprite);
 			
 			textManager = new TextContainerManager(textCanvas);
 			textManager.editingMode = EditingMode.READ_ONLY;
@@ -392,6 +362,23 @@ package view.element.text
 			textManager.updateContainer();
 			graphics.clear();
 		}
+		
+		public function get smooth():Boolean
+		{
+			return __smooth;
+		}
+		
+		public function set smooth(value:Boolean):void
+		{
+			if (__smooth!= value)
+			{
+				__smooth = value;
+				textCanvas.visible = smooth;
+				shape.visible = !smooth;
+			}
+		}
+		
+		private var __smooth:Boolean = true;
 		
 		/**
 		 */		

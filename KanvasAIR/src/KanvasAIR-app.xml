@@ -15,7 +15,7 @@
 
 	<!-- A universally unique application identifier. Must be unique across all AIR applications.
 	Using a reverse DNS-style name as the id is recommended. (Eg. com.example.ExampleApplication.) Required. -->
-	<id>KanvasAIR</id>
+	<id>cn.kanvas.KanvasAIR</id>
 
 	<!-- Used as the filename for the application. Required. -->
 	<filename>KanvasAIR</filename>
@@ -40,8 +40,9 @@
 	<!-- <copyright></copyright> -->
 
 	<!-- Publisher ID. Used if you're updating an application created prior to 1.5.3 -->
-	<!-- <publisherID></publisherID> -->
-
+	<!--  
+	<publisherID>02D88EEED35F84C264A183921344EEA353A629FD.1</publisherID>
+	-->
 	<!-- Settings for the application's initial window. Required. -->
 	<initialWindow>
 		<!-- The main SWF or HTML file of the application. Required. -->
@@ -140,7 +141,7 @@
 	
 	<!-- Whether the application can be launched when the user clicks a link in a web browser.
 	Optional. Default false. -->
-	<!-- <allowBrowserInvocation></allowBrowserInvocation> -->
+	<allowBrowserInvocation>true</allowBrowserInvocation>
 
 	<!-- Listing of file types for which the application can register. Optional. -->
 	<fileTypes>

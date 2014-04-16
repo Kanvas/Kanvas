@@ -1,6 +1,6 @@
 package landray.kp.model
 {
-	import cn.vision.pattern.Model;
+	import cn.vision.pattern.core.Model;
 	
 	import landray.kp.core.KPProvider;
 	

@@ -347,6 +347,13 @@ package model
 			(CoreFacade.coreMediator.coreApp as CoreApp).themeUpdated(xml.header.@styleID);
 			(CoreFacade.coreMediator.coreApp as CoreApp).bgColorsUpdated(bgColorsXML);
 			
+			//处理背景颜色绘制
+			XMLVOMapper.fuck(xml.bg, bgVO);
+			updateBgColor();
+			sendNotification(Command.RENDER_BG_COLOR, bgColor);
+			coreApp.bgColorUpdated(bgColorIndex);
+			ElementCreator.setID(bgVO.imgID);
+			
 			CoreFacade.clear();
 			
 			//先创建所有元素，再匹配组合关系
@@ -405,12 +412,7 @@ package model
 			for each (element in this.elements)
 				element.render();
 			
-			//处理背景颜色绘制
-			XMLVOMapper.fuck(xml.bg, bgVO);
-			updateBgColor();
-			sendNotification(Command.RENDER_BG_COLOR, bgColor);
-			coreApp.bgColorUpdated(bgColorIndex);
-			ElementCreator.setID(bgVO.imgID);
+			
 			
 			//背景图片加载
 			bgImgLoader.addEventListener(ImgInsertEvent.IMG_LOADED, initializeBgImgLoaded);

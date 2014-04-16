@@ -6,8 +6,7 @@ package cn.vision.utils
 	{
 		public static function toString($value:*):String
 		{
-			if(!($value is String)) $value = String($value);
-			return $value;
+			return ($value is String) ? $value : String($value);
 		}
 	}
 }

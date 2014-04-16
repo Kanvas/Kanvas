@@ -10,7 +10,7 @@ package landray.kp.maps.main.elements
 		{
 			super(vo);
 		}
-		override public function render(scale:Number = 1):void
+		override public function render():void
 		{
 			if(!rendered)
 			{

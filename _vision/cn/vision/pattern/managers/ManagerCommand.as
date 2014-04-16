@@ -1,8 +1,8 @@
-package cn.vision.managers
+package cn.vision.pattern.managers
 {
 	import cn.vision.core.vs;
 	import cn.vision.events.EventCommand;
-	import cn.vision.pattern.Command;
+	import cn.vision.pattern.core.Command;
 	
 	import flash.events.IEventDispatcher;
 	

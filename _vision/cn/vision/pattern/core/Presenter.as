@@ -1,10 +1,10 @@
-package cn.vision.pattern
+package cn.vision.pattern.core
 {
 	import cn.vision.containers.WebApplicaion;
 	import cn.vision.core.vs;
 	import cn.vision.core.VSEventDispatcher;
-	import cn.vision.managers.ManagerCommand;
-	import cn.vision.managers.ManagerModel;
+	import cn.vision.pattern.managers.ManagerCommand;
+	import cn.vision.pattern.managers.ManagerModel;
 	import cn.vision.utils.ClassUtil;
 	
 	import flash.display.DisplayObjectContainer;

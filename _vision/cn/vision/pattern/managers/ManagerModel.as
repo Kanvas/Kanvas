@@ -1,9 +1,9 @@
-package cn.vision.managers
+package cn.vision.pattern.managers
 {
 	import cn.vision.core.VSEventDispatcher;
 	import cn.vision.core.vs;
 	import cn.vision.events.EventModel;
-	import cn.vision.pattern.Model;
+	import cn.vision.pattern.core.Model;
 	
 	public class ManagerModel extends Manager
 	{

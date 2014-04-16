@@ -1,5 +1,6 @@
 package com.kvs.ui.label
 {
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
 	import flash.text.TextFormat;
@@ -24,6 +25,7 @@ package com.kvs.ui.label
 		{
 			super();
 			
+			addChild(shape = new Shape).visible = false;
 			addChild(textCanvas);
 			textDrawer = new TextDrawer(this);
 			
@@ -56,14 +58,15 @@ package com.kvs.ui.label
 		 */		
 		public function renderLabel(textformat:TextFormat, ifUseEmbedFont:Boolean = true):void
 		{
+			this.textformat = textformat;
+			this.ifUseEmbedFont = ifUseEmbedFont;
 			FlowTextManager.render(this, textformat, ifUseEmbedFont);
 			
+			textCanvas.x = - textCanvas.width  * .5;
+			textCanvas.y = - textCanvas.height * .5;
+			
 			if (ifTextBitmap)
-			{
-				var bound:Rectangle = textManager.getContentBounds();
-				textDrawer.renderTextBMD(this.graphics, textCanvas, 1, bound.width * .5, bound.height * .5, bound.width, bound.height);
-				textDrawer.checkVisible(this.graphics, textCanvas, 1, bound.width * .5, bound.height * .5, bound.width, bound.height);
-			}
+				textDrawer.checkTextBm(shape.graphics, textCanvas, globleScale);
 		}
 		
 		/**
@@ -73,12 +76,7 @@ package com.kvs.ui.label
 			globleScale = scale;
 			
 			if (ifTextBitmap)
-			{
-				var w:Number = textManager.compositionWidth;
-				var h:Number = textManager.compositionHeight;
-				var bound:Rectangle = textManager.getContentBounds();
-				textDrawer.checkTextBm(graphics, textCanvas, globleScale, bound.width * .5, bound.height * .5, bound.width, bound.height);
-			}
+				textDrawer.checkTextBm(shape.graphics, textCanvas, globleScale);
 		}
 		
 		/**
@@ -171,17 +169,35 @@ package com.kvs.ui.label
 		 */		
 		private var _fixWidth:Number = 0;
 		
+		public function get smooth():Boolean
+		{
+			return __smooth;
+		}
+		
+		public function set smooth(value:Boolean):void
+		{
+			if (__smooth!= value)
+			{
+				__smooth = value;
+				textCanvas.visible = smooth;
+				shape.visible =!smooth;
+			}
+		}
+		private var __smooth:Boolean = true;
+		
+		private var textformat:TextFormat;
+		
+		private var ifUseEmbedFont:Boolean;
+		
+		private var shape:Shape;
+		
 		/**
 		 */		
 		public function afterReRender():void
 		{
+			FlowTextManager.render(this, textformat, ifUseEmbedFont);
 			if (ifTextBitmap)
-			{
-				var bound:Rectangle = textManager.getContentBounds();
-				//todo
-				textDrawer.renderTextBMD(this.graphics, textCanvas, globleScale, bound.width * .5, bound.height * .5, bound.width, bound.height);
-				textDrawer.checkVisible(this.graphics, textCanvas, globleScale, bound.width * .5, bound.height * .5, bound.width, bound.height);
-			}
+				textDrawer.checkTextBm(shape.graphics, textCanvas, globleScale);
 				
 		}
 	}

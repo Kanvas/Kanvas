@@ -184,6 +184,8 @@ package view.editor.text
 				XMLVOMapper.fuck(item, textStyleBtn.textVO);
 				
 				StyleUtil.applyStyleToElement(textStyleBtn.textVO);
+				
+				textStyleBtn.textVO.color = 0x000000;
 			
 				addStyleBtn(textStyleBtn);
 				

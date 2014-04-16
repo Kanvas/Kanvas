@@ -76,12 +76,13 @@ package landray.kp.command
 					pageManager.dataProvider = provider.dataXML.pages[0].children();
 					for each (var vo:PageVO in pageManager.pages)
 					{
+						CoreUtil.applyStyle(vo);
 						var page:Element = MainUtil.getElementUI(vo);
 						page.render();
 						config.kp_internal::viewer.canvas.addChild(page);
 					}
 				}
-				catch (e:Error) {}
+				catch (e:Error) {trace(e.getStackTrace())}
 				//resolve module
 				try
 				{

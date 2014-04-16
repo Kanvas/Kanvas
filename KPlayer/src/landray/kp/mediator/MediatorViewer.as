@@ -68,7 +68,7 @@ package landray.kp.mediator
 		 */		
 		public function get mainUI():MainUIBase
 		{
-			return this.viewer
+			return this.viewer;
 		}
 		
 		/**
@@ -90,15 +90,16 @@ package landray.kp.mediator
 		{
 			lastWidth  = stage.stageWidth;
 			lastHeight = stage.stageHeight;
-			viewer.width  = lastWidth;
-			viewer.height = lastHeight;
-			viewer.addEventListener(MouseEvent.CLICK, click);
+			
 			stage.addEventListener(Event.RESIZE, resize);
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
 			stage.addEventListener(FullScreenEvent.FULL_SCREEN, fullScreen);
 			stage.addEventListener(MouseEvent.MOUSE_WHEEL, mouseWheel, false, 0, true);
 			stage.focus = viewer;
 			
+			viewer.width  = lastWidth;
+			viewer.height = lastHeight;
+			viewer.addEventListener(MouseEvent.CLICK, click);
 			viewer.dispatchEvent(new Event("initialize"));
 		}
 		

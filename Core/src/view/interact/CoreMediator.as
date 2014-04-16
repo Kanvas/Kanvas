@@ -734,7 +734,11 @@ package view.interact
 			{
 				if (element is ImgElement)
 				{
-					(element as ImgElement).smooth = false
+					(element as ImgElement).smooth = false;
+				}
+				else if (element is TextEditField)
+				{
+					(element as TextEditField).smooth = false;
 				}
 			}
 		}
@@ -761,7 +765,7 @@ package view.interact
 				{
 					if (element is TextEditField)
 					{
-						(element as TextEditField).checkTextBm(canvas.scaleX);
+						(element as TextEditField).checkTextBm();
 					}
 					//刷新页面编号尺寸，防止太大
 					else if (element is PageElement)
@@ -785,6 +789,10 @@ package view.interact
 				if (element is ImgElement)
 				{
 					(element as ImgElement).smooth = true;
+				}
+				else if (element is TextEditField)
+				{
+					(element as TextEditField).smooth = true;
 				}
 			}
 		}

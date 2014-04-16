@@ -32,23 +32,23 @@ package landray.kp.maps.main.elements
 		
 		/**
 		 */		
-		public function showBmp(smooth:Boolean = true):void
+		public function showBmp():void
 		{
 			if (bmpLarge && bmpSmall)
 			{
-				var tmpDispl:Bitmap = (width <= minSize || height <= minSize) ? bmpSmall : bmpLarge;
+				var tmpDispl:Bitmap = (stageWidth <= minSize || stageHeight <= minSize) ? bmpSmall : bmpLarge;
 				if (tmpDispl != bmpDispl)
 				{
-					if (bmpDispl && contains(bmpDispl)) 
-						removeChild(bmpDispl);
+					if (bmpDispl) bmpDispl.visible = false;
 					bmpDispl = tmpDispl;
-					addChild(bmpDispl);
+					bmpDispl.visible = true;
 				}
-				bmpDispl.smoothing = smooth;
+				if (bmpDispl.smoothing!= smooth)
+					bmpDispl.smoothing = smooth;
 			}
 		}
 		
-		override public function render(scale:Number = 1):void
+		override public function render():void
 		{
 			if(!rendered)
 			{
@@ -65,28 +65,11 @@ package landray.kp.maps.main.elements
 			}
 		}
 		
-		override public function updateView(check:Boolean = true):void
-		{
-			super.updateView(check);
-			checkBmdRender();
-		}
-		
-		private function checkBmdRender():void
-		{
-			var renderBmdNeeded:Boolean = (width > minSize && height > minSize)
-				? (lastWidth<= minSize || lastHeight<= minSize)
-				: (lastWidth > minSize && lastHeight > minSize);
-			lastWidth  = width;
-			lastHeight = height;
-			if (renderBmdNeeded) showBmp();
-		}
-		
-		
-		
 		/**
 		 */		
 		private function toNomalState():void
 		{
+			graphics.clear();
 			showBmp();
 		}
 		
@@ -115,10 +98,13 @@ package landray.kp.maps.main.elements
 			{
 				bmdLarge = bmd;
 				bmpLarge = new Bitmap(bmdLarge);
+				bmpLarge.visible = false;
 				bmpLarge.width  =  vo.width;
 				bmpLarge.height =  vo.height;
 				bmpLarge.x = -.5 * vo.width;
 				bmpLarge.y = -.5 * vo.height;
+				bmpLarge.smoothing = true;
+				addChild(bmpLarge);
 				if(!bmdSmall)
 				{
 					var ow:Number = bmdLarge.width;
@@ -136,10 +122,13 @@ package landray.kp.maps.main.elements
 						bmdSmall = bmdLarge;
 					}
 					bmpSmall = new Bitmap(bmdSmall);
+					bmpSmall.visible = false;
 					bmpSmall.width  =  vo.width;
 					bmpSmall.height =  vo.height;
 					bmpSmall.x = -.5 * vo.width;
 					bmpSmall.y = -.5 * vo.height;
+					bmpSmall.smoothing = true;
+					addChild(bmpSmall);
 				}
 			}
 		}
@@ -165,7 +154,6 @@ package landray.kp.maps.main.elements
 		 */		
 		private function imgLoaded(e:ImgInsertEvent):void
 		{
-			Debugger.debug("imgLoaded:", imgVO.url);
 			initBmp(e.bitmapData);
 			
 			loader.removeEventListener(ImgInsertEvent.IMG_LOADED, imgLoaded);
@@ -195,6 +183,43 @@ package landray.kp.maps.main.elements
 			
 			removeLoading();
 		}
+		
+		public function get stageWidth():Number
+		{
+			return scaledWidth  * ((parent) ? parent.scaleX : 1);
+		}
+		
+		public function get stageHeight():Number
+		{
+			return scaledHeight * ((parent) ? parent.scaleX : 1);
+		}
+		
+		public function get smooth():Boolean
+		{
+			return __smooth;
+		}
+		
+		public function set smooth(value:Boolean):void
+		{
+			if (__smooth!= value)
+			{
+				__smooth = value;
+				if (bmpSmall && bmpLarge)
+				{
+					if (smooth)
+					{
+						bmpSmall.visible = (stageWidth < minSize || stageHeight < minSize);
+						bmpLarge.visible = !bmpSmall.visible;
+					}
+					else
+					{
+						bmpLarge.visible = false;
+						bmpSmall.visible = true;
+					}
+				}
+			}
+		}
+		private var __smooth:Boolean = true;
 		
 		private function get imgVO():ImgVO
 		{

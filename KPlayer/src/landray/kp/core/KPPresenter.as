@@ -1,6 +1,6 @@
 package landray.kp.core
 {
-	import cn.vision.pattern.Presenter;
+	import cn.vision.pattern.core.Presenter;
 	
 	import landray.kp.command.*;
 	

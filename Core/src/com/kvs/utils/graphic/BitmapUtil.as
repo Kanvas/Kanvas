@@ -117,25 +117,17 @@ package com.kvs.utils.graphic
 			var s:Number = 1;
 			if (p > maxBitmapSize)
 			{
-				s = Math.pow((maxBitmapSize * maxBitmapSize) / (p * p), .5);
-				nw = ow * s;
-				nh = oh * s;
+				s = maxBitmapSize / p;
+				ow *= s;
+				oh *= s;
+				scale *= s;
 			}
 			
-			try
-			{
-				var myBitmapData:BitmapData = new BitmapData(nw, nh, true, 0xFFFFFF);
-				var mat:Matrix = new Matrix;
-				mat.createBox(scale * s, scale * s, 0, - rect.left, - rect.top);
-				myBitmapData.draw(target, mat, null, null, null, ifSmooth);
-			}
-			catch (e:Error)
-			{
-				trace(e);
-				trace(ow, oh);
-				trace(nw, nh);
-				trace(maxBitmapSize, p, s, nw * nh < maxBitmapSize);
-			}
+			var myBitmapData:BitmapData = new BitmapData(ow, oh, true, 0xFFFFFF);
+			var mat:Matrix = new Matrix;
+			mat.createBox(scale, scale, 0, - rect.left, - rect.top);
+			myBitmapData.draw(target, mat, null, null, null, ifSmooth);
+			
 			
 			
 			return myBitmapData;
@@ -173,5 +165,7 @@ package com.kvs.utils.graphic
 			return _maxBitmapSize;
 		}
 		private static var _maxBitmapSize:int = 16777216;
+		
+		private static const maxSizePow:uint = 281474976710656;
 	}
 }

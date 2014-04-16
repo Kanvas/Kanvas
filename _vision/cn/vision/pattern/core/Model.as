@@ -1,4 +1,4 @@
-package cn.vision.pattern
+package cn.vision.pattern.core
 {
 	import cn.vision.core.vs;
 	import cn.vision.core.VSEventDispatcher;

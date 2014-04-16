@@ -1,6 +1,6 @@
 package landray.kp.command
 {
-	import cn.vision.pattern.Command;
+	import cn.vision.pattern.core.Command;
 	
 	import landray.kp.core.*;
 	import landray.kp.manager.ManagerGraph;

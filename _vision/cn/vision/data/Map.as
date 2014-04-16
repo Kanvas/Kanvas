@@ -28,9 +28,9 @@ package cn.vision.data
 		private function initialize():void
 		{
 			itemObject          = {};
-			itemIndexDictionary = new Dictionary;
 			itemNameArray       = [];
 			nameIndexObject     = {};
+			itemIndexDictionary = new Dictionary;
 		}
 		
 		public function getItemIndex($item:*):*
@@ -175,6 +175,9 @@ package cn.vision.data
 			return(StringUtil.toString($name) in itemObject);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override flash_proxy function isAttribute($name:*):Boolean
 		{
 			return super.flash_proxy::isAttribute(StringUtil.toString($name));;
@@ -312,7 +315,7 @@ package cn.vision.data
 		
 		public function get length():uint
 		{
-			return __length;
+			return  __length;
 		}
 		
 		/**

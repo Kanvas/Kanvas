@@ -43,7 +43,7 @@ package model.vo
 		
 		/**
 		 */		
-		private var _color:Object
+		private var _color:Object = 0xFFFFFF;
 
 		/**
 		 */

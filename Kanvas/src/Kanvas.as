@@ -100,7 +100,7 @@ package
 		
 		/**
 		 */		
-		private function stageResizeHandler(evt:Event):void
+		protected function stageResizeHandler(evt:Event):void
 		{
 			if (stage.stageWidth && stage.stageHeight)
 			{

@@ -30,13 +30,17 @@ package landray.kp.maps.main
 		override public function flashPlay():void
 		{
 			for each (var image:Image in images)
-				image.showBmp(false);
+				image.smooth = false;
+			for each (var label:Label in labels)
+				label.smooth = false;
 		}
 		
 		override public function flashStop():void
 		{
 			for each (var image:Image in images)
-				image.showBmp(true);
+				image.smooth = true;
+			for each (var label:Label in labels)
+				label.smooth = true;
 		}
 		
 		override public function flashTrek():void
@@ -44,7 +48,7 @@ package landray.kp.maps.main
 			for each (var label:Label in labels)
 			{
 				if (label.visible)
-					label.render(viewer.canvas.scaleX);
+					label.check();
 			}
 		}
 		

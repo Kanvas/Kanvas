@@ -47,7 +47,7 @@ package landray.kp.maps.main.elements
 				render();
 		}
 		
-		public function render(scale:Number = 1):void
+		public function render():void
 		{
 			if(!rendered)
 			{
