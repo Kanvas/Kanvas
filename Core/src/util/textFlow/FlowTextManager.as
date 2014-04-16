@@ -377,9 +377,13 @@ package util.textFlow
 			{
 				field.textLayoutFormat.fontFamily = "微软雅黑";
 			}
-			else 
+			else if (sysFonts.indexOf("黑体") != - 1)
 			{
 				field.textLayoutFormat.fontFamily = "黑体";
+			}
+			else
+			{
+				field.textLayoutFormat.fontFamily = "华文细黑";
 			}
 			
 			field.textLayoutFormat.fontSize = format.size;
