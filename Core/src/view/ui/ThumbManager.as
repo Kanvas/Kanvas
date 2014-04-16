@@ -88,7 +88,7 @@ package view.ui
 				var end:Boolean;
 				for (var i:int = 0; i < l; i++)
 				{
-					if (i < flag)
+					if (i < flag || (i == flag && l == flag))
 					{
 						var m:int = i % 10;
 						if (m == 0)
