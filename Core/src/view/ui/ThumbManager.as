@@ -1,6 +1,9 @@
 package view.ui
 {
+	import com.kvs.ui.label.LabelUI;
+	import com.kvs.ui.label.TextFlowLabel;
 	import com.kvs.utils.MathUtil;
+	import com.kvs.utils.XMLConfigKit.style.LabelStyle;
 	import com.kvs.utils.graphic.BitmapUtil;
 	
 	import flash.display.Bitmap;
@@ -11,7 +14,10 @@ package view.ui
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.text.TextFormat;
 	import flash.utils.ByteArray;
+	
+	import flashx.textLayout.formats.TextLayoutFormat;
 	
 	import model.CoreFacade;
 	import model.vo.PageVO;
@@ -78,28 +84,50 @@ package view.ui
 				var shapes:Vector.<Shape> = new Vector.<Shape>;
 				var l:int = manager.length;
 				var gutter:int = 10;
+				var flag:int = 20;
+				var end:Boolean;
 				for (var i:int = 0; i < l; i++)
 				{
-					var m:int = i % 10;
-					if (m == 0)
+					if (i < flag)
 					{
-						var shape:Shape = new Shape;
-						var sw:Number = w + gutter * 2;
-						var sh:Number = (h +　gutter) * Math.min(l - i, 10) + gutter;
-						shape.graphics.beginFill(0x555555);
-						shape.graphics.drawRect(0, 0, sw, sh);
-						shape.graphics.endFill();
-						shapes.push(shape);
-					}
-					var page:PageVO = manager.pages[i];
-					
-					var bmd:BitmapData = manager.getThumbByPageVO(page, w, h, core, CoreFacade.coreProxy.bgColor);
-					
-					/*if (bmd)
+						var m:int = i % 10;
+						if (m == 0)
+						{
+							var shape:Shape = new Shape;
+							var sw:Number = w + gutter * 2;
+							var sh:Number = (h +　gutter) * Math.min(l - i, 10) + gutter;
+							shape.graphics.beginFill(0x555555);
+							shape.graphics.drawRect(0, 0, sw, sh);
+							shape.graphics.endFill();
+							shapes.push(shape);
+						}
+						var page:PageVO = manager.pages[i];
 						
+						var bmd:BitmapData = manager.getThumbByPageVO(page, w, h, core, CoreFacade.coreProxy.bgColor);
+					}
 					else
-						bmd = page.bitmapData = PageUtil.getThumbByPageVO(page, w, h, core, CoreFacade.coreProxy.bgColor);*/
+					{
+						var temp:Sprite = new Sprite;
+						temp.graphics.beginFill(CoreFacade.coreProxy.bgColor);
+						temp.graphics.drawRect(0, 0, w, h);
+						temp.graphics.endFill();
+						var text:TextFlowLabel = new TextFlowLabel;
+						text.text = "更多精彩内容，请使用电脑查看...";
+						var labelStyle:LabelStyle = new LabelStyle;
+						var textFormat:TextFormat = new TextFormat;
+						textFormat.size = 40;
+						textFormat.color = 0xFFFFFF;
+						text.renderLabel(textFormat);
+						temp.addChild(text);
+						text.x = .5 * (temp.width  - text.width);
+						text.y = .5 * (temp.height - text.height);
+						bmd = new BitmapData(w, h, false, 0);
+						bmd.draw(temp);
+						end = true;
+					}
+					
 					BitmapUtil.drawBitmapDataToShape(bmd, shape, w, h, gutter, (h + gutter) * m + gutter, true);
+					if (end) break;
 				}
 				l = shapes.length;
 				var offset:int = 4;

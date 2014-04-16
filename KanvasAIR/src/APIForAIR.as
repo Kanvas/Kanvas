@@ -159,7 +159,7 @@ package
 				writer.addBytes(imgDataBytes,imgID.toString() + '.png');
 			}
 			
-			/*var pageData:ByteArray = core.thumbManager.getPageBytes(960, 720);
+			var pageData:ByteArray = core.thumbManager.getPageBytes(960, 720);
 			if (pageData)
 			{
 				var vector:Vector.<ByteArray> = core.thumbManager.resolvePageData(pageData);
@@ -168,7 +168,7 @@ package
 				{
 					writer.addBytes(bytes, "pages/" + (flag++) + ".jpg");
 				}
-			}*/
+			}
 			
 			writer.close();
 			

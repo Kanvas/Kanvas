@@ -62,8 +62,8 @@ package com.kvs.ui.label
 			this.ifUseEmbedFont = ifUseEmbedFont;
 			FlowTextManager.render(this, textformat, ifUseEmbedFont);
 			
-			textCanvas.x = - textCanvas.width  * .5;
-			textCanvas.y = - textCanvas.height * .5;
+			/*textCanvas.x = - textCanvas.width  * .5;
+			textCanvas.y = - textCanvas.height * .5;*/
 			
 			if (ifTextBitmap)
 				textDrawer.checkTextBm(shape.graphics, textCanvas, globleScale);
