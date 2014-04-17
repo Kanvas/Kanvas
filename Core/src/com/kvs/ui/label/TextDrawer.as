@@ -23,43 +23,13 @@ package com.kvs.ui.label
 		 */		
 		private var host:Sprite;
 		
-		/*public function checkTextBmp(shape:Bitmap, textCanvas:Sprite, scale:Number = 1, smooth:Boolean = false):void
-		{
-			scale = Math.abs(scale);
-			if(!textBMD)
-			{
-				renderTextBmp(shape, textCanvas, scale, smooth);
-			}
-			else
-			{
-				var r:Number = textBMD.width / (scale * textCanvas.width);
-				//截图有最大尺寸限制，最大宽高乘积为 imgMaxSize
-				var max:Number = scale * textCanvas.width * scale * textCanvas.height;
-				if (host.visible && max < imgMaxSize && (textBMD.width < textCanvas.width * scale * .45 || r > bmMaxScaleMultiple))
-					renderTextBmp(shape, textCanvas, scale * .9, smooth);
-			}
-		}
-		
-		public function renderTextBmp(shape:Bitmap, textCanvas:Sprite, scale:Number = 1, smooth:Boolean = false):void
-		{
-			PerformaceTest.start("renderTextBmp");
-			
-			shape.bitmapData = textBMD = BitmapUtil.getBitmapData(textCanvas, smooth, scale);
-			shape.width = textCanvas.width;
-			shape.height = textCanvas.height;
-			shape.x = textCanvas.x;
-			shape.y = textCanvas.y;
-			
-			PerformaceTest.end("renderTextBmp");
-		}*/
-		
 		/**
 		 * 检测截图是否满足要求
 		 */		
-		public function checkTextBm(shape:Graphics, textCanvas:Sprite, scale:Number = 1, smooth:Boolean = false):void
+		public function checkTextBm(shape:Graphics, textCanvas:Sprite, scale:Number = 1, smooth:Boolean = false, force:Boolean = false):void
 		{
 			scale = Math.abs(scale);
-			checkVisible(shape, textCanvas, scale, smooth);
+			checkVisible(shape, textCanvas, scale, smooth, force);
 		}
 		
 		/**
@@ -67,15 +37,12 @@ package com.kvs.ui.label
 		 */		
 		public function renderTextBMD(shape:Graphics, textCanvas:Sprite, scale:Number = 1, smooth:Boolean = false):void
 		{
-			PerformaceTest.start("renderTextBMD");
 			shape.clear();
 			
 			textBMD = BitmapUtil.getBitmapData(textCanvas, smooth, scale);
 			
 			BitmapUtil.drawBitmapDataToGraphics(textBMD, shape, textCanvas.width, textCanvas.height, 
 				- textCanvas.width * .5,  - textCanvas.height * .5, smooth);
-			
-			PerformaceTest.end("renderTextBMD");
 		}
 
 		
@@ -86,9 +53,9 @@ package com.kvs.ui.label
 		 * 
 		 * 文字太小时，隐藏文字；
 		 */		
-		public function checkVisible(shape:Graphics, textCanvas:Sprite, scale:Number = 1, smooth:Boolean = false):void
+		public function checkVisible(shape:Graphics, textCanvas:Sprite, scale:Number = 1, smooth:Boolean = false, force:Boolean = false):void
 		{
-			if(!textBMD)
+			if(!textBMD || force)
 			{
 				renderTextBMD(shape, textCanvas, scale, smooth);
 			}

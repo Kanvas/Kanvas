@@ -228,11 +228,11 @@ package view.element.text
 		/**
 		 * 检测截图是否满足要求
 		 */		
-		public function checkTextBm():void
+		public function checkTextBm(force:Boolean = false):void
 		{
-			if (visible)
+			if (visible || force)
 			{
-				textDrawer.checkTextBm(graphics, textCanvas, textVO.scale * parent.scaleX);
+				textDrawer.checkTextBm(graphics, textCanvas, textVO.scale * parent.scaleX, false, force);
 			}
 		}
 		

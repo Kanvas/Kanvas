@@ -211,7 +211,9 @@ package view.editor.text
 				synEditorToTextLabel(editMode.element.vo as TextVO);
 				
 				var field:TextEditField = editMode.element as TextEditField;
+				
 				field.render();
+				field.checkTextBm(true);
 			}
 			else 
 			{
