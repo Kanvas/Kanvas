@@ -18,6 +18,8 @@ package
 	
 	import model.CoreFacade;
 	
+	import util.textFlow.FlowTextManager;
+	
 	
 	/**
 	 * 
@@ -44,6 +46,7 @@ package
 		{
 			super.init();
 			registFileRef();
+			FlowTextManager.loadFont("FontLib.swf");
 			addChild(updater = new AIRUpdater);
 			updater.update(AIR_CLIENT_URL, "check");
 		}

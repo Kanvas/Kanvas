@@ -11,14 +11,14 @@ package
 	public class FontLib extends Sprite implements ISWFContext
 	{
 		
-		[Embed(source="YuppySC-Regular.otf", fontName="雅痞", mimeType="application/x-font")]
+		[Embed(source="msyh.ttf", fontName="微软雅黑", mimeType="application/x-font")]
 		public var YaHei:Class;
 		
-		[Embed(source="华文细黑.ttf", fontName="华文细黑", mimeType="application/x-font")]
+		[Embed(source="simfang.ttf", fontName="仿宋", mimeType="application/x-font")]
 		public var FangSong:Class;
 		
-		[Embed(source="WawaSC-Regular.otf", fontName="娃娃体", mimeType="application/x-font")]
-		public var KaiShu:Class;
+		[Embed(source="simsun.ttc", fontName="宋体", mimeType="application/x-font")]
+		public var Sonti:Class;
 		
 		/**
 		 */		

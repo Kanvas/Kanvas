@@ -3,7 +3,10 @@
 	<!-- 以下是样式库，给样式模板提供共享使用的样式素材 -->
 
 	<template>
-		<format id='Text' font='微软雅黑' size='${size}' color='${color}'/>
+		<format id='FontBody' font='微软雅黑' size='${size}' color='${color}'/>
+		<format id='FontTitle' font='仿宋' size='${size}' color='${color}'/>
+		<format id='FontSubTitle' font='宋体' size='${size}' color='${color}'/>
+		
 		<fill id='Simple' color='${color}' alpha='0.9' angle='90' type='radial'/>
 		<border id='Simple' color='${color}' alpha='0.9' thickness='${thickness}' caps='round' pixelHinting='true'/>
 		<border id="PageFrame" color='#ededed' alpha='0.8' thickness='0'/>
@@ -146,21 +149,15 @@
 			</template>
 			
 			<text styleID='Title' size='30'>
-				<label format='Text'>
-					<format font='仿宋'/>
-				</label>
+				<label format='FontBody'/>
 			</text>
 			
 			<text styleID='SubTitle' size='30'>
-				<label format='Text'>
-					<format font='宋体'/>
-				</label>
+				<label format='FontSubTitle'/>
 			</text>
 			
 			<text styleID='Body' size='30'>
-				<label format='Text'>
-					<format font='微软雅黑'/>
-				</label>
+				<label format='FontTitle'/>
 			</text>
 			
 			<colors styleID='fill'>
@@ -268,21 +265,15 @@
 			</template>
 			
 			<text styleID='Title' size='30'>
-				<label format='Text'>
-					<format font='仿宋'/>
-				</label>
+				<label format='FontBody'/>
 			</text>
 			
 			<text styleID='SubTitle' size='30'>
-				<label format='Text'>
-					<format font='宋体'/>
-				</label>
+				<label format='FontSubTitle'/>
 			</text>
 			
 			<text styleID='Body' size='30'>
-				<label format='Text'>
-					<format font='微软雅黑'/>
-				</label>
+				<label format='FontTitle'/>
 			</text>
 			
 			<colors styleID='fill'>
@@ -389,21 +380,15 @@
 			</template>
 			
 			<text styleID='Title' size='30'>
-				<label format='Text'>
-					<format font='仿宋'/>
-				</label>
+				<label format='FontBody'/>
 			</text>
 			
 			<text styleID='SubTitle' size='30'>
-				<label format='Text'>
-					<format font='宋体'/>
-				</label>
+				<label format='FontSubTitle'/>
 			</text>
 			
 			<text styleID='Body' size='30'>
-				<label format='Text'>
-					<format font='微软雅黑'/>
-				</label>
+				<label format='FontTitle'/>
 			</text>
 			
 			<colors styleID='fill'>
@@ -511,21 +496,15 @@
 			</template>
 			
 			<text styleID='Title' size='30'>
-				<label format='Text'>
-					<format font='仿宋'/>
-				</label>
+				<label format='FontBody'/>
 			</text>
 			
 			<text styleID='SubTitle' size='30'>
-				<label format='Text'>
-					<format font='宋体'/>
-				</label>
+				<label format='FontSubTitle'/>
 			</text>
 			
 			<text styleID='Body' size='30'>
-				<label format='Text'>
-					<format font='微软雅黑'/>
-				</label>
+				<label format='FontTitle'/>
 			</text>
 			
 			<colors styleID='fill'>
@@ -633,21 +612,15 @@
 			</template>
 			
 			<text styleID='Title' size='30'>
-				<label format='Text'>
-					<format font='仿宋'/>
-				</label>
+				<label format='FontBody'/>
 			</text>
 			
 			<text styleID='SubTitle' size='30'>
-				<label format='Text'>
-					<format font='宋体'/>
-				</label>
+				<label format='FontSubTitle'/>
 			</text>
 			
 			<text styleID='Body' size='30'>
-				<label format='Text'>
-					<format font='微软雅黑'/>
-				</label>
+				<label format='FontTitle'/>
 			</text>
 			
 			<colors styleID='fill'>
@@ -756,21 +729,15 @@
 			</template>
 			
 			<text styleID='Title' size='30'>
-				<label format='Text'>
-					<format font='仿宋'/>
-				</label>
+				<label format='FontBody'/>
 			</text>
 			
 			<text styleID='SubTitle' size='30'>
-				<label format='Text'>
-					<format font='宋体'/>
-				</label>
+				<label format='FontSubTitle'/>
 			</text>
 			
 			<text styleID='Body' size='30'>
-				<label format='Text'>
-					<format font='微软雅黑'/>
-				</label>
+				<label format='FontTitle'/>
 			</text>
 			
 			<colors styleID='fill'>

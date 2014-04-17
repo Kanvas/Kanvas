@@ -453,7 +453,7 @@ package util.textFlow
 		{
 			Font.registerFont(fontLoader.content['YaHei']);
 			Font.registerFont(fontLoader.content['FangSong']);
-			Font.registerFont(fontLoader.content['KaiShu']);
+			Font.registerFont(fontLoader.content['Sonti']);
 			
 			ifFontLoaded = true;
 			
