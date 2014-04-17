@@ -34,5 +34,7 @@ package
 				return fn.apply(thisArg, argsArray);
 			fn.apply(thisArg, argsArray);
 		}
+		
+		public var fonts:Array = ["微软雅黑", "仿宋", "宋体"];
 	}
 }

@@ -31,7 +31,6 @@ package
 			super();
 			
 			CoreApp.isAIR = true;
-			FlowTextManager.isCheckSysFont = false;
 			initCommands();
 		}
 		

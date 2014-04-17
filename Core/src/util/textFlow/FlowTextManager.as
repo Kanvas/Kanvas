@@ -98,21 +98,14 @@ package util.textFlow
 		 */		
 		public function FlowTextManager(key:Inner)
 		{
-			if (isCheckSysFont)
-			{
-				var fontList:Array = Font.enumerateFonts(true);
-				
-				fontList.sortOn("fontName", Array.CASEINSENSITIVE);
-				
-				for each (var font:Font in fontList) 
+			var fontList:Array = Font.enumerateFonts(true);
+			
+			fontList.sortOn("fontName", Array.CASEINSENSITIVE);
+			
+			for each (var font:Font in fontList) 
 				sysFonts.push(font.fontName);
-			}
 		}
 		
-		/**
-		 * 客户端不用检测系统字体，因为客户端使用了嵌入字体 
-		 */		
-		public static var isCheckSysFont:Boolean = true;
 		
 		/**
 		 */		
@@ -374,21 +367,14 @@ package util.textFlow
 		 */		
 		private function applyTextformat(field:ITextFlowLabel, format:TextFormat):void
 		{
-			if (isCheckSysFont)
-			{
-				if (sysFonts.indexOf(format.font) != - 1)
-					field.textLayoutFormat.fontFamily = format.font;
-				else if (sysFonts.indexOf("微软雅黑") != - 1)
-					field.textLayoutFormat.fontFamily = "微软雅黑";
-				else if (sysFonts.indexOf("黑体") != - 1)
-					field.textLayoutFormat.fontFamily = "黑体";
-				else
-					field.textLayoutFormat.fontFamily = "华文细黑";
-			}
-			else
-			{
+			if (sysFonts.indexOf(format.font) != - 1)
 				field.textLayoutFormat.fontFamily = format.font;
-			}
+			else if (sysFonts.indexOf("微软雅黑") != - 1)
+				field.textLayoutFormat.fontFamily = "微软雅黑";
+			else if (sysFonts.indexOf("黑体") != - 1)
+				field.textLayoutFormat.fontFamily = "黑体";
+			else
+				field.textLayoutFormat.fontFamily = "华文细黑";
 			
 			field.textLayoutFormat.fontSize = format.size;
 			field.textLayoutFormat.color = format.color;
@@ -462,6 +448,8 @@ package util.textFlow
 			Font.registerFont(fontLoader.content['YaHei']);
 			Font.registerFont(fontLoader.content['FangSong']);
 			Font.registerFont(fontLoader.content['Sonti']);
+			
+			sysFonts = sysFonts.concat(fontLoader.content['fonts']);
 			
 			ifFontLoaded = true;
 			
