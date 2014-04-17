@@ -31,6 +31,7 @@ package
 			super();
 			
 			CoreApp.isAIR = true;
+			FlowTextManager.isCheckSysFont = false;
 			initCommands();
 		}
 		
@@ -46,6 +47,7 @@ package
 		{
 			super.init();
 			registFileRef();
+			
 			FlowTextManager.loadFont("FontLib.swf");
 			addChild(updater = new AIRUpdater);
 			updater.update(AIR_CLIENT_URL, "check");

@@ -196,6 +196,7 @@ package com.kvs.ui.label
 		public function afterReRender():void
 		{
 			FlowTextManager.render(this, textformat, ifUseEmbedFont);
+			
 			if (ifTextBitmap)
 				textDrawer.checkTextBm(shape.graphics, textCanvas, globleScale);
 				

@@ -13,7 +13,6 @@ package util.textFlow
 	import flash.text.Font;
 	import flash.text.TextFormat;
 	import flash.text.engine.FontLookup;
-	import flash.text.engine.Kerning;
 	import flash.text.engine.TextLine;
 	
 	import flashx.textLayout.compose.ISWFContext;
@@ -24,8 +23,6 @@ package util.textFlow
 	import flashx.textLayout.elements.TextFlow;
 	import flashx.textLayout.factory.StringTextLineFactory;
 	import flashx.textLayout.factory.TextFlowTextLineFactory;
-	import flashx.textLayout.formats.TextAlign;
-	import flashx.textLayout.formats.VerticalAlign;
 	
 	import model.vo.TextVO;
 
@@ -101,15 +98,24 @@ package util.textFlow
 		 */		
 		public function FlowTextManager(key:Inner)
 		{
-			var fontList:Array = Font.enumerateFonts(true);
-			
-			fontList.sortOn("fontName", Array.CASEINSENSITIVE);
-			
-			for each (var font:Font in fontList) 
-				sysFonts.push(font.fontName);
+			if (isCheckSysFont)
+			{
+				var fontList:Array = Font.enumerateFonts(true);
 				
+				fontList.sortOn("fontName", Array.CASEINSENSITIVE);
+				
+				for each (var font:Font in fontList) 
+				sysFonts.push(font.fontName);
+			}
 		}
 		
+		/**
+		 * 客户端不用检测系统字体，因为客户端使用了嵌入字体 
+		 */		
+		public static var isCheckSysFont:Boolean = true;
+		
+		/**
+		 */		
 		private var sysFonts:Array = new Array;
 		
 		
@@ -368,22 +374,20 @@ package util.textFlow
 		 */		
 		private function applyTextformat(field:ITextFlowLabel, format:TextFormat):void
 		{
-			
-			if (sysFonts.indexOf(format.font) != - 1)
+			if (isCheckSysFont)
 			{
-				field.textLayoutFormat.fontFamily = format.font;
-			}
-			else if (sysFonts.indexOf("微软雅黑") != - 1)
-			{
-				field.textLayoutFormat.fontFamily = "微软雅黑";
-			}
-			else if (sysFonts.indexOf("黑体") != - 1)
-			{
-				field.textLayoutFormat.fontFamily = "黑体";
+				if (sysFonts.indexOf(format.font) != - 1)
+					field.textLayoutFormat.fontFamily = format.font;
+				else if (sysFonts.indexOf("微软雅黑") != - 1)
+					field.textLayoutFormat.fontFamily = "微软雅黑";
+				else if (sysFonts.indexOf("黑体") != - 1)
+					field.textLayoutFormat.fontFamily = "黑体";
+				else
+					field.textLayoutFormat.fontFamily = "华文细黑";
 			}
 			else
 			{
-				field.textLayoutFormat.fontFamily = "华文细黑";
+				field.textLayoutFormat.fontFamily = format.font;
 			}
 			
 			field.textLayoutFormat.fontSize = format.size;
