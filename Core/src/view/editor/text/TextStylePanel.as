@@ -189,7 +189,7 @@ package view.editor.text
 			
 				addStyleBtn(textStyleBtn);
 				
-				if (textStyleBtn.id == 'Body')
+				if (textStyleBtn.id == 'Title')
 					setStyle(textStyleBtn.textVO);
 			}
 			

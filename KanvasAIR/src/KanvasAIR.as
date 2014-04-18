@@ -31,6 +31,7 @@ package
 			super();
 			
 			CoreApp.isAIR = true;
+			FlowTextManager.ifUseEmbedFont = true;
 			initCommands();
 		}
 		
