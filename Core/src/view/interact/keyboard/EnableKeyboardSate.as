@@ -209,6 +209,11 @@ package view.interact.keyboard
 					}
 					
 					break;
+				case Keyboard.S:
+					if (evt.ctrlKey)
+					{
+						mainUIMediator.coreApp.dispatchEvent(new KVSEvent(KVSEvent.SAVE));
+					}
 			}
 		}
 		

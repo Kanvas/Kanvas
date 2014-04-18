@@ -62,7 +62,7 @@ package view.toolBar
 			prevBtn.iconW = prevBtn.iconH = 30;
 			prevBtn.w = prevBtn.h = 30;
 			prevBtn.setIcons("play_up", "play_over", "play_down");
-			prevBtn.tips = '预 览';
+			prevBtn.tips = '预览';
 			addChild(prevBtn);
 			prevBtn.addEventListener(MouseEvent.CLICK, prevHandler, false, 0, true);
 			

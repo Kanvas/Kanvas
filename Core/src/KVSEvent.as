@@ -50,6 +50,11 @@ package
 		public static const DATA_CHANGED:String = "dataChanged";
 		
 		/**
+		 * 保存
+		 */	
+		public static const SAVE:String = "save";
+		
+		/**
 		 */		
 		public function KVSEvent(type:String)
 		{

@@ -6,6 +6,7 @@ package
 	import commands.*;
 	
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	import model.CoreFacade;
@@ -18,14 +19,15 @@ package
 		public function KanvasWeb()
 		{
 			super();
-			initCommands();
+			initKanvasWeb();
 		}
 		
 		
-		private function initCommands():void
+		private function initKanvasWeb():void
 		{
 			CoreFacade.inserImgCommad = InserImageCMD;
 			CoreFacade.insertBgCommand = ChangeBgImgCMD;
+			kvsCore.addEventListener(KVSEvent.SAVE, saveHandler);
 		}
 		/**
 		 */		 
@@ -69,10 +71,13 @@ package
 		
 		/**
 		 */		
-		private function saveHandler(evt:MouseEvent):void
+		private function saveHandler(evt:Event):void
 		{
-			saveBtn.selected = true;
-			jsapi.saveDataToServer(saveComplete);
+			if(!saveBtn.selected)
+			{
+				saveBtn.selected = true;
+				jsapi.saveDataToServer(saveComplete);
+			}
 		}
 		
 		/**
@@ -86,12 +91,15 @@ package
 		 */		
 		private function exitHandler(evt:MouseEvent):void
 		{
-			exitBtn.selected = true;
-			
-			jsapi.saveDataToServer(exitComplete);
-			
-			this.mouseChildren = this.mouseEnabled = false;
-			this.kvsCore.alpha = 0.6;
+			if(!exitBtn.selected)
+			{
+				exitBtn.selected = true;
+				
+				jsapi.saveDataToServer(exitComplete);
+				
+				this.mouseChildren = this.mouseEnabled = false;
+				this.kvsCore.alpha = 0.6;
+			}
 		}
 		
 		/**

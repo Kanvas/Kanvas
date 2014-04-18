@@ -333,6 +333,7 @@ package view.pagePanel
 		internal function startCreatePageByDrag():void
 		{
 			var rect:Rectangle = this.addPageBtn.getRect(stage);
+			addPageBtn.tips = "添加页面";
 			var bmd:BitmapData = BitmapUtil.getBitmapData(this.addPageBtn, true);
 			
 			pageCreateIcon.graphics.clear();

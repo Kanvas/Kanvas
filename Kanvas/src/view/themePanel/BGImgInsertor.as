@@ -206,11 +206,11 @@ package view.themePanel
 											</states>
 			
 		private const noImgLabelStyle:XML = <label vAlign="center">
-								                <format color='555555' font='华文细黑' size='12' letterSpacing="3"/>
+								                <format color='555555' font='微软雅黑' size='12' letterSpacing="3"/>
 								            </label>
 			
 		private const hasImgLabelStyle:XML = <label vAlign="center">
-								                <format color='ffffff' font='华文细黑' size='12' letterSpacing="3"/>
+								                <format color='ffffff' font='微软雅黑' size='12' letterSpacing="3"/>
 								            </label>
 			
 		

@@ -81,6 +81,7 @@ package
 			shapePanel.ifShowExitBtn = true;
 			shapePanel.isOpen = false;
 			shapePanel.bgStyleXML = panelBGStyleXML;
+			shapePanel.titleStyleXML = panelTitleStyleXML;
 			shapePanel.exitBtnStyleXML = exitBtnStyle;
 			
 			// 样式面板初始化
@@ -91,6 +92,7 @@ package
 			themePanel.ifShowExitBtn = true;
 			themePanel.isOpen = false;
 			themePanel.bgStyleXML = panelBGStyleXML;
+			themePanel.titleStyleXML = panelTitleStyleXML;
 			themePanel.exitBtnStyleXML = exitBtnStyle;
 			
 			//多页面列表
@@ -277,7 +279,7 @@ package
 		private var tipsStyle:XML = <label hPadding='12' vPadding='8' radius='30' vMargin='10' hMargin='20'>
 										<border thikness='1' alpha='0' color='555555' pixelHinting='true'/>
 										<fill color='e96565' alpha='0.9'/>
-										<format font='华文细黑' size='13' color='ffffff'/>
+										<format font='微软雅黑' size='13' color='ffffff'/>
 										<text value='${tips}'>
 											<effects>
 												<shadow color='0' alpha='0.3' distance='1' blur='1' angle='90'/>
@@ -293,5 +295,10 @@ package
 									<border color='#eeeeee' alpha='1'/>
 									<fill color='#eeeeee' alpha='0.8'/>
 								 </style>;
+		
+		private var panelTitleStyleXML:XML = 
+			<label radius='0' vPadding='20' hPadding='20'>
+				<format color='#555555' font='微软雅黑' size='14'/>
+			</label>;
 	}
 }

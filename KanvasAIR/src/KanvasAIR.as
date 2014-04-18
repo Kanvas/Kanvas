@@ -30,14 +30,15 @@ package
 		{
 			super();
 			
-			CoreApp.isAIR = true;
-			initCommands();
+			initKanvasAIR();
 		}
 		
-		private function initCommands():void
+		private function initKanvasAIR():void
 		{
+			CoreApp.isAIR = true;
 			CoreFacade.inserImgCommad = InsertIMGFromAIR;
 			CoreFacade.insertBgCommand = ChangeBgImgAIR;
+			kvsCore.addEventListener(KVSEvent.SAVE, saveHandler);
 		}
 		
 		/**
@@ -88,9 +89,11 @@ package
 		 */		
 		private function saveHandler(evt:MouseEvent):void
 		{
-			saveBtn.selected = true;
-			
-			airAPI.saveFile();
+			if(!saveBtn.selected)
+			{
+				saveBtn.selected = true;
+				airAPI.saveFile();
+			}
 		}
 		
 		/**
