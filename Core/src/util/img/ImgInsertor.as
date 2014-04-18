@@ -9,6 +9,7 @@ package util.img
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
+	import flash.events.SecurityErrorEvent;
 	import flash.geom.Rectangle;
 	import flash.net.FileFilter;
 	import flash.net.FileReference;
@@ -17,6 +18,8 @@ package util.img
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
 	import flash.utils.ByteArray;
+	
+	import view.ui.Debugger;
 
 	/**
 	 * 图片插入器, 负责从客户端选取图片，并上传至指定服务器
@@ -38,13 +41,15 @@ package util.img
 			imageByteLoader.dataFormat = URLLoaderDataFormat.BINARY;
 			imageByteLoader.addEventListener(Event.COMPLETE, imgByteLoaeded);
 			imageByteLoader.addEventListener(IOErrorEvent.IO_ERROR, imgByteLoadError);
+			imageByteLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, imgByteLoadError);
 		}
 		
 		/**
 		 * 从服务端加载图片数据流错误
 		 */		
-		private function imgByteLoadError(e:IOErrorEvent):void
+		private function imgByteLoadError(e:Event):void
 		{
+			Debugger.debug("ImgInsertor.imgByteLoadError", e.type)
 			this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_LOADED_ERROR));
 		}
 		
@@ -95,20 +100,30 @@ package util.img
 		{
 			if (isLoading == false)
 			{
-				this.imgID = imgID;
-				
-				//旧图片数据需要记录图片的宽高信息，以便生成正确的bitmapdata
-				temW = w;
-				temH = h;
-				
-				if (url.indexOf("http") != 0)
-					url = IMG_DOMAIN_URL + url;
-				var req:URLRequest = new URLRequest(url);
-				req.method = URLRequestMethod.GET;
-				req.contentType = "application/octet-stream";  
-				imageByteLoader.load(req);
-				
-				isLoading = true;
+				try {
+					
+					this.imgID = imgID;
+					
+					//旧图片数据需要记录图片的宽高信息，以便生成正确的bitmapdata
+					temW = w;
+					temH = h;
+					
+					if (url.indexOf("http") != 0)
+						url = IMG_DOMAIN_URL + url;
+					var req:URLRequest = new URLRequest(url);
+					req.method = URLRequestMethod.GET;
+					req.contentType = "application/octet-stream";  
+					imageByteLoader.load(req);
+					
+					isLoading = true;
+					Debugger.debug("1111111111111111111111111111111");
+				}
+				catch (e:Error)
+				{
+					Debugger.debug("222222222222222222222222222222");
+					Debugger.debug(e.getStackTrace());
+				}
+				Debugger.debug("3333333333333333333333333333333333");
 			}
 		}
 		
@@ -121,6 +136,7 @@ package util.img
 		private function imgByteLoaeded(evt:Event):void
 		{
 			//这里做了兼容处理，如果加载失败则可能是旧的图片数据
+			Debugger.debug("ImgInsertor.imgByteLoaeded");
 			imgLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, bmdLoadedFromServerHandler);
 			imgLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imgLoadIoError);
 			
@@ -139,6 +155,7 @@ package util.img
 		 */		
 		private function imgLoadIoError(e:IOErrorEvent):void
 		{
+			Debugger.debug("ImgInsertor.imgLoadIoError");
 			isLoading = false;
 			
 			if (imageByteLoader.data)
@@ -173,6 +190,7 @@ package util.img
 		 */		
 		private function bmdLoadedFromServerHandler(evt:Event):void
 		{
+			Debugger.debug("ImgInsertor.bmdLoadedFromServerHandler");
 			(imageByteLoader.data as ByteArray).clear();// 清空数据
 			
 			imageLoaedEnd((imgLoader.content as Bitmap).bitmapData);
@@ -184,6 +202,7 @@ package util.img
 		 */		
 		private function imageLoaedEnd(bmd:BitmapData):void
 		{
+			Debugger.debug("ImgInsertor.imageLoaedEnd");
 			imgLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, bmdLoadedFromServerHandler);
 			imgLoader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imgLoadIoError);
 			
