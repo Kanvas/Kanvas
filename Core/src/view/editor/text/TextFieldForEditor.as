@@ -120,9 +120,7 @@ package view.editor.text
 		 */		
 		public function afterReRender():void
 		{
-			
-		}
-		
+		}		
 		/**
 		 */		
 		public function setFocusForCreate():void

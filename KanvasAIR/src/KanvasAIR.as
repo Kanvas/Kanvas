@@ -38,6 +38,7 @@ package
 			CoreApp.isAIR = true;
 			CoreFacade.inserImgCommad = InsertIMGFromAIR;
 			CoreFacade.insertBgCommand = ChangeBgImgAIR;
+			FlowTextManager.ifUseEmbedFont = true;
 			kvsCore.addEventListener(KVSEvent.SAVE, saveHandler);
 		}
 		

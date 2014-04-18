@@ -367,14 +367,21 @@ package util.textFlow
 		 */		
 		private function applyTextformat(field:ITextFlowLabel, format:TextFormat):void
 		{
-			if (sysFonts.indexOf(format.font) != - 1)
+			if (ifUseEmbedFont)
+			{
 				field.textLayoutFormat.fontFamily = format.font;
-			else if (sysFonts.indexOf("微软雅黑") != - 1)
-				field.textLayoutFormat.fontFamily = "微软雅黑";
-			else if (sysFonts.indexOf("黑体") != - 1)
-				field.textLayoutFormat.fontFamily = "黑体";
+			}
 			else
-				field.textLayoutFormat.fontFamily = "华文细黑";
+			{
+				if (sysFonts.indexOf(format.font) != - 1)
+					field.textLayoutFormat.fontFamily = format.font;
+				else if (sysFonts.indexOf("微软雅黑") != - 1)
+					field.textLayoutFormat.fontFamily = "微软雅黑";
+				else if (sysFonts.indexOf("黑体") != - 1)
+					field.textLayoutFormat.fontFamily = "黑体";
+				else
+					field.textLayoutFormat.fontFamily = "华文细黑";
+			}
 			
 			field.textLayoutFormat.fontSize = format.size;
 			field.textLayoutFormat.color = format.color;
@@ -383,6 +390,11 @@ package util.textFlow
 			
 			field.textManager.hostFormat = field.textLayoutFormat;
 		}
+		
+		/**
+		 * 桌面模式开启后，防止文本编辑器的字体手影响
+		 */		
+		public static var ifUseEmbedFont:Boolean = false;
 		
 		
 		
