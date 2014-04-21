@@ -15,10 +15,10 @@
 
 	<!-- A universally unique application identifier. Must be unique across all AIR applications.
 	Using a reverse DNS-style name as the id is recommended. (Eg. com.example.ExampleApplication.) Required. -->
-	<id>cn.kanvas.KanvasAIR</id>
+	<id>cn.kanvas.Kanvas</id>
 
 	<!-- Used as the filename for the application. Required. -->
-	<filename>KanvasAIR</filename>
+	<filename>Kanvas</filename>
 
 	<!-- The name that is displayed in the AIR application installer. 
 	May have multiple values for each language. See samples or xsd schema file. Optional. -->
@@ -50,7 +50,7 @@
 		<content>[此值将由 Flash Builder 在输出 app.xml 中覆盖]</content>
 		
 		<!-- The title of the main window. Optional. -->
-		<title>Kanvas 4.0 AIR</title>
+		<title>Kanvas 1.0</title>
 
 		<!-- The type of system chrome to use (either "standard" or "none"). Optional. Default standard. -->
 		<!-- <systemChrome></systemChrome> -->
@@ -141,7 +141,7 @@
 	
 	<!-- Whether the application can be launched when the user clicks a link in a web browser.
 	Optional. Default false. -->
-	<allowBrowserInvocation>true</allowBrowserInvocation>
+	<allowBrowserInvocation>false</allowBrowserInvocation>
 
 	<!-- Listing of file types for which the application can register. Optional. -->
 	<fileTypes>
