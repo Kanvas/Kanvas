@@ -233,7 +233,7 @@ package landray.kp.maps.main.elements
 		
 		private var lastWidth :Number;
 		private var lastHeight:Number;
-		private var minSize   :Number = 20;
+		private var minSize   :Number = 400;
 		
 		private var bmdLarge:BitmapData;
 		private var bmdSmall:BitmapData;
