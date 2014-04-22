@@ -15,6 +15,7 @@ package
 	import flash.events.MouseEvent;
 	import flash.events.NativeDragEvent;
 	import flash.filesystem.File;
+	import flash.text.ReturnKeyLabel;
 	
 	import model.CoreFacade;
 	
@@ -184,6 +185,9 @@ package
 		 */		
 		private function onInvoke( event:InvokeEvent ):void 
 		{ 
+			if (NativeApplication.nativeApplication.activeWindow == null)
+				return;
+				
 			//先窗口最大化
 			NativeApplication.nativeApplication.activeWindow.maximize();
 			

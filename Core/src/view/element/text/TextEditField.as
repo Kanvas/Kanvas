@@ -43,6 +43,8 @@ package view.element.text
 			
 			textDrawer = new TextDrawer(this);
 			xmlData = <text/>;
+			
+			
 		}
 		
 		/**
@@ -222,7 +224,9 @@ package view.element.text
 		{
 			FlowTextManager.renderTextVOLabel(this, textVO);
 			renderAfterLabelRender();
-			checkTextBm();
+			checkTextBm(true);// 文本渲染时要强制重新截图
+			
+			
 		}
 		
 		/**
