@@ -237,7 +237,7 @@ package modules.pages
 		
 		public function registOverlappingPageVOs(current:ElementBase):void
 		{
-			if (current.isPage) //元素本身是页面
+			if (current.isPage && current.parent) //元素本身是页面
 			{
 				registUpdateThumbVO(current.vo.pageVO);
 			}

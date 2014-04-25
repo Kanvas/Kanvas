@@ -151,7 +151,7 @@ package commands
 					}
 				}
 				
-				if (obj["x"] != undefined && obj["y"] != undefined)
+				if (obj["x"] != undefined && obj["y"] != undefined && (obj["width"] == undefined && obj["height"] == undefined))
 				{
 					CoreFacade.coreMediator.autoGroupController.moveTo(newObj.x - oldObj.x, newObj.y - oldObj.y, group);
 				}

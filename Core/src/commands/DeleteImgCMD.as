@@ -37,8 +37,9 @@ package commands
 			elementIndex = element.index;
 			
 			CoreFacade.coreMediator.pageManager.registOverlappingPageVOs(element);
-			
 			CoreFacade.removeElement(element);
+			if (element.isPage)
+				CoreFacade.coreMediator.pageManager.removePage(element.vo.pageVO);
 			
 			v = CoreFacade.coreMediator.pageManager.refreshVOThumbs();
 			// 判断如果系统中不再含有此图片ID的图片元素，则从图片库中删除此元素
@@ -55,6 +56,8 @@ package commands
 		override public function undoHandler():void
 		{
 			CoreFacade.addElementAt(element, elementIndex);
+			if (element.isPage)
+				CoreFacade.coreMediator.pageManager.addPageAt(element.vo.pageVO, element.vo.pageVO.index);
 			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 			//ImgLib.register(imgElement.imgVO.imgID.toString(), imgElement.imgVO.sourceData);
 			
@@ -64,6 +67,8 @@ package commands
 		override public function redoHandler():void
 		{
 			CoreFacade.removeElement(element);
+			if (element.isPage)
+				CoreFacade.coreMediator.pageManager.removePage(element.vo.pageVO);
 			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 			//ImgLib.unRegister(imgElement.imgVO.imgID);
 			

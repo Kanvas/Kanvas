@@ -28,6 +28,8 @@ package commands
 			element = notification.getBody() as TextEditField;
 			elementIndex = CoreFacade.getElementIndex(element);
 			CoreFacade.coreMediator.pageManager.registOverlappingPageVOs(element);
+			if (element.isPage)
+				CoreFacade.coreMediator.pageManager.removePage(element.vo.pageVO);
 			CoreFacade.removeElement(element);
 			v = CoreFacade.coreMediator.pageManager.refreshVOThumbs();
 			
@@ -41,7 +43,8 @@ package commands
 		override public function undoHandler():void
 		{
 			CoreFacade.addElementAt(element, elementIndex);
-			
+			if (element.isPage)
+				CoreFacade.coreMediator.pageManager.addPageAt(element.vo.pageVO, element.vo.pageVO.index);
 			// 文本被删除时可能处于编辑状态， 所以撤销后需要重绘一下
 			// 编辑状态的文本看不到，本身没有绘制
 			element.render();
@@ -54,7 +57,8 @@ package commands
 		override public function redoHandler():void
 		{
 			CoreFacade.removeElement(element);
-			
+			if (element.isPage)
+				CoreFacade.coreMediator.pageManager.removePage(element.vo.pageVO);
 			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 			
 			this.dataChanged();

@@ -30,6 +30,8 @@ package commands
 			elementIndex = CoreFacade.getElementIndex(element);
 			CoreFacade.coreMediator.pageManager.registOverlappingPageVOs(element);
 			CoreFacade.removeElement(element);
+			if (element.isPage)
+				CoreFacade.coreMediator.pageManager.removePage(element.vo.pageVO);
 			
 			elementIndexArray = [];
 			groupElements = CoreFacade.coreMediator.autoGroupController.elements;
@@ -42,11 +44,10 @@ package commands
 				{
 					var item:ElementBase = groupElements[i];
 					elementIndexArray[i] = CoreFacade.getElementIndex(item);
+					CoreFacade.coreMediator.pageManager.registOverlappingPageVOs(item);
 					CoreFacade.removeElement(item);
-					if (item is PageElement)
-						CoreFacade.coreMediator.pageManager.removePage(item.vo as PageVO);
-					else
-						CoreFacade.coreMediator.pageManager.registOverlappingPageVOs(item);
+					if (item.isPage)
+						CoreFacade.coreMediator.pageManager.removePage(item.vo.pageVO);
 				}
 			}
 			
@@ -54,7 +55,7 @@ package commands
 			
 			UndoRedoMannager.register(this);
 			
-			this.dataChanged();
+			dataChanged();
 		}
 		
 		/**
@@ -69,18 +70,18 @@ package commands
 				{
 					var item:ElementBase = groupElements[i];
 					CoreFacade.addElementAt(groupElements[i], elementIndexArray[i]);
-					if (item is PageElement)
-					{
-						var pageVO:PageVO = item.vo as PageVO;
-						CoreFacade.coreMediator.pageManager.addPageAt(pageVO, pageVO.index);
-					}
+					if (item.isPage)
+						CoreFacade.coreMediator.pageManager.addPageAt(item.vo.pageVO, item.vo.pageVO.index);
 				}
 			}
 			
 			CoreFacade.addElementAt(element, elementIndex);
+			if (element.isPage)
+				CoreFacade.coreMediator.pageManager.addPageAt(element.vo.pageVO, element.vo.pageVO.index);
 			
 			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
-			this.dataChanged();
+			
+			dataChanged();
 		}
 		
 		/**
@@ -88,20 +89,22 @@ package commands
 		override public function redoHandler():void
 		{
 			CoreFacade.removeElement(element);
+			if (element.isPage)
+				CoreFacade.coreMediator.pageManager.removePage(element.vo.pageVO);
 			
 			if (autoGroupEnabled)
 			{
 				for each (var item:ElementBase in groupElements)
 				{
 					CoreFacade.removeElement(item);
-					if (item is PageElement)
-						CoreFacade.coreMediator.pageManager.removePage(item.vo as PageVO);
+					if (item.isPage)
+						CoreFacade.coreMediator.pageManager.removePage(item.vo.pageVO);
 				}
 			}
 			
 			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
 			
-			this.dataChanged();
+			dataChanged();
 		}
 		
 		/**
