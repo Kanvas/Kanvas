@@ -2,6 +2,7 @@ package view.element
 {
 	import com.kvs.ui.clickMove.ClickMoveControl;
 	import com.kvs.ui.clickMove.IClickMove;
+	import com.kvs.ui.label.LabelUI;
 	import com.kvs.utils.MathUtil;
 	import com.kvs.utils.PerformaceTest;
 	import com.kvs.utils.RectangleUtil;
@@ -19,8 +20,12 @@ package view.element
 	import flash.geom.Rectangle;
 	
 	import model.vo.ElementVO;
+	import model.vo.PageVO;
+	
+	import modules.pages.PageEvent;
 	
 	import util.ElementCreator;
+	import util.ElementUtil;
 	import util.LayoutUtil;
 	import util.StyleUtil;
 	
@@ -54,21 +59,7 @@ package view.element
 		 */		
 		public function exportData():XML
 		{
-			xmlData.@id = vo.id;
-			xmlData.@property = vo.property;
-			xmlData.@type = vo.type;
-			xmlData.@styleType = vo.styleType;
-			xmlData.@styleID = vo.styleID;
-			xmlData.@x = vo.x;
-			xmlData.@y = vo.y;
-			xmlData.@width = vo.width;
-			xmlData.@height = vo.height;
-			xmlData.@rotation = vo.rotation;
-			xmlData.@color = vo.color.toString(16);
-			xmlData.@colorIndex = vo.colorIndex;
-			xmlData.@scale = vo.scale;
-			
-			return xmlData;
+			return vo.exportData(xmlData);
 		}
 		
 		/**
@@ -503,6 +494,7 @@ package view.element
 		public function toPreview(renderable:Boolean = false):void
 		{
 			super.visible = previewVisible;
+			if (isPage &&　numShape) numShape.visible = true;
 			if (renderable)
 			{
 				alpha = previewAlpha;
@@ -514,6 +506,7 @@ package view.element
 		{
 			previewAlpha   = alpha;
 			previewVisible = visible;
+			if (isPage &&　numShape) numShape.visible = false;
 			if (renderable)
 			{
 				alpha   = 1;
@@ -596,6 +589,131 @@ package view.element
 			return scaledHeight * ((parent) ? parent.scaleX : 1);
 		}
 		
+		public function get isPage():Boolean
+		{
+			return Boolean(vo.pageVO);
+		}
+		
+		public function setPage(pageVO:PageVO):void
+		{
+			if (vo.pageVO)
+			{
+				vo.pageVO.removeEventListener(PageEvent.DELETE_PAGE_FROM_UI, deletePageHandler);
+				vo.pageVO.removeEventListener(PageEvent.UPDATE_PAGE_INDEX, updatePageIndex);
+			}
+			if (pageVO)
+			{
+				vo.pageVO = pageVO;
+				vo.pageVO.elementVO = vo;
+				vo.pageVO.thumbUpdatable = false;
+				vo.pageVO.x        = vo.x;
+				vo.pageVO.y        = vo.y;
+				vo.pageVO.width    = vo.width;
+				vo.pageVO.height   = vo.height;
+				vo.pageVO.scale    = vo.scale;
+				vo.pageVO.rotation = vo.rotation;
+				vo.pageVO.addEventListener(PageEvent.DELETE_PAGE_FROM_UI, deletePageHandler);
+				vo.pageVO.addEventListener(PageEvent.UPDATE_PAGE_INDEX, updatePageIndex);
+				vo.pageVO.thumbUpdatable = true;
+				drawPageNum();
+				layoutPageNum();
+			}
+			else
+			{
+				vo.pageVO.elementVO = null;
+				vo.pageVO = null;
+				clearPageNum();
+			}
+		}
+		
+		private function updatePageIndex(e:PageEvent):void
+		{
+			drawPageNum();
+		}
+		
+		private function deletePageHandler(e:PageEvent):void
+		{
+			if (elementPageConvertable && isPage)
+				dispatchEvent(new ElementEvent(ElementEvent.CONVERT_PAGE_2_ELEMENT, this));
+			else
+				del();
+		}
+		
+		/**
+		 *  保证页面编号控制在和尺寸内
+		 * 
+		 */		
+		public function layoutPageNum(s:Number = NaN):void
+		{
+			//尺寸缩放时需要临时取表象的信息
+			if(!numLabel)
+				drawPageNum();
+			if (isNaN(s))
+				s = vo.scale;
+			
+			numShape.width = numShape.height = height * .5;
+			var temSize:Number = numShape.width * s * parent.scaleX;
+			
+			if (temSize > maxNumSize)
+			{
+				var size:Number = maxNumSize / s / parent.scaleX;
+				
+				numShape.width  = size;
+				numShape.height = size;
+			}
+			
+			numShape.x = - width * .5 - numShape.width * .5;
+			numShape.y = - numShape.height;
+		}
+		
+		/**
+		 */		
+		private function drawPageNum(size:Number = 20):void
+		{
+			if(!numLabel)
+			{
+				addChild(numShape = new Sprite);
+				numShape.addChild(numLabel = new LabelUI);
+				numLabel.styleXML = <label radius='0' vPadding='0' hPadding='0'>
+										<format color='#FFFFFF' font='黑体' size='12'/>
+									</label>;
+				numShape.mouseChildren = false;
+				numShape.buttonMode = true;
+				numShape.cacheAsBitmap = true;
+			}
+			numLabel.text = (vo.pageVO.index + 1).toString();
+			numLabel.render();
+			numLabel.x = - numLabel.width  * .5;
+			numLabel.y = - numLabel.height * .5;
+			
+			numShape.graphics.clear();
+			numShape.graphics.lineStyle(1, 0, 0.8);
+			numShape.graphics.beginFill(0x555555, .8);
+			numShape.graphics.drawCircle(0, 0, size * .5);
+			numShape.graphics.endFill();
+		}
+		
+		private function clearPageNum():void
+		{
+			if (numLabel)
+			{
+				removeChild(numShape);
+				numShape = null;
+				numLabel = null;
+			}
+		}
+		
+		/**
+		 */		
+		private var maxNumSize:uint = 26;
+		
+		private var numLabel:LabelUI;
+		
+		/**
+		 * 用来绘制页面序号 
+		 */		
+		private var numShape:Sprite;
+		
 		/**
 		 * 复制出一个新的自己
 		 */		
@@ -607,26 +725,15 @@ package view.element
 		/**
 		 * 
 		 */		
-		public function cloneVO(newVO:ElementVO):ElementVO
+		protected function cloneVO(newVO:ElementVO):ElementVO
 		{
-			// 除了ID， 其他都与原shape属性相同
-			newVO.id = ElementCreator.id;
-			newVO.styleType = vo.styleType;
-			newVO.styleID = vo.styleID;
+			ElementUtil.cloneVO(newVO, vo);
 			
-			//提前应用样式是为了防止color和thickness被刷新
-			StyleUtil.applyStyleToElement(newVO);  
-			
-			newVO.color = vo.color;
-			newVO.colorIndex = vo.colorIndex;
-			newVO.thickness = vo.thickness;
-			
-			newVO.x = vo.x;
-			newVO.y = vo.y;
-			newVO.width = vo.width;
-			newVO.height = vo.height;
-			newVO.scale = vo.scale;
-			newVO.rotation = vo.rotation;
+			if (vo.pageVO && vo.pageVO != vo)
+			{
+				newVO.pageVO = new PageVO;
+				ElementUtil.cloneVO(newVO.pageVO, vo.pageVO);
+			}
 			
 			return newVO;
 		}
@@ -661,12 +768,6 @@ package view.element
 		{
 			return (parent) ? parent.getChildIndex(this) : -1;
 		}
-		
-		public function get isPage():Boolean
-		{
-			return _isPage;
-		}
-		protected var _isPage:Boolean;
 		
 		override public function get graphics():Graphics
 		{
@@ -717,6 +818,9 @@ package view.element
 			initListen();
 			
 			clickMoveControl = new ClickMoveControl(this, this);
+			
+			if (isPage)
+				setPage(vo.pageVO);
 		}
 		
 		/**
@@ -873,6 +977,8 @@ package view.element
 		public function toPrevState():void
 		{
 			currentState.toPrevState();
+			if (isPage)
+				numShape.visible = false;
 		}
 		
 		/**
@@ -880,6 +986,8 @@ package view.element
 		public function returnFromPrevState():void
 		{
 			currentState.returnFromPrevState();
+			if (isPage)
+				numShape.visible = true;
 		}
 		
 		/**
@@ -949,6 +1057,7 @@ package view.element
 		{
 			updateLayout();
 			drawBG();
+			if (isPage) layoutPageNum();
 		}
 		
 		/**
@@ -1044,7 +1153,22 @@ package view.element
 		public function clicked():void
 		{
 			// 非选择状态下才会触发clicked
-			currentState.clicked();
+			if (isPage)
+			{
+				if (clickMoveControl.clickTarget == numShape)
+				{
+					dispatchEvent(new PageEvent(PageEvent.PAGE_NUM_CLICKED, vo.pageVO, true));
+					vo.pageVO.dispatchEvent(new PageEvent(PageEvent.PAGE_SELECTED, vo.pageVO, false));
+				}
+				else
+				{
+					currentState.clicked();
+				}
+			}
+			else
+			{
+				currentState.clicked();
+			}
 		}
 		
 		/**
@@ -1058,6 +1182,15 @@ package view.element
 		 * 由每个状态负责向回切换，把向回切换的方法保存下来即可
 		 */		
 		public var returnFromPrevFun:Function; 
+		
+		/**
+		 * 元素能否在页面和普通元素之间互相转换。
+		 */
+		public function get elementPageConvertable():Boolean
+		{
+			return  _elementPageConvertable;
+		}
+		protected var _elementPageConvertable:Boolean = true;
 		
 		/**
 		 * 数据

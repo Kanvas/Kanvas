@@ -6,6 +6,7 @@ package view.elementSelector.toolBar
 	import com.kvs.utils.XMLConfigKit.style.Style;
 	
 	import view.element.ElementBase;
+	import view.element.PageElement;
 
 	/**
 	 */	
@@ -123,6 +124,14 @@ package view.elementSelector.toolBar
 		protected function get selectorRotation():Number
 		{
 			return toolBar.selector.rotation;	
+		}
+		
+		protected function initPageElementConvertIcons():void
+		{
+			if (element.elementPageConvertable)
+			{
+				toolBar.addBtn((element.isPage) ? toolBar.convertElementBtn : toolBar.convertPageBtn);
+			}
 		}
 		
 		/**

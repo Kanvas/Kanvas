@@ -41,7 +41,9 @@ package view.elementSelector.toolBar
 		
 		override public function render():void
 		{
+			toolBar.clear();
 			toolBar.addBtn(zoomBtn);
+			initPageElementConvertIcons();
 			toolBar.addBtn(toolBar.delBtn);
 		}
 	}

@@ -51,8 +51,8 @@ package view.elementSelector.sizeControl
 			oldX = holder.x;
 			oldY = holder.y;
 			
-			if (holder.element.vo is PageVO)
-				holder.coreMdt.pageManager.registUpdateThumbVO(PageVO(holder.element.vo));
+			if (holder.element.isPage)
+				holder.coreMdt.pageManager.registUpdateThumbVO(holder.element.vo.pageVO);
 		}
 		
 		/**

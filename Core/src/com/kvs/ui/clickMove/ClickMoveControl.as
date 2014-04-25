@@ -80,7 +80,6 @@ package com.kvs.ui.clickMove
 		 */		
 		public function stopMoveCanvas(evt:MouseEvent = null):void
 		{
-			moveTarget.stage.removeEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
 			moveTarget.stage.removeEventListener(MouseEvent.MOUSE_MOVE, moveHandler);
 			moveTarget.stage.removeEventListener(MouseEvent.MOUSE_UP, stopMoveCanvas);
 			

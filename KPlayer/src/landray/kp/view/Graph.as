@@ -1,5 +1,7 @@
 package landray.kp.view
 {	
+	import cn.vision.utils.ClassUtil;
+	
 	import flash.display.Sprite;
 	
 	import landray.kp.core.GRConfig;
@@ -38,6 +40,7 @@ package landray.kp.view
 		 */
 		private function initialize():void
 		{
+			__configClass = GRConfig;
 			__config = new configClass(this);
 		}
 		
@@ -185,14 +188,17 @@ package landray.kp.view
 		 */
 		public function set configClass(value:Class):void
 		{
-			__configClass = value;
-			__config = new configClass(this);
+			if ((value == GRConfig) || ClassUtil.isSubClass(value, GRConfig))
+			{
+				__configClass = value;
+				__config = new configClass(this);
+			}
 		}
 		
 		/**
 		 * @private 
 		 */
-		private var __configClass:Class = GRConfig;
+		private var __configClass:Class;
 		
 		/**
 		 * 返回父级Viewer实例

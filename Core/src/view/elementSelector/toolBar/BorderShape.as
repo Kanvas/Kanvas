@@ -109,13 +109,14 @@ package view.elementSelector.toolBar
 		 */		
 		override public function render():void
 		{
+			toolBar.clear();
 			toolBar.addBtn(toolBar.styleBtn);
 			toolBar.addBtn(addBtn);
 			toolBar.addBtn(cutBtn);
 			toolBar.addBtn(toolBar.topLayerBtn);
 			toolBar.addBtn(toolBar.bottomLayerBtn);
+			initPageElementConvertIcons();
 			toolBar.addBtn(toolBar.delBtn);
-			
 			
 			resetColorIconStyle();
 			

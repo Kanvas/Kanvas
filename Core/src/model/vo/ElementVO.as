@@ -52,7 +52,7 @@ package model.vo
 		public function set x(value:Number):void
 		{
 			_x = value;
-			
+			if (pageVO) pageVO.x = value;
 			
 		}
 		protected var _x:Number = 0;
@@ -66,6 +66,7 @@ package model.vo
 		public function set y(value:Number):void
 		{
 			_y = value;
+			if (pageVO) pageVO.y = value;
 		}
 		protected var _y:Number = 0;
 		
@@ -87,6 +88,7 @@ package model.vo
 		public function set height(value:Number):void
 		{
 			_height = value;
+			if (pageVO) pageVO.height = value;
 		}
 		
 		/**
@@ -106,6 +108,7 @@ package model.vo
 		public function set width(value:Number):void
 		{
 			_width = value;
+			if (pageVO) pageVO.width = value;
 		}
 		
 		/**
@@ -130,6 +133,7 @@ package model.vo
 		public function set scale(value:Number):void
 		{
 			_scale = value;
+			if (pageVO) pageVO.scale = value;
 		}
 		
 		protected var _scale:Number = 1;
@@ -148,6 +152,7 @@ package model.vo
 		public function set rotation(value:Number):void
 		{
 			_rotation = value;
+			if (pageVO) pageVO.rotation = value;
 		}
 		
 		protected var _rotation:Number = 0;
@@ -260,5 +265,27 @@ package model.vo
 			return _thickness;
 		}
 		protected var _thickness:Number = 6;
+		
+		public var pageVO:PageVO;
+		
+		public function exportData(template:XML):XML
+		{
+			if(!template)
+				template = <element/>;
+			template.@id = id;
+			template.@property = property;
+			template.@type = type;
+			template.@styleType = styleType;
+			template.@styleID = styleID;
+			template.@x = x;
+			template.@y = y;
+			template.@width = width;
+			template.@height = height;
+			template.@rotation = rotation;
+			template.@color = color.toString(16);
+			template.@colorIndex = colorIndex;
+			template.@scale = scale;
+			return template;
+		}
 	}
 }

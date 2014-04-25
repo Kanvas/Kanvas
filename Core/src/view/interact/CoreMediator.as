@@ -768,9 +768,9 @@ package view.interact
 						(element as TextEditField).checkTextBm();
 					}
 					//刷新页面编号尺寸，防止太大
-					else if (element is PageElement)
+					else if (element.isPage)
 					{
-						(element as PageElement).layoutPageNum();
+						element.layoutPageNum();
 					}
 				}
 			}
