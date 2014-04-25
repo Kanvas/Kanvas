@@ -127,7 +127,6 @@ package view.element
 		override public function clone():ElementBase
 		{
 			var cameraVO:ElementVO = new ElementVO;
-			
 			return new Camera(cloneVO(cameraVO));
 		}
 		

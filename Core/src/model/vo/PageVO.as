@@ -21,16 +21,24 @@ package model.vo
 		public function PageVO()
 		{
 			super();
-			
+			pageVO = this;
 			this.styleType = "shape";
 			this.type = "page";
 		}
 		
+		override public function exportData(template:XML):XML
+		{
+			var template:XML = super.exportData(template);
+			if (elementVO)
+				template.@elementID = elementVO.id;
+			return template;
+		}
+		
 		override public function set x(value:Number):void
 		{
-			if (x != value)
+			if (_x!= value)
 			{
-				super.x = value;
+				_x = value;
 				if (thumbUpdatable)
 					dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
 			}
@@ -38,9 +46,9 @@ package model.vo
 		
 		override public function set y(value:Number):void
 		{
-			if (y != value)
+			if (_y!= value)
 			{
-				super.y = value;
+				_y = value;
 				if (thumbUpdatable)
 					dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
 			}
@@ -48,9 +56,9 @@ package model.vo
 		
 		override public function set width(value:Number):void
 		{
-			if (width != value)
+			if (_width!= value)
 			{
-				super.width = value;
+				_width = value;
 				if (thumbUpdatable)
 					dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
 			}
@@ -58,9 +66,9 @@ package model.vo
 		
 		override public function set height(value:Number):void
 		{
-			if (height != value)
+			if (_height!= value)
 			{
-				super.height = value;
+				_height = value;
 				if (thumbUpdatable)
 					dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
 			}
@@ -68,9 +76,9 @@ package model.vo
 		
 		override public function set scale(value:Number):void
 		{
-			if (scale != value)
+			if (_scale!= value)
 			{
-				super.scale = value;
+				_scale = value;
 				if (thumbUpdatable)
 					dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
 			}
@@ -78,9 +86,9 @@ package model.vo
 		
 		override public function set rotation(value:Number):void
 		{
-			if (rotation != value)
+			if (_rotation!= value)
 			{
-				super.rotation = value;
+				_rotation = value;
 				if (thumbUpdatable)
 					dispatchEvent(new PageEvent(PageEvent.UPDATE_THUMB, this));
 			}
@@ -121,6 +129,10 @@ package model.vo
 		}
 		private var __thumbUpdatable:Boolean = true;
 		
+		public var elementID:uint;
+		
 		public var bitmapData:BitmapData;
+		
+		public var elementVO:ElementVO;
 	}
 }

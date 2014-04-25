@@ -27,11 +27,11 @@ package view.element
 			
 			xmlData = <page/>;
 			_screenshot = false;
-			_isPage = true;
+			_elementPageConvertable = false;
 			
-			this.mouseChildren = true;			
-			vo.addEventListener(PageEvent.DELETE_PAGE_FROM_UI, deletePageHandler);
-			vo.addEventListener(PageEvent.UPDATE_PAGE_INDEX, updatePageIndex);
+			mouseChildren = true;			
+			//vo.addEventListener(PageEvent.DELETE_PAGE_FROM_UI, deletePageHandler);
+			//vo.addEventListener(PageEvent.UPDATE_PAGE_INDEX, updatePageIndex);
 		}
 		
 		override public function disable():void
@@ -39,15 +39,15 @@ package view.element
 			super.disable();
 			
 			//使得放大时，页面编号依旧可被点击
-			this.mouseChildren = true;
+			mouseChildren = true;
 		}
 		
 		/**
 		 */		
-		private function updatePageIndex(evt:PageEvent):void
+		/*private function updatePageIndex(evt:PageEvent):void
 		{
 			drawPageNum();
-		}
+		}*/
 		
 		/**
 		 */		
@@ -65,22 +65,9 @@ package view.element
 		override protected function preRender():void
 		{
 			super.preRender();
-			
-			numLabel.styleXML = <label radius='0' vPadding='0' hPadding='0'>
-									<format color='#FFFFFF' font='华文细黑' size='12'/>
-								  </label>
-			
-			drawPageNum();
-			layoutPageNum();
-			
-			numShape.mouseChildren = false;
-			numShape.buttonMode = true;
-			numShape.cacheAsBitmap = true;
-			
-			numShape.addChild(numLabel);
-			addChild(numShape);
+			setPage(pageVO);
 		}
-		 
+		
 		/**
 		 * 热点在预览状态时不显示
 		 */		
@@ -93,7 +80,7 @@ package view.element
 			graphics.drawRect(- width * .5, - height * .5, width, height);
 			graphics.endFill();
 			
-			numShape.visible = false;
+			//numShape.visible = false;
 		}
 		
 		/**
@@ -102,7 +89,7 @@ package view.element
 		{
 			super.returnFromPrevState();
 			
-			numShape.visible = true;
+			//numShape.visible = true;
 			this.render();
 		}
 		
@@ -173,13 +160,13 @@ package view.element
 				
 			}
 			
-			layoutPageNum();
+			//layoutPageNum();
 		}
 		
 		/**
 		 * 页面点击有可能会点击到页面编号
 		 */		
-		override public function clicked():void
+		/*override public function clicked():void
 		{
 			if (clickMoveControl.clickTarget == numShape)
 			{
@@ -190,13 +177,13 @@ package view.element
 			{
 				currentState.clicked();
 			}
-		}
+		}*/
 		
 		/**
 		 *  保证页面编号控制在和尺寸内
 		 * 
 		 */		
-		public function layoutPageNum(s:Number = NaN):void
+		/*public function layoutPageNum(s:Number = NaN):void
 		{
 			var h:Number;
 			var s:Number;
@@ -219,16 +206,11 @@ package view.element
 			
 			numShape.x = - width * .5 - numShape.width * .5;
 			numShape.y = - numShape.height;
-		}
-		
-		/**
-		 *  
-		 */		
-		private var maxNumSize:uint = 26;
+		}*/
 		
 		/**
 		 */		
-		private function drawPageNum(size:Number = 20):void
+		/*private function drawPageNum(size:Number = 20):void
 		{
 			numShape.graphics.clear();
 			
@@ -241,14 +223,18 @@ package view.element
 			numShape.graphics.beginFill(0x555555, .8);
 			numShape.graphics.drawCircle(0, 0, size * .5);
 			numShape.graphics.endFill();
-		}
+		}*/
 		
-		private var numLabel:LabelUI = new LabelUI;
+		/**
+		 */		
+		/*private var maxNumSize:uint = 26;
+		
+		private var numLabel:LabelUI = new LabelUI;*/
 		
 		/**
 		 * 用来绘制页面序号 
 		 */		
-		private var numShape:Sprite = new Sprite;
+		//private var numShape:Sprite = new Sprite;
 		
 		/**
 		 */		
@@ -310,12 +296,10 @@ package view.element
 			ViewUtil.show(selector.scaleRollControl);
 		}
 		
-		/**
-		 * 来自主UI中的删除页面命令
-		 */		
-		private function deletePageHandler(e:PageEvent):void
+		
+		override public function get isPage():Boolean
 		{
-			del();
+			return true;
 		}
 		
 		private function get pageVO():PageVO

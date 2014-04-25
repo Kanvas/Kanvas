@@ -8,6 +8,8 @@ package view.pagePanel
 	import com.kvs.utils.XMLConfigKit.style.Style;
 	import com.kvs.utils.graphic.BitmapUtil;
 	
+	import commands.Command;
+	
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.KeyboardEvent;
@@ -441,6 +443,9 @@ package view.pagePanel
 			
 			currentDragPageIndex = currentDragPageUI.pageVO.index;
 			
+			sendingDraggPageVO = currentDragPageUI.pageVO;
+			sendingPageVOIndex = currentDragPageIndex;
+			
 			evt.pageUI.startDrag();
 		}
 		
@@ -468,6 +473,7 @@ package view.pagePanel
 				
 				var pageY:Number = getPagePos(currentDragPageUI).y;
 				
+				
 				// 向上拖动
 				if (pageY < min && currentDragPageIndex >= 1)
 				{
@@ -491,6 +497,9 @@ package view.pagePanel
 		
 		}
 		
+		private var sendingDraggPageVO:PageVO;
+		private var sendingPageVOIndex:int;
+		
 		/**
 		 */		
 		private function stopDragPage(evt:PagePanelEvent):void
@@ -512,6 +521,11 @@ package view.pagePanel
 					pageUI.x = 0;
 					pageUI.y = pageUI.pageVO.index * pageUI.h;
 					pageUI.updataLabel();
+				}
+				if (sendingDraggPageVO.index != sendingPageVOIndex)
+				{
+					var obj:Object = {pageVO:sendingDraggPageVO, oldIndex:sendingPageVOIndex, newIndex:sendingDraggPageVO.index};
+					CoreFacade.coreMediator.sendNotification(Command.CHANGE_PAGE_INDEX, obj);
 				}
 				
 				pagesCtn.graphics.clear();

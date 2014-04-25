@@ -68,6 +68,8 @@ package modules.pages
 			proxy.index = (index > 0 && index < length) ? index : length;
 			proxy.ifSelectedAfterCreate = false;
 			
+			__index = proxy.index;
+			
 			coreMdt.createNewShapeMouseUped = true;
 			coreMdt.sendNotification(Command.CREATE_PAGE, proxy);
 		}
@@ -203,7 +205,6 @@ package modules.pages
 					coreMdt.zoomMoveControl.zoomAuto();
 				}
 			}
-			
 		}
 		
 		/**
@@ -236,7 +237,11 @@ package modules.pages
 		
 		public function registOverlappingPageVOs(current:ElementBase):void
 		{
-			if (current.screenshot)
+			if (current.isPage) //元素本身是页面
+			{
+				registUpdateThumbVO(current.vo.pageVO);
+			}
+			if (current.screenshot) //元素为可见元素
 			{
 				var elements:Vector.<ElementBase> = proxy.elements;
 				if (elements)
@@ -244,11 +249,11 @@ package modules.pages
 					var currentRect:Rectangle = LayoutUtil.getItemRect(coreMdt.canvas, current, false, true, false);
 					for each(var element:ElementBase in elements)
 					{
-						if (element is PageElement)
+						if (element.isPage)
 						{
 							var elementRect:Rectangle = LayoutUtil.getItemRect(coreMdt.canvas, element, false, true, false);
 							if (RectangleUtil.rectOverlapping(currentRect, elementRect))
-								registUpdateThumbVO(element.vo as PageVO);
+								registUpdateThumbVO(element.vo.pageVO);
 						}
 					}
 				}
@@ -295,33 +300,34 @@ package modules.pages
 		
 		public function refreshPageThumbsByElement(element:ElementBase):Vector.<PageVO>
 		{
-			if (element.screenshot)
-			{
-				var vector:Vector.<PageVO> = getOverlappingPages(element);
-				for each (var vo:PageVO in vector)
-					registUpdateThumbVO(vo);
-			}
+			var vector:Vector.<PageVO> = getOverlappingPages(element);
+			for each (var vo:PageVO in vector)
+				registUpdateThumbVO(vo);
+			
 			return refreshVOThumbs();
 		}
 		
 		public function getOverlappingPages(current:ElementBase):Vector.<PageVO>
 		{
+			if (current.isPage)
+			{
+				var vector:Vector.<PageVO> = new Vector.<PageVO>;
+				vector.push(current);
+			}
 			if (current.screenshot)
 			{
 				var elements:Vector.<ElementBase> = proxy.elements;
-				var vector:Vector.<PageVO> = new Vector.<PageVO>;
-				if (elements)
+				if(!vector) vector = new Vector.<PageVO>;
+				if( elements)
 				{
 					var currentRect:Rectangle = LayoutUtil.getItemRect(coreMdt.canvas, current, false, true, false);
 					for each(var element:ElementBase in elements)
 					{
-						if (element is PageElement)
+						if (element.isPage)
 						{
 							var elementRect:Rectangle = LayoutUtil.getItemRect(coreMdt.canvas, element, false, true, false);
 							if (RectangleUtil.rectOverlapping(currentRect, elementRect))
-							{
-								vector.push(element.vo as PageVO);
-							}
+								vector.push(element.vo.pageVO);
 						}
 					}
 				}

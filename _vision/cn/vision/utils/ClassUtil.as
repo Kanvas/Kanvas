@@ -109,5 +109,26 @@ package cn.vision.utils
 			}
 			return superClassNameArray;
 		}
+		
+		/**
+		 * Check whether value class is the sub class of the super class.
+		 * 
+		 * @param $value value class
+		 * @param $superClass super class
+		 * 
+		 * @return <code>Boolean</code>
+		 */
+		public static function isSubClass($value:Class, $superClass:Class):Boolean
+		{
+			var superClassName:String = getQualifiedSuperclassName($value);
+			while ( superClassName)
+			{
+				if( superClassName== getQualifiedClassName($superClass))
+					return true;
+				else
+					superClassName = getQualifiedSuperclassName(getDefinitionByName(superClassName));
+			}
+			return false;
+		}
 	}
 }

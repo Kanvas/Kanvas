@@ -116,6 +116,8 @@ package view.element
 		
 		public static const DEL_PAGE:String = "deletePage";
 		
+		public static const CONVERT_PAGE_2_ELEMENT:String = "convertPage2Element";
+		
 		
 		
 		//--------------复制，粘贴不同元件区别对待

@@ -118,7 +118,9 @@ package view.elementSelector.toolBar
 			toolBar.addBtn(cutBtn);
 			toolBar.addBtn(toolBar.topLayerBtn);
 			toolBar.addBtn(toolBar.bottomLayerBtn);
+			initPageElementConvertIcons();
 			toolBar.addBtn(toolBar.delBtn);
+			
 		}
 		
 		/**

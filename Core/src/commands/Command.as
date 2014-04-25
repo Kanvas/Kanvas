@@ -196,7 +196,16 @@ package commands
 		 */		
 		public static const DELETE_CHILD_IN_TEM_GROUP:String = 'delChildsInTemGroup';
 		
+		/**
+		 * 页面转换为元素
+		 */		
+		public static const CONVERT_PAGE_2_ELEMENT:String = "convertPage2Element";
 		
+		
+		/**
+		 * 元素转换为页面
+		 */		
+		public static const CONVERT_ELEMENT_2_PAGE:String = "convertElement2Page";
 		
 		
 		
@@ -234,6 +243,8 @@ package commands
 		/**
 		 */		
 		public static const PAST_GROUP:String = 'pastGroup';
+		
+		public static const CHANGE_PAGE_INDEX:String = "changePageIndex";
 		
 		/**
 		 */		

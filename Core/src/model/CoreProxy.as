@@ -199,17 +199,6 @@ package model
 		//------------------------------------------
 		
 		
-		public function exportBytData(pageW:Number = 960, pageH:Number = 540):ByteArray
-		{
-			
-			return null;
-		}
-		
-		public function importBytData(bytes:ByteArray):void
-		{
-			
-		}
-		
 		/**
 		 * 将所有资源打包
 		 */		
@@ -302,24 +291,22 @@ package model
 			for each (var item:ElementBase in elements)
 			{
 				//图层 － 1 是因为canvas最底层有个拖动交互元素
-				elementsWidthIndex[canvas.getChildIndex(item) - 1] = item;
+				elementsWidthIndex[item.index - 1] = item;
 			}
 			
-			var pages:Vector.<PageElement> = new Vector.<PageElement>;
-			var pagesNode:XML = <pages/>;
+			var pageNode:XML = <pages/>;
 			for each (item in elementsWidthIndex)
 			{
-				if (item is PageElement)
-				{
-					pagesNode.appendChild(item.exportData());
-				}
-				else
-				{
+				if(!(item is PageElement))
 					mainNode.appendChild(item.exportData());
-				}
 			}
 			
-			xml.appendChild(pagesNode);
+			for each (var vo:PageVO in CoreFacade.coreMediator.pageManager.pages)
+			{
+				pageNode.appendChild(vo.exportData(<page/>));
+			}
+			
+			xml.appendChild(pageNode);
 			
 			// 背景设置
 			xml.appendChild(bgVO.xml);
@@ -358,10 +345,13 @@ package model
 			
 			//先创建所有元素，再匹配组合关系
 			var groupElements:Array = [];
+			var vos:Object = {};
 			var item:XML;
 			for each(item in xml.main.children())
 			{
-				var element:ElementBase = createElement(item);//创建并初始化元素
+				var vo:ElementVO = createVO(item);
+				var element:ElementBase = createElement(vo);//创建并初始化元素
+				vos[vo.id] = vo;
 				if (element is GroupElement)
 				{
 					element.xmlData = item;
@@ -385,8 +375,18 @@ package model
 			var pages:Vector.<PageVO> = new Vector.<PageVO>;
 			for each(item in xml.pages.children())
 			{
-				element = createElement(item);//创建并初始化元素
-				pages.push(element.vo as PageVO);
+				var pageVO:PageVO = (createVO(item) as PageVO);
+				if (pageVO.elementID > 0 && vos[pageVO.elementID])
+				{
+					element.setPage(pageVO);
+					//pageVO.elementVO = vos[pageVO.elementID];
+					//pageVO.elementVO.pageVO = pageVO;
+				}
+				else
+				{
+					element = createElement(pageVO);
+				}
+				pages.push(pageVO);
 			}
 			
 			pages.sort(sortOnIndex);
@@ -445,9 +445,7 @@ package model
 		 */		
 		private var temElementMap:Map = new Map;
 		
-		/**
-		 */		
-		public function createElement(item:XML):ElementBase
+		private function createVO(item:XML):ElementVO
 		{
 			var vo:ElementVO = ElementCreator.getElementVO(item.name().toString());
 			
@@ -464,13 +462,17 @@ package model
 				var imgVO:ImgVO = vo as ImgVO;
 				ImgLib.setID((vo as ImgVO).imgID); 
 			}
-			
+			return vo;
+		}
+		
+		/**
+		 */		
+		private function createElement(vo:ElementVO):ElementBase
+		{
 			var element:ElementBase = ElementCreator.getElementUI(vo);
 			
 			if (element is ImgElement)
-			{
 				element.addEventListener(ElementEvent.IMAGE_TO_RENDER, imageToNormalHandler, false, 0, true);
-			}
 			
 			//虽然添加到了显示列表，但元素未渲染，因为未设定样式
 			CoreFacade.addElement(element);
@@ -482,6 +484,7 @@ package model
 		
 		private function imageToNormalHandler(e:ElementEvent):void
 		{
+			e.currentTarget.removeEventListener(ElementEvent.IMAGE_TO_RENDER, imageToNormalHandler);
 			CoreFacade.coreMediator.pageManager.refreshPageThumbsByElement(e.currentTarget as ElementBase);
 		}
 		

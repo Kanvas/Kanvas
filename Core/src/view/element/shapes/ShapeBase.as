@@ -79,7 +79,7 @@ package view.element.shapes
 		
 		/**
 		 */		
-		override public function cloneVO(newVO:ElementVO):ElementVO
+		override protected function cloneVO(newVO:ElementVO):ElementVO
 		{
 			super.cloneVO(newVO);
 			

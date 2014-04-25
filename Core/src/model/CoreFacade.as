@@ -226,7 +226,10 @@ package model
 			registerCommand(Command.COPY_GROUP, CopyGroupCMD);
 			registerCommand(Command.PAST_GROUP, PasteGroupCMD);
 			
+			registerCommand(Command.CONVERT_PAGE_2_ELEMENT, ConvertPage2ElementCMD);
+			registerCommand(Command.CONVERT_ELEMENT_2_PAGE, ConvertElement2PageCMD);
 			
+			registerCommand(Command.CHANGE_PAGE_INDEX, ChangePageIndexCMD);
 		}
 		
 		/**

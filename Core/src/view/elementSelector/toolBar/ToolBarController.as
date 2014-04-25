@@ -141,7 +141,16 @@
 		}
 		
 		
+		private function convertPageHandler(e:MouseEvent):void
+		{
+			selector.coreMdt.sendNotification(Command.CONVERT_ELEMENT_2_PAGE, selector.element);
+		}
 		
+		
+		private function convertElementHandler(e:MouseEvent):void
+		{
+			selector.coreMdt.sendNotification(Command.CONVERT_PAGE_2_ELEMENT, selector.element);
+		}
 		
 		
 		//----------------------------------------------------
@@ -286,9 +295,10 @@
 		 */		
 		public function resetToolbar():void
 		{
-			this.clear();
-			curToolBar.render();
-			this.renderBG();
+			clear();
+			if (curToolBar)
+				curToolBar.render();
+			renderBG();
 		}
 		
 		/**
@@ -528,6 +538,14 @@
 			bottomLayerBtn.doubleClickEnabled = true;
 			bottomLayerBtn.addEventListener(MouseEvent.DOUBLE_CLICK, bottomLayer, false, 0, true);
 			
+			convertPageBtn.tips = "转换为页面";
+			initBtnStyle(convertPageBtn, 'link');
+			convertPageBtn.addEventListener(MouseEvent.CLICK, convertPageHandler);
+			
+			convertElementBtn.tips = '转换为元素';
+			initBtnStyle(convertElementBtn, 'link');
+			convertElementBtn.addEventListener(MouseEvent.CLICK, convertElementHandler);
+			
 			styleBtn.tips = '颜色/样式';
 			this.styleBtn.w = btnWidth;
 			this.styleBtn.h = btnHeight;
@@ -582,6 +600,10 @@
 		 * 颜色按钮 
 		 */		
 		public var styleBtn:StyleBtn = new StyleBtn;
+		
+		public var convertPageBtn:IconBtn = new IconBtn;
+		
+		public var convertElementBtn:IconBtn = new IconBtn;
 		
 		/**
 		 * 注册点到工具面板的距离

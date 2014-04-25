@@ -2,6 +2,8 @@ package view.element.imgElement
 {
 	import model.vo.ImgVO;
 	
+	import util.ElementUtil;
+	
 	import view.element.ElementBase;
 
 	public class NormalState extends ImgLoadStateBase
@@ -20,7 +22,8 @@ package view.element.imgElement
 			imgVO.url = element.imgVO.url;
 			imgVO.imgID = element.imgVO.imgID;
 			
-			var newElement:ImgElement = new ImgElement(element.cloneVO(imgVO) as ImgVO);
+			ElementUtil.cloneVO(imgVO, element.vo);
+			var newElement:ImgElement = new ImgElement(imgVO);
 			newElement.currLoadState = element.normalState;
 			
 			newElement.toNomalState();
