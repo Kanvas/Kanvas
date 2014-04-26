@@ -61,7 +61,11 @@ package view.editor.text
 			_manager = new TextContainerManager(textCanvas);
 			textManager.editingMode = EditingMode.READ_ONLY;
 			
+			var temColor:Object = textVO.color;
+			textVO.color = 0x000000;//文本字体按钮永远都用显示为黑色
 			FlowTextManager.renderTextVOLabel(this, textVO);
+			textVO.color = temColor;
+			
 			FlowTextManager.updateTexLayout(textVO.text, textManager);
 			textCanvas.scaleX = textCanvas.scaleY = labelHeight / textCanvas.height;
 			

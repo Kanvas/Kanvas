@@ -38,6 +38,13 @@ package view.toolBar
 		
 		/**
 		 */		
+		private function addImgHandler(evt:MouseEvent):void
+		{
+			this.dispatchEvent(new InteractEvent(InteractEvent.INSERT_IMAGE));
+		}
+		
+		/**
+		 */		
 		private function openThemeHandler(evt:MouseEvent):void
 		{
 			this.dispatchEvent(new InteractEvent(InteractEvent.OPEN_THEME_PANEL));
@@ -88,17 +95,29 @@ package view.toolBar
 			redoBtn.tips = '重做';
 			addChild(redoBtn);
 			
+			//图片插入面板
+			img_up;
+			img_over;
+			img_down;
+			imgBtn.iconW = imgBtn.iconH = 30;
+			imgBtn.w = imgBtn.h = 30;
+			imgBtn.setIcons("img_up", "img_over", "img_down");
+			imgBtn.tips = '插入图片';
+			centerBtnsC.addChild(imgBtn);
+			imgBtn.addEventListener(MouseEvent.CLICK, addImgHandler, false, 0, true);
 			
-			add_up;
-			add_over;
-			add_down;
+			//图形创建面板
+			shape_up;
+			shape_over;
+			shape_down;
+			
 			addBtn.iconW = addBtn.iconH = 30;
 			addBtn.w = addBtn.h = 30;
-			addBtn.setIcons("add_up", "add_over", "add_down");
+			addBtn.setIcons("shape_up", "shape_over", "shape_down");
 			addBtn.tips = '开启图形创建面板';
+			addBtn.x = imgBtn.width + 20;
 			centerBtnsC.addChild(addBtn);
 			addBtn.addEventListener(MouseEvent.CLICK, addHandler, false, 0, true);
-			
 			
 			style_up;
 			style_over;
@@ -108,7 +127,7 @@ package view.toolBar
 			themeBtn.setIcons("style_up", "style_over", "style_down");
 			themeBtn.tips = '开启风格样式面板';
 			centerBtnsC.addChild(themeBtn);
-			themeBtn.x = addBtn.width + 10;
+			themeBtn.x = addBtn.x + addBtn.width + 20;
 			themeBtn.addEventListener(MouseEvent.CLICK, openThemeHandler, false, 0, true);
 			
 			addChild(customButtonContainer = new Sprite);
@@ -200,6 +219,11 @@ package view.toolBar
 		 * 元素创建按钮，点击后会弹出元素创建面板 
 		 */		
 		public var addBtn:IconBtn = new IconBtn;
+		
+		/**
+		 * 图片插入按钮 
+		 */		
+		public var imgBtn:IconBtn = new IconBtn;
 		
 		/**
 		 * 风格设置按钮，点击后会弹出风格设置面板，用于设置风格和背景； 

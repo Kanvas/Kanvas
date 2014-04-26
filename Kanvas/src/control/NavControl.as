@@ -26,6 +26,7 @@ package control
 		{
 			this.app = main;
 			
+			app.addEventListener(InteractEvent.INSERT_IMAGE, insertImageHandler, false, 0, true);
 			app.addEventListener(InteractEvent.OPEN_SHAPE_PANEL, openShapePanelHandler, false, 0, true);
 			app.addEventListener(InteractEvent.CLOSE_SHAPE_PANE, closeShapePanelHandler, false, 0, true);
 			
@@ -223,6 +224,13 @@ package control
 			
 			
 			autofit(1, 0);
+		}
+		
+		/**
+		 */		
+		private function insertImageHandler(evt:InteractEvent):void
+		{
+			app.kvsCore.insertIMG();
 		}
 		
 		/**

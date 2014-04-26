@@ -16,8 +16,14 @@ package
 	import flash.utils.ByteArray;
 	
 	import model.ConfigInitor;
+	import model.CoreFacade;
 	
+	import util.img.ImgInsertEvent;
+	import util.img.ImgInsertor;
 	import util.img.ImgLib;
+	
+	import view.element.ElementBase;
+	import view.element.imgElement.ImgElement;
 
 	/**
 	 * air客户端的api
@@ -27,6 +33,22 @@ package
 		public function APIForAIR(core:CoreApp)
 		{
 			super(core);
+			
+			imgInter.addEventListener(ImgInsertEvent.IMG_LOADED, imgLoaded, false, 0, true);
+		}
+		
+		/**
+		 */		
+		private function imgLoaded(evt:ImgInsertEvent):void
+		{
+			
+		}
+		
+		/**
+		 */		
+		private function imgLoadError(e:ImgInsertEvent):void
+		{
+			
 		}
 		
 		/**
@@ -73,6 +95,8 @@ package
 			var list:Array = reader.getEntries();
 			var xml:String;
 			var imgID:String;
+			var imgIDsInKvs:Array = new Array;
+				
 			var imgData:ByteArray;
 			
 			for each(var entry:ZipEntry in list)
@@ -87,12 +111,37 @@ package
 					imgID = entry.getFilename().split('.')[0].toString();
 					
 					if (uint(imgID) != 0)
+					{
 						ImgLib.register(imgID, imgData);
+						imgIDsInKvs.push(imgID);
+					}
 				}
 			}
 			
 			this.setXMLData(xml);
 			reader.close();
+			
+			
+			
+			
+			
+			
+			
+			//这里需要清理冗余的图片数据
+			var imgIDsInXML:Array = [];
+			for each (var element:ElementBase in CoreFacade.coreProxy.elements)
+			{
+				if (element is ImgElement)
+					imgIDsInXML.push((element as ImgElement).imgVO.imgID);
+			}
+			
+			//如果数据中的图片id不存在于xml中，则说明此图片是多余图片，删除
+			for each (var id:uint in imgIDsInKvs)
+			{
+				if (imgIDsInXML.indexOf(id) == - 1)
+					ImgLib.unRegister(id);
+			}
+			
 			PerformaceTest.end();
 		}
 		
@@ -152,10 +201,19 @@ package
 			}
 			
 			// 添加图片资源数据
+			var imgBytes:ByteArray;
 			for each (var imgID:uint in imgIDs)
 			{
 				//imgDataBytes.clear();
-				imgDataBytes = ImgLib.getData(imgID);
+				imgDataBytes = new ByteArray();
+				imgBytes = ImgLib.getData(imgID);
+				imgBytes.position = 0;
+				imgDataBytes.writeBytes(imgBytes, 0, imgBytes.bytesAvailable);
+				imgDataBytes.position = 0;
+				
+				//这里要防止反复保存时，原始图片数据被不断的压缩
+				imgInter.loadImgBytes(imgDataBytes);
+				
 				writer.addBytes(imgDataBytes,imgID.toString() + '.png');
 			}
 			
@@ -171,8 +229,9 @@ package
 			}
 			
 			writer.close();
-			
 			PerformaceTest.end("save");
 		}
+		
+		private var imgInter:ImgInsertor = new ImgInsertor();
 	}
 }

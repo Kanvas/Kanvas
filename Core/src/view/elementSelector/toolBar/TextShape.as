@@ -60,7 +60,7 @@ package view.elementSelector.toolBar
 		{
 			var styleXML:XML = XMLVOMapper.getStyleXMLBy_ID('text', 'colors') as XML;
 			
-			resetColorBtns(styleXML);
+			//resetColorBtns(styleXML);
 		}
 		
 		/**
@@ -106,7 +106,6 @@ package view.elementSelector.toolBar
 		 */		
 		override public function render():void
 		{
-			toolBar.addBtn(toolBar.styleBtn);
 			toolBar.addBtn(editBtn);
 			toolBar.addBtn(toolBar.topLayerBtn);
 			toolBar.addBtn(toolBar.bottomLayerBtn);

@@ -9,9 +9,6 @@ package view.editor.text
 	import com.kvs.utils.XMLConfigKit.style.Style;
 	import com.kvs.utils.layout.BoxLayout;
 	
-	import flash.display.Sprite;
-	import flash.events.MouseEvent;
-	
 	import view.elementSelector.toolBar.StyleBtn;
 	
 	/**
@@ -93,7 +90,7 @@ package view.editor.text
 		 */		
 		public function update(xml:XML):void
 		{
-			colorPanel.panelWidth = xml.children().length() * iconSize;
+			colorPanel.panelWidth = iconSize * 10;
 			colorPanel.dataXML = xml;
 			colorPanel.x = - colorPanel.panelWidth / 2;
 			colorPanel.y = - colorPanel.height;

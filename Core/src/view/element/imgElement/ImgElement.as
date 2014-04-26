@@ -83,7 +83,7 @@ package view.element.imgElement
 			removeLoading();
 			initBmp(imgVO.sourceData);
 			currLoadState.render();
-			trace(vo.width, vo.height, vo.scale)
+			
 			dispatchEvent(new ElementEvent(ElementEvent.IMAGE_TO_RENDER));
 		}
 		
@@ -251,6 +251,7 @@ package view.element.imgElement
 				}
 			}
 		}
+		
 		private var __smooth:Boolean = true;
 		
 		

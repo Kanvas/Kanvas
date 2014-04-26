@@ -111,7 +111,26 @@ package util.img
 			isLoading = true;
 			
 			imgLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, imageLoaedFromLocal);
-			imgLoader.loadBytes(bytes);
+			imgLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imageLoadErrorFromLocal);
+			
+			try
+			{
+				imgLoader.loadBytes(bytes);
+			} 
+			catch(error:Error) 
+			{
+				trace("图片格式错误");
+			}
+		}
+		
+		/**
+		 */		
+		private function imageLoadErrorFromLocal(e:IOErrorEvent):void
+		{
+			this.dispatchEvent(new ImgInsertEvent(ImgInsertEvent.IMG_LOADED_ERROR));
+			
+			imgLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imageLoaedFromLocal);
+			imgLoader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imageLoadErrorFromLocal);
 		}
 		
 		/**
@@ -125,6 +144,7 @@ package util.img
 			isLoading = false;
 			
 			imgLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imageLoaedFromLocal);
+			imgLoader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imageLoadErrorFromLocal);
 		}
 		
 		/**
