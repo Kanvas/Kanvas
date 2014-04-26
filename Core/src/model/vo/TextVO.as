@@ -109,6 +109,28 @@ package model.vo
 			_ifMutiLine = XMLVOMapper.boolean(value);
 		}
 		
+		/**
+		 * 默认文本采用样式模版的颜色序号，如果用户选择了其他颜色，
+		 * 
+		 * 则认为用户采用了自定义颜色，样式改变时，文本颜色不随样式走
+		 */
+		public function get isCustomColor():Object
+		{
+			return _isCustomColor;
+		}
+		
+		/**
+		 * @private
+		 */
+		public function set isCustomColor(value:Object):void
+		{
+			_isCustomColor = XMLVOMapper.boolean(value);;
+		}
+		
+		/**
+		 */		
+		private var _isCustomColor:Object = false;
+		
 		
 	}
 }

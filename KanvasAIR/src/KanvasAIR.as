@@ -3,6 +3,7 @@ package
 	import com.kvs.ui.button.IconBtn;
 	
 	import commands.ChangeBgImgAIR;
+	import commands.DelImageFromAIRCMD;
 	import commands.InsertIMGFromAIR;
 	
 	import flash.desktop.Clipboard;
@@ -39,6 +40,8 @@ package
 			CoreApp.isAIR = true;
 			CoreFacade.inserImgCommad = InsertIMGFromAIR;
 			CoreFacade.insertBgCommand = ChangeBgImgAIR;
+			CoreFacade.delImgCommad = DelImageFromAIRCMD;
+			
 			FlowTextManager.ifUseEmbedFont = true;
 			kvsCore.addEventListener(KVSEvent.SAVE, saveHandler);
 		}

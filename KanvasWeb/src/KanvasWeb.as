@@ -27,6 +27,8 @@ package
 		{
 			CoreFacade.inserImgCommad = InserImageCMD;
 			CoreFacade.insertBgCommand = ChangeBgImgCMD;
+			CoreFacade.delImgCommad = DeleteImgCMDBase;
+			
 			kvsCore.addEventListener(KVSEvent.SAVE, saveHandler);
 		}
 		/**

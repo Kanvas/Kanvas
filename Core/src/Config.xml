@@ -13,7 +13,7 @@
 		<fill id="PageFill" color='#eeeeee, #eeeeee' alpha='0.6, 0.6' radioes='0,255' angle='90'/>
 		
 		<!--文本和背景颜色全局统一， 每套样式尽需指定颜色序号-->
-		<!--colors id='text'>
+		<colors id='text'>
 			<color>#F7EDBA</color>
             <color>#FFB57D</color>
             <color>#FF9286</color>
@@ -46,7 +46,7 @@
             <color>#437314</color>
             <color>#333333</color>
             <color>#000000</color>
-		</colors-->
+		</colors>
 		
 		<colors id='bg'>
 			<color>#FFFFFF</color>
@@ -143,20 +143,20 @@
 			
 			<!-- 文本模板 -->
 			<template styleID='text'>
-				<text styleID='Title' text='微软雅黑' colorIndex='0'/>
-				<text styleID='SubTitle' text='仿宋' colorIndex='0'/>
-				<text styleID='Body' text='宋体' colorIndex='0'/>
+				<text styleID='Title' text='微软雅黑' colorIndex='28'/>
+				<text styleID='SubTitle' text='仿宋' colorIndex='28'/>
+				<text styleID='Body' text='宋体' colorIndex='28'/>
 			</template>
 			
-			<text styleID='Title' size='30'>
-				<label format='FontTitle'/>
+			<text styleID='Title' size='30' colorIndex='28'>
+				<label format='FontTitle' />
 			</text>
 			
-			<text styleID='SubTitle' size='30'>
+			<text styleID='SubTitle' size='30' colorIndex='28'>
 				<label format='FontSubTitle'/>
 			</text>
 			
-			<text styleID='Body' size='30'>
+			<text styleID='Body' size='30' colorIndex='28'>
 				<label format='FontBody'/>
 			</text>
 			
@@ -189,17 +189,6 @@
 	            <color>#FFFFFF</color>
 				<color>#CDCDCD</color>
 	            <color>#71777F</color>
-			</colors>
-			
-			<colors styleID='text'>
-				<color>#000000</color>
-	            <color>#00AFFF</color>
-				<color>#FFE429</color>
-	            <color>#9ED54C</color>
-	            <color>#F25987</color>
-	            <color>#B27AFF</color>
-	            <color>#FFFFFF</color>
-				<color>#CDCDCD</color>
 			</colors>
 			
 		</White>
@@ -259,20 +248,20 @@
 			
 			<!-- 文本模板 -->
 			<template styleID='text'>
-				<text styleID='Title' text='微软雅黑' colorIndex='0'/>
-				<text styleID='SubTitle' text='仿宋' colorIndex='0'/>
-				<text styleID='Body' text='宋体' colorIndex='0'/>
+				<text styleID='Title' text='微软雅黑' colorIndex='8'/>
+				<text styleID='SubTitle' text='仿宋' colorIndex='8'/>
+				<text styleID='Body' text='宋体' colorIndex='8'/>
 			</template>
 			
-			<text styleID='Title' size='30'>
+			<text styleID='Title' size='30' colorIndex='8'>
 				<label format='FontTitle'/>
 			</text>
 			
-			<text styleID='SubTitle' size='30'>
+			<text styleID='SubTitle' size='30' colorIndex='8'>
 				<label format='FontSubTitle'/>
 			</text>
 			
-			<text styleID='Body' size='30'>
+			<text styleID='Body' size='30' colorIndex='8'>
 				<label format='FontBody'/>
 			</text>
 			
@@ -307,16 +296,6 @@
 	            <color>#000000</color>
 			</colors>
 			
-			<colors styleID='text'>
-				<color>#FFFFFF</color>
-				<color>#AFDA4F</color>
-				<color>#8AD8F7</color>
-	            <color>#FFE429</color>
-	            <color>#CF73D3</color>
-	            <color>#FE7B62</color>
-				<color>#CDCDCD</color>
-	            <color>#000000</color>
-			</colors>
 		</Black>
 
 		<!-------------------------------------------------------------------------------------------->
@@ -374,20 +353,20 @@
 			
 			<!-- 文本模板 -->
 			<template styleID='text'>
-				<text styleID='Title' text='微软雅黑' colorIndex='0'/>
-				<text styleID='SubTitle' text='仿宋' colorIndex='0'/>
-				<text styleID='Body' text='宋体' colorIndex='0'/>
+				<text styleID='Title' text='微软雅黑' colorIndex='8'/>
+				<text styleID='SubTitle' text='仿宋' colorIndex='8'/>
+				<text styleID='Body' text='宋体' colorIndex='8'/>
 			</template>
 			
-			<text styleID='Title' size='30'>
+			<text styleID='Title' size='30' colorIndex='8'>
 				<label format='FontTitle'/>
 			</text>
 			
-			<text styleID='SubTitle' size='30'>
+			<text styleID='SubTitle' size='30' colorIndex='8'>
 				<label format='FontSubTitle'/>
 			</text>
 			
-			<text styleID='Body' size='30'>
+			<text styleID='Body' size='30' colorIndex='8'>
 				<label format='FontBody'/>
 			</text>
 			
@@ -423,16 +402,7 @@
 	            <color>#6E1418</color>
 			</colors>
 			
-			<colors styleID='text'>
-				<color>#FFFFFF</color>
-				<color>#CDCDCD</color>
-	            <color>#71777F</color>
-				<color>#A8CF53</color>
-				<color>#89D0EC</color>
-	            <color>#F5DC37</color>
-	            <color>#0E789A</color>
-	            <color>#6E1418</color>
-			</colors>
+			
 		</Red>
 
 <!-------------------------------------------------------------------------------------------->
@@ -490,20 +460,20 @@
 			
 			<!-- 文本模板 -->
 			<template styleID='text'>
-				<text styleID='Title' text='微软雅黑' colorIndex='0'/>
-				<text styleID='SubTitle' text='仿宋' colorIndex='0'/>
-				<text styleID='Body' text='宋体' colorIndex='0'/>
+				<text styleID='Title' text='微软雅黑' colorIndex='8'/>
+				<text styleID='SubTitle' text='仿宋' colorIndex='8'/>
+				<text styleID='Body' text='宋体' colorIndex='8'/>
 			</template>
 			
-			<text styleID='Title' size='30'>
+			<text styleID='Title' size='30' colorIndex='8'>
 				<label format='FontTitle'/>
 			</text>
 			
-			<text styleID='SubTitle' size='30'>
+			<text styleID='SubTitle' size='30' colorIndex='8'>
 				<label format='FontSubTitle'/>
 			</text>
 			
-			<text styleID='Body' size='30'>
+			<text styleID='Body' size='30' colorIndex='8'>
 				<label format='FontBody'/>
 			</text>
 			
@@ -539,16 +509,7 @@
 	            <color>#6E1418</color>
 			</colors>
 			
-			<colors styleID='text'>
-				<color>#FFFFFF</color>
-				<color>#CDCDCD</color>
-	            <color>#212121</color>
-				<color>#A8CF53</color>
-				<color>#89D0EC</color>
-	            <color>#F5DC37</color>
-	            <color>#E78514</color>
-	            <color>#6E1418</color>
-			</colors>
+		
 		</Blue>
 
 		<!-------------------------------------------------------------------------------------------->
@@ -606,20 +567,20 @@
 			
 			<!-- 文本模板 -->
 			<template styleID='text'>
-				<text styleID='Title' text='微软雅黑' colorIndex='0'/>
-				<text styleID='SubTitle' text='仿宋' colorIndex='0'/>
-				<text styleID='Body' text='宋体' colorIndex='0'/>
+				<text styleID='Title' text='微软雅黑' colorIndex='28'/>
+				<text styleID='SubTitle' text='仿宋' colorIndex='28'/>
+				<text styleID='Body' text='宋体' colorIndex='28'/>
 			</template>
 			
-			<text styleID='Title' size='30'>
+			<text styleID='Title' size='30' colorIndex='28'>
 				<label format='FontTitle'/>
 			</text>
 			
-			<text styleID='SubTitle' size='30'>
+			<text styleID='SubTitle' size='30' colorIndex='28'>
 				<label format='FontSubTitle'/>
 			</text>
 			
-			<text styleID='Body' size='30'>
+			<text styleID='Body' size='30' colorIndex='28'>
 				<label format='FontBody'/>
 			</text>
 			
@@ -657,16 +618,7 @@
 	            <color>#488737</color>
 			</colors>
 			
-			<colors styleID='text'>
-				<color>#444444</color>
-				<color>#777777</color>
-	            <color>#ffffff</color>
-	            <color>#E25780</color>
-	            <color>#9C5B24</color>  
-				<color>#9079B6</color>
-				<color>#3CB8AF</color>
-	            <color>#488737</color>
-			</colors>
+			
 		</Yellow>
 
 <!-------------------------------------------------------------------------------------------->
@@ -723,20 +675,20 @@
 			
 			<!-- 文本模板 -->
 			<template styleID='text'>
-				<text styleID='Title' text='微软雅黑' colorIndex='0'/>
-				<text styleID='SubTitle' text='仿宋' colorIndex='0'/>
-				<text styleID='Body' text='宋体' colorIndex='0'/>
+				<text styleID='Title' text='微软雅黑' colorIndex='8'/>
+				<text styleID='SubTitle' text='仿宋' colorIndex='8'/>
+				<text styleID='Body' text='宋体' colorIndex='8'/>
 			</template>
 			
-			<text styleID='Title' size='30'>
+			<text styleID='Title' size='30' colorIndex='8'>
 				<label format='FontTitle'/>
 			</text>
 			
-			<text styleID='SubTitle' size='30'>
+			<text styleID='SubTitle' size='30' colorIndex='8'>
 				<label format='FontSubTitle'/>
 			</text>
 			
-			<text styleID='Body' size='30'>
+			<text styleID='Body' size='30' colorIndex='8'>
 				<label format='FontBody'/>
 			</text>
 			
@@ -771,16 +723,7 @@
 	            <color>#6E1418</color>
 			</colors>
 			
-			<colors styleID='text'>
-				<color>#FFFFFF</color>
-				<color>#CDCDCD</color>
-	            <color>#71777F</color>
-				<color>#8AD8F7</color>
-	            <color>#FFE429</color>
-	            <color>#CF73D3</color>
-	            <color>#FE7B62</color>
-	            <color>#6E1418</color>
-			</colors>
+		
 		</Green>
 	</themes>
 	

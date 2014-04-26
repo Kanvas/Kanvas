@@ -7,14 +7,13 @@ package commands
 	
 	import util.undoRedo.UndoRedoMannager;
 	
-	import view.element.ElementBase;
 	import view.element.imgElement.ImgElement;
 
 	/**
 	 */	
-	public class DeleteImgCMD extends Command
+	public class DeleteImgCMDBase extends Command
 	{
-		public function DeleteImgCMD()
+		public function DeleteImgCMDBase()
 		{
 			super();
 		}
@@ -41,10 +40,6 @@ package commands
 			CoreFacade.removeElement(element);
 			
 			v = CoreFacade.coreMediator.pageManager.refreshVOThumbs();
-			// 判断如果系统中不再含有此图片ID的图片元素，则从图片库中删除此元素
-			/*if (ifImgShared == false)
-				ImgLib.unRegister(element.imgVO.imgID);*/
-			
 			UndoRedoMannager.register(this);
 			
 			this.dataChanged();
@@ -56,42 +51,25 @@ package commands
 		{
 			CoreFacade.addElementAt(element, elementIndex);
 			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
-			//ImgLib.register(imgElement.imgVO.imgID.toString(), imgElement.imgVO.sourceData);
 			
 			this.dataChanged();
 		}
 		
+		/**
+		 */		
 		override public function redoHandler():void
 		{
 			CoreFacade.removeElement(element);
 			CoreFacade.coreMediator.pageManager.refreshVOThumbs(v);
-			//ImgLib.unRegister(imgElement.imgVO.imgID);
 			
 			this.dataChanged();
 		}
 		
 		/**
 		 */		
-		private var element:ImgElement;
+		protected var element:ImgElement;
 		
-		private var elementIndex:int;
-		
-		/**
-		 */		
-		private function get ifImgShared():Boolean
-		{
-			var isImgShared:Boolean = false;
-			for each (var element:ElementBase in CoreFacade.coreProxy.elements)
-			{
-				if (element is ImgElement && (element as ImgElement).imgVO.imgID == this.element.imgVO.imgID)
-				{
-					isImgShared = true;
-					break;
-				}
-			}
-			
-			return isImgShared;
-		}
+		protected var elementIndex:int;
 		
 		private var v:Vector.<PageVO>;
 	}

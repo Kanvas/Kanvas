@@ -8,6 +8,11 @@ package control
 	public class InteractEvent extends Event
 	{
 		/**
+		 * 插入图片
+		 */		
+		public static const INSERT_IMAGE:String = 'insertImage';
+		
+		/**
 		 * 开启图形创建面板 
 		 */		
 		public static const OPEN_SHAPE_PANEL:String = 'openShapePanel';

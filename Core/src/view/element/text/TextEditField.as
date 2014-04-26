@@ -100,6 +100,7 @@ package view.element.text
 			xmlData = super.exportData();
 			
 			xmlData.@ifMutiLine = textVO.ifMutiLine;
+			xmlData.@isCustomColor = textVO.isCustomColor;
 			
 			//防止文本有特殊字符
 			if (textVO.text && textVO.text != "")
@@ -120,6 +121,7 @@ package view.element.text
 			textVO.text = this.textVO.text;
 			textVO.ifMutiLine = this.textVO.ifMutiLine;
 			textVO.styleID = this.textVO.styleID;
+			textVO.isCustomColor = this.textVO.isCustomColor;
 			
 			return new TextEditField(cloneVO(textVO) as TextVO);
 		}

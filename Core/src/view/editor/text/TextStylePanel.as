@@ -106,6 +106,7 @@ package view.editor.text
 				
 				curStyleBtn.textVO.color = colorSelectBtn.iconColor;
 				curStyleBtn.textVO.colorIndex = uint(colorSelectBtn.data);
+		
 				editor.textField.applyStyle(curStyleBtn.textVO);
 				
 				colorSelectBtn.render();
@@ -119,6 +120,12 @@ package view.editor.text
 		{	
 			textVO.styleID = curStyleBtn.id;
 			textVO.colorIndex = uint(colorSelectBtn.data);
+			
+			//用户选取了另外的颜色，则认为采用了自定义颜色，此文本颜色不随样式模版
+			if (curStyleBtn.textVO.colorIndex == textVO.colorIndex)
+				textVO.isCustomColor = false;
+			else
+				textVO.isCustomColor = true;
 			
 			editor.textField.getTextVO(textVO);
 		}
@@ -142,6 +149,7 @@ package view.editor.text
 					// 记录下文字的颜色信息
 					colorSelectBtn.iconColor = textVO.color;
 					colorSelectBtn.data = textVO.colorIndex;
+					
 					colorSelectBtn.render();
 				}
 				else
@@ -152,6 +160,7 @@ package view.editor.text
 		}
 		
 		/**
+		 * 颜色选择后触发
 		 */		
 		public function changeFontColor(color:Object):void
 		{
@@ -185,7 +194,7 @@ package view.editor.text
 				
 				StyleUtil.applyStyleToElement(textStyleBtn.textVO);
 				
-				textStyleBtn.textVO.color = 0x000000;
+			
 			
 				addStyleBtn(textStyleBtn);
 				

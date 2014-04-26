@@ -180,6 +180,16 @@ package view.shapePanel
 			mainPage = currentPage = getPage('home')
 			pagesContainer.addChild(mainPage); 
 			pagesContainer.addEventListener(ShapePageNavEvt.NAV_TO_TARGET_SHAPE_PAGE, toTargetShapePageHandler, false, 0, true);
+			
+			
+			//直接进入到图形页面
+			currentPage = getPage("shapePage");
+			pagesContainer.addChild(currentPage);
+			reTitle(currentPage.title);
+			
+			currentPage.x = w;
+			pagesContainer.x = - w;
+			backBtn.visible = false;
 		}
 		
 		/**

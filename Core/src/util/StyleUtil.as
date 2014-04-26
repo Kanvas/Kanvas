@@ -4,6 +4,7 @@ package util
 	import com.kvs.utils.XMLConfigKit.XMLVOMapper;
 	
 	import model.vo.ElementVO;
+	import model.vo.TextVO;
 	
 	
 	/**
@@ -37,9 +38,19 @@ package util
 			if (elementVO.styleID && elementVO.styleID != 'null')// 数据导入时，没有id的会自动填充为null
 			{
 				var xml:Object = XMLVOMapper.getStyleXMLBy_ID(elementVO.styleID, elementVO.styleType);
+				var colorIndex:uint = elementVO.colorIndex;
 				
 				if (xml)
 					XMLVOMapper.fuck(xml, elementVO);
+				
+				//如果文本采用了自定义颜色，则不随样式模版
+				if (elementVO is TextVO)
+				{
+					if ((elementVO as TextVO).isCustomColor)
+					{
+						elementVO.colorIndex = colorIndex;
+					}
+				}
 			}
 			
 			//根据颜色序号从模板中匹配颜色
@@ -49,7 +60,7 @@ package util
 		/**
 		 * 根据元素的类型和
 		 */		
-		private static function getColor(elementVO:ElementVO):void
+		public static function getColor(elementVO:ElementVO):void
 		{
 			var xml:XML = XMLVOMapper.getStyleXMLBy_ID(elementVO.styleType, 'colors') as XML;
 			

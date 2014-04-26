@@ -186,7 +186,7 @@ package model
 			registerCommand(Command.CREATE_PAGE, CreatePageCMD);
 			
 			registerCommand(Command.DELETE_ElEMENT, DeleteElementCMD);
-			registerCommand(Command.DELETE_IMG, DeleteImgCMD);
+			registerCommand(Command.DELETE_IMG, delImgCommad);
 			registerCommand(Command.DELETE_TEXT, DeleteTextCMD);
 			registerCommand(Command.DELETE_PAGE, DeletePageCMD);
 			registerCommand(Command.DELETE_CHILD_IN_TEM_GROUP, DeleteChildInTemGroupCMD);
@@ -235,6 +235,8 @@ package model
 		public static var inserImgCommad:Class;
 		
 		public static var insertBgCommand:Class;
+		
+		public static var delImgCommad:Class;
 	}
 }
 

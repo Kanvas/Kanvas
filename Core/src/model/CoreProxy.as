@@ -2,7 +2,6 @@ package model
 {
 	import com.adobe.images.PNGEncoder;
 	import com.kvs.utils.Map;
-	import com.kvs.utils.PerformaceTest;
 	import com.kvs.utils.RexUtil;
 	import com.kvs.utils.XMLConfigKit.StyleManager;
 	import com.kvs.utils.XMLConfigKit.XMLVOLib;
@@ -28,9 +27,7 @@ package model
 	import util.img.ImgInsertEvent;
 	import util.img.ImgInsertor;
 	import util.img.ImgLib;
-	import util.img.PNGDecoder;
 	import util.zip.ZipEntry;
-	import util.zip.ZipFile;
 	import util.zip.ZipOutput;
 	
 	import view.element.ElementBase;
@@ -411,8 +408,6 @@ package model
 			
 			for each (element in this.elements)
 				element.render();
-			
-			
 			
 			//背景图片加载
 			bgImgLoader.addEventListener(ImgInsertEvent.IMG_LOADED, initializeBgImgLoaded);
