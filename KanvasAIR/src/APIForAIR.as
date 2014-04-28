@@ -1,9 +1,6 @@
 package
 {
-	import com.adobe.images.PNGEncoder;
 	import com.coltware.airxzip.ZipEntry;
-	import com.coltware.airxzip.ZipErrorEvent;
-	import com.coltware.airxzip.ZipEvent;
 	import com.coltware.airxzip.ZipFileReader;
 	import com.coltware.airxzip.ZipFileWriter;
 	import com.kvs.utils.PerformaceTest;
@@ -19,7 +16,6 @@ package
 	import model.CoreFacade;
 	
 	import util.img.ImgInsertEvent;
-	import util.img.ImgInsertor;
 	import util.img.ImgLib;
 	
 	import view.element.ElementBase;
@@ -33,8 +29,6 @@ package
 		public function APIForAIR(core:CoreApp)
 		{
 			super(core);
-			
-			imgInter.addEventListener(ImgInsertEvent.IMG_LOADED, imgLoaded, false, 0, true);
 		}
 		
 		/**
@@ -121,12 +115,6 @@ package
 			this.setXMLData(xml);
 			reader.close();
 			
-			
-			
-			
-			
-			
-			
 			//这里需要清理冗余的图片数据
 			var imgIDsInXML:Array = [];
 			for each (var element:ElementBase in CoreFacade.coreProxy.elements)
@@ -211,11 +199,13 @@ package
 				imgDataBytes.writeBytes(imgBytes, 0, imgBytes.bytesAvailable);
 				imgDataBytes.position = 0;
 				
-				//这里要防止反复保存时，原始图片数据被不断的压缩
-				imgInter.loadImgBytes(imgDataBytes);
-				
 				writer.addBytes(imgDataBytes,imgID.toString() + '.png');
 			}
+			
+			writer.close();
+			PerformaceTest.end("save");
+			
+			return;
 			
 			var pageData:ByteArray = core.thumbManager.getPageBytes(960, 720);
 			if (pageData)
@@ -228,10 +218,7 @@ package
 				}
 			}
 			
-			writer.close();
-			PerformaceTest.end("save");
 		}
 		
-		private var imgInter:ImgInsertor = new ImgInsertor();
 	}
 }
