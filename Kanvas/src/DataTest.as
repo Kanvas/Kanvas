@@ -73,7 +73,7 @@ package
 			} 
 			catch(error:Error) 
 			{
-				
+				trace(error.getStackTrace())
 			}
 			
 		}

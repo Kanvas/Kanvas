@@ -34,21 +34,19 @@ package view.ui
 		{
 			canvas.clearBG();
 			
-			var w:Number = canvas.width;
-			var h:Number = canvas.height;
-			var bmd:BitmapData;
+			var canvasRect:Rectangle = canvas.getBounds(canvas);
 			
-			if (w && h)
+			var bmd:BitmapData;
+			var scale:Number = 1;
+			if (canvasRect.width && canvasRect.height)
 			{
-				var canvasScale:Number = canvas.scaleX;
-				var bgimgScale:Number = bgImg.scaleX;
-				
-				if (w * h > 16000000)
+				if (canvasRect.width * canvasRect.height > 16000000)
 				{
-					var t:Number = (w > h) ? 1000 / w : 1000 / h;
-					bgImg.scaleX = bgImg.scaleY = canvas.scaleX = canvas.scaleY *= t;
-					w *= t;
-					h *= t;
+					scale = (canvasRect.width > canvasRect.height) ? 1000 / canvasRect.width : 1000 / canvasRect.height;
+					canvasRect.x *= scale;
+					canvasRect.y *= scale;
+					canvasRect.width  *= scale;
+					canvasRect.height *= scale;
 				}
 				
 				var c:Sprite = new Sprite;
@@ -63,9 +61,11 @@ package view.ui
 				c.graphics.drawRect(0, 0, width, height);
 				c.graphics.endFill();
 				
-				var canvasRect:Rectangle = canvas.getBounds(canvas);
 				var canvasBmd:BitmapData = new BitmapData(canvasRect.width, canvasRect.height, true, 0);
-				canvasBmd.draw(canvas, new Matrix(1, 0, 0, 1, - canvasRect.left, - canvasRect.top));
+				var matrix:Matrix = new Matrix;
+				matrix.scale(scale, scale);
+				matrix.translate(-canvasRect.x, -canvasRect.y);
+				canvasBmd.draw(canvas, matrix);
 				var canvasBmp:Bitmap = new Bitmap(canvasBmd);
 				var bwh:Number = canvasBmp.width / canvasBmp.height;
 				var swh:Number = width / height;
@@ -76,15 +76,13 @@ package view.ui
 				canvasBmp.smoothing = true;
 				c.addChild(canvasBmp);
 				
-				canvas.scaleX = canvas.scaleY = canvasScale;
-				
 				if (bgImg.width && bgImg.height)// 防止无背景图片时的异常
 				{
 					var bgimgRect:Rectangle = bgImg.getBounds(bgImg);
 					var bgimgBmd:BitmapData = new BitmapData(bgimgRect.width, bgimgRect.height, true, 0);
 					bgimgBmd.draw(bgImg, new Matrix(1, 0, 0, 1, - bgimgRect.left, - bgimgRect.top));
 					var bgimgBmp:Bitmap = new Bitmap(bgimgBmd);
-					bgImg.scaleX = bgImg.scaleY = bgimgScale;
+					//bgImg.scaleX = bgImg.scaleY = bgimgScale;
 					bgimgBmp.scaleX = bgimgBmp.scaleY = aim;
 					bgimgBmp.x = (width - bgimgBmp.width) * .5;
 					bgimgBmp.y = (height - bgimgBmp.height) * .5;
