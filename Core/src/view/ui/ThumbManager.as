@@ -98,6 +98,10 @@ package view.ui
 				
 				bmd = BitmapUtil.drawWithSize(c, width, height);
 			}
+			else
+			{
+				bmd = new BitmapData(width, height, false, 0xFFFFFF);
+			}
 			
 			return bmd;
 		}
